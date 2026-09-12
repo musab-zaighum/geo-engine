@@ -1,99 +1,53 @@
 import { NextRequest, NextResponse } from 'next/server';
-import * as cheerio from 'cheerio';
+import { discoverClinicUrl } from '@/lib/agentic-search';
+import { executeOssScraperPipeline } from '@/lib/oss-scrapers-engine';
+import { distillDomAndExtractSchema } from '@/lib/stagehand-distiller';
 import { AuditResponse } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
-function normalizeUrl(rawUrl: string): string {
-  let urlStr = rawUrl.trim();
-  if (!urlStr.startsWith('http://') && !urlStr.startsWith('https://')) {
-    urlStr = 'https://' + urlStr;
-  }
-  return urlStr;
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const rawUrl = body.url;
+    const rawInput = body.url || body.query;
 
-    if (!rawUrl || typeof rawUrl !== 'string') {
+    if (!rawInput || typeof rawInput !== 'string' || rawInput.trim() === '') {
       return NextResponse.json(
-        { error: 'A valid URL parameter is required.' },
+        { error: 'A valid website URL or business search query is required.' },
         { status: 400 }
       );
     }
 
-    const targetUrl = normalizeUrl(rawUrl);
-    let parsedUrlObj: URL;
-    try {
-      parsedUrlObj = new URL(targetUrl);
-    } catch {
-      return NextResponse.json(
-        { error: 'Invalid URL format provided.' },
-        { status: 400 }
-      );
-    }
+    // 1. Agentic Web Search Discovery
+    const discovery = await discoverClinicUrl(rawInput);
+    const targetUrl = discovery.targetUrl;
 
-    const origin = parsedUrlObj.origin;
-    const headers = {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    };
+    // 2. Execute Official Open-Source Scrapers Pipeline (Firecrawl SDK / Crawl4AI Engine / Stagehand)
+    const scrapeResult = await executeOssScraperPipeline(targetUrl);
 
-    // 1. Check llms.txt at origin domain
-    let hasLlmsTxt = false;
-    let llmsTxtStatus = 0;
-
-    try {
-      const llmsUrl = `${origin}/llms.txt`;
-      const llmsRes = await fetch(llmsUrl, {
-        method: 'GET',
-        headers,
-        signal: AbortSignal.timeout(5000),
-      });
-      llmsTxtStatus = llmsRes.status;
-      if (llmsRes.ok) {
-        const text = await llmsRes.text();
-        if (text && text.trim().length > 10) {
-          hasLlmsTxt = true;
-        }
-      }
-    } catch {
-      llmsTxtStatus = 0;
-    }
-
-    // 2. Fetch target URL homepage HTML
-    let html = '';
-    let pageFetchOk = false;
-
-    try {
-      const pageRes = await fetch(targetUrl, {
-        method: 'GET',
-        headers,
-        signal: AbortSignal.timeout(8000),
-        redirect: 'follow',
-      });
-      if (pageRes.ok) {
-        html = await pageRes.text();
-        pageFetchOk = true;
-      }
-    } catch {
-      pageFetchOk = false;
-    }
+    const {
+      success: pageFetchOk,
+      html,
+      hasLlmsTxt,
+      llmsTxtStatus,
+      engineUsed,
+    } = scrapeResult;
 
     if (!pageFetchOk || !html) {
-      // Fallback audit response if domain cannot be fetched
       const failedResponse: AuditResponse = {
         url: targetUrl,
+        query: rawInput,
+        isDirectUrl: discovery.isDirectUrl,
+        isPlaywrightRendered: engineUsed.includes('Crawl4AI') || engineUsed.includes('Firecrawl'),
+        discoveredTitle: discovery.discoveredTitle,
+        snippet: discovery.snippet,
         hasLlmsTxt,
         llmsTxtStatus,
         hasMedicalSchema: false,
         detectedSchemas: [],
         readinessScore: hasLlmsTxt ? 15 : 0,
         criticalIssues: [
-          'Website domain could not be fetched or blocked automated request.',
+          'Website domain could not be fetched or blocked automated crawler connection.',
           ...(hasLlmsTxt
             ? []
             : ['Missing /llms.txt AI crawler standard file at domain root.']),
@@ -108,68 +62,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(failedResponse);
     }
 
-    // 3. Parse HTML with Cheerio & extract JSON-LD
-    const $ = cheerio.load(html);
-    const detectedSchemas: string[] = [];
-    let hasMedicalSchema = false;
-
-    $('script[type="application/ld+json"]').each((_, element) => {
-      try {
-        const content = $(element).html();
-        if (!content) return;
-        const parsed = JSON.parse(content);
-
-        const extractTypes = (obj: any) => {
-          if (!obj) return;
-          if (Array.isArray(obj)) {
-            obj.forEach((item) => extractTypes(item));
-            return;
-          }
-          if (typeof obj === 'object') {
-            if (obj['@type']) {
-              const types = Array.isArray(obj['@type'])
-                ? obj['@type']
-                : [obj['@type']];
-              types.forEach((t: string) => {
-                if (typeof t === 'string' && !detectedSchemas.includes(t)) {
-                  detectedSchemas.push(t);
-                }
-              });
-            }
-            if (obj['@graph'] && Array.isArray(obj['@graph'])) {
-              obj['@graph'].forEach((item: any) => extractTypes(item));
-            }
-          }
-        };
-
-        extractTypes(parsed);
-      } catch {
-        // Ignore JSON parse errors in script tag
-      }
-    });
-
-    const medicalKeywords = [
-      'MedicalClinic',
-      'Physician',
-      'MedicalBusiness',
-      'Hospital',
-      'Dentist',
-      'MedicalOrganization',
-      'DiagnosticLab',
-      'MedicalProcedure',
-      'MedicalCondition',
-      'MedicalSpecialty',
-    ];
-
-    hasMedicalSchema = detectedSchemas.some((schemaType) =>
-      medicalKeywords.some(
-        (keyword) => schemaType.toLowerCase() === keyword.toLowerCase()
-      )
-    );
-
-    // Metadata checks
-    const pageTitle = $('title').text().trim();
-    const metaDescription = $('meta[name="description"]').attr('content')?.trim();
+    // 3. Stagehand DOM Distillation & Schema Extractor
+    const distilled = distillDomAndExtractSchema(html);
+    const { detectedSchemas, hasMedicalSchema, registrationNumbers, title, metaDescription } = distilled;
 
     // 4. Calculate Readiness Score (0-100)
     let score = 0;
@@ -177,11 +72,11 @@ export async function POST(req: NextRequest) {
     if (detectedSchemas.length > 0) score += 25;
     if (hasMedicalSchema) score += 25;
     if (hasLlmsTxt) score += 20;
-    if (metaDescription && pageTitle) score += 10;
+    if (metaDescription || title) score += 10;
 
     const readinessScore = Math.min(100, score);
 
-    // 5. Critical Issues
+    // 5. Critical Issues Identification
     const criticalIssues: string[] = [];
     if (!hasLlmsTxt) {
       criticalIssues.push(
@@ -198,17 +93,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (
-      !html.toLowerCase().includes('npi') &&
-      !html.toLowerCase().includes('ahpra') &&
-      !html.toLowerCase().includes('gmc')
-    ) {
+    if (registrationNumbers.length === 0) {
       criticalIssues.push(
-        'Medical license registration IDs (AHPRA, NPI, or GMC) are missing from detected structured data.'
+        'Medical license registration IDs (AHPRA, NPI, or GMC) are missing from detected structured data & page headers.'
       );
     }
 
-    // 6. Recommendations
+    // 6. Actionable Recommendations
     const recommendations: string[] = [];
     if (!hasLlmsTxt) {
       recommendations.push(
@@ -229,6 +120,11 @@ export async function POST(req: NextRequest) {
 
     const result: AuditResponse = {
       url: targetUrl,
+      query: rawInput,
+      isDirectUrl: discovery.isDirectUrl,
+      isPlaywrightRendered: engineUsed.includes('Crawl4AI') || engineUsed.includes('Firecrawl'),
+      discoveredTitle: title || discovery.discoveredTitle,
+      snippet: discovery.snippet,
       hasLlmsTxt,
       llmsTxtStatus,
       hasMedicalSchema,

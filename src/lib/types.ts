@@ -30,6 +30,11 @@ export interface GenerateResponse {
 
 export interface AuditResponse {
   url: string;
+  query?: string;
+  isDirectUrl?: boolean;
+  isPlaywrightRendered?: boolean;
+  discoveredTitle?: string;
+  snippet?: string;
   hasLlmsTxt: boolean;
   llmsTxtStatus: number;
   hasMedicalSchema: boolean;
