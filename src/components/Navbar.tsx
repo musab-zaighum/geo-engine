@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Stethoscope,
   LayoutDashboard,
+  Palette,
   Tag,
-  CreditCard,
-  Lock,
   LogOut,
+  ArrowRight,
   ShieldCheck,
-  Activity,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -31,98 +29,146 @@ export function Navbar() {
     window.location.href = '/login';
   };
 
+  const handleScrollToAudit = () => {
+    if (pathname !== '/') {
+      window.location.href = '/#audit-bar';
+    } else {
+      const el = document.getElementById('audit-bar');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const input = el.querySelector('input');
+        if (input) input.focus();
+      }
+    }
+  };
+
   return (
-    <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-40 shadow-xl">
+    <header className="sticky top-0 z-50 bg-[#F8FAFC]/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo Left */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-500 to-sky-500 p-0.5 shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Stethoscope className="w-5 h-5 text-teal-400" />
+        <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 group">
+            {/* Standard <img> tag with graceful SVG fallback */}
+            <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/50 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#38BDF8] transition-colors">
+              <img
+                src="/logo.png"
+                alt="AI NEXUS"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                }}
+              />
             </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-lg font-black tracking-tight text-white">
-                Cite<span className="text-teal-400">Med</span>
-              </span>
-              <span className="text-slate-500 font-normal text-sm">//</span>
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                Healthcare GEO Suite
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="text-base font-black tracking-tight text-slate-900 font-sans">
+                  AI <span className="text-[#0284C7]">NEXUS</span>
+                </span>
+              </div>
+              <span className="text-[9px] font-bold tracking-widest text-slate-500 uppercase -mt-0.5">
+                INTELLIGENCE SIMPLIFIED
               </span>
             </div>
-            <span className="text-[10px] text-slate-400 font-medium block -mt-1">
-              AI Visibility & Infrastructure Platform
-            </span>
-          </div>
-        </Link>
+          </Link>
 
-        {/* Center Navigation Links (Exact Order: Workspace -> White-Label Suite -> Pricing) */}
-        <nav className="hidden md:flex items-center gap-1.5">
+          {/* Status Badge */}
+          <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-[#0284C7] border border-sky-200/70">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
+            <span>GEO Engine Active</span>
+          </div>
+        </div>
+
+        {/* Center Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1">
           <Link
             href="/"
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
               pathname === '/'
-                ? 'bg-slate-800 text-teal-400 border border-slate-700 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4 text-teal-400" />
             Workspace
           </Link>
 
           <Link
-            href="/white-label"
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
-              pathname === '/white-label'
-                ? 'bg-slate-800 text-teal-400 border border-slate-700 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            href="/partner-console"
+            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pathname === '/partner-console'
+                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            <Tag className="w-4 h-4 text-teal-400" />
+            Partner Console
+          </Link>
+
+          <Link
+            href="/licensing"
+            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pathname === '/licensing'
+                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+            }`}
+          >
+            Licensing &amp; P&amp;L
+          </Link>
+
+          <Link
+            href="/white-label"
+            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pathname === '/white-label'
+                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+            }`}
+          >
             White-Label Suite
           </Link>
 
           <Link
             href="/pricing"
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
               pathname === '/pricing'
-                ? 'bg-slate-800 text-teal-400 border border-slate-700 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            <CreditCard className="w-4 h-4 text-teal-400" />
             Pricing
           </Link>
         </nav>
 
-        {/* Right Status & Auth Lock Controls */}
+        {/* Right CTA Action Button & Auth Controls */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 rounded-full text-[11px] font-semibold text-slate-300 border border-slate-800">
-            <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span>AHPRA & NPI Engine Active</span>
-          </div>
+          <Link
+            href="/signup"
+            className="px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-[#0284C7] transition-colors hidden sm:inline-block"
+          >
+            Sign Up
+          </Link>
 
-          {authenticated ? (
+          {authenticated && (
             <button
               type="button"
               onClick={handleLogout}
-              className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-rose-400 border border-slate-800 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-200 rounded-lg transition-colors flex items-center gap-1.5 bg-slate-50"
+              title="Lock Workspace"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Lock Workspace</span>
+              <span className="hidden sm:inline">Lock</span>
             </button>
-          ) : (
-            <Link
-              href="/login"
-              className="px-4 py-2 bg-gradient-to-r from-teal-500 to-sky-600 hover:from-teal-400 hover:to-sky-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-teal-500/20 transition-all"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Login Gate</span>
-            </Link>
           )}
+
+          {/* Primary Action Button: Run Audit */}
+          <button
+            type="button"
+            onClick={handleScrollToAudit}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white text-sm font-medium shadow-sm transition-all active:scale-[0.98]"
+          >
+            <span>Run Audit</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>
   );
 }
+

@@ -35,8 +35,8 @@ export function PricingCalculatorModal({ isOpen, onClose }: PricingCalculatorMod
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-teal-600" />
+            <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-blue-600" />
             </div>
             <div>
               <h2 className="text-xl font-extrabold text-slate-900">
@@ -63,7 +63,7 @@ export function PricingCalculatorModal({ isOpen, onClose }: PricingCalculatorMod
           <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
-                <UserCheck className="w-4 h-4 text-teal-600" /> Solo Doctors ($1,497 Retail)
+                <UserCheck className="w-4 h-4 text-blue-600" /> Solo Doctors ($1,497 Retail)
               </span>
             </div>
 
@@ -79,7 +79,7 @@ export function PricingCalculatorModal({ isOpen, onClose }: PricingCalculatorMod
               <button
                 type="button"
                 onClick={() => setSoloCount(soloCount + 1)}
-                className="p-2 bg-teal-600 hover:bg-teal-500 rounded-lg text-white font-bold transition-colors shadow-sm"
+                className="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white font-bold transition-colors shadow-sm"
               >
                 <Plus className="w-4 h-4" />
               </button>

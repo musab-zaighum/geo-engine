@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col selection:bg-teal-500/20 selection:text-teal-900">
+    <html lang="en" className="scroll-smooth">
+      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col selection:bg-blue-600/10 selection:text-blue-700">
         <Navbar />
         <div className="flex-1">{children}</div>
         <CornerChatWidget />

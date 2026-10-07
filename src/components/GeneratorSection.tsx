@@ -248,15 +248,15 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
       <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               GEO Infrastructure Generator
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Synthesize Medical AI Index Files
             </h2>
             <p className="text-slate-600 text-sm max-w-2xl leading-relaxed">
-              Generate Schema.org <code className="text-teal-700 bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">@graph</code> JSON-LD, <code className="text-teal-700 bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">/llms.txt</code> files, and Raw Markdown Profiles.
+              Generate Schema.org <code className="text-blue-700 bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">@graph</code> JSON-LD, <code className="text-blue-700 bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">/llms.txt</code> files, and Raw Markdown Profiles.
             </p>
           </div>
 
@@ -264,9 +264,9 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
             <button
               type="button"
               onClick={() => handleAutoFillDemo('clinic')}
-              className="px-4 py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all"
+              className="px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all"
             >
-              <Building2 className="w-4 h-4 text-teal-600" />
+              <Building2 className="w-4 h-4 text-blue-600" />
               1-Click Demo (Clinic)
             </button>
             <button
@@ -292,7 +292,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 onClick={() => setPracticeType('clinic')}
                 className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                   practiceType === 'clinic'
-                    ? 'bg-teal-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -303,7 +303,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 onClick={() => setPracticeType('solo_practitioner')}
                 className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                   practiceType === 'solo_practitioner'
-                    ? 'bg-teal-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -322,11 +322,11 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 onClick={() => setHasWebsite(true)}
                 className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                   hasWebsite
-                    ? 'bg-white text-teal-700 border border-slate-300 shadow-sm'
+                    ? 'bg-white text-blue-700 border border-slate-300 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <Globe className="w-4 h-4 text-teal-600" /> Has Website
+                <Globe className="w-4 h-4 text-blue-600" /> Has Website
               </button>
               <button
                 type="button"
@@ -356,7 +356,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
       {/* Generator Form */}
       <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
         <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Stethoscope className="w-5 h-5 text-teal-600" />
+          <Stethoscope className="w-5 h-5 text-blue-600" />
           Practice Identity & Canonical Address
         </h3>
 
@@ -370,7 +370,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               value={entityName}
               onChange={(e) => setEntityName(e.target.value)}
               placeholder={practiceType === 'clinic' ? 'e.g. Sydney Plastic Surgery Centre' : 'e.g. Dr. Marcus Vance, MD'}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -383,7 +383,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               value={websiteUrl}
               onChange={(e) => setWebsiteUrl(e.target.value)}
               placeholder={hasWebsite ? 'e.g. https://sydneycosmeticsurgery.com.au' : 'e.g. https://maps.google.com/?cid=123'}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -394,7 +394,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               value={streetAddress}
               onChange={(e) => setStreetAddress(e.target.value)}
               placeholder="Level 7, 135 Macquarie Street"
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -406,7 +406,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 placeholder="Sydney"
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
             <div className="space-y-1">
@@ -416,7 +416,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 placeholder="NSW"
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
             <div className="space-y-1">
@@ -426,7 +426,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
                 placeholder="2000"
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
@@ -438,7 +438,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               placeholder="Australia"
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -449,7 +449,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+61 2 9252 0000"
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-teal-500"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-blue-500"
             />
           </div>
         </div>
@@ -461,7 +461,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <UserCheck className="w-5 h-5 text-teal-600" />
+                <UserCheck className="w-5 h-5 text-blue-600" />
                 Medical Practitioners & Ahpra/NPI License IDs
               </h3>
               <p className="text-xs text-slate-500">
@@ -472,7 +472,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               <button
                 type="button"
                 onClick={handleAddDoctor}
-                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-teal-700 rounded-xl text-xs font-bold flex items-center gap-1 transition-colors"
+                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-blue-700 rounded-xl text-xs font-bold flex items-center gap-1 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Doctor
               </button>
@@ -483,7 +483,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
             {doctors.map((doc, idx) => (
               <div key={idx} className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-teal-700 uppercase">Practitioner #{idx + 1}</span>
+                  <span className="text-xs font-bold text-blue-700 uppercase">Practitioner #{idx + 1}</span>
                   {practiceType === 'clinic' && doctors.length > 1 && (
                     <button
                       type="button"
@@ -528,7 +528,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
         {/* Services */}
         <div className="space-y-3">
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <FileCode className="w-5 h-5 text-teal-600" /> Core Medical Procedures & Treatments Catalog
+            <FileCode className="w-5 h-5 text-blue-600" /> Core Medical Procedures & Treatments Catalog
           </h3>
 
           <div className="flex gap-2">
@@ -543,12 +543,12 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                 }
               }}
               placeholder="e.g. Deep Plane Facelift or Total Knee Arthroplasty"
-              className="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs focus:outline-none focus:border-teal-500"
+              className="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs focus:outline-none focus:border-blue-500"
             />
             <button
               type="button"
               onClick={handleAddService}
-              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-teal-700 font-bold text-xs rounded-xl flex items-center gap-1 transition-colors"
+              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-blue-700 font-bold text-xs rounded-xl flex items-center gap-1 transition-colors"
             >
               <Plus className="w-3.5 h-3.5" /> Add
             </button>
@@ -576,7 +576,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
           type="button"
           onClick={handleGenerate}
           disabled={loading}
-          className="w-full py-4 bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 text-white font-bold text-base rounded-2xl shadow-lg shadow-teal-500/20 disabled:opacity-50 flex items-center justify-center gap-3 transition-all"
+          className="w-full py-4 bg-gradient-to-r bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-sm disabled:opacity-50 flex items-center justify-center gap-3 transition-all"
         >
           {loading ? (
             <>
@@ -613,7 +613,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               }
               className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors"
             >
-              <Download className="w-4 h-4 text-teal-600" /> Download Bundle (.md)
+              <Download className="w-4 h-4 text-blue-600" /> Download Bundle (.md)
             </button>
           </div>
 
@@ -624,7 +624,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               onClick={() => setActiveOutputTab('schema')}
               className={`py-3 px-4 font-bold text-xs rounded-t-xl border-b-2 transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeOutputTab === 'schema'
-                  ? 'border-teal-600 text-teal-700 bg-teal-50/50'
+                  ? 'border-blue-600 text-blue-700 bg-blue-50/50'
                   : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
@@ -635,7 +635,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               onClick={() => setActiveOutputTab('llmstxt')}
               className={`py-3 px-4 font-bold text-xs rounded-t-xl border-b-2 transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeOutputTab === 'llmstxt'
-                  ? 'border-teal-600 text-teal-700 bg-teal-50/50'
+                  ? 'border-blue-600 text-blue-700 bg-blue-50/50'
                   : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
@@ -646,7 +646,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               onClick={() => setActiveOutputTab('profile')}
               className={`py-3 px-4 font-bold text-xs rounded-t-xl border-b-2 transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeOutputTab === 'profile'
-                  ? 'border-teal-600 text-teal-700 bg-teal-50/50'
+                  ? 'border-blue-600 text-blue-700 bg-blue-50/50'
                   : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
@@ -658,14 +658,14 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
           {activeOutputTab === 'schema' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs text-slate-500">
-                <span>Embed inside website's <code className="text-teal-700">&lt;head&gt;</code> HTML script tag.</span>
+                <span>Embed inside website's <code className="text-blue-700">&lt;head&gt;</code> HTML script tag.</span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => copyToClipboard(result.schemaJsonLd, 'schema')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    {copiedKey === 'schema' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-teal-600" />}
+                    {copiedKey === 'schema' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-blue-600" />}
                     {copiedKey === 'schema' ? 'Copied!' : 'Copy JSON'}
                   </button>
                   <button
@@ -673,12 +673,12 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                     onClick={() => downloadFile('medical-schema.json', result.schemaJsonLd, 'application/json')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    <Download className="w-3.5 h-3.5 text-teal-600" /> Download
+                    <Download className="w-3.5 h-3.5 text-blue-600" /> Download
                   </button>
                 </div>
               </div>
 
-              <pre className="p-4 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto text-teal-300 font-mono text-xs max-h-[400px]">
+              <pre className="p-4 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto text-blue-300 font-mono text-xs max-h-[400px]">
                 {result.schemaJsonLd}
               </pre>
             </div>
@@ -688,14 +688,14 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
           {activeOutputTab === 'llmstxt' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs text-slate-500">
-                <span>Publish as <code className="text-teal-700">/llms.txt</code> at domain root.</span>
+                <span>Publish as <code className="text-blue-700">/llms.txt</code> at domain root.</span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => copyToClipboard(result.llmsTxt, 'llms')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    {copiedKey === 'llms' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-teal-600" />}
+                    {copiedKey === 'llms' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-blue-600" />}
                     {copiedKey === 'llms' ? 'Copied!' : 'Copy llms.txt'}
                   </button>
                   <button
@@ -703,7 +703,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                     onClick={() => downloadFile('llms.txt', result.llmsTxt, 'text/plain')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    <Download className="w-3.5 h-3.5 text-teal-600" /> Download
+                    <Download className="w-3.5 h-3.5 text-blue-600" /> Download
                   </button>
                 </div>
               </div>
@@ -725,7 +725,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                       type="button"
                       onClick={() => setProfileViewMode('rendered')}
                       className={`px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1 ${
-                        profileViewMode === 'rendered' ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500'
+                        profileViewMode === 'rendered' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'
                       }`}
                     >
                       <Eye className="w-3 h-3" /> Preview
@@ -734,7 +734,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                       type="button"
                       onClick={() => setProfileViewMode('raw')}
                       className={`px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1 ${
-                        profileViewMode === 'raw' ? 'bg-white text-teal-700 shadow-sm' : 'text-slate-500'
+                        profileViewMode === 'raw' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'
                       }`}
                     >
                       <Code className="w-3 h-3" /> Raw
@@ -746,7 +746,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                     onClick={() => copyToClipboard(result.rawMarkdownProfile, 'profile')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    {copiedKey === 'profile' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-teal-600" />}
+                    {copiedKey === 'profile' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-blue-600" />}
                     {copiedKey === 'profile' ? 'Copied!' : 'Copy Profile'}
                   </button>
                   <button
@@ -754,7 +754,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
                     onClick={() => downloadFile('medical-profile.md', result.rawMarkdownProfile, 'text/markdown')}
                     className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold flex items-center gap-1"
                   >
-                    <Download className="w-3.5 h-3.5 text-teal-600" /> Download
+                    <Download className="w-3.5 h-3.5 text-blue-600" /> Download
                   </button>
                 </div>
               </div>

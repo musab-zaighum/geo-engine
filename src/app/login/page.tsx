@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, ShieldCheck, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -42,44 +42,20 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center p-4 bg-slate-50">
-      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 max-w-md w-full shadow-xl space-y-6 relative overflow-hidden">
-        {/* Glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-
-        <div className="relative z-10 space-y-4 text-center">
-          <div className="w-14 h-14 bg-gradient-to-tr from-teal-600 to-sky-600 rounded-2xl p-0.5 mx-auto shadow-lg shadow-teal-500/20">
-            <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-              <Lock className="w-7 h-7 text-teal-600" />
-            </div>
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-sm space-y-6">
+        <div className="space-y-3 text-center">
+          <div className="w-12 h-12 bg-blue-600 rounded-xl mx-auto shadow-sm flex items-center justify-center text-white">
+            <Lock className="w-6 h-6" />
           </div>
 
           <div className="space-y-1">
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
               CiteMed Platform Access
             </h1>
             <p className="text-slate-500 text-xs sm:text-sm">
-              Enter your passcode or click 1-Click Demo Access to unlock the workspace.
+              Enter authorized administrator passcode to unlock full workspace capabilities.
             </p>
           </div>
-
-          {/* Quick Demo Access Button */}
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={() => handleLogin('citemed2026')}
-              disabled={loading}
-              className="w-full py-3 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-2xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all shadow-sm"
-            >
-              <Sparkles className="w-4 h-4 text-teal-600" />
-              1-Click Demo / Test Access (Free)
-            </button>
-          </div>
-        </div>
-
-        <div className="relative z-10 flex items-center gap-3 my-4">
-          <hr className="flex-1 border-slate-200" />
-          <span className="text-[11px] text-slate-400 font-bold uppercase">or enter passcode</span>
-          <hr className="flex-1 border-slate-200" />
         </div>
 
         <form
@@ -87,27 +63,27 @@ export default function LoginPage() {
             e.preventDefault();
             handleLogin();
           }}
-          className="relative z-10 space-y-4"
+          className="space-y-4"
         >
-          <div className="space-y-1.5 text-left">
-            <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-700 block">
               Access Passcode
             </label>
             <div className="relative">
-              <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="password"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
-                placeholder="Default: citemed2026"
-                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-teal-500 font-mono"
+                placeholder="Enter passcode (e.g. citemed2026)"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600"
               />
             </div>
           </div>
 
           {error && (
             <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
               <span>{error}</span>
             </div>
           )}
@@ -115,23 +91,27 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 text-white font-bold text-sm rounded-2xl shadow-lg shadow-teal-500/20 disabled:opacity-50 flex items-center justify-center gap-2 transition-all"
+            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             {loading ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin" /> Verifying...
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                <span>Authenticating...</span>
               </>
             ) : (
               <>
-                Unlock Workspace <ArrowRight className="w-4 h-4" />
+                <span>Unlock Workspace</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        <div className="relative z-10 pt-2 text-center text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Encrypted Session Protection Active</span>
+        <div className="pt-2 border-t border-slate-100 text-center">
+          <div className="inline-flex items-center gap-1.5 text-xs text-slate-500">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>Encrypted Session Cookie Storage</span>
+          </div>
         </div>
       </div>
     </div>
