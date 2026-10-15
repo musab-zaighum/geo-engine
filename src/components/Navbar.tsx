@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Palette,
-  Tag,
   LogOut,
   ArrowRight,
   ShieldCheck,
+  Search,
+  Building2,
+  Lock,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -43,13 +43,12 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F8FAFC]/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
+    <header className="sticky top-0 z-50 bg-[#F8FAFC]/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo Left */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
-            {/* Standard <img> tag with graceful SVG fallback */}
-            <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/50 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#0284C7] transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/60 flex items-center justify-center overflow-hidden shadow-2xs group-hover:border-[#0284C7] transition-all">
               <img
                 src="/logo.png"
                 alt="VeloGEO"
@@ -65,91 +64,71 @@ export function Navbar() {
                   Velo<span className="text-[#0284C7]">GEO</span>
                 </span>
               </div>
-              <span className="text-[9px] font-mono font-bold tracking-widest text-slate-500 uppercase -mt-0.5">
+              <span className="text-[9px] font-mono font-bold tracking-widest text-slate-400 uppercase -mt-0.5">
                 INTELLIGENCE SIMPLIFIED
               </span>
             </div>
           </Link>
 
-          {/* Status Badge */}
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-[#0284C7] border border-sky-200/70">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] animate-pulse" />
-            <span className="font-mono text-[11px]">Regular GEO Active</span>
+          {/* Engine Status Pill */}
+          <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-mono text-[10px] tracking-tight">Regular GEO Active</span>
           </div>
         </div>
 
-        {/* Center Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Clean Center Navigation Links (Linear-style minimalism) */}
+        <nav className="hidden md:flex items-center gap-1 bg-white/70 p-1 rounded-xl border border-slate-200/70 shadow-2xs">
           <Link
             href="/"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               pathname === '/'
-                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                ? 'text-[#0284C7] bg-sky-50/80 font-bold shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            Workspace
+            Audit Engine
           </Link>
 
           <Link
             href="/partner-console"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center gap-1.5 ${
               pathname === '/partner-console'
-                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                ? 'text-[#0284C7] bg-sky-50/80 font-bold shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            Partner Console
-          </Link>
-
-          <Link
-            href="/licensing"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-              pathname === '/licensing'
-                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
-            }`}
-          >
-            Licensing &amp; P&amp;L
-          </Link>
-
-          <Link
-            href="/white-label"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-              pathname === '/white-label'
-                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
-            }`}
-          >
-            White-Label Suite
+            <Building2 className="w-3.5 h-3.5 text-[#0284C7]" />
+            <span>Partner Console</span>
           </Link>
 
           <Link
             href="/pricing"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               pathname === '/pricing'
-                ? 'text-[#0284C7] bg-sky-50/80 font-semibold'
+                ? 'text-[#0284C7] bg-sky-50/80 font-bold shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
             }`}
           >
-            Pricing
+            Wholesale Pricing
           </Link>
         </nav>
 
         {/* Right CTA Action Button & Auth Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <Link
-            href="/signup"
-            className="px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-[#0284C7] transition-colors hidden sm:inline-block"
+            href="/partner-console"
+            className="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-[#0284C7] transition-colors hidden sm:inline-flex items-center gap-1"
           >
-            Sign Up
+            <Lock className="w-3.5 h-3.5 text-slate-400" />
+            <span>Agency Login</span>
           </Link>
 
           {authenticated && (
             <button
               type="button"
               onClick={handleLogout}
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-200 rounded-lg transition-colors flex items-center gap-1.5 bg-slate-50"
+              className="px-2.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-200 rounded-lg transition-colors flex items-center gap-1.5 bg-white shadow-2xs"
               title="Lock Workspace"
             >
               <LogOut className="w-3.5 h-3.5" />
@@ -161,14 +140,13 @@ export function Navbar() {
           <button
             type="button"
             onClick={handleScrollToAudit}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white text-sm font-medium shadow-sm transition-all active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-xs shadow-sky-900/10 transition-all duration-200 active:scale-[0.98]"
           >
-            <span>Run Audit</span>
-            <ArrowRight className="w-4 h-4" />
+            <Search className="w-3.5 h-3.5" />
+            <span>Audit Domain</span>
           </button>
         </div>
       </div>
     </header>
   );
 }
-

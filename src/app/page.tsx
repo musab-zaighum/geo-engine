@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {
   Search,
   ShieldCheck,
-  ShieldAlert,
   CheckCircle2,
   XCircle,
   AlertTriangle,
@@ -30,6 +29,11 @@ import {
   Zap,
   Activity,
   CheckCheck,
+  Cpu,
+  Layers,
+  Terminal,
+  Server,
+  ArrowUpRight,
 } from 'lucide-react';
 import { AuditResponse } from '@/lib/types';
 import { GeneratorSection } from '@/components/GeneratorSection';
@@ -101,7 +105,7 @@ export default function HomePage() {
     setAuditProgressMessage('Connecting to Regular GEO diagnostic vector cascade...');
 
     setTimeout(() => {
-      setAuditProgressMessage('Inspecting Schema.org @graph & /llms.txt endpoints...');
+      setAuditProgressMessage('Querying Perplexity, ChatGPT Search & Schema.org graph...');
     }, 800);
 
     try {
@@ -138,10 +142,13 @@ export default function HomePage() {
 
   // Calculator Math
   const grossMonthlyRevenue = managedClinics * monthlyClinicBill;
-  const wholesaleVeloCost = wholesalePlan === 'flat' ? 297 : 199 + (managedClinics * 89);
+  const wholesaleVeloCost = wholesalePlan === 'flat' ? 297 : 199 + managedClinics * 89;
   const netMonthlyProfit = Math.max(0, grossMonthlyRevenue - wholesaleVeloCost);
   const annualRunRate = netMonthlyProfit * 12;
-  const grossMargin = grossMonthlyRevenue > 0 ? ((netMonthlyProfit / grossMonthlyRevenue) * 100).toFixed(1) : '0';
+  const grossMargin =
+    grossMonthlyRevenue > 0
+      ? ((netMonthlyProfit / grossMonthlyRevenue) * 100).toFixed(1)
+      : '0';
 
   // Simulated Card Payment
   const handleSimulatedPayment = (e: React.FormEvent) => {
@@ -150,7 +157,7 @@ export default function HomePage() {
     setTimeout(() => {
       setPaymentProcessing(false);
       setPaymentSuccess(true);
-    }, 1200);
+    }, 1100);
   };
 
   // Copy Schema
@@ -180,36 +187,37 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7] bg-dot-matrix">
       {/* Modal */}
       <PasteGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
 
-      {/* 1. HERO SECTION: Zero-Scroll Domain Audit Bar */}
-      <section className="relative pt-12 pb-14 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-6">
-        {/* Top Medical Spec Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-2xs text-[#0284C7] text-xs font-mono font-bold">
+      {/* 1. HERO SECTION: Above the fold, high-density audit engine */}
+      <section className="relative pt-10 sm:pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-6">
+        {/* Telemetry Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200/90 shadow-2xs text-[#0284C7] text-xs font-mono font-semibold">
           <Activity className="w-3.5 h-3.5 text-[#0284C7]" />
-          <span>VeloGEO &bull; INTELLIGENCE SIMPLIFIED &bull; Regular GEO Engine</span>
+          <span>VeloGEO Engine v2.4 &bull; Clinical Search Citation Standard</span>
         </div>
 
         {/* Hero Title */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.12]">
-          Clinical &amp; Regular GEO Audit Engine for <span className="text-[#0284C7]">Modern Healthcare</span>
-        </h1>
+        <div className="space-y-3">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.12]">
+            Audit Any Dental or Medical Clinic for <span className="text-[#0284C7]">AI Search Citations</span>
+          </h1>
 
-        {/* Value Proposition */}
-        <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Ensure Perplexity, ChatGPT Search, and Claude cite your dental and medical practices. Audit Schema.org JSON-LD integrity, verify NPI credentials, and deploy zero-trace agency infrastructure in seconds.
-        </p>
+          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            Ensure Perplexity, ChatGPT Search, and Claude recommend your practice. Instant machine-readable diagnostics for Schema.org entity graphs, NPI verification, and /llms.txt roots.
+          </p>
+        </div>
 
         {/* Zero-Scroll Domain Audit Bar */}
-        <div id="audit-bar" className="max-w-2xl mx-auto pt-2">
+        <div id="audit-bar" className="max-w-2xl mx-auto pt-1">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               runAudit();
             }}
-            className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm focus-within:border-[#0284C7] focus-within:ring-2 focus-within:ring-[#0284C7]/20 flex flex-col sm:flex-row items-center gap-2 transition-all"
+            className="bg-white p-2 rounded-2xl border border-slate-200/90 shadow-sm shadow-slate-900/5 focus-within:border-[#0284C7] focus-within:ring-2 focus-within:ring-[#0284C7]/20 flex flex-col sm:flex-row items-center gap-2 transition-all duration-200"
           >
             <div className="relative flex-1 w-full">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -224,7 +232,7 @@ export default function HomePage() {
             <button
               type="submit"
               disabled={auditLoading}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95 shrink-0"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-xs shadow-sky-900/10 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95 shrink-0"
             >
               {auditLoading ? (
                 <>
@@ -242,7 +250,7 @@ export default function HomePage() {
 
           {/* Quick Domain Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-3 text-xs text-slate-500">
-            <span className="font-mono text-[11px] text-slate-400">Sample Tests:</span>
+            <span className="font-mono text-[11px] text-slate-400">Quick Test:</span>
             {samplePills.map((p, idx) => (
               <button
                 key={idx}
@@ -251,7 +259,7 @@ export default function HomePage() {
                   setDomainInput(p.value);
                   runAudit(p.value);
                 }}
-                className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 transition-colors text-[11px] font-mono shadow-2xs"
+                className="px-2.5 py-1 rounded-lg bg-white/90 hover:bg-white text-slate-700 border border-slate-200/90 transition-all text-[11px] font-mono shadow-2xs hover:border-slate-300"
               >
                 {p.label}
               </button>
@@ -260,7 +268,7 @@ export default function HomePage() {
 
           {/* Loading Banner */}
           {auditLoading && (
-            <div className="mt-4 p-4 rounded-xl bg-white border border-[#0284C7]/30 text-[#0284C7] text-xs font-mono flex items-center justify-center gap-2.5 shadow-xs animate-pulse">
+            <div className="mt-4 p-4 rounded-xl bg-white border border-[#0284C7]/30 text-[#0284C7] text-xs font-mono flex items-center justify-center gap-2.5 shadow-2xs animate-pulse">
               <RefreshCw className="w-4 h-4 animate-spin" />
               <span>{auditProgressMessage || 'Analyzing domain regular GEO entities...'}</span>
             </div>
@@ -275,28 +283,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. INSTANT AUDIT RESULTS CARD (if scanned) */}
+      {/* 2. INSTANT AUDIT RESULTS CARD (High-Urgency Diagnostic Telemetry) */}
       {auditResult && (
-        <section id="audit-results-card" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <section id="audit-results-card" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-sky-50 text-[#0284C7] border border-sky-200">
-                    Diagnostic Output
+                    Live Diagnostic Telemetry
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">Live Multi-Model Cascade</span>
+                  <span className="text-xs text-slate-400 font-mono">Cascade: Gemini 2.0 / Claude 3.5 Sonnet / GPT-4o</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-mono">
                   {auditResult.url}
                 </h2>
                 <div className="text-xs text-slate-500 font-mono">
-                  Scanned Entity: {auditResult.discoveredTitle || 'Clinical Website'}
+                  Discovered Entity: {auditResult.discoveredTitle || 'Clinical Practice'}
                 </div>
               </div>
 
-              {/* Score Display */}
-              <div className="flex items-center gap-5 p-3 rounded-xl bg-[#F8FAFC] border border-slate-200">
+              {/* Score Meter */}
+              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/90">
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Regular GEO Score</span>
                   <span className="text-3xl font-black font-mono text-rose-600">
@@ -305,17 +313,21 @@ export default function HomePage() {
                 </div>
                 <div className="h-8 w-px bg-slate-200" />
                 <div className="text-left text-xs space-y-0.5">
-                  <div className="font-bold text-rose-600">High Urgency</div>
-                  <div className="text-slate-400 font-mono text-[10px]">Critical Omissions</div>
+                  <div className="font-bold text-rose-600">Urgent Remediation</div>
+                  <div className="text-slate-400 font-mono text-[10px]">Unindexed by LLMs</div>
                 </div>
               </div>
             </div>
 
-            {/* High-Urgency Diagnostic Warnings */}
+            {/* High-Urgency Diagnostic Warnings with Monospaced Telemetry */}
             <div className="space-y-3">
-              <h3 className="text-xs font-mono font-bold uppercase text-slate-500 tracking-wider">
-                Automated Diagnostic Checkpoints (Urgent Remediation Required)
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-mono font-bold uppercase text-slate-500 tracking-wider">
+                  Diagnostic Checkpoints &amp; Machine-Readable Status
+                </h3>
+                <span className="text-[10px] font-mono text-slate-400">Latency: 28ms</span>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
                 {(auditResult.issuesFound || [
                   '❌ MedicalClinic JSON-LD Entity Graph: Missing',
@@ -325,10 +337,13 @@ export default function HomePage() {
                 ]).map((issue, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200 text-slate-800 flex items-center gap-2.5 shadow-2xs"
+                    className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 text-slate-800 flex items-center justify-between shadow-2xs"
                   >
-                    <span className="shrink-0">{issue.includes('❌') ? '' : '⚠️'}</span>
-                    <span className="font-semibold">{issue}</span>
+                    <div className="flex items-center gap-2.5">
+                      <span className="shrink-0">{issue.includes('❌') ? '' : '⚠️'}</span>
+                      <span className="font-semibold">{issue}</span>
+                    </div>
+                    <span className="text-[10px] text-rose-600 font-bold uppercase shrink-0 ml-2">Action Required</span>
                   </div>
                 ))}
               </div>
@@ -341,11 +356,11 @@ export default function HomePage() {
                   <CheckCheck className="w-4 h-4 text-emerald-600" />
                   <span>Immediate Solution Ready</span>
                 </div>
-                <span className="text-[11px] font-mono text-emerald-700 bg-white/80 px-2.5 py-0.5 rounded border border-emerald-200">
+                <span className="text-[11px] font-mono text-emerald-700 bg-white/90 px-2.5 py-0.5 rounded border border-emerald-200">
                   Turnkey Remediation Engine
                 </span>
               </div>
-              <p className="text-sm font-bold text-emerald-900 leading-relaxed">
+              <p className="text-sm font-bold text-emerald-950 leading-relaxed">
                 &ldquo;VeloGEO generates and validates this entire unbranded Regular GEO package in 30 seconds.&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-1 flex-wrap">
@@ -367,7 +382,7 @@ export default function HomePage() {
                   className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
                 >
                   <Building2 className="w-3.5 h-3.5 text-[#0284C7]" />
-                  <span>Open in White-Label Console</span>
+                  <span>Open in Partner Console</span>
                 </Link>
 
                 <button
@@ -386,7 +401,7 @@ export default function HomePage() {
 
       {/* 3. INTERACTIVE AGENCY REVENUE & CLINIC PROFIT CALCULATOR BOX */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#0284C7] uppercase">
@@ -397,11 +412,11 @@ export default function HomePage() {
                 Agency Revenue &amp; Clinic Profitability Calculator
               </h2>
               <p className="text-xs text-slate-500">
-                Test exact monthly cashflow, retail margins, and annual recurring run-rates before onboarding clients.
+                Simulate exact monthly agency cashflow, retail margins, and annual recurring run-rates.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#F8FAFC] p-1.5 rounded-xl border border-slate-200">
+            <div className="flex items-center gap-2 bg-[#F8FAFC] p-1.5 rounded-xl border border-slate-200/90">
               <button
                 type="button"
                 onClick={() => setWholesalePlan('flat')}
@@ -430,7 +445,7 @@ export default function HomePage() {
           {/* Calculator Sliders Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
             {/* Slider 1: Number of Clinic Clients */}
-            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200">
+            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/90">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-slate-700">Clinics Managed by Agency:</span>
                 <span className="font-mono text-base font-black text-[#0284C7] bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
@@ -448,14 +463,14 @@ export default function HomePage() {
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-400">
                 <span>1 Clinic</span>
-                <span>10 Clinics (Baseline)</span>
+                <span>10 Clinics (Standard Agency)</span>
                 <span>25 Clinics</span>
                 <span>50 Clinics</span>
               </div>
             </div>
 
             {/* Slider 2: Retainer Billed per Clinic */}
-            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200">
+            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/90">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-slate-700">Agency Monthly Fee to Clinic:</span>
                 <span className="font-mono text-base font-black text-emerald-600 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
@@ -473,7 +488,7 @@ export default function HomePage() {
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-400">
                 <span>$450/mo (Basic)</span>
-                <span>$650/mo (Standard)</span>
+                <span>$650/mo (Recommended)</span>
                 <span>$1,000/mo (Multi-Surgeon)</span>
                 <span>$1,500/mo (Enterprise)</span>
               </div>
@@ -482,7 +497,7 @@ export default function HomePage() {
 
           {/* Interactive Profit Calculation Ledger */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-1">
               <div className="text-[10px] font-mono font-bold uppercase text-slate-400">Gross Monthly Invoiced</div>
               <div className="text-2xl font-black font-mono text-slate-900">
                 ${grossMonthlyRevenue.toLocaleString()}
@@ -492,7 +507,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-1">
               <div className="text-[10px] font-mono font-bold uppercase text-slate-400">VeloGEO Wholesale Cost</div>
               <div className="text-2xl font-black font-mono text-slate-700">
                 ${wholesaleVeloCost.toLocaleString()}
@@ -527,7 +542,7 @@ export default function HomePage() {
 
       {/* 4. SIMULATED BANK CARD & CHECKOUT PREVIEW SECTION */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
           {/* 14-Day Agency Assurance Guarantee Directly Above Checkout */}
           <div className="p-4 rounded-xl bg-sky-50/80 border border-sky-200 flex items-start gap-3.5 shadow-2xs">
             <ShieldCheck className="w-5 h-5 text-[#0284C7] shrink-0 mt-0.5" />
@@ -536,7 +551,7 @@ export default function HomePage() {
                 14-Day Agency Assurance Guarantee
               </div>
               <p className="text-xs text-slate-700 leading-relaxed">
-                If your agency does not close at least 1 paying dental or medical clinic client using our zero-trace Regular GEO reports within 14 days, contact support for a complete, immediate 100% refund. Zero hassle, zero risk.
+                If your agency does not close at least 1 paying dental or medical clinic client using our zero-trace Regular GEO reports within 14 days, receive a complete 100% refund immediately. Zero risk, 100% backed.
               </p>
             </div>
           </div>
@@ -575,7 +590,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200 text-xs font-mono space-y-1">
+              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200/90 text-xs font-mono space-y-1">
                 <div className="flex justify-between text-slate-500">
                   <span>Wholesale License:</span>
                   <span>$297.00 / month</span>
@@ -592,11 +607,11 @@ export default function HomePage() {
             </div>
 
             {/* Right Column: Secure Simulated Card Input Form */}
-            <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6 shadow-2xs space-y-5">
+            <div className="bg-[#F8FAFC] border border-slate-200/90 rounded-2xl p-6 shadow-2xs space-y-5">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-[#0284C7]" />
-                  <span className="text-xs font-bold text-slate-900">Simulated Bank Card Input</span>
+                  <span className="text-xs font-bold text-slate-900">Simulated Card Checkout</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                   <Lock className="w-3 h-3 text-emerald-600" />
@@ -631,7 +646,7 @@ export default function HomePage() {
                       value={cardName}
                       onChange={(e) => setCardName(e.target.value)}
                       placeholder="Alexander Wright"
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
                     />
                   </div>
 
@@ -647,7 +662,7 @@ export default function HomePage() {
                         value={cardNumber}
                         onChange={(e) => setCardNumber(e.target.value)}
                         placeholder="4242 4242 4242 4242"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
                       />
                       <CreditCard className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     </div>
@@ -662,7 +677,7 @@ export default function HomePage() {
                         value={cardExpiry}
                         onChange={(e) => setCardExpiry(e.target.value)}
                         placeholder="11/28"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
                       />
                     </div>
 
@@ -675,7 +690,7 @@ export default function HomePage() {
                         value={cardCvc}
                         onChange={(e) => setCardCvc(e.target.value)}
                         placeholder="882"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
                       />
                     </div>
                   </div>
@@ -715,7 +730,7 @@ export default function HomePage() {
 
       {/* 5. WORKSPACE TAB SECTION (AUDITOR & GENERATOR STUDIO) */}
       <section id="workspace-view" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4 flex-wrap gap-3">
+        <div className="flex items-center justify-between border-b border-slate-200/90 pb-4 flex-wrap gap-3">
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -755,13 +770,13 @@ export default function HomePage() {
         </div>
 
         {activeWorkspaceTab === 'generator' && (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
             <GeneratorSection initialUrl={generatorUrl} />
           </div>
         )}
 
         {activeWorkspaceTab === 'auditor' && !auditResult && (
-          <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center space-y-3">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-8 shadow-sm text-center space-y-3">
             <div className="w-12 h-12 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center mx-auto border border-sky-200">
               <Search className="w-5 h-5" />
             </div>
@@ -775,7 +790,7 @@ export default function HomePage() {
 
       {/* 6. FAQ ACCORDION SECTION */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl font-black text-slate-900 tracking-tight">
               Frequently Asked Questions (Regular GEO &amp; Wholesale Agency)
@@ -791,7 +806,7 @@ export default function HomePage() {
               return (
                 <div
                   key={idx}
-                  className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 transition-colors"
+                  className="border border-slate-200/80 rounded-xl overflow-hidden bg-slate-50/50 transition-colors"
                 >
                   <button
                     type="button"
