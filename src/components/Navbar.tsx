@@ -49,10 +49,10 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
             {/* Standard <img> tag with graceful SVG fallback */}
-            <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/50 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#38BDF8] transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/50 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#0284C7] transition-colors">
               <img
                 src="/logo.png"
-                alt="AI NEXUS"
+                alt="VeloGEO"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = '/logo.svg';
@@ -60,12 +60,12 @@ export function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1">
                 <span className="text-base font-black tracking-tight text-slate-900 font-sans">
-                  AI <span className="text-[#0284C7]">NEXUS</span>
+                  Velo<span className="text-[#0284C7]">GEO</span>
                 </span>
               </div>
-              <span className="text-[9px] font-bold tracking-widest text-slate-500 uppercase -mt-0.5">
+              <span className="text-[9px] font-mono font-bold tracking-widest text-slate-500 uppercase -mt-0.5">
                 INTELLIGENCE SIMPLIFIED
               </span>
             </div>
@@ -73,8 +73,8 @@ export function Navbar() {
 
           {/* Status Badge */}
           <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-[#0284C7] border border-sky-200/70">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-            <span>GEO Engine Active</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7] animate-pulse" />
+            <span className="font-mono text-[11px]">Regular GEO Active</span>
           </div>
         </div>
 

@@ -38,10 +38,20 @@ export interface AuditResponse {
   hasLlmsTxt: boolean;
   llmsTxtStatus: number;
   hasMedicalSchema: boolean;
+  schemaStatus?: string;
   detectedSchemas: string[];
   readinessScore: number;
+  regularGeoScore?: number;
+  npiStatus?: string;
+  npiVerified?: boolean;
+  registrationNumbers?: string[];
   criticalIssues: string[];
+  issuesFound?: string[];
   recommendations: string[];
+  suggestedSchemaJsonLd?: string;
+  suggestedLlmsTxt?: string;
+  remediationHighlight?: string;
+  modelUsed?: string;
 }
 
 export interface ChatMessage {

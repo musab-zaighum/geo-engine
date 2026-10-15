@@ -4,15 +4,15 @@ import { Navbar } from '@/components/Navbar';
 import { CornerChatWidget } from '@/components/CornerChatWidget';
 
 export const metadata: Metadata = {
-  title: 'CiteMed | Healthcare GEO Engine & Agency Platform',
+  title: 'VeloGEO | INTELLIGENCE SIMPLIFIED | Enterprise Healthcare Regular GEO Platform',
   description:
-    'Ultra-clean Healthcare Generative Engine Optimization (GEO) platform. Audit medical practice websites, synthesize Schema.org @graph JSON-LD, deploy /llms.txt, and scale $2,500 agency packages.',
+    'Deploy enterprise-grade, 100% white-label B2B SaaS for Healthcare Generative Engine Optimization (GEO). Run regular GEO audits, verify Schema.org @graph and /llms.txt, and scale wholesale agency revenues.',
   keywords: [
-    'CiteMed',
+    'VeloGEO',
+    'Regular GEO',
     'Healthcare GEO',
     'Medical Schema Generator',
     'llms.txt Healthcare',
-    'Ahpra Medical Schema',
     'NPI Physician Schema',
     'Perplexity Medical Search',
   ],
