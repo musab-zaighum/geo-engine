@@ -154,7 +154,7 @@ export default function StandaloneClientReportPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 py-8 px-4 sm:px-6 lg:px-8 space-y-8 font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
-      {/* 100% Debranded Agency Header (Zero VeloGEO references) */}
+      {/* 100% Debranded Agency Header (Zero-Trace White-Label) */}
       <header className="max-w-5xl mx-auto bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-11 h-11 rounded-xl bg-slate-900 border border-slate-200 flex items-center justify-center overflow-hidden shadow-xs">
@@ -436,7 +436,7 @@ export default function StandaloneClientReportPage() {
         </div>
       </main>
 
-      {/* 100% Debranded Footer - zero VeloGEO references */}
+      {/* 100% Debranded Agency Footer - Zero Platform Trace */}
       <footer className="max-w-5xl mx-auto border-t border-slate-200 pt-6 text-center text-xs text-slate-500 space-y-1">
         <div className="font-bold text-slate-700">{branding.agencyName} &bull; Enterprise Healthcare Intelligence</div>
         <div className="text-[11px] font-mono text-slate-400">

@@ -42,6 +42,7 @@ export interface AuditResponse {
   detectedSchemas: string[];
   readinessScore: number;
   regularGeoScore?: number;
+  geoCitationScore?: number;
   npiStatus?: string;
   npiVerified?: boolean;
   registrationNumbers?: string[];

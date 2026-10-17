@@ -42,6 +42,11 @@ export function Navbar() {
     }
   };
 
+  // Hide VeloGEO global navigation bar on standalone debranded client reports
+  if (pathname?.startsWith('/report/')) {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-[#F8FAFC]/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">

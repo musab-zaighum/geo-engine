@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Bot,
   User,
@@ -13,6 +14,7 @@ import {
 import { ChatMessage } from '@/lib/types';
 
 export function CornerChatWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -94,6 +96,10 @@ How can I help you optimize your practice or agency today?
       setLoading(false);
     }
   };
+
+  if (pathname?.startsWith('/report/')) {
+    return null;
+  }
 
   return (
     <>

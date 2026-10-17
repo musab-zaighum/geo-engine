@@ -35,6 +35,7 @@ import {
   BarChart3,
   SlidersHorizontal,
   Share2,
+  Upload,
 } from 'lucide-react';
 
 export type UnifiedTab = 'overview' | 'brand' | 'economics' | 'cname';
@@ -50,6 +51,7 @@ export default function UnifiedPartnerConsolePage() {
 
   // Agency Brand Config State (Default: Apex Health Growth)
   const [portalName, setPortalName] = useState('Apex Health Growth');
+  const [agencyLogoUrl, setAgencyLogoUrl] = useState('/logo.png');
   const [supportEmail, setSupportEmail] = useState('growth@apexhealthpartners.com');
   const [customHex, setCustomHex] = useState('#0284C7');
   const [debrandedToggle, setDebrandedToggle] = useState(true);
@@ -129,9 +131,11 @@ export default function UnifiedPartnerConsolePage() {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (parsed.agencyName) setPortalName(parsed.agencyName);
+        if (parsed.agencyLogoUrl) setAgencyLogoUrl(parsed.agencyLogoUrl);
         if (parsed.contactEmail) setSupportEmail(parsed.contactEmail);
         if (parsed.customHexColor) setCustomHex(parsed.customHexColor);
         if (parsed.agencySlug) setCustomSubdomain(parsed.agencySlug);
+        if (typeof parsed.debranded === 'boolean') setDebrandedToggle(parsed.debranded);
       }
     } catch {
       // Use defaults
@@ -150,12 +154,25 @@ export default function UnifiedPartnerConsolePage() {
       ? ((netMonthlyProfit / monthlyRevenue) * 100).toFixed(1)
       : '0';
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        if (loadEvent.target?.result) {
+          setAgencyLogoUrl(loadEvent.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
     setIsSaving(true);
     const agencyConfig = {
       agencyName: portalName,
       agencySlug: customSubdomain,
-      agencyLogoUrl: '/logo.png',
+      agencyLogoUrl: agencyLogoUrl || '/logo.png',
       primaryColor: 'blue',
       customHexColor: customHex,
       supportUrl: `https://${customSubdomain}`,
@@ -176,6 +193,7 @@ export default function UnifiedPartnerConsolePage() {
 
   const handleDiscard = () => {
     setPortalName('Apex Health Growth');
+    setAgencyLogoUrl('/logo.png');
     setSupportEmail('growth@apexhealthpartners.com');
     setCustomHex('#0284C7');
     setDebrandedToggle(true);
@@ -504,10 +522,11 @@ export default function UnifiedPartnerConsolePage() {
             <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs space-y-5">
               <div className="border-b border-slate-100 pb-3 space-y-0.5">
                 <h2 className="text-base font-bold text-slate-900 tracking-tight">White-Label Identity Configuration</h2>
-                <p className="text-xs text-slate-500">All customer reports and client portals reflect these settings.</p>
+                <p className="text-xs text-slate-500">All customer reports, schema exports, and client portals reflect these settings.</p>
               </div>
 
               <div className="space-y-4 text-xs">
+                {/* Agency Brand Name */}
                 <div className="space-y-1">
                   <label className="font-bold text-slate-700">Agency Brand Name</label>
                   <input
@@ -519,6 +538,43 @@ export default function UnifiedPartnerConsolePage() {
                   <p className="text-[11px] text-slate-400">Replaces all references to VeloGEO across client views.</p>
                 </div>
 
+                {/* Agency Logo Upload */}
+                <div className="space-y-2">
+                  <label className="font-bold text-slate-700">Agency Brand Logo</label>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                      <img
+                        src={agencyLogoUrl}
+                        alt="Agency Logo Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 space-y-1.5">
+                      <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs cursor-pointer transition-colors shadow-2xs">
+                        <Upload className="w-3.5 h-3.5 text-[#0284C7]" />
+                        <span>Upload Logo File (PNG/SVG)</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleLogoUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={agencyLogoUrl}
+                        onChange={(e) => setAgencyLogoUrl(e.target.value)}
+                        placeholder="Or enter logo image URL (e.g. /logo.png)"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg font-mono text-[11px]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Client Support Email */}
                 <div className="space-y-1">
                   <label className="font-bold text-slate-700">Client Support Email</label>
                   <input
@@ -529,28 +585,41 @@ export default function UnifiedPartnerConsolePage() {
                   />
                 </div>
 
-                {/* Primary Accent Hex */}
-                <div className="space-y-1.5">
+                {/* Primary Accent Hex with Live Swatches */}
+                <div className="space-y-2">
                   <label className="font-bold text-slate-700">Primary Brand Accent Hex Color</label>
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
                       value={customHex}
                       onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-10 h-10 rounded-xl border border-slate-300 cursor-pointer p-0.5 bg-white"
+                      className="w-10 h-10 rounded-xl border border-slate-300 cursor-pointer p-0.5 bg-white shrink-0"
                     />
                     <input
                       type="text"
                       value={customHex}
                       onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-32 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs"
+                      className="w-28 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs"
                     />
-                    <span
-                      className="px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-2xs font-mono"
-                      style={{ backgroundColor: customHex }}
-                    >
-                      Color Swatch
-                    </span>
+                    {/* Preset Palette Swatches */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {[
+                        { hex: '#0284C7', label: 'Sky' },
+                        { hex: '#059669', label: 'Emerald' },
+                        { hex: '#2563EB', label: 'Ahrefs Blue' },
+                        { hex: '#D97706', label: 'Amber' },
+                        { hex: '#0F172A', label: 'Slate' },
+                      ].map((swatch) => (
+                        <button
+                          key={swatch.hex}
+                          type="button"
+                          onClick={() => setCustomHex(swatch.hex)}
+                          className="w-6 h-6 rounded-lg border border-slate-200 shadow-2xs hover:scale-110 transition-transform"
+                          style={{ backgroundColor: swatch.hex }}
+                          title={swatch.label}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -564,11 +633,14 @@ export default function UnifiedPartnerConsolePage() {
                       className="w-4 h-4 mt-0.5 rounded text-[#0284C7] focus:ring-[#0284C7]"
                     />
                     <div className="space-y-0.5">
-                      <div className="text-xs font-bold text-slate-900">
-                        100% Zero-Trace Debranding Active
+                      <div className="text-xs font-bold text-slate-900 flex items-center gap-2">
+                        <span>100% Zero-Trace Debranding Active</span>
+                        <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">
+                          Active
+                        </span>
                       </div>
                       <div className="text-[11px] text-slate-500 leading-relaxed">
-                        Suppresses every mention of VeloGEO in report headers, schema JSON-LD creator nodes, and PDFs.
+                        Suppresses every mention of VeloGEO in report headers, schema JSON-LD creator nodes, client URLs, and PDFs.
                       </div>
                     </div>
                   </label>
@@ -605,8 +677,15 @@ export default function UnifiedPartnerConsolePage() {
                   <div className="p-4 bg-white space-y-4">
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center overflow-hidden">
-                          <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
+                        <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center overflow-hidden border border-slate-200">
+                          <img
+                            src={agencyLogoUrl}
+                            alt={portalName}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                            }}
+                          />
                         </div>
                         <span className="font-bold text-slate-900 text-xs">{portalName}</span>
                       </div>

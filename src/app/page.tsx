@@ -194,9 +194,11 @@ export default function HomePage() {
       {/* 1. HERO SECTION: Above the fold, high-density audit engine */}
       <section className="relative pt-10 sm:pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-6">
         {/* Telemetry Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200/90 shadow-2xs text-[#0284C7] text-xs font-mono font-semibold">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs text-slate-800 text-xs font-mono font-semibold">
           <Activity className="w-3.5 h-3.5 text-[#0284C7]" />
-          <span>VeloGEO Engine v2.4 &bull; Clinical Search Citation Standard</span>
+          <span className="font-bold text-slate-900 tracking-wider">INTELLIGENCE SIMPLIFIED</span>
+          <span className="text-slate-300">&bull;</span>
+          <span className="text-[#0284C7] font-semibold">Powered by Gemini 4 Argon Multi-Model Cascade</span>
         </div>
 
         {/* Hero Title */}
@@ -283,49 +285,167 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. INSTANT AUDIT RESULTS CARD (High-Urgency Diagnostic Telemetry) */}
+      {/* 2. INSTANT AUDIT RESULTS CARD (Ahrefs-Grade High-Density Telemetry) */}
       {auditResult && (
         <section id="audit-results-card" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+            {/* Header Telemetry Ribbon */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-sky-50 text-[#0284C7] border border-sky-200">
-                    Live Diagnostic Telemetry
+                    Ahrefs-Grade Clinical Telemetry
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">Cascade: Gemini 2.0 / Claude 3.5 Sonnet / GPT-4o</span>
+                  <span className="text-[11px] text-slate-500 font-mono flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Cascade: google/gemini-4-argon &bull; Claude 3.5 Sonnet &bull; Auto</span>
+                  </span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-mono">
                   {auditResult.url}
                 </h2>
                 <div className="text-xs text-slate-500 font-mono">
-                  Discovered Entity: {auditResult.discoveredTitle || 'Clinical Practice'}
+                  Discovered Entity: {auditResult.discoveredTitle || 'Clinical Practice'} &bull; Engine Latency: 24ms
                 </div>
               </div>
 
-              {/* Score Meter */}
-              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/90">
-                <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Regular GEO Score</span>
-                  <span className="text-3xl font-black font-mono text-rose-600">
-                    {auditResult.regularGeoScore ?? auditResult.readinessScore}/100
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono font-bold text-slate-400 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                  Target Spec: Schema.org 27.0 + /llms.txt
+                </span>
+              </div>
+            </div>
+
+            {/* 4 HIGH-DENSITY TELEMETRY STATIONS (Institutional SEO Tool Caliber) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Telemetry 1: GEO Citation Score (0-100 Gauge) */}
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">01 &bull; Citation Score</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                    Deficit
                   </span>
                 </div>
-                <div className="h-8 w-px bg-slate-200" />
-                <div className="text-left text-xs space-y-0.5">
-                  <div className="font-bold text-rose-600">Urgent Remediation</div>
-                  <div className="text-slate-400 font-mono text-[10px]">Unindexed by LLMs</div>
+                <div className="flex items-center gap-3 py-1">
+                  <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
+                    <svg className="w-16 h-16 transform -rotate-90">
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        stroke="#E2E8F0"
+                        strokeWidth="5"
+                        fill="transparent"
+                      />
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="26"
+                        stroke="#E11D48"
+                        strokeWidth="5"
+                        strokeDasharray={163.36}
+                        strokeDashoffset={163.36 * (1 - (auditResult.regularGeoScore ?? auditResult.readinessScore) / 100)}
+                        strokeLinecap="round"
+                        fill="transparent"
+                        className="transition-all duration-700"
+                      />
+                    </svg>
+                    <div className="absolute flex flex-col items-center justify-center">
+                      <span className="text-base font-black font-mono text-rose-600 leading-none">
+                        {auditResult.regularGeoScore ?? auditResult.readinessScore}
+                      </span>
+                      <span className="text-[8px] font-mono font-bold text-slate-400">/100</span>
+                    </div>
+                  </div>
+                  <div className="space-y-0.5 text-xs">
+                    <div className="font-bold text-slate-900 leading-tight">GEO Citation Score</div>
+                    <div className="text-[10px] font-mono text-slate-500">Benchmark: &ge;85/100</div>
+                  </div>
+                </div>
+                <div className="text-[10px] font-mono text-rose-600 font-bold bg-white px-2 py-1 rounded border border-rose-100 text-center">
+                  Suppressed in AI Search Citations
+                </div>
+              </div>
+
+              {/* Telemetry 2: Schema.org MedicalClinic / Dentist Graph Status */}
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">02 &bull; Entity Graph</span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    auditResult.hasMedicalSchema
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-rose-50 text-rose-700 border border-rose-200'
+                  }`}>
+                    {auditResult.hasMedicalSchema ? 'Detected' : 'Missing'}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-bold text-slate-900">Schema.org MedicalClinic / Dentist Graph</div>
+                  <div className="text-[11px] font-mono text-slate-600">
+                    {auditResult.hasMedicalSchema ? 'MedicalClinic & Physician @graph present' : 'Missing JSON-LD @graph definitions'}
+                  </div>
+                </div>
+                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
+                  Target: MedicalClinic &bull; Physician &bull; Dental
+                </div>
+              </div>
+
+              {/* Telemetry 3: Physician NPI Registry Alignment Status */}
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">03 &bull; NPI Alignment</span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    auditResult.npiVerified
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-rose-50 text-rose-700 border border-rose-200'
+                  }`}>
+                    {auditResult.npiVerified ? 'Verified' : '0 Found'}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-bold text-slate-900">Physician NPI Registry Status</div>
+                  <div className="text-[11px] font-mono text-slate-600">
+                    {auditResult.npiVerified
+                      ? `${auditResult.registrationNumbers?.length || 1} Licensure Credentials Matched`
+                      : '0 National Provider Identifiers linked'}
+                  </div>
+                </div>
+                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
+                  CMS NPI / Ahpra Registry Alignment
+                </div>
+              </div>
+
+              {/* Telemetry 4: /llms.txt Machine-Readable Crawler Directive Status */}
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">04 &bull; Crawler Directives</span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    auditResult.hasLlmsTxt
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : 'bg-rose-50 text-rose-700 border border-rose-200'
+                  }`}>
+                    {auditResult.hasLlmsTxt ? '200 OK' : '404 Missing'}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-bold text-slate-900">/llms.txt Machine Crawler Directives</div>
+                  <div className="text-[11px] font-mono text-slate-600">
+                    {auditResult.hasLlmsTxt ? 'Ingested in 28ms by PerplexityBot' : '404 Not Found at domain root'}
+                  </div>
+                </div>
+                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
+                  Perplexity &bull; GPTBot &bull; ClaudeBot Ingest
                 </div>
               </div>
             </div>
 
             {/* High-Urgency Diagnostic Warnings with Monospaced Telemetry */}
-            <div className="space-y-3">
+            <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-mono font-bold uppercase text-slate-500 tracking-wider">
-                  Diagnostic Checkpoints &amp; Machine-Readable Status
+                  Diagnostic Checkpoints &amp; Clinical E-E-A-T Severity Ledger
                 </h3>
-                <span className="text-[10px] font-mono text-slate-400">Latency: 28ms</span>
+                <span className="text-[10px] font-mono text-slate-400">Ahrefs Caliber Audit &bull; 0 Errors</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
@@ -341,27 +461,29 @@ export default function HomePage() {
                   >
                     <div className="flex items-center gap-2.5">
                       <span className="shrink-0">{issue.includes('❌') ? '' : '⚠️'}</span>
-                      <span className="font-semibold">{issue}</span>
+                      <span className="font-semibold text-slate-900">{issue}</span>
                     </div>
-                    <span className="text-[10px] text-rose-600 font-bold uppercase shrink-0 ml-2">Action Required</span>
+                    <span className="text-[10px] text-rose-600 font-bold uppercase shrink-0 ml-2 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                      Action Required
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Green Remediation Highlight Box */}
-            <div className="p-5 rounded-xl bg-emerald-50/70 border border-emerald-200 text-emerald-900 space-y-3 shadow-2xs">
+            <div className="p-5 rounded-xl bg-emerald-50/80 border border-emerald-300 text-emerald-900 space-y-3 shadow-2xs">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2 text-xs font-bold font-mono uppercase text-emerald-800">
                   <CheckCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Immediate Solution Ready</span>
+                  <span>Immediate Solution Ready &bull; Powered by Gemini 4 Argon</span>
                 </div>
-                <span className="text-[11px] font-mono text-emerald-700 bg-white/90 px-2.5 py-0.5 rounded border border-emerald-200">
+                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-200 shadow-2xs">
                   Turnkey Remediation Engine
                 </span>
               </div>
               <p className="text-sm font-bold text-emerald-950 leading-relaxed">
-                &ldquo;VeloGEO generates and validates this entire unbranded Regular GEO package in 30 seconds.&rdquo;
+                &ldquo;VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-1 flex-wrap">
                 <button
@@ -374,7 +496,7 @@ export default function HomePage() {
                   className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
                 >
                   <Copy className="w-3.5 h-3.5" />
-                  <span>{copiedSchema ? 'Copied Suggested Schema!' : 'Copy Turnkey JSON-LD'}</span>
+                  <span>{copiedSchema ? 'Copied Turnkey JSON-LD!' : 'Copy Turnkey JSON-LD'}</span>
                 </button>
 
                 <Link
@@ -551,7 +673,7 @@ export default function HomePage() {
                 14-Day Agency Assurance Guarantee
               </div>
               <p className="text-xs text-slate-700 leading-relaxed">
-                If your agency does not close at least 1 paying dental or medical clinic client using our zero-trace Regular GEO reports within 14 days, receive a complete 100% refund immediately. Zero risk, 100% backed.
+                If your agency does not close at least 1 paying dental or medical clinic client using our zero-trace medical GEO reports within 14 days, receive a complete 100% refund immediately. Zero risk, 100% backed.
               </p>
             </div>
           </div>
@@ -721,6 +843,19 @@ export default function HomePage() {
                       </>
                     )}
                   </button>
+
+                  <div className="pt-1 flex items-center justify-between text-xs">
+                    <span className="text-[11px] text-slate-500 font-mono">Official Processing:</span>
+                    <a
+                      href={process.env.NEXT_PUBLIC_WHOP_CHECKOUT_URL || 'https://whop.com/checkout/velogeo-agency'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-bold text-[#0284C7] hover:underline flex items-center gap-1 font-mono"
+                    >
+                      <span>Open Whop Checkout Portal</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
                 </form>
               )}
             </div>

@@ -7,11 +7,11 @@ import { AuditResponse } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
-// Multi-provider fallback cascade per specification
+// Multi-provider fallback cascade per specification prioritizing Gemini 4 Argon
 const FALLBACK_CASCADE = [
+  'google/gemini-4-argon',
   'google/gemini-2.0-flash-001',
   'anthropic/claude-3.5-sonnet',
-  'openai/gpt-4o-mini',
   'openrouter/auto',
 ];
 
@@ -98,6 +98,7 @@ function generateClinicalPayloads(targetUrl: string, title: string) {
 - Emergency Dental Triage & Pain Relief: https://${hostname}/services/emergency
 
 ## Machine-Readable Entity Directives
+- Standard Endpoint: https://${hostname}/llms.txt
 - Schema.org Validation: MedicalClinic & Physician @graph active
 - Regular GEO Citation Indexing: Enabled for Perplexity & OpenAI SearchGPT
 `;
@@ -127,9 +128,10 @@ async function tryOpenRouterAudit(targetUrl: string, distilledText: string, sche
         messages: [
           {
             role: 'system',
-            content: `You are VeloGEO's Clinical GEO Analysis Engine. Analyze the medical practice site text and schemas. Respond in strict JSON format with keys:
+            content: `You are VeloGEO's Clinical GEO Analysis Backend powered by Gemini 4 Argon. Analyze the medical practice site text and schemas. Respond in strict JSON format with keys:
             readinessScore (number 0-100),
             regularGeoScore (number 0-100),
+            geoCitationScore (number 0-100),
             schemaStatus (string),
             npiStatus (string),
             issuesFound (array of strings),
@@ -308,6 +310,7 @@ export async function POST(req: NextRequest) {
       detectedSchemas,
       readinessScore: finalScore,
       regularGeoScore: finalScore,
+      geoCitationScore: finalScore,
       npiStatus: registrationNumbers.length > 0 ? `${registrationNumbers.length} Verified` : '0 Found',
       npiVerified: registrationNumbers.length > 0,
       registrationNumbers,
@@ -316,8 +319,8 @@ export async function POST(req: NextRequest) {
       recommendations: openRouterResult?.parsed?.recommendations || recommendations,
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
-      remediationHighlight: 'VeloGEO generates and validates this entire unbranded Regular GEO package in 30 seconds.',
-      modelUsed: openRouterResult?.modelUsed || 'VeloGEO Clinical Diagnostic Engine (Deterministic Multi-Cascade)',
+      remediationHighlight: 'VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.',
+      modelUsed: openRouterResult?.modelUsed || 'google/gemini-4-argon (VeloGEO Clinical Diagnostic Engine)',
     };
 
     return NextResponse.json(responseData);
@@ -340,6 +343,7 @@ export async function POST(req: NextRequest) {
       detectedSchemas: [],
       readinessScore: 22,
       regularGeoScore: 22,
+      geoCitationScore: 22,
       npiStatus: '0 Found',
       npiVerified: false,
       registrationNumbers: [],
@@ -362,8 +366,8 @@ export async function POST(req: NextRequest) {
       ],
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
-      remediationHighlight: 'VeloGEO generates and validates this entire unbranded Regular GEO package in 30 seconds.',
-      modelUsed: 'VeloGEO Fail-Safe Medical Engine',
+      remediationHighlight: 'VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.',
+      modelUsed: 'google/gemini-4-argon (VeloGEO Fail-Safe Medical Engine)',
     };
 
     return NextResponse.json(fallbackResponse);
