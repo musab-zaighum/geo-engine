@@ -13,18 +13,11 @@ import {
   ExternalLink,
   Download,
   Mail,
-  Code,
-  FileText,
   Sparkles,
   Zap,
   ArrowRight,
   Globe,
-  Sliders,
-  ChevronDown,
-  Building2,
   Lock,
-  Layers,
-  Activity,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -98,6 +91,7 @@ export function InstantAuditBar({
     const clean = rawInput
       .replace(/^https?:\/\//, '')
       .replace(/\/.*$/, '')
+      .replace(/^www\./, '')
       .trim() || 'dentalpractice.com';
     
     const isMayo = clean.includes('mayoclinic');
@@ -237,17 +231,21 @@ export function InstantAuditBar({
   // 5-Second Fake-Progress Visualizer
   const handleStartAudit = (e?: React.FormEvent, presetUrl?: string) => {
     if (e) e.preventDefault();
-    const target = (presetUrl || domainInput).trim();
-    if (!target) {
+    let raw = (presetUrl || domainInput).trim();
+    if (!raw) {
       toast.error('Please enter a target domain URL');
       return;
     }
 
+    if (presetUrl) {
+      setDomainInput(presetUrl.replace(/^https?:\/\//, ''));
+    }
+
     setIsScanning(true);
     setCurrentStepIndex(0);
-    setProgressPercent(10);
+    setProgressPercent(15);
 
-    const stepDuration = 1000; // 5 steps * 1000ms = 5000ms total
+    const stepDuration = 900; // 5 steps * 900ms = 4.5s
     let currentStep = 0;
 
     const interval = setInterval(() => {
@@ -259,31 +257,48 @@ export function InstantAuditBar({
         clearInterval(interval);
         setProgressPercent(100);
         setTimeout(() => {
-          generateAuditResult(target);
+          generateAuditResult(raw);
           setIsScanning(false);
-          toast.success(`Audit completed for ${target}!`);
+          toast.success(`Audit completed for ${raw}!`);
           if (resultsRef.current) {
             resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
-        }, 400);
+        }, 350);
       }
     }, stepDuration);
   };
 
   const handleCopySchema = () => {
     if (!auditData) return;
-    navigator.clipboard.writeText(auditData.jsonLd);
-    setCopiedSchema(true);
-    toast.success('0-Error Schema copied to clipboard!');
-    setTimeout(() => setCopiedSchema(false), 2200);
+    try {
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(auditData.jsonLd);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = auditData.jsonLd;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopiedSchema(true);
+      toast.success('0-Error Schema copied to clipboard!');
+      setTimeout(() => setCopiedSchema(false), 2200);
+    } catch {
+      toast.error('Failed to copy to clipboard');
+    }
   };
 
   const handleCopyLlms = () => {
     if (!auditData) return;
-    navigator.clipboard.writeText(auditData.llmsTxt);
-    setCopiedLlms(true);
-    toast.success('/llms.txt manifest copied to clipboard!');
-    setTimeout(() => setCopiedLlms(false), 2200);
+    try {
+      navigator.clipboard.writeText(auditData.llmsTxt);
+      setCopiedLlms(true);
+      toast.success('/llms.txt manifest copied to clipboard!');
+      setTimeout(() => setCopiedLlms(false), 2200);
+    } catch {
+      toast.error('Failed to copy');
+    }
   };
 
   const handleDownloadFile = (type: 'schema' | 'llms') => {
@@ -315,17 +330,18 @@ export function InstantAuditBar({
     <div className="w-full space-y-8" id="audit-engine">
       {/* Search Input Bar Card */}
       <div className="rounded-3xl bg-slate-900/90 border border-slate-800 p-4 sm:p-6 shadow-2xl backdrop-blur-xl relative">
-        <form onSubmit={(e) => handleStartAudit(e)} className="space-y-3">
+        <form noValidate onSubmit={(e) => handleStartAudit(e)} className="space-y-3">
           <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <div className="relative flex-1 flex items-center">
               <div className="absolute left-4 text-slate-500 pointer-events-none">
                 <Search className="w-5 h-5 text-indigo-400" />
               </div>
               <input
-                type="url"
+                type="text"
+                inputMode="url"
                 autoCapitalize="none"
                 autoCorrect="off"
-                inputMode="url"
+                spellCheck={false}
                 value={domainInput}
                 onChange={(e) => setDomainInput(e.target.value)}
                 placeholder="dentalpractice.com"
@@ -361,7 +377,7 @@ export function InstantAuditBar({
                 key={item.label}
                 type="button"
                 onClick={() => {
-                  setDomainInput(item.url);
+                  setDomainInput(item.url.replace(/^https?:\/\//, ''));
                   handleStartAudit(undefined, item.url);
                 }}
                 className="px-2.5 py-1 rounded-full bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-indigo-500/40 text-[11px] font-mono transition-all touch-target cursor-pointer"
@@ -411,7 +427,7 @@ export function InstantAuditBar({
           <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Target Practice</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono">Target Practice</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">
                   {auditData.timestamp}
                 </span>
@@ -489,7 +505,7 @@ export function InstantAuditBar({
           {/* Diagnostic Issue Cards Breakdown */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                 Clinical Entity Verification Breakdown
               </span>
               <span className="text-xs text-indigo-400 font-mono">3 Checks Run</span>
@@ -616,7 +632,7 @@ export function InstantAuditBar({
                 <button
                   type="button"
                   onClick={() => handleDownloadFile(activeCodeTab)}
-                  className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
                 >
                   <Download className="w-3.5 h-3.5 text-slate-400" />
                   <span>Download {activeCodeTab === 'schema' ? '.json' : '.txt'}</span>
@@ -624,7 +640,7 @@ export function InstantAuditBar({
                 <button
                   type="button"
                   onClick={handleEmailWebmaster}
-                  className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
                 >
                   <Mail className="w-3.5 h-3.5 text-slate-400" />
                   <span>Email Webmaster</span>
@@ -648,14 +664,14 @@ export function InstantAuditBar({
                 <button
                   type="button"
                   onClick={onOpenWhiteLabelModal}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors touch-target"
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors touch-target cursor-pointer"
                 >
                   Preview White-Label CNAME
                 </button>
                 <button
                   type="button"
                   onClick={() => onOpenCheckout && onOpenCheckout('growth')}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-colors touch-target"
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-colors touch-target cursor-pointer"
                 >
                   Claim Growth License ($297/mo)
                 </button>
