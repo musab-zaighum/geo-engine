@@ -115,8 +115,8 @@ async function tryOpenRouterAudit(targetUrl: string, distilledText: string, sche
     baseURL: 'https://openrouter.ai/api/v1',
     apiKey,
     defaultHeaders: {
-      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://velogeo.com',
-      'X-Title': 'VeloGEO Regular GEO Engine',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://nexusrank1.com',
+      'X-Title': 'NexusRank1 Autonomous B2B Engine',
     },
     timeout: 7000,
   });
@@ -128,7 +128,7 @@ async function tryOpenRouterAudit(targetUrl: string, distilledText: string, sche
         messages: [
           {
             role: 'system',
-            content: `You are VeloGEO's Clinical GEO Analysis Backend powered by Gemini 4 Argon. Analyze the medical practice site text and schemas. Respond in strict JSON format with keys:
+            content: `You are NexusRank1's Autonomous Clinical GEO Analysis Backend powered by Gemini 4 Argon. Analyze the medical practice site text and schemas. Respond in strict JSON format with keys:
             readinessScore (number 0-100),
             regularGeoScore (number 0-100),
             geoCitationScore (number 0-100),
@@ -250,10 +250,10 @@ export async function POST(req: NextRequest) {
       openrouterKey
     );
 
-    // High-urgency diagnostic warnings required by VeloGEO Regular GEO specification
+    // High-urgency diagnostic warnings required by Clinical GEO specification
     const issuesFound: string[] = [
       hasMedicalSchema
-        ? 'MedicalClinic JSON-LD Entity Graph: Present (Requires VeloGEO Expansion)'
+        ? 'MedicalClinic JSON-LD Entity Graph: Present (Verified Graph)'
         : '❌ MedicalClinic JSON-LD Entity Graph: Missing',
       registrationNumbers.length > 0
         ? `Physician / NPI Schema Association: ${registrationNumbers.length} Found`
@@ -319,8 +319,8 @@ export async function POST(req: NextRequest) {
       recommendations: openRouterResult?.parsed?.recommendations || recommendations,
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
-      remediationHighlight: 'VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.',
-      modelUsed: openRouterResult?.modelUsed || 'google/gemini-4-argon (VeloGEO Clinical Diagnostic Engine)',
+      remediationHighlight: 'Generates and validates this entire unbranded medical GEO package in 30 seconds.',
+      modelUsed: openRouterResult?.modelUsed || 'google/gemini-4-argon (Clinical Diagnostic Engine)',
     };
 
     return NextResponse.json(responseData);
@@ -360,14 +360,14 @@ export async function POST(req: NextRequest) {
         '❌ Regular GEO Search Citation Index: Unindexed on Perplexity / ChatGPT',
       ],
       recommendations: [
-        'Deploy VeloGEO spec-compliant Schema.org MedicalClinic @graph.',
+        'Deploy spec-compliant Schema.org MedicalClinic @graph.',
         'Install /llms.txt standard directory to domain root.',
         'Associate verified NPI credentials to medical practice providers.',
       ],
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
-      remediationHighlight: 'VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.',
-      modelUsed: 'google/gemini-4-argon (VeloGEO Fail-Safe Medical Engine)',
+      remediationHighlight: 'Generates and validates this entire unbranded medical GEO package in 30 seconds.',
+      modelUsed: 'google/gemini-4-argon (Fail-Safe Medical Engine)',
     };
 
     return NextResponse.json(fallbackResponse);

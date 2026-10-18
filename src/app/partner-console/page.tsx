@@ -36,7 +36,9 @@ import {
   SlidersHorizontal,
   Share2,
   Upload,
+  Zap,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export type UnifiedTab = 'overview' | 'brand' | 'economics' | 'cname';
 
@@ -53,7 +55,7 @@ export default function UnifiedPartnerConsolePage() {
   const [portalName, setPortalName] = useState('Apex Health Growth');
   const [agencyLogoUrl, setAgencyLogoUrl] = useState('/logo.png');
   const [supportEmail, setSupportEmail] = useState('growth@apexhealthpartners.com');
-  const [customHex, setCustomHex] = useState('#0284C7');
+  const [customHex, setCustomHex] = useState('#6366f1');
   const [debrandedToggle, setDebrandedToggle] = useState(true);
   const [customSubdomain, setCustomSubdomain] = useState('audit.apexhealthpartners.com');
 
@@ -67,8 +69,6 @@ export default function UnifiedPartnerConsolePage() {
 
   // Modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [cancelReason, setCancelReason] = useState('');
 
   // Add Practice Form State
   const [newPracticeName, setNewPracticeName] = useState('Austin Cosmetic Dentistry');
@@ -98,29 +98,40 @@ export default function UnifiedPartnerConsolePage() {
       schemaHealth: 94,
       status: 'Active',
       mrr: '$750',
-      citations: 'Perplexity, Applebot',
-    },
-    {
-      id: 'pr-103',
-      name: 'Precision Dermatology Group',
-      specialty: 'Dermatology & Skin Oncology',
-      domain: 'precisionderm.com',
-      npiAhpra: 'NPI-1736482910',
-      schemaHealth: 96,
-      status: 'Active',
-      mrr: '$650',
       citations: 'Perplexity, SearchGPT',
     },
     {
-      id: 'pr-104',
-      name: 'Bayside Family Medicine',
-      specialty: 'Primary Care & Pediatrics',
-      domain: 'baysidehealth.org',
-      npiAhpra: 'NPI-1049586720',
-      schemaHealth: 91,
+      id: 'pr-103',
+      name: 'Bellevue Heart Specialists',
+      specialty: 'Interventional Cardiology',
+      domain: 'bellevueheart.org',
+      npiAhpra: 'NPI-1728394012',
+      schemaHealth: 96,
       status: 'Active',
-      mrr: '$500',
-      citations: 'Perplexity, ChatGPT',
+      mrr: '$850',
+      citations: 'Google AI, Perplexity',
+    },
+    {
+      id: 'pr-104',
+      name: 'Dr. Jane Smith Specialist',
+      specialty: 'Primary Care & Geriatrics',
+      domain: 'drjanesmith.com',
+      npiAhpra: 'NPI-1982736450',
+      schemaHealth: 88,
+      status: 'Action Needed',
+      mrr: '$650',
+      citations: 'Perplexity Only',
+    },
+    {
+      id: 'pr-105',
+      name: 'Austin Family Dental Care',
+      specialty: 'Family Dentistry',
+      domain: 'austinfamilydental.com',
+      npiAhpra: 'NPI-1627384950',
+      schemaHealth: 92,
+      status: 'Active',
+      mrr: '$650',
+      citations: 'ChatGPT, Google AI',
     },
   ]);
 
@@ -154,26 +165,13 @@ export default function UnifiedPartnerConsolePage() {
       ? ((netMonthlyProfit / monthlyRevenue) * 100).toFixed(1)
       : '0';
 
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (loadEvent) => {
-        if (loadEvent.target?.result) {
-          setAgencyLogoUrl(loadEvent.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSave = () => {
     setIsSaving(true);
     const agencyConfig = {
       agencyName: portalName,
       agencySlug: customSubdomain,
       agencyLogoUrl: agencyLogoUrl || '/logo.png',
-      primaryColor: 'blue',
+      primaryColor: 'indigo',
       customHexColor: customHex,
       supportUrl: `https://${customSubdomain}`,
       badgeTitle: 'Official Agency Partner',
@@ -187,17 +185,19 @@ export default function UnifiedPartnerConsolePage() {
     setTimeout(() => {
       setIsSaving(false);
       setSaveSuccess(true);
+      toast.success('White-label agency configuration saved to edge!');
       setTimeout(() => setSaveSuccess(false), 3000);
-    }, 500);
+    }, 400);
   };
 
   const handleDiscard = () => {
     setPortalName('Apex Health Growth');
     setAgencyLogoUrl('/logo.png');
     setSupportEmail('growth@apexhealthpartners.com');
-    setCustomHex('#0284C7');
+    setCustomHex('#6366f1');
     setDebrandedToggle(true);
     setCustomSubdomain('audit.apexhealthpartners.com');
+    toast.info('Reset to default values');
   };
 
   const handleTestDns = () => {
@@ -205,6 +205,7 @@ export default function UnifiedPartnerConsolePage() {
     setTimeout(() => {
       setDnsTesting(false);
       setDnsVerified(true);
+      toast.success(`CNAME ${customSubdomain} successfully verified!`);
     }, 1000);
   };
 
@@ -219,22 +220,19 @@ export default function UnifiedPartnerConsolePage() {
       npiAhpra: newNpi,
       schemaHealth: 96,
       status: 'Active',
-      mrr: `$${agencyBillRate}`,
-      citations: 'Perplexity, ChatGPT Search',
+      mrr: '$650',
+      citations: 'Perplexity, ChatGPT, Claude',
     };
     setPractices([newEntry, ...practices]);
-    setClinicCount((prev) => prev + 1);
     setIsAddModalOpen(false);
-    setNewPracticeName('');
-    setNewSpecialty('');
-    setNewDomain('');
-    setNewNpi('');
+    toast.success(`Added ${newPracticeName} to client roster`);
   };
 
-  const copyPracticeReportLink = (domain: string) => {
-    const fullUrl = `${window.location.origin}/report/${domain}`;
+  const handleCopyClientLink = (domain: string) => {
+    const fullUrl = `${window.location.origin}/report/${domain}?unbranded=true`;
     navigator.clipboard.writeText(fullUrl);
     setCopiedLink(domain);
+    toast.success('Unbranded report link copied!');
     setTimeout(() => setCopiedLink(null), 2000);
   };
 
@@ -246,22 +244,23 @@ export default function UnifiedPartnerConsolePage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
-      {/* 1. Sleek Linear/Stripe Enterprise Top Bar */}
-      <header className="bg-white border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sticky top-16 z-30 shadow-2xs">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+      
+      {/* Top Header Bar */}
+      <header className="bg-slate-900/90 border-b border-slate-800 px-4 sm:px-8 py-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sticky top-16 z-30 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-            <Link href="/" className="hover:text-slate-800 transition-colors">VeloGEO</Link>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-slate-900 font-bold font-sans">Command Center</span>
+            <Link href="/" className="hover:text-white transition-colors">NexusRank1.com</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <span className="text-white font-bold font-sans">Partner Command Center</span>
           </div>
 
-          <div className="h-4 w-px bg-slate-200 hidden sm:block" />
+          <div className="h-4 w-px bg-slate-800 hidden sm:block" />
 
           {/* Agency Badge */}
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800">
-            <span className="w-2 h-2 rounded-full bg-[#0284C7]" />
-            <span className="font-bold text-slate-900">{portalName}</span>
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-200">
+            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+            <span className="font-bold text-white">{portalName}</span>
             <span className="text-[10px] font-mono text-slate-400">({practices.length} Practices)</span>
           </div>
         </div>
@@ -269,8 +268,8 @@ export default function UnifiedPartnerConsolePage() {
         {/* Global Save / Discard Bar */}
         <div className="flex items-center gap-2.5">
           {saveSuccess && (
-            <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1.5 animate-fadeIn">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
               <span>Saved to Edge</span>
             </span>
           )}
@@ -278,7 +277,7 @@ export default function UnifiedPartnerConsolePage() {
           <button
             type="button"
             onClick={handleDiscard}
-            className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-semibold transition-all active:scale-95 shadow-2xs"
+            className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all touch-target"
           >
             Discard
           </button>
@@ -287,7 +286,7 @@ export default function UnifiedPartnerConsolePage() {
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="px-3.5 py-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold transition-all shadow-xs active:scale-95 flex items-center gap-1.5 disabled:opacity-50"
+            className="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md active:scale-95 flex items-center gap-1.5 disabled:opacity-50 touch-target cursor-pointer"
           >
             {isSaving ? (
               <>
@@ -304,22 +303,22 @@ export default function UnifiedPartnerConsolePage() {
         </div>
       </header>
 
-      {/* 2. Unified Enterprise Navigation Tabs (Stripe/Linear Style) */}
+      {/* Navigation Tabs */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-8 pt-6">
-        <div className="flex items-center gap-1.5 border-b border-slate-200/90 pb-px overflow-x-auto">
+        <div className="flex items-center gap-1.5 border-b border-slate-800 pb-px overflow-x-auto no-scrollbar">
           {/* TAB 1: Overview & Practice Sub-Accounts */}
           <button
             type="button"
             onClick={() => setActiveTab('overview')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
               activeTab === 'overview'
-                ? 'border-[#0284C7] text-[#0284C7] bg-white shadow-2xs font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/50'
+                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
+                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
             }`}
           >
-            <BarChart3 className="w-4 h-4" />
-            <span>Overview &amp; Practice Sub-Accounts</span>
-            <span className="ml-1 text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full">
+            <BarChart3 className="w-4 h-4 text-indigo-400" />
+            <span>Overview &amp; Practice Roster</span>
+            <span className="ml-1 text-[10px] font-mono font-bold bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded-full">
               {practices.length}
             </span>
           </button>
@@ -328,17 +327,17 @@ export default function UnifiedPartnerConsolePage() {
           <button
             type="button"
             onClick={() => setActiveTab('brand')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
               activeTab === 'brand'
-                ? 'border-[#0284C7] text-[#0284C7] bg-white shadow-2xs font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/50'
+                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
+                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
             }`}
           >
-            <Palette className="w-4 h-4" />
-            <span>White-Label Engine</span>
+            <Palette className="w-4 h-4 text-indigo-400" />
+            <span>White-Label Branding</span>
             {debrandedToggle && (
-              <span className="ml-1 text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200">
-                Zero-Trace
+              <span className="ml-1 text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded-full border border-emerald-500/20">
+                100% Debranded
               </span>
             )}
           </button>
@@ -347,16 +346,16 @@ export default function UnifiedPartnerConsolePage() {
           <button
             type="button"
             onClick={() => setActiveTab('economics')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
               activeTab === 'economics'
-                ? 'border-[#0284C7] text-[#0284C7] bg-white shadow-2xs font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/50'
+                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
+                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
             }`}
           >
-            <Calculator className="w-4 h-4" />
-            <span>Economics &amp; P&amp;L Calculator</span>
-            <span className="ml-1 text-[10px] font-mono font-bold bg-sky-50 text-[#0284C7] px-1.5 py-0.5 rounded-full">
-              {marginPercentage}% Margin
+            <Calculator className="w-4 h-4 text-emerald-400" />
+            <span>Economics &amp; 93% Margin</span>
+            <span className="ml-1 text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded-full">
+              {marginPercentage}% Net
             </span>
           </button>
 
@@ -364,145 +363,149 @@ export default function UnifiedPartnerConsolePage() {
           <button
             type="button"
             onClick={() => setActiveTab('cname')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
               activeTab === 'cname'
-                ? 'border-[#0284C7] text-[#0284C7] bg-white shadow-2xs font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/50'
+                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
+                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
             }`}
           >
-            <Globe className="w-4 h-4" />
-            <span>CNAME &amp; DNS Mapping</span>
-            {dnsVerified && (
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-            )}
+            <Globe className="w-4 h-4 text-indigo-400" />
+            <span>Custom CNAME &amp; SSL</span>
+            {dnsVerified && <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />}
           </button>
         </div>
       </div>
 
-      {/* 3. Main Command Center Viewport */}
+      {/* Main Viewport */}
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex-1">
-        {/* ======================================================== */}
-        {/* TAB 1: OVERVIEW & PRACTICE SUB-ACCOUNTS                  */}
-        {/* ======================================================== */}
+        
+        {/* TAB 1: OVERVIEW & PRACTICES */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
-            {/* Quick KPI Ribbon */}
+            {/* KPI Ribbon */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-2xs space-y-1">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Total Practice Accounts</div>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-slate-900">{practices.length}</span>
-                  <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">100% Active</span>
+                  <span className="text-2xl font-black font-mono text-white">{practices.length}</span>
+                  <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                    100% Active
+                  </span>
                 </div>
-                <div className="text-[10px] text-slate-500 font-mono">Unlimited capacity on Wholesale</div>
+                <div className="text-[10px] text-slate-500 font-mono">100 audits/mo on Growth Tier</div>
               </div>
 
-              <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-2xs space-y-1">
-                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Active Monthly MRR</div>
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
+                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Client Revenue (MRR)</div>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-slate-900">${monthlyRevenue.toLocaleString()}</span>
-                  <span className="text-xs font-mono font-bold text-emerald-600">+{marginPercentage}% Margin</span>
+                  <span className="text-2xl font-black font-mono text-white">${monthlyRevenue.toLocaleString()}</span>
+                  <span className="text-xs font-mono font-bold text-emerald-400">+{marginPercentage}% Margin</span>
                 </div>
                 <div className="text-[10px] text-slate-500 font-mono">Wholesale deduction: -$297/mo</div>
               </div>
 
-              <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-2xs space-y-1">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Average GEO Health</div>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-[#0284C7]">95.2%</span>
-                  <span className="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded">Tier 1</span>
+                  <span className="text-2xl font-black font-mono text-indigo-400">95.2%</span>
+                  <span className="text-xs font-mono font-bold text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                    Grade A
+                  </span>
                 </div>
                 <div className="text-[10px] text-slate-500 font-mono">Verified @graph + /llms.txt</div>
               </div>
 
-              <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-2xs space-y-1">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Branded Subdomain</div>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-sm font-bold font-mono text-slate-800 truncate">{customSubdomain}</span>
+                  <span className="text-xs font-mono font-bold text-slate-300 truncate">{customSubdomain}</span>
                 </div>
-                <div className="text-[10px] text-emerald-600 font-mono flex items-center gap-1 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span>Cloudflare SSL Active</span>
+                <div className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
+                  <Check className="w-3 h-3" /> SSL Active • 0-Trace
                 </div>
               </div>
             </div>
 
-            {/* Practices Table Card */}
-            <div className="bg-white border border-slate-200/90 rounded-2xl shadow-2xs overflow-hidden space-y-4 p-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                <div className="space-y-0.5">
-                  <h2 className="text-base font-bold text-slate-900 tracking-tight">Active Medical Practice Sub-Accounts</h2>
-                  <p className="text-xs text-slate-500">Each clinic has a dedicated zero-trace diagnostic report URL under your agency domain.</p>
+            {/* Practices Table */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="relative flex-1 max-w-sm">
+                  <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search practice name, domain, or specialty..."
+                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                  />
                 </div>
 
-                <div className="flex items-center gap-2.5 flex-wrap w-full sm:w-auto">
-                  <div className="relative flex-1 sm:w-64">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Filter clinics or domains..."
-                      className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
-                    />
-                  </div>
-
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="px-3 py-1.5 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors touch-target"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>Add Practice</span>
+                    <span>Add New Client Practice</span>
                   </button>
                 </div>
               </div>
 
-              {/* High-Density Table */}
-              <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
+              {/* Table */}
+              <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50/80 text-slate-500 font-mono text-[10px] uppercase border-b border-slate-200/80">
+                  <thead className="border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
                     <tr>
-                      <th className="px-4 py-3">Practice Name</th>
-                      <th className="px-4 py-3">Specialty</th>
-                      <th className="px-4 py-3">Domain</th>
-                      <th className="px-4 py-3">Registry ID</th>
-                      <th className="px-4 py-3">GEO Score</th>
-                      <th className="px-4 py-3">Retainer</th>
-                      <th className="px-4 py-3 text-right">Actions</th>
+                      <th className="py-3 px-3">Practice Name</th>
+                      <th className="py-3 px-3">Specialty</th>
+                      <th className="py-3 px-3">Domain</th>
+                      <th className="py-3 px-3">NPI Licensure</th>
+                      <th className="py-3 px-3">GEO Score</th>
+                      <th className="py-3 px-3">Retainer</th>
+                      <th className="py-3 px-3 text-right">Client Report</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
-                    {filteredPractices.map((p) => (
-                      <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="px-4 py-3 font-bold text-slate-900">{p.name}</td>
-                        <td className="px-4 py-3 text-slate-600">{p.specialty}</td>
-                        <td className="px-4 py-3 font-mono font-semibold text-[#0284C7]">{p.domain}</td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-slate-500">{p.npiAhpra}</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            {p.schemaHealth}/100
+                  <tbody className="divide-y divide-slate-800/60 font-sans">
+                    {filteredPractices.map((practice) => (
+                      <tr key={practice.id} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-3.5 px-3 font-bold text-white">{practice.name}</td>
+                        <td className="py-3.5 px-3 text-slate-400">{practice.specialty}</td>
+                        <td className="py-3.5 px-3 font-mono text-indigo-400">{practice.domain}</td>
+                        <td className="py-3.5 px-3 font-mono text-slate-400">{practice.npiAhpra}</td>
+                        <td className="py-3.5 px-3">
+                          <span className="font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                            {practice.schemaHealth}%
                           </span>
                         </td>
-                        <td className="px-4 py-3 font-mono font-bold text-slate-800">{p.mrr}/mo</td>
-                        <td className="px-4 py-3 text-right space-x-1.5">
-                          <button
-                            type="button"
-                            onClick={() => copyPracticeReportLink(p.domain)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors"
-                          >
-                            <Copy className="w-3 h-3" />
-                            <span>{copiedLink === p.domain ? 'Copied!' : 'Copy Link'}</span>
-                          </button>
-
-                          <Link
-                            href={`/report/${p.domain}`}
-                            target="_blank"
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#0284C7]/10 hover:bg-[#0284C7]/20 text-[#0284C7] text-[11px] font-bold transition-colors"
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            <span>View Report</span>
-                          </Link>
+                        <td className="py-3.5 px-3 font-mono text-slate-300 font-bold">{practice.mrr}</td>
+                        <td className="py-3.5 px-3 text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleCopyClientLink(practice.domain)}
+                              className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                              title="Copy Unbranded Link"
+                            >
+                              {copiedLink === practice.domain ? (
+                                <span className="text-emerald-400 text-[10px] flex items-center gap-1">
+                                  <Check className="w-3 h-3" /> Copied
+                                </span>
+                              ) : (
+                                <span className="text-[10px] flex items-center gap-1">
+                                  <Copy className="w-3 h-3" /> Link
+                                </span>
+                              )}
+                            </button>
+                            <Link
+                              href={`/report/${practice.domain}?unbranded=true`}
+                              target="_blank"
+                              className="px-2.5 py-1 rounded bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-colors text-[10px] flex items-center gap-1"
+                            >
+                              <span>View</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -513,491 +516,268 @@ export default function UnifiedPartnerConsolePage() {
           </div>
         )}
 
-        {/* ======================================================== */}
-        {/* TAB 2: WHITE-LABEL ENGINE                                */}
-        {/* ======================================================== */}
+        {/* TAB 2: WHITE-LABEL BRANDING */}
         {activeTab === 'brand' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left: Custom Branding Settings */}
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs space-y-5">
-              <div className="border-b border-slate-100 pb-3 space-y-0.5">
-                <h2 className="text-base font-bold text-slate-900 tracking-tight">White-Label Identity Configuration</h2>
-                <p className="text-xs text-slate-500">All customer reports, schema exports, and client portals reflect these settings.</p>
+          <div className="max-w-4xl space-y-6">
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-white">White-Label Branding Settings</h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  Customize your client-facing portal and PDF outputs. Strict zero-mention guarantee enabled.
+                </p>
               </div>
 
-              <div className="space-y-4 text-xs">
-                {/* Agency Brand Name */}
-                <div className="space-y-1">
-                  <label className="font-bold text-slate-700">Agency Brand Name</label>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Agency Name</label>
                   <input
                     type="text"
                     value={portalName}
                     onChange={(e) => setPortalName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
-                  <p className="text-[11px] text-slate-400">Replaces all references to VeloGEO across client views.</p>
                 </div>
 
-                {/* Agency Logo Upload */}
-                <div className="space-y-2">
-                  <label className="font-bold text-slate-700">Agency Brand Logo</label>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
-                      <img
-                        src={agencyLogoUrl}
-                        alt="Agency Logo Preview"
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = '/logo.svg';
-                        }}
-                      />
-                    </div>
-                    <div className="flex-1 space-y-1.5">
-                      <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs cursor-pointer transition-colors shadow-2xs">
-                        <Upload className="w-3.5 h-3.5 text-[#0284C7]" />
-                        <span>Upload Logo File (PNG/SVG)</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleLogoUpload}
-                          className="hidden"
-                        />
-                      </label>
-                      <input
-                        type="text"
-                        value={agencyLogoUrl}
-                        onChange={(e) => setAgencyLogoUrl(e.target.value)}
-                        placeholder="Or enter logo image URL (e.g. /logo.png)"
-                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg font-mono text-[11px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Client Support Email */}
-                <div className="space-y-1">
-                  <label className="font-bold text-slate-700">Client Support Email</label>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Support &amp; Contact Email</label>
                   <input
                     type="email"
                     value={supportEmail}
                     onChange={(e) => setSupportEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
-                {/* Primary Accent Hex with Live Swatches */}
-                <div className="space-y-2">
-                  <label className="font-bold text-slate-700">Primary Brand Accent Hex Color</label>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Primary Brand Color (Hex)</label>
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
                       value={customHex}
                       onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-10 h-10 rounded-xl border border-slate-300 cursor-pointer p-0.5 bg-white shrink-0"
+                      className="w-10 h-10 rounded-lg cursor-pointer bg-transparent border-0"
                     />
                     <input
                       type="text"
                       value={customHex}
                       onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-28 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-xs"
+                      className="w-36 px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm font-mono text-white focus:outline-none focus:border-indigo-500"
                     />
-                    {/* Preset Palette Swatches */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      {[
-                        { hex: '#0284C7', label: 'Sky' },
-                        { hex: '#059669', label: 'Emerald' },
-                        { hex: '#2563EB', label: 'Ahrefs Blue' },
-                        { hex: '#D97706', label: 'Amber' },
-                        { hex: '#0F172A', label: 'Slate' },
-                      ].map((swatch) => (
-                        <button
-                          key={swatch.hex}
-                          type="button"
-                          onClick={() => setCustomHex(swatch.hex)}
-                          className="w-6 h-6 rounded-lg border border-slate-200 shadow-2xs hover:scale-110 transition-transform"
-                          style={{ backgroundColor: swatch.hex }}
-                          title={swatch.label}
-                        />
-                      ))}
-                    </div>
                   </div>
                 </div>
 
-                {/* Zero-Trace Debranding Toggle */}
                 <div className="pt-2">
-                  <label className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200/90 cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={debrandedToggle}
                       onChange={(e) => setDebrandedToggle(e.target.checked)}
-                      className="w-4 h-4 mt-0.5 rounded text-[#0284C7] focus:ring-[#0284C7]"
+                      className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-950 border-slate-700"
                     />
-                    <div className="space-y-0.5">
-                      <div className="text-xs font-bold text-slate-900 flex items-center gap-2">
-                        <span>100% Zero-Trace Debranding Active</span>
-                        <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">
-                          Active
-                        </span>
-                      </div>
-                      <div className="text-[11px] text-slate-500 leading-relaxed">
-                        Suppresses every mention of VeloGEO in report headers, schema JSON-LD creator nodes, client URLs, and PDFs.
-                      </div>
+                    <div>
+                      <div className="text-xs font-bold text-white">Strict Zero-Trace Debranding Active</div>
+                      <div className="text-[11px] text-slate-400">Completely hides any mention of NexusRank from reports and code exports.</div>
                     </div>
                   </label>
                 </div>
               </div>
             </div>
-
-            {/* Right: Live Interactive Client Preview */}
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs space-y-4 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <Eye className="w-4 h-4 text-[#0284C7]" />
-                    <span>Live Client View Simulation</span>
-                  </h3>
-                  <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">
-                    Zero Platform Trace
-                  </span>
-                </div>
-
-                {/* Browser Shell */}
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 shadow-2xs">
-                  <div className="bg-slate-200/70 px-3 py-2 flex items-center gap-2 border-b border-slate-300">
-                    <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-rose-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                    </div>
-                    <div className="flex-1 max-w-xs mx-auto bg-white rounded px-2.5 py-0.5 text-[10px] text-slate-600 font-mono text-center border border-slate-200">
-                      https://{customSubdomain}/report/aspendental.com
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-white space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center overflow-hidden border border-slate-200">
-                          <img
-                            src={agencyLogoUrl}
-                            alt={portalName}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src = '/logo.svg';
-                            }}
-                          />
-                        </div>
-                        <span className="font-bold text-slate-900 text-xs">{portalName}</span>
-                      </div>
-                      <span
-                        className="px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white font-mono"
-                        style={{ backgroundColor: customHex }}
-                      >
-                        Client Portal Active
-                      </span>
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-                      <div className="text-[11px] font-bold text-slate-800">Aspen Dental Specialists</div>
-                      <div className="text-[10px] text-slate-500 font-mono">Verified NPI: NPI-1928374650 &bull; DentalClinic @graph</div>
-                      <div className="text-[10px] text-emerald-600 font-bold font-mono">Regular GEO Readiness: 98/100</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-2 text-xs text-slate-500 font-mono">
-                Click &ldquo;View Report&rdquo; in the Practices tab to inspect full public report pages.
-              </div>
-            </div>
           </div>
         )}
 
-        {/* ======================================================== */}
-        {/* TAB 3: ECONOMICS & P&L CALCULATOR                         */}
-        {/* ======================================================== */}
+        {/* TAB 3: ECONOMICS */}
         {activeTab === 'economics' && (
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-2xs space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-              <div className="space-y-0.5">
-                <h2 className="text-base font-bold text-slate-900 tracking-tight">Agency Cashflow, Margins &amp; Unit Economics</h2>
-                <p className="text-xs text-slate-500">Simulate retail monthly retainer rates against the fixed VeloGEO wholesale license.</p>
+          <div className="max-w-4xl space-y-6">
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-white">Agency Unit Economics &amp; P&amp;L Calculator</h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  Adjust client volume and retainer rates to see real-time net agency revenue and margin.
+                </p>
               </div>
 
-              <div className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200">
-                <button
-                  type="button"
-                  onClick={() => setWholesaleModel('flat')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    wholesaleModel === 'flat'
-                      ? 'bg-white text-[#0284C7] shadow-2xs border border-slate-200'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  Flat Wholesale ($297/mo)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setWholesaleModel('per_clinic')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    wholesaleModel === 'per_clinic'
-                      ? 'bg-white text-[#0284C7] shadow-2xs border border-slate-200'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  Setup + Retainer ($199 + $89/mo)
-                </button>
-              </div>
-            </div>
-
-            {/* Sliders */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#F8FAFC] p-6 rounded-2xl border border-slate-200/80">
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-slate-700">Managed Practice Clients:</span>
-                  <span className="font-mono text-sm font-black text-[#0284C7] bg-white px-3 py-1 rounded-lg border border-slate-200">
-                    {clinicCount} Clinics
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="50"
-                  step="1"
-                  value={clinicCount}
-                  onChange={(e) => setClinicCount(Number(e.target.value))}
-                  className="w-full accent-[#0284C7] cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] font-mono text-slate-400">
-                  <span>1 Clinic</span>
-                  <span>10 Clinics (Typical)</span>
-                  <span>25 Clinics</span>
-                  <span>50 Clinics</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-slate-700">Retainer Billed per Clinic:</span>
-                  <span className="font-mono text-sm font-black text-emerald-600 bg-white px-3 py-1 rounded-lg border border-slate-200">
-                    ${agencyBillRate} / clinic / mo
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="450"
-                  max="1500"
-                  step="50"
-                  value={agencyBillRate}
-                  onChange={(e) => setAgencyBillRate(Number(e.target.value))}
-                  className="w-full accent-[#0284C7] cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] font-mono text-slate-400">
-                  <span>$450/mo (Basic)</span>
-                  <span>$650/mo (Standard)</span>
-                  <span>$1,000/mo (Specialist)</span>
-                  <span>$1,500/mo (Enterprise)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Financial Ledger Output */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <div className="text-[10px] font-mono font-bold uppercase text-slate-400">Gross Monthly Invoiced</div>
-                <div className="text-xl font-black font-mono text-slate-900">${monthlyRevenue.toLocaleString()}</div>
-                <div className="text-[10px] text-slate-500 font-mono">{clinicCount} &times; ${agencyBillRate}/mo</div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                <div className="text-[10px] font-mono font-bold uppercase text-slate-400">VeloGEO Wholesale Cost</div>
-                <div className="text-xl font-black font-mono text-slate-700">${wholesaleCost.toLocaleString()}</div>
-                <div className="text-[10px] text-slate-500 font-mono">Fixed wholesale license</div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1">
-                <div className="text-[10px] font-mono font-bold uppercase text-emerald-800">Net Monthly Profit</div>
-                <div className="text-xl font-black font-mono text-emerald-700">${netMonthlyProfit.toLocaleString()}</div>
-                <div className="text-[10px] font-mono font-bold text-emerald-800">{marginPercentage}% Net Margin</div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-sky-50/70 border border-sky-200 space-y-1">
-                <div className="text-[10px] font-mono font-bold uppercase text-[#0284C7]">Annualized Run Rate (ARR)</div>
-                <div className="text-xl font-black font-mono text-[#0284C7]">${annualRunRate.toLocaleString()}</div>
-                <div className="text-[10px] font-mono text-sky-800">12-Month Projected Net</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ======================================================== */}
-        {/* TAB 4: CNAME & DNS MAPPING                               */}
-        {/* ======================================================== */}
-        {activeTab === 'cname' && (
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-2xs space-y-6">
-            <div className="border-b border-slate-100 pb-4 space-y-0.5">
-              <h2 className="text-base font-bold text-slate-900 tracking-tight">Custom CNAME Subdomain Proxy Configuration</h2>
-              <p className="text-xs text-slate-500">Point your own subdomain to proxy.velogeo.com with automatic TLS 1.3 certificates.</p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Agency Custom Subdomain</label>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-slate-300">Managed Clients:</span>
+                    <span className="font-mono font-bold text-indigo-400 text-sm">{clinicCount} Practices</span>
+                  </div>
                   <input
-                    type="text"
-                    value={customSubdomain}
-                    onChange={(e) => setCustomSubdomain(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                    type="range"
+                    min="1"
+                    max="50"
+                    value={clinicCount}
+                    onChange={(e) => setClinicCount(Number(e.target.value))}
+                    className="w-full accent-indigo-500"
                   />
                 </div>
 
-                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono flex items-center justify-between">
-                  <span className="text-slate-500">Proxy Target:</span>
-                  <span className="font-bold text-[#0284C7]">proxy.velogeo.com</span>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-slate-300">Monthly Retainer per Client:</span>
+                    <span className="font-mono font-bold text-emerald-400 text-sm">${agencyBillRate} / mo</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="300"
+                    max="1500"
+                    step="50"
+                    value={agencyBillRate}
+                    onChange={(e) => setAgencyBillRate(Number(e.target.value))}
+                    className="w-full accent-emerald-500"
+                  />
                 </div>
-              </div>
 
-              {/* DNS Table */}
-              <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
-                <table className="w-full text-left">
-                  <thead className="bg-slate-50 text-slate-500 font-mono text-[10px] uppercase border-b border-slate-200">
-                    <tr>
-                      <th className="p-3">Record Type</th>
-                      <th className="p-3">Host Name</th>
-                      <th className="p-3">Target Value</th>
-                      <th className="p-3">TTL</th>
-                    </tr>
-                  </thead>
-                  <tbody className="font-mono text-slate-800">
-                    <tr>
-                      <td className="p-3 font-bold text-[#0284C7]">CNAME</td>
-                      <td className="p-3">audit</td>
-                      <td className="p-3 font-bold">proxy.velogeo.com</td>
-                      <td className="p-3 text-slate-500">Auto (300s)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="flex items-center gap-4 flex-wrap pt-2">
-                <button
-                  type="button"
-                  onClick={handleTestDns}
-                  disabled={dnsTesting}
-                  className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-2"
-                >
-                  {dnsTesting ? (
-                    <>
-                      <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#0284C7]" />
-                      <span>Checking DNS Records...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Server className="w-3.5 h-3.5 text-[#0284C7]" />
-                      <span>Verify DNS Propagation</span>
-                    </>
-                  )}
-                </button>
-
-                {dnsVerified && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>CNAME Verified &bull; proxy.velogeo.com active with TLS 1.3</span>
-                  </span>
-                )}
+                <div className="p-5 rounded-2xl bg-slate-950 border border-indigo-500/30 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-mono">Gross Billing</div>
+                    <div className="text-xl font-black font-mono text-white">${monthlyRevenue.toLocaleString()}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-mono">NexusRank Cost</div>
+                    <div className="text-xl font-black font-mono text-rose-400">-${wholesaleCost}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-mono">Net Monthly Profit</div>
+                    <div className="text-xl font-black font-mono text-emerald-400">${netMonthlyProfit.toLocaleString()}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-mono">Net Margin</div>
+                    <div className="text-xl font-black font-mono text-indigo-400">{marginPercentage}%</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         )}
+
+        {/* TAB 4: CNAME & DNS */}
+        {activeTab === 'cname' && (
+          <div className="max-w-4xl space-y-6">
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-white">Custom Subdomain CNAME &amp; SSL</h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  Point your own domain to our edge proxy so clients access your portal at your subdomain.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Your Custom Subdomain</label>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="text"
+                      value={customSubdomain}
+                      onChange={(e) => setCustomSubdomain(e.target.value)}
+                      className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm font-mono text-indigo-300 focus:outline-none focus:border-indigo-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleTestDns}
+                      disabled={dnsTesting}
+                      className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors touch-target flex items-center justify-center gap-1.5 shrink-0"
+                    >
+                      {dnsTesting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Server className="w-3.5 h-3.5" />}
+                      <span>Verify DNS Record</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+                  <div className="font-bold text-white">DNS CNAME Record Target:</div>
+                  <div className="font-mono text-slate-400 space-y-1">
+                    <div>Host: <strong className="text-white">audit</strong></div>
+                    <div>Points to: <strong className="text-emerald-400">cname.nexusrank1.com</strong></div>
+                    <div>TTL: <strong className="text-white">Auto / 300</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </main>
 
-      {/* MODAL: Add Practice Sub-Account */}
+      {/* Add Practice Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl border border-slate-200 animate-fadeIn">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-[#0284C7]" />
-                <span>Add Medical Clinic Account</span>
-              </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between">
+              <h4 className="text-base font-bold text-white">Add Client Practice</h4>
               <button
                 type="button"
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 text-lg font-bold"
+                className="text-slate-400 hover:text-white"
               >
-                &times;
+                ✕
               </button>
             </div>
 
-            <form onSubmit={handleAddPractice} className="space-y-4 text-xs">
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700">Practice Name</label>
+            <form onSubmit={handleAddPractice} className="space-y-3.5 text-xs">
+              <div>
+                <label className="block text-slate-400 mb-1">Practice Name</label>
                 <input
                   type="text"
                   required
                   value={newPracticeName}
                   onChange={(e) => setNewPracticeName(e.target.value)}
-                  placeholder="Austin Cosmetic Dentistry"
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700">Clinical Specialty</label>
+              <div>
+                <label className="block text-slate-400 mb-1">Specialty</label>
                 <input
                   type="text"
                   required
                   value={newSpecialty}
                   onChange={(e) => setNewSpecialty(e.target.value)}
-                  placeholder="Cosmetic & Restorative Dentistry"
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700">Practice Domain</label>
+              <div>
+                <label className="block text-slate-400 mb-1">Website Domain</label>
                 <input
                   type="text"
                   required
                   value={newDomain}
                   onChange={(e) => setNewDomain(e.target.value)}
-                  placeholder="austincosmetic.com"
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white font-mono"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700">Registry NPI Identifier</label>
+              <div>
+                <label className="block text-slate-400 mb-1">Physician NPI Number</label>
                 <input
                   type="text"
-                  required
                   value={newNpi}
                   onChange={(e) => setNewNpi(e.target.value)}
-                  placeholder="NPI-1928374650"
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
+                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white font-mono"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-2">
+              <div className="pt-2 flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-300 font-bold text-slate-700 hover:bg-slate-50"
+                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white font-bold shadow-xs"
+                  className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
                 >
-                  Save Practice Account
+                  Add Practice
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+
     </div>
   );
 }

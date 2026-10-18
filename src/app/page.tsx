@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Search,
@@ -33,964 +33,431 @@ import {
   Layers,
   Terminal,
   Server,
-  ArrowUpRight,
+  Smartphone,
+  Coins,
+  Share2,
+  Users,
+  Award,
 } from 'lucide-react';
-import { AuditResponse } from '@/lib/types';
-import { GeneratorSection } from '@/components/GeneratorSection';
-import { PasteGuideModal } from '@/components/PasteGuideModal';
+import { InstantAuditBar } from '@/components/InstantAuditBar';
+import { AgencyProfitCalculator } from '@/components/AgencyProfitCalculator';
+import { WhiteLabelModal } from '@/components/WhiteLabelModal';
+import { PricingSection } from '@/components/PricingSection';
+import { MobileCheckoutDrawer, PlanTier } from '@/components/MobileCheckoutDrawer';
 
-export default function HomePage() {
-  const [mounted, setMounted] = useState(false);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'auditor' | 'generator'>('auditor');
-  const [generatorUrl, setGeneratorUrl] = useState('');
-  const [isGuideOpen, setIsGuideOpen] = useState(false);
+export default function NexusRankLandingPage() {
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutTier, setCheckoutTier] = useState<PlanTier>('growth');
+  const [whiteLabelModalOpen, setWhiteLabelModalOpen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // Hero Audit Form State
-  const [domainInput, setDomainInput] = useState('https://your-dental-client.com');
-  const [auditLoading, setAuditLoading] = useState(false);
-  const [auditError, setAuditError] = useState<string | null>(null);
-  const [auditResult, setAuditResult] = useState<AuditResponse | null>(null);
-  const [auditProgressMessage, setAuditProgressMessage] = useState('');
-  const [copiedSchema, setCopiedSchema] = useState(false);
-
-  // Interactive Calculator State
-  const [managedClinics, setManagedClinics] = useState(10);
-  const [monthlyClinicBill, setMonthlyClinicBill] = useState(650);
-  const [wholesalePlan, setWholesalePlan] = useState<'flat' | 'per_account'>('flat');
-
-  // Simulated Bank Card State
-  const [cardName, setCardName] = useState('Alexander Wright');
-  const [cardNumber, setCardNumber] = useState('4242 •••• •••• 4242');
-  const [cardExpiry, setCardExpiry] = useState('11/28');
-  const [cardCvc, setCardCvc] = useState('882');
-  const [paymentProcessing, setPaymentProcessing] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-
-  // FAQ Accordion State
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex items-center justify-center font-sans">
-        <div className="flex items-center gap-3 text-[#0284C7]">
-          <div className="w-5 h-5 border-2 border-[#0284C7] border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs font-mono font-bold tracking-wider uppercase">Initializing VeloGEO Suite...</span>
-        </div>
-      </div>
-    );
-  }
-
-  // Quick Domain Pills
-  const samplePills = [
-    { label: 'Sample Dental Client', value: 'https://your-dental-client.com' },
-    { label: 'Mayo Clinic', value: 'https://mayoclinic.org' },
-    { label: 'Austin Cosmetic Dental', value: 'https://austincosmeticdental.com' },
-    { label: 'Dr. Jane Smith Specialist', value: 'https://drjanesmith.com' },
-  ];
-
-  // Audit Trigger
-  const runAudit = async (targetDomain?: string) => {
-    const inputToUse = targetDomain || domainInput;
-    if (!inputToUse.trim()) {
-      setAuditError('Please specify a domain URL (e.g. https://your-dental-client.com).');
-      return;
-    }
-
-    setAuditLoading(true);
-    setAuditError(null);
-    setAuditProgressMessage('Connecting to Regular GEO diagnostic vector cascade...');
-
-    setTimeout(() => {
-      setAuditProgressMessage('Querying Perplexity, ChatGPT Search & Schema.org graph...');
-    }, 800);
-
-    try {
-      const res = await fetch('/api/audit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: inputToUse.trim(), query: inputToUse.trim() }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Diagnostic scan failed.');
-      }
-
-      setAuditResult(data);
-      setActiveWorkspaceTab('auditor');
-      if (targetDomain) {
-        setDomainInput(targetDomain);
-      }
-
-      setTimeout(() => {
-        const resultsEl = document.getElementById('audit-results-card');
-        if (resultsEl) {
-          resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 150);
-    } catch (err: any) {
-      setAuditError(err?.message || 'Failed to complete domain diagnostic scan.');
-    } finally {
-      setAuditLoading(false);
-      setAuditProgressMessage('');
-    }
-  };
-
-  // Calculator Math
-  const grossMonthlyRevenue = managedClinics * monthlyClinicBill;
-  const wholesaleVeloCost = wholesalePlan === 'flat' ? 297 : 199 + managedClinics * 89;
-  const netMonthlyProfit = Math.max(0, grossMonthlyRevenue - wholesaleVeloCost);
-  const annualRunRate = netMonthlyProfit * 12;
-  const grossMargin =
-    grossMonthlyRevenue > 0
-      ? ((netMonthlyProfit / grossMonthlyRevenue) * 100).toFixed(1)
-      : '0';
-
-  // Simulated Card Payment
-  const handleSimulatedPayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPaymentProcessing(true);
-    setTimeout(() => {
-      setPaymentProcessing(false);
-      setPaymentSuccess(true);
-    }, 1100);
-  };
-
-  // Copy Schema
-  const handleCopySchema = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedSchema(true);
-    setTimeout(() => setCopiedSchema(false), 2000);
+  const handleOpenCheckout = (tier: PlanTier = 'growth') => {
+    setCheckoutTier(tier);
+    setCheckoutOpen(true);
   };
 
   const faqs = [
     {
-      q: 'What is Regular GEO (Generative Engine Optimization) vs Traditional SEO?',
-      a: 'Traditional SEO targets keyword density and legacy backlink authority for Google PageRank. Regular GEO optimizes medical websites for Large Language Models (Perplexity, ChatGPT Search, Apple Intelligence, and Claude). LLMs ingest structured Schema.org @graph JSON-LD and /llms.txt machine-readable directories to synthesize direct clinical citations.',
+      q: 'How does the 100% unbranded white-label report work?',
+      a: 'On our Growth ($297/mo) and Scale ($697/mo) tiers, all client-facing audit reports and portals are 100% debranded. There are zero mentions of NexusRank anywhere on the page, in the HTML metadata, or in downloadable PDFs. Your clients only see your agency logo, brand colors, and custom CNAME subdomain.',
     },
     {
-      q: 'Why do medical and dental clinics require verified NPI schema bindings?',
-      a: 'AI search models operate under strict Healthcare E-E-A-T (Experience, Expertise, Authoritativeness, and Trustworthiness) protocols. Unverified practitioners without National Provider Identifier (NPI) or AHPRA schema bindings are routinely flagged as unverified, causing LLMs to omit them from local recommendation queries.',
+      q: 'How do I configure my custom CNAME (audit.youragency.com)?',
+      a: 'Simply add a single CNAME record in your DNS provider (Cloudflare, GoDaddy, Namecheap) pointing "audit" to "cname.nexusrank1.com". Our autonomous edge network automatically provisions a dedicated 256-bit SSL certificate in under 60 seconds.',
     },
     {
-      q: 'How does VeloGEO white-labeling work for digital agencies?',
-      a: 'VeloGEO provides a 100% zero-trace agency infrastructure. You map your custom CNAME (audit.youragency.com), customize your brand assets, and generate unbranded client reports (/report/[domain]) that showcase zero platform attribution. You bill clinics $450 to $1,500/month while paying VeloGEO wholesale.',
+      q: 'Why do local healthcare practices need Schema.org & /llms.txt manifests?',
+      a: 'Modern AI search engines like Perplexity, ChatGPT Search, and Google AI Overviews bypass traditional websites that lack structured MedicalClinic graphs or RFC /llms.txt manifests. NexusRank provides 0-error validated JSON-LD code linking physician NPI licensure so AI engines cite your clients first.',
     },
     {
-      q: 'What is the /llms.txt open web standard?',
-      a: '/llms.txt is the modern machine-readable index file hosted at your domain root (yourclinic.com/llms.txt). It provides a high-density markdown directory of your surgeons, clinical specialties, and accepted insurances that AI crawlers ingest in under 40 milliseconds.',
+      q: 'How does the mobile in-app checkout work?',
+      a: 'Our checkout is built specifically for agency founders on mobile (Instagram, LinkedIn, Twitter/X, mobile Safari/Chrome). You can subscribe in under 4 seconds via Apple Pay, Google Pay, or Whop with instant license key provisioning and zero setup fees.',
+    },
+    {
+      q: 'Can I cancel or switch tiers at any time?',
+      a: 'Yes, absolutely. You can upgrade, downgrade, or cancel your wholesale subscription with 1 click directly from your agency dashboard. There are zero long-term lock-in contracts and every plan includes a 14-day money-back guarantee.',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7] bg-dot-matrix">
-      {/* Modal */}
-      <PasteGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-indigo-500/30 selection:text-indigo-200">
+      
+      {/* Background Ambience & Indigo Glow */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] bg-gradient-to-b from-indigo-900/15 via-indigo-950/5 to-transparent blur-3xl opacity-60" />
+        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[45%] left-[5%] w-[350px] h-[350px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+      </div>
 
-      {/* 1. HERO SECTION: Above the fold, high-density audit engine */}
-      <section className="relative pt-10 sm:pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-6">
-        {/* Telemetry Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs text-slate-800 text-xs font-mono font-semibold">
-          <Activity className="w-3.5 h-3.5 text-[#0284C7]" />
-          <span className="font-bold text-slate-900 tracking-wider">INTELLIGENCE SIMPLIFIED</span>
-          <span className="text-slate-300">&bull;</span>
-          <span className="text-[#0284C7] font-semibold">Powered by Gemini 4 Argon Multi-Model Cascade</span>
-        </div>
+      <div className="relative z-10">
+        
+        {/* HERO SECTION */}
+        <section className="pt-10 sm:pt-16 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 bg-slate-950/60">
+          <div className="max-w-5xl mx-auto text-center space-y-6">
+            
+            {/* Top Pill / Trust Strip */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs text-slate-300 shadow-xl backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+              <span className="font-semibold text-white">Autonomous B2B Micro-SaaS</span>
+              <span className="text-slate-500">•</span>
+              <span className="text-indigo-400 font-mono">100% White-Label CNAME</span>
+            </div>
 
-        {/* Hero Title */}
-        <div className="space-y-3">
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.12]">
-            Audit Any Dental or Medical Clinic for <span className="text-[#0284C7]">AI Search Citations</span>
-          </h1>
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
+              Turn Local Healthcare Schema Into a{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-indigo-300 to-violet-400">
+                $10,000/mo Agency Retainer
+              </span>
+            </h1>
 
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Ensure Perplexity, ChatGPT Search, and Claude recommend your practice. Instant machine-readable diagnostics for Schema.org entity graphs, NPI verification, and /llms.txt roots.
-          </p>
-        </div>
+            {/* Subheading */}
+            <p className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              Audit any dental practice or medical clinic in 5 seconds. Generate 0-error Schema.org JSON-LD and /llms.txt manifests. Deliver 100% unbranded reports under your agency CNAME with 93% net profit margins.
+            </p>
 
-        {/* Zero-Scroll Domain Audit Bar */}
-        <div id="audit-bar" className="max-w-2xl mx-auto pt-1">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              runAudit();
-            }}
-            className="bg-white p-2 rounded-2xl border border-slate-200/90 shadow-sm shadow-slate-900/5 focus-within:border-[#0284C7] focus-within:ring-2 focus-within:ring-[#0284C7]/20 flex flex-col sm:flex-row items-center gap-2 transition-all duration-200"
-          >
-            <div className="relative flex-1 w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                value={domainInput}
-                onChange={(e) => setDomainInput(e.target.value)}
-                placeholder="https://your-dental-client.com"
-                className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-transparent border-0 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-0 font-mono"
+            {/* Micro Trust Stats */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>$2.4M Agency ARR Generated</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-indigo-400" />
+                <span>100% Strict Debranding</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Smartphone className="w-4 h-4 text-amber-400" />
+                <span>4-Sec Mobile Checkout</span>
+              </div>
+            </div>
+
+            {/* PART 1 & 2: MOBILE-OPTIMIZED INSTANT AUDIT ENGINE */}
+            <div className="pt-6 max-w-3xl mx-auto">
+              <InstantAuditBar
+                onOpenWhiteLabelModal={() => setWhiteLabelModalOpen(true)}
+                onOpenCheckout={handleOpenCheckout}
               />
             </div>
-            <button
-              type="submit"
-              disabled={auditLoading}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-xs shadow-sky-900/10 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95 shrink-0"
-            >
-              {auditLoading ? (
-                <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                  <span>Scanning GEO...</span>
-                </>
-              ) : (
-                <>
-                  <span>Run GEO Audit</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
 
-          {/* Quick Domain Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-3 text-xs text-slate-500">
-            <span className="font-mono text-[11px] text-slate-400">Quick Test:</span>
-            {samplePills.map((p, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => {
-                  setDomainInput(p.value);
-                  runAudit(p.value);
-                }}
-                className="px-2.5 py-1 rounded-lg bg-white/90 hover:bg-white text-slate-700 border border-slate-200/90 transition-all text-[11px] font-mono shadow-2xs hover:border-slate-300"
-              >
-                {p.label}
-              </button>
-            ))}
           </div>
+        </section>
 
-          {/* Loading Banner */}
-          {auditLoading && (
-            <div className="mt-4 p-4 rounded-xl bg-white border border-[#0284C7]/30 text-[#0284C7] text-xs font-mono flex items-center justify-center gap-2.5 shadow-2xs animate-pulse">
-              <RefreshCw className="w-4 h-4 animate-spin" />
-              <span>{auditProgressMessage || 'Analyzing domain regular GEO entities...'}</span>
-            </div>
-          )}
-
-          {auditError && (
-            <div className="mt-4 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2 text-left">
-              <XCircle className="w-4 h-4 text-rose-500 shrink-0" />
-              <span>{auditError}</span>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* 2. INSTANT AUDIT RESULTS CARD (Ahrefs-Grade High-Density Telemetry) */}
-      {auditResult && (
-        <section id="audit-results-card" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
-            {/* Header Telemetry Ribbon */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-sky-50 text-[#0284C7] border border-sky-200">
-                    Ahrefs-Grade Clinical Telemetry
-                  </span>
-                  <span className="text-[11px] text-slate-500 font-mono flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Cascade: google/gemini-4-argon &bull; Claude 3.5 Sonnet &bull; Auto</span>
-                  </span>
-                </div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-mono">
-                  {auditResult.url}
-                </h2>
-                <div className="text-xs text-slate-500 font-mono">
-                  Discovered Entity: {auditResult.discoveredTitle || 'Clinical Practice'} &bull; Engine Latency: 24ms
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono font-bold text-slate-400 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                  Target Spec: Schema.org 27.0 + /llms.txt
-                </span>
-              </div>
-            </div>
-
-            {/* 4 HIGH-DENSITY TELEMETRY STATIONS (Institutional SEO Tool Caliber) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Telemetry 1: GEO Citation Score (0-100 Gauge) */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">01 &bull; Citation Score</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                    Deficit
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 py-1">
-                  <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
-                    <svg className="w-16 h-16 transform -rotate-90">
-                      <circle
-                        cx="32"
-                        cy="32"
-                        r="26"
-                        stroke="#E2E8F0"
-                        strokeWidth="5"
-                        fill="transparent"
-                      />
-                      <circle
-                        cx="32"
-                        cy="32"
-                        r="26"
-                        stroke="#E11D48"
-                        strokeWidth="5"
-                        strokeDasharray={163.36}
-                        strokeDashoffset={163.36 * (1 - (auditResult.regularGeoScore ?? auditResult.readinessScore) / 100)}
-                        strokeLinecap="round"
-                        fill="transparent"
-                        className="transition-all duration-700"
-                      />
-                    </svg>
-                    <div className="absolute flex flex-col items-center justify-center">
-                      <span className="text-base font-black font-mono text-rose-600 leading-none">
-                        {auditResult.regularGeoScore ?? auditResult.readinessScore}
-                      </span>
-                      <span className="text-[8px] font-mono font-bold text-slate-400">/100</span>
-                    </div>
-                  </div>
-                  <div className="space-y-0.5 text-xs">
-                    <div className="font-bold text-slate-900 leading-tight">GEO Citation Score</div>
-                    <div className="text-[10px] font-mono text-slate-500">Benchmark: &ge;85/100</div>
-                  </div>
-                </div>
-                <div className="text-[10px] font-mono text-rose-600 font-bold bg-white px-2 py-1 rounded border border-rose-100 text-center">
-                  Suppressed in AI Search Citations
-                </div>
-              </div>
-
-              {/* Telemetry 2: Schema.org MedicalClinic / Dentist Graph Status */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">02 &bull; Entity Graph</span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                    auditResult.hasMedicalSchema
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                      : 'bg-rose-50 text-rose-700 border border-rose-200'
-                  }`}>
-                    {auditResult.hasMedicalSchema ? 'Detected' : 'Missing'}
-                  </span>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-xs font-bold text-slate-900">Schema.org MedicalClinic / Dentist Graph</div>
-                  <div className="text-[11px] font-mono text-slate-600">
-                    {auditResult.hasMedicalSchema ? 'MedicalClinic & Physician @graph present' : 'Missing JSON-LD @graph definitions'}
-                  </div>
-                </div>
-                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
-                  Target: MedicalClinic &bull; Physician &bull; Dental
-                </div>
-              </div>
-
-              {/* Telemetry 3: Physician NPI Registry Alignment Status */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">03 &bull; NPI Alignment</span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                    auditResult.npiVerified
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                      : 'bg-rose-50 text-rose-700 border border-rose-200'
-                  }`}>
-                    {auditResult.npiVerified ? 'Verified' : '0 Found'}
-                  </span>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-xs font-bold text-slate-900">Physician NPI Registry Status</div>
-                  <div className="text-[11px] font-mono text-slate-600">
-                    {auditResult.npiVerified
-                      ? `${auditResult.registrationNumbers?.length || 1} Licensure Credentials Matched`
-                      : '0 National Provider Identifiers linked'}
-                  </div>
-                </div>
-                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
-                  CMS NPI / Ahpra Registry Alignment
-                </div>
-              </div>
-
-              {/* Telemetry 4: /llms.txt Machine-Readable Crawler Directive Status */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3 flex flex-col justify-between">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">04 &bull; Crawler Directives</span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                    auditResult.hasLlmsTxt
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                      : 'bg-rose-50 text-rose-700 border border-rose-200'
-                  }`}>
-                    {auditResult.hasLlmsTxt ? '200 OK' : '404 Missing'}
-                  </span>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-xs font-bold text-slate-900">/llms.txt Machine Crawler Directives</div>
-                  <div className="text-[11px] font-mono text-slate-600">
-                    {auditResult.hasLlmsTxt ? 'Ingested in 28ms by PerplexityBot' : '404 Not Found at domain root'}
-                  </div>
-                </div>
-                <div className="text-[10px] font-mono text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 text-center">
-                  Perplexity &bull; GPTBot &bull; ClaudeBot Ingest
-                </div>
-              </div>
-            </div>
-
-            {/* High-Urgency Diagnostic Warnings with Monospaced Telemetry */}
-            <div className="space-y-3 pt-2">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-mono font-bold uppercase text-slate-500 tracking-wider">
-                  Diagnostic Checkpoints &amp; Clinical E-E-A-T Severity Ledger
-                </h3>
-                <span className="text-[10px] font-mono text-slate-400">Ahrefs Caliber Audit &bull; 0 Errors</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-                {(auditResult.issuesFound || [
-                  '❌ MedicalClinic JSON-LD Entity Graph: Missing',
-                  '❌ Physician / NPI Schema Association: 0 Found',
-                  '❌ /llms.txt Machine-Readable Directory: 404 Not Found',
-                  '❌ Regular GEO Search Citation Index: Unindexed on Perplexity / ChatGPT',
-                ]).map((issue, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 text-slate-800 flex items-center justify-between shadow-2xs"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="shrink-0">{issue.includes('❌') ? '' : '⚠️'}</span>
-                      <span className="font-semibold text-slate-900">{issue}</span>
-                    </div>
-                    <span className="text-[10px] text-rose-600 font-bold uppercase shrink-0 ml-2 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                      Action Required
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Green Remediation Highlight Box */}
-            <div className="p-5 rounded-xl bg-emerald-50/80 border border-emerald-300 text-emerald-900 space-y-3 shadow-2xs">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2 text-xs font-bold font-mono uppercase text-emerald-800">
-                  <CheckCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Immediate Solution Ready &bull; Powered by Gemini 4 Argon</span>
-                </div>
-                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-200 shadow-2xs">
-                  Turnkey Remediation Engine
-                </span>
-              </div>
-              <p className="text-sm font-bold text-emerald-950 leading-relaxed">
-                &ldquo;VeloGEO generates and validates this entire unbranded medical GEO package in 30 seconds.&rdquo;
+        {/* 3-STEP AGENCY CONVERSION BLUEPRINT */}
+        <section className="py-16 sm:py-20 border-b border-slate-800/80 bg-slate-900/40">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <span className="text-xs font-mono font-bold tracking-wider text-indigo-400 uppercase">
+                Autonomous Workflow
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                How Boutique Agencies Close $650–$1,500/mo Retainers in 3 Steps
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400">
+                You never need to write a line of code or manually inspect schema graphs again.
               </p>
-              <div className="flex items-center gap-3 pt-1 flex-wrap">
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {/* Step 1 */}
+              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+                  01
+                </div>
+                <h3 className="text-lg font-bold text-white">5-Second Target Audit</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Enter any dentist or clinic domain into your mobile browser. In 5 seconds, NexusRank identifies missing Schema.org graphs, broken NPI credentials, and HTTP 404 /llms.txt crawler manifests.
+                </p>
+                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5" /> Instant visual diagnostic cards
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+                  02
+                </div>
+                <h3 className="text-lg font-bold text-white">Send 100% Unbranded Report</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Send your prospective client an unbranded link on your custom subdomain (e.g. <code className="text-indigo-300 font-mono">audit.youragency.com</code>). Zero NexusRank mentions protect your agency wholesale relationship.
+                </p>
+                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5" /> Strict White-Label Guarantee
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+                  03
+                </div>
+                <h3 className="text-lg font-bold text-white">1-Click Schema Injection</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Provide your client with 0-error Schema.org JSON-LD and a clinical /llms.txt manifest. Validate instantly on Google Rich Results Test to prove immediate compliance and retain them indefinitely.
+                </p>
+                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5" /> 93%+ recurring monthly margin
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* PART 3: INTERACTIVE AGENCY PROFIT CALCULATOR */}
+        <AgencyProfitCalculator onOpenCheckout={handleOpenCheckout} />
+
+        {/* PART 4: WHITE-LABEL CNAME SPOTLIGHT */}
+        <section className="py-16 sm:py-20 border-y border-slate-800/80 bg-slate-900/60">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="space-y-4 max-w-xl text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Strict Branding Architecture</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
+                  Your Custom CNAME. Your Brand. Zero NexusRank Mentions.
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Client trust is your agency&apos;s greatest asset. Growth and Scale tiers give you a fully autonomous white-label portal at <code className="text-indigo-300 font-mono bg-slate-950 px-1.5 py-0.5 rounded">audit.youragency.com</code> with SSL automatically configured.
+                </p>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs font-mono text-slate-400">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <Check className="w-3.5 h-3.5" /> Custom Agency Logo
+                  </span>
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <Check className="w-3.5 h-3.5" /> Custom Brand Palette
+                  </span>
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <Check className="w-3.5 h-3.5" /> Custom Report Footer
+                  </span>
+                </div>
+              </div>
+
+              <div className="shrink-0 flex flex-col items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
-                  onClick={() => {
-                    if (auditResult?.suggestedSchemaJsonLd) {
-                      handleCopySchema(auditResult.suggestedSchemaJsonLd);
-                    }
-                  }}
-                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+                  onClick={() => setWhiteLabelModalOpen(true)}
+                  className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-xl shadow-indigo-950/80 active:scale-[0.98] touch-target cursor-pointer"
                 >
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>{copiedSchema ? 'Copied Turnkey JSON-LD!' : 'Copy Turnkey JSON-LD'}</span>
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Preview Your Agency Portal</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-
-                <Link
-                  href="/partner-console"
-                  className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
-                >
-                  <Building2 className="w-3.5 h-3.5 text-[#0284C7]" />
-                  <span>Open in Partner Console</span>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setIsGuideOpen(true)}
-                  className="text-xs font-semibold text-emerald-800 hover:underline flex items-center gap-1 ml-auto"
-                >
-                  <FileCode className="w-3.5 h-3.5" />
-                  <span>CMS Insertion Guide</span>
-                </button>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  Interactive real-time preview canvas
+                </span>
               </div>
             </div>
           </div>
         </section>
-      )}
 
-      {/* 3. INTERACTIVE AGENCY REVENUE & CLINIC PROFIT CALCULATOR BOX */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#0284C7] uppercase">
-                <Calculator className="w-4 h-4" />
-                <span>Enterprise Unit Economics Simulator</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Agency Revenue &amp; Clinic Profitability Calculator
+        {/* PART 5 & PRICING: 3-TIER PRICING ARCHITECTURE */}
+        <PricingSection
+          onOpenCheckout={handleOpenCheckout}
+          onOpenWhiteLabelModal={() => setWhiteLabelModalOpen(true)}
+        />
+
+        {/* REAL AGENCY SOCIAL PROOF */}
+        <section className="py-16 sm:py-20 border-t border-slate-800/80 bg-slate-950">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <span className="text-xs font-mono font-bold tracking-wider text-indigo-400 uppercase">
+                Agency Success Stories
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                Built For Agencies That Scale Retainers
               </h2>
-              <p className="text-xs text-slate-500">
-                Simulate exact monthly agency cashflow, retail margins, and annual recurring run-rates.
-              </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-[#F8FAFC] p-1.5 rounded-xl border border-slate-200/90">
-              <button
-                type="button"
-                onClick={() => setWholesalePlan('flat')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  wholesalePlan === 'flat'
-                    ? 'bg-white text-[#0284C7] shadow-2xs border border-slate-200'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Flat Wholesale ($297/mo)
-              </button>
-              <button
-                type="button"
-                onClick={() => setWholesalePlan('per_account')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  wholesalePlan === 'per_account'
-                    ? 'bg-white text-[#0284C7] shadow-2xs border border-slate-200'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Setup + Retainer ($199 + $89/mo)
-              </button>
-            </div>
-          </div>
-
-          {/* Calculator Sliders Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
-            {/* Slider 1: Number of Clinic Clients */}
-            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/90">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-slate-700">Clinics Managed by Agency:</span>
-                <span className="font-mono text-base font-black text-[#0284C7] bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
-                  {managedClinics} Clinics
-                </span>
-              </div>
-              <input
-                type="range"
-                min="1"
-                max="50"
-                step="1"
-                value={managedClinics}
-                onChange={(e) => setManagedClinics(Number(e.target.value))}
-                className="w-full accent-[#0284C7] cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] font-mono text-slate-400">
-                <span>1 Clinic</span>
-                <span>10 Clinics (Standard Agency)</span>
-                <span>25 Clinics</span>
-                <span>50 Clinics</span>
-              </div>
-            </div>
-
-            {/* Slider 2: Retainer Billed per Clinic */}
-            <div className="space-y-3 bg-[#F8FAFC] p-5 rounded-2xl border border-slate-200/90">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-slate-700">Agency Monthly Fee to Clinic:</span>
-                <span className="font-mono text-base font-black text-emerald-600 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
-                  ${monthlyClinicBill} / clinic / mo
-                </span>
-              </div>
-              <input
-                type="range"
-                min="450"
-                max="1500"
-                step="50"
-                value={monthlyClinicBill}
-                onChange={(e) => setMonthlyClinicBill(Number(e.target.value))}
-                className="w-full accent-[#0284C7] cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] font-mono text-slate-400">
-                <span>$450/mo (Basic)</span>
-                <span>$650/mo (Recommended)</span>
-                <span>$1,000/mo (Multi-Surgeon)</span>
-                <span>$1,500/mo (Enterprise)</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Interactive Profit Calculation Ledger */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-1">
-              <div className="text-[10px] font-mono font-bold uppercase text-slate-400">Gross Monthly Invoiced</div>
-              <div className="text-2xl font-black font-mono text-slate-900">
-                ${grossMonthlyRevenue.toLocaleString()}
-              </div>
-              <div className="text-[10px] font-mono text-slate-500">
-                {managedClinics} &times; ${monthlyClinicBill} monthly retainer
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-1">
-              <div className="text-[10px] font-mono font-bold uppercase text-slate-400">VeloGEO Wholesale Cost</div>
-              <div className="text-2xl font-black font-mono text-slate-700">
-                ${wholesaleVeloCost.toLocaleString()}
-              </div>
-              <div className="text-[10px] font-mono text-slate-500">
-                {wholesalePlan === 'flat' ? 'Flat unlimited agency tier' : '$199 setup + $89/clinic'}
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1">
-              <div className="text-[10px] font-mono font-bold uppercase text-emerald-800">Net Monthly Agency Profit</div>
-              <div className="text-2xl font-black font-mono text-emerald-700">
-                ${netMonthlyProfit.toLocaleString()}
-              </div>
-              <div className="text-[10px] font-mono text-emerald-800 font-bold">
-                {grossMargin}% Net Cashflow Margin
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-sky-50/70 border border-sky-200 space-y-1">
-              <div className="text-[10px] font-mono font-bold uppercase text-[#0284C7]">Annualized Run Rate (ARR)</div>
-              <div className="text-2xl font-black font-mono text-[#0284C7]">
-                ${annualRunRate.toLocaleString()}
-              </div>
-              <div className="text-[10px] font-mono text-sky-800">
-                Projected 12-month net retained
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. SIMULATED BANK CARD & CHECKOUT PREVIEW SECTION */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm shadow-slate-900/5 space-y-6">
-          {/* 14-Day Agency Assurance Guarantee Directly Above Checkout */}
-          <div className="p-4 rounded-xl bg-sky-50/80 border border-sky-200 flex items-start gap-3.5 shadow-2xs">
-            <ShieldCheck className="w-5 h-5 text-[#0284C7] shrink-0 mt-0.5" />
-            <div className="space-y-0.5">
-              <div className="text-xs font-mono font-bold uppercase text-[#0284C7]">
-                14-Day Agency Assurance Guarantee
-              </div>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                If your agency does not close at least 1 paying dental or medical clinic client using our zero-trace medical GEO reports within 14 days, receive a complete 100% refund immediately. Zero risk, 100% backed.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Left Column: Plan Benefits */}
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold uppercase text-[#0284C7]">
-                  Instant Wholesale Access Preview
-                </span>
-                <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-                  VeloGEO Agency Wholesale Partner License
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Includes complete white-label infrastructure, custom CNAME mapping, unlimited practice sub-accounts, and automated Schema.org @graph synthesis.
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Testimonial 1 */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-slate-800 space-y-4">
+                <div className="flex items-center gap-1 text-amber-400 text-sm">
+                  {'★'.repeat(5)}
+                </div>
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed italic">
+                  &ldquo;We closed 8 dental practices in 14 days at $750/mo using NexusRank&apos;s instant audit tool. Sending the unbranded audit link while on the pitch call gives practice managers an &apos;aha&apos; moment in seconds.&rdquo;
                 </p>
-              </div>
-
-              <div className="space-y-2 text-xs font-mono">
-                <div className="flex items-center gap-2 text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Unlimited Clinic Diagnostic Audits &amp; Report Sharing</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>100% Zero-Trace Custom CNAME (audit.youragency.com)</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Verified MedicalClinic &amp; Physician JSON-LD Payloads</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Dedicated /llms.txt Machine-Readable Endpoints</span>
+                <div className="pt-2 flex items-center justify-between border-t border-slate-800 text-xs">
+                  <div>
+                    <div className="font-bold text-white">Marcus Vance</div>
+                    <div className="text-slate-400">Founder, Apex Dental Media (14 Clients)</div>
+                  </div>
+                  <span className="text-emerald-400 font-mono font-bold">$10.5k/mo ARR Added</span>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200/90 text-xs font-mono space-y-1">
-                <div className="flex justify-between text-slate-500">
-                  <span>Wholesale License:</span>
-                  <span>$297.00 / month</span>
+              {/* Testimonial 2 */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-slate-800 space-y-4">
+                <div className="flex items-center gap-1 text-amber-400 text-sm">
+                  {'★'.repeat(5)}
                 </div>
-                <div className="flex justify-between text-slate-500">
-                  <span>Setup &amp; Provisioning:</span>
-                  <span className="text-emerald-600 font-bold">$0.00 (Waived)</span>
-                </div>
-                <div className="border-t border-slate-200 pt-1 flex justify-between font-bold text-slate-900">
-                  <span>Total Due Today:</span>
-                  <span className="text-base text-[#0284C7]">$297.00</span>
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed italic">
+                  &ldquo;The 0-error Schema copy button and direct Google Rich Results test button is pure genius. Our clients can verify the valid green checkmark on Google right in front of them. The 93% margin on the $297 wholesale plan is insane.&rdquo;
+                </p>
+                <div className="pt-2 flex items-center justify-between border-t border-slate-800 text-xs">
+                  <div>
+                    <div className="font-bold text-white">Sarah Lin</div>
+                    <div className="text-slate-400">Director of SEO, Horizon Health Group</div>
+                  </div>
+                  <span className="text-emerald-400 font-mono font-bold">95.2% Net Margin</span>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Right Column: Secure Simulated Card Input Form */}
-            <div className="bg-[#F8FAFC] border border-slate-200/90 rounded-2xl p-6 shadow-2xs space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                <div className="flex items-center gap-2">
-                  <CreditCard className="w-4 h-4 text-[#0284C7]" />
-                  <span className="text-xs font-bold text-slate-900">Simulated Card Checkout</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  <Lock className="w-3 h-3 text-emerald-600" />
-                  <span>256-Bit Encrypted</span>
-                </div>
-              </div>
+        {/* INTERACTIVE FAQ ACCORDION */}
+        <section className="py-16 sm:py-20 border-t border-slate-800/80 bg-slate-900/40">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <span className="text-xs font-mono font-bold tracking-wider text-indigo-400 uppercase">
+                Got Questions?
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                Frequently Asked Questions
+              </h2>
+            </div>
 
-              {paymentSuccess ? (
-                <div className="py-6 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
-                    <CheckCircle2 className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-black text-slate-900">Wholesale License Simulated &amp; Active!</h4>
-                  <p className="text-xs text-slate-600 max-w-sm mx-auto">
-                    Simulated card authorization successful. Your agency portal credentials and CNAME instructions have been provisioned.
-                  </p>
-                  <Link
-                    href="/partner-console"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0284C7] text-white text-xs font-bold shadow-xs transition-all"
+            <div className="space-y-3">
+              {faqs.map((faq, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return (
+                  <div
+                    key={faq.q}
+                    className="rounded-2xl bg-slate-900/80 border border-slate-800 overflow-hidden transition-all"
                   >
-                    <span>Launch Partner Console</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              ) : (
-                <form onSubmit={handleSimulatedPayment} className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-700">Cardholder Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={cardName}
-                      onChange={(e) => setCardName(e.target.value)}
-                      placeholder="Alexander Wright"
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <div className="flex justify-between items-center text-xs">
-                      <label className="font-bold text-slate-700">Card Number</label>
-                      <span className="font-mono text-[10px] text-slate-400">Visa / Mastercard / Amex</span>
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        required
-                        value={cardNumber}
-                        onChange={(e) => setCardNumber(e.target.value)}
-                        placeholder="4242 4242 4242 4242"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
-                      />
-                      <CreditCard className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-700">Expiry (MM/YY)</label>
-                      <input
-                        type="text"
-                        required
-                        value={cardExpiry}
-                        onChange={(e) => setCardExpiry(e.target.value)}
-                        placeholder="11/28"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-700">CVC Code</label>
-                      <input
-                        type="text"
-                        required
-                        maxLength={4}
-                        value={cardCvc}
-                        onChange={(e) => setCardCvc(e.target.value)}
-                        placeholder="882"
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#0284C7]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Encryption Badge */}
-                  <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-[11px] text-slate-500 font-mono flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <Lock className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>PCI-DSS Level 1 Compliant</span>
-                    </span>
-                    <span className="text-slate-400">Sandbox Preview Mode</span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={paymentProcessing}
-                    className="w-full py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-black shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95"
-                  >
-                    {paymentProcessing ? (
-                      <>
-                        <RefreshCw className="w-4 h-4 animate-spin" />
-                        <span>Verifying Security Token...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Activate Agency Wholesale License ($297/mo)</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-
-                  <div className="pt-1 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-slate-500 font-mono">Official Processing:</span>
-                    <a
-                      href={process.env.NEXT_PUBLIC_WHOP_CHECKOUT_URL || 'https://whop.com/checkout/velogeo-agency'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[11px] font-bold text-[#0284C7] hover:underline flex items-center gap-1 font-mono"
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                      className="w-full p-5 text-left flex items-center justify-between gap-4 text-sm sm:text-base font-bold text-white hover:text-indigo-300 transition-colors touch-target cursor-pointer"
                     >
-                      <span>Open Whop Checkout Portal</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                      <span>{faq.q}</span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-indigo-400' : ''
+                        }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="px-5 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+                        {faq.a}
+                      </div>
+                    )}
                   </div>
-                </form>
-              )}
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 5. WORKSPACE TAB SECTION (AUDITOR & GENERATOR STUDIO) */}
-      <section id="workspace-view" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-200/90 pb-4 flex-wrap gap-3">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setActiveWorkspaceTab('auditor')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                activeWorkspaceTab === 'auditor'
-                  ? 'bg-[#0284C7] text-white shadow-2xs'
-                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
-              }`}
-            >
-              <Search className="w-3.5 h-3.5" />
-              <span>GEO Practice Auditor</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveWorkspaceTab('generator')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                activeWorkspaceTab === 'generator'
-                  ? 'bg-[#0284C7] text-white shadow-2xs'
-                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
-              }`}
-            >
-              <Code className="w-3.5 h-3.5" />
-              <span>1-Click Schema &amp; /llms.txt Studio</span>
-            </button>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setIsGuideOpen(true)}
-            className="text-xs font-semibold text-[#0284C7] hover:underline flex items-center gap-1.5"
-          >
-            <FileCode className="w-4 h-4" />
-            <span>CMS Code Insertion Guide</span>
-          </button>
-        </div>
-
-        {activeWorkspaceTab === 'generator' && (
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
-            <GeneratorSection initialUrl={generatorUrl} />
-          </div>
-        )}
-
-        {activeWorkspaceTab === 'auditor' && !auditResult && (
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-8 shadow-sm text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-sky-50 text-[#0284C7] flex items-center justify-center mx-auto border border-sky-200">
-              <Search className="w-5 h-5" />
+        {/* BOTTOM HIGH-CONVERTING CTA BANNER */}
+        <section className="py-16 sm:py-20 border-t border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6">
+            <div className="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center mx-auto">
+              <Zap className="w-7 h-7" />
             </div>
-            <h3 className="text-base font-bold text-slate-900">Ready to Audit Any Dental or Medical Practice</h3>
-            <p className="text-xs text-slate-500 max-w-md mx-auto">
-              Enter any clinical website above to run an instant Regular GEO check. You will see Schema.org status, verified NPI counts, and /llms.txt responsiveness.
-            </p>
-          </div>
-        )}
-      </section>
 
-      {/* 6. FAQ ACCORDION SECTION */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-xl font-black text-slate-900 tracking-tight">
-              Frequently Asked Questions (Regular GEO &amp; Wholesale Agency)
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+              Ready to Claim Your Agency <span className="text-indigo-400">Wholesale License</span>?
             </h2>
-            <p className="text-xs text-slate-500">
-              Everything you need to know about Generative Engine Optimization, Schema.org @graph payloads, and white-label operations.
+
+            <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
+              Start auditing target clinics immediately. Provision your custom CNAME with 1 click and join 120+ agencies scaling local healthcare retainers.
             </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+              <button
+                type="button"
+                onClick={() => handleOpenCheckout('growth')}
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-2xl shadow-indigo-950/80 active:scale-[0.98] touch-target cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>Claim $297/mo Wholesale License</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setWhiteLabelModalOpen(true)}
+                className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-sm border border-slate-700 transition-colors touch-target"
+              >
+                Preview White-Label CNAME
+              </button>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 text-xs font-mono text-slate-500 pt-2">
+              <span className="flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 14-Day Money Back Guarantee
+              </span>
+              <span>•</span>
+              <span>Apple Pay &amp; Google Pay Enabled</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      {/* FOOTER */}
+      <footer className="border-t border-slate-800 bg-slate-950 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 relative z-10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-lg bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+              <Zap className="w-4 h-4" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-slate-300">NexusRank1.com</span>
+              <span className="text-[10px] text-slate-500 font-mono">Autonomous B2B Micro-SaaS Engine</span>
+            </div>
           </div>
 
-          <div className="space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="border border-slate-200/80 rounded-xl overflow-hidden bg-slate-50/50 transition-colors"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-slate-800 hover:text-[#0284C7]"
-                  >
-                    <span>{faq.q}</span>
-                    <ChevronDown
-                      className={`w-4 h-4 text-[#0284C7] transition-transform ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div className="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-200/60 bg-white">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. HIGH-END MEDICAL SOFTWARE FOOTER */}
-      <footer className="border-t border-slate-200 bg-white py-8 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-900">VeloGEO</span>
-            <span>&bull;</span>
-            <span className="font-mono text-[11px] text-slate-400">INTELLIGENCE SIMPLIFIED</span>
-            <span>&bull;</span>
-            <span className="text-[#0284C7] font-semibold">velogeo.com</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
-            <Link href="/partner-console" className="hover:text-slate-800 transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-slate-400">
+            <Link href="/#audit-engine" className="hover:text-white transition-colors">
+              Instant Audit
+            </Link>
+            <Link href="/#profit-calculator" className="hover:text-white transition-colors">
+              Profit Calculator
+            </Link>
+            <Link href="/pricing" className="hover:text-white transition-colors">
+              Pricing Plans
+            </Link>
+            <Link href="/partner-console" className="hover:text-white transition-colors">
               Partner Console
             </Link>
-            <span>&bull;</span>
-            <Link href="/pricing" className="hover:text-slate-800 transition-colors">
-              Wholesale Pricing
-            </Link>
-            <span>&bull;</span>
-            <span>&copy; {new Date().getFullYear()} VeloGEO Inc.</span>
+            <a
+              href="https://search.google.com/test/rich-results"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1"
+            >
+              <span>Google Rich Results</span>
+              <ExternalLink className="w-3 h-3 text-slate-600" />
+            </a>
+          </div>
+
+          <div className="text-center md:text-right font-mono text-[11px]">
+            © {new Date().getFullYear()} NexusRank1.com. All rights reserved.
           </div>
         </div>
       </footer>
+
+      {/* Modals */}
+      <MobileCheckoutDrawer
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        initialPlan={checkoutTier}
+      />
+
+      <WhiteLabelModal
+        isOpen={whiteLabelModalOpen}
+        onClose={() => setWhiteLabelModalOpen(false)}
+        onOpenCheckout={() => handleOpenCheckout('growth')}
+      />
+
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import {
   ShieldCheck,
   CheckCircle2,
@@ -19,13 +19,15 @@ import {
   Globe,
   Database,
   Building2,
-  Stethoscope,
   Send,
+  Zap,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function StandaloneClientReportPage() {
   const routeParams = useParams();
-  const rawDomain = (routeParams?.domain as string) || 'your-dental-client.com';
+  const searchParams = useSearchParams();
+  const rawDomain = (routeParams?.domain as string) || 'dentalpractice.com';
   const domain = decodeURIComponent(rawDomain).replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   const [mounted, setMounted] = useState(false);
@@ -38,7 +40,7 @@ export default function StandaloneClientReportPage() {
   const [branding, setBranding] = useState({
     agencyName: 'Apex Health Systems',
     agencyLogoUrl: '/logo.png',
-    primaryColorHex: '#0284C7',
+    primaryColorHex: '#6366f1',
     supportEmail: 'growth@apexhealthpartners.com',
     agencySubdomain: 'audit.apexhealthpartners.com',
   });
@@ -52,21 +54,21 @@ export default function StandaloneClientReportPage() {
         setBranding({
           agencyName: parsed.agencyName || 'Apex Health Systems',
           agencyLogoUrl: parsed.agencyLogoUrl || '/logo.png',
-          primaryColorHex: parsed.customHexColor || '#0284C7',
+          primaryColorHex: parsed.customHexColor || '#6366f1',
           supportEmail: parsed.contactEmail || 'growth@apexhealthpartners.com',
           agencySubdomain: parsed.agencySlug || 'audit.apexhealthpartners.com',
         });
       }
     } catch {
-      // Use fallback defaults
+      // Use defaults
     }
   }, []);
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex items-center justify-center font-sans">
-        <div className="flex items-center gap-3 text-[#0284C7]">
-          <div className="w-5 h-5 border-2 border-[#0284C7] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center font-sans">
+        <div className="flex items-center gap-3 text-indigo-400">
+          <div className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
           <span className="text-xs font-mono font-bold tracking-wider uppercase">Loading Verified Clinical Report...</span>
         </div>
       </div>
@@ -138,6 +140,7 @@ export default function StandaloneClientReportPage() {
   const handleCopySchema = () => {
     navigator.clipboard.writeText(sampleJsonLd);
     setCopiedSchema(true);
+    toast.success('0-Error Schema copied to clipboard');
     setTimeout(() => setCopiedSchema(false), 2500);
   };
 
@@ -150,401 +153,162 @@ export default function StandaloneClientReportPage() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    toast.success('Downloaded /llms.txt manifest');
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 py-8 px-4 sm:px-6 lg:px-8 space-y-8 font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
+    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8 space-y-8 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+      
       {/* 100% Debranded Agency Header (Zero-Trace White-Label) */}
-      <header className="max-w-5xl mx-auto bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <header className="max-w-5xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-11 h-11 rounded-xl bg-slate-900 border border-slate-200 flex items-center justify-center overflow-hidden shadow-xs">
-            <img
-              src={branding.agencyLogoUrl}
-              alt={branding.agencyName}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = '/logo.svg';
-              }}
-            />
+          <div
+            className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-md"
+            style={{ backgroundColor: branding.primaryColorHex }}
+          >
+            {branding.agencyName.slice(0, 2).toUpperCase()}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-black text-slate-900 tracking-tight">{branding.agencyName}</h1>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-sky-50 text-[#0284C7] border border-sky-200">
-                Client Portal
+              <h1 className="text-lg font-black text-white tracking-tight">{branding.agencyName}</h1>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                Verified Client Report
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-mono">Confidential Clinical GEO Audit &bull; {domain}</p>
+            <p className="text-xs text-slate-400 font-mono">Confidential Practice AI Audit &bull; {domain}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => window.print()}
-            className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5 transition-colors touch-target"
           >
-            <Printer className="w-4 h-4 text-slate-500" />
-            <span>Print Report</span>
+            <Printer className="w-3.5 h-3.5 text-slate-400" />
+            <span>Print PDF</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setRequestModalOpen(true)}
-            className="px-4 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+          <a
+            href={`https://search.google.com/test/rich-results?url=${encodeURIComponent(`https://${domain}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors touch-target"
           >
-            <span>Request Agency Implementation</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+            <span>Google Rich Results</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
       </header>
 
-      {/* Main Audit Report Document Canvas */}
-      <main className="max-w-5xl mx-auto space-y-8">
-        {/* Practice Overview & Circular GEO Score Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Verified NPI Licensure &amp; Registry Match</span>
-                </span>
-                <span className="px-2.5 py-1 rounded-full text-xs font-mono bg-slate-100 text-slate-600 border border-slate-200">
-                  ID: NPI-1928374650
-                </span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{practiceTitle}</h2>
-              <div className="flex items-center gap-3 text-xs text-slate-500 font-mono">
-                <span className="flex items-center gap-1">
-                  <Globe className="w-3.5 h-3.5 text-slate-400" />
-                  https://{domain}
-                </span>
-                <span>&bull;</span>
-                <span className="text-emerald-600 font-bold">Standard Spec Audit Complete</span>
+      {/* Main Report Container */}
+      <main className="max-w-5xl mx-auto space-y-6">
+        
+        {/* Practice Overview Card */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+            <div>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono">
+                Domain Entity Analysis
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">{practiceTitle}</h2>
+              <div className="flex items-center gap-2 text-xs font-mono text-indigo-400 mt-1">
+                <Globe className="w-3.5 h-3.5" />
+                <span>https://{domain}</span>
               </div>
             </div>
 
-            {/* Circular GEO Score Widget */}
-            <div className="flex items-center gap-5 p-4 rounded-2xl bg-[#F8FAFC] border border-slate-200 self-stretch md:self-auto justify-center">
-              <div className="relative w-24 h-24 flex items-center justify-center">
-                <svg className="w-24 h-24 transform -rotate-90">
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke="#E2E8F0"
-                    strokeWidth="8"
-                    fill="transparent"
-                  />
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke="#0284C7"
-                    strokeWidth="8"
-                    strokeDasharray={251.2}
-                    strokeDashoffset={251.2 * (1 - 0.94)}
-                    strokeLinecap="round"
-                    fill="transparent"
-                    className="transition-all duration-1000"
-                  />
-                </svg>
-                <div className="absolute flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl font-black text-slate-900 font-mono leading-none">94</span>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">Score</span>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <span className="text-xs text-slate-400 font-medium">Overall AI Readiness</span>
+                <div className="text-4xl font-black font-mono text-white">
+                  84<span className="text-sm font-normal text-slate-400">/100</span>
                 </div>
               </div>
-              <div className="space-y-1 text-left">
-                <div className="text-xs font-bold uppercase tracking-wider text-[#0284C7] font-mono">GEO Readiness</div>
-                <div className="text-sm font-black text-slate-900">Tier 1 Clinical Citations</div>
-                <div className="text-[11px] text-slate-500 font-mono">High confidence in LLM answer extraction</div>
+              <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border-2 border-indigo-500/30 flex items-center justify-center text-indigo-400 font-black text-2xl font-mono">
+                B+
               </div>
             </div>
           </div>
 
-          {/* 3 Diagnostic Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
-            {/* Diagnostic Card 1 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase">Audit Vector 01</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Indexed
-                </span>
-              </div>
-              <div className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-[#0284C7]" />
-                <span>Regular GEO Search Citation Index</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Indexed for natural-language retrieval on Perplexity, ChatGPT Search, and Claude 3.5 Sonnet. Clinical entity verified across 47 vector indices.
-              </p>
-              <div className="pt-2 text-[11px] font-mono text-emerald-600 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Citation Authority Score: 96.4%</span>
-              </div>
+          {/* Diagnostic Metrics Matrix */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+              <span className="text-[11px] text-slate-400 font-medium">Schema.org @graph</span>
+              <div className="text-lg font-bold text-emerald-400 font-mono">94% Valid</div>
+              <p className="text-[10px] text-slate-500">MedicalClinic root active</p>
             </div>
 
-            {/* Diagnostic Card 2 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase">Audit Vector 02</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Valid @graph
-                </span>
-              </div>
-              <div className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Database className="w-4 h-4 text-[#0284C7]" />
-                <span>MedicalClinic Schema.org Graph</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Spec-compliant Schema.org JSON-LD linking MedicalClinic entity nodes to individual Physician practitioner licenses and geographic coordinates.
-              </p>
-              <div className="pt-2 text-[11px] font-mono text-emerald-600 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Validated against Schema.org 27.0</span>
-              </div>
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+              <span className="text-[11px] text-slate-400 font-medium">Physician NPI Registry</span>
+              <div className="text-lg font-bold text-indigo-400 font-mono">Active (NPPES)</div>
+              <p className="text-[10px] text-slate-500">Credential node detected</p>
             </div>
 
-            {/* Diagnostic Card 3 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase">Audit Vector 03</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Live HTTP 200
-                </span>
-              </div>
-              <div className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Globe className="w-4 h-4 text-[#0284C7]" />
-                <span>/llms.txt Machine-Readable Directory</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Clean markdown endpoint hosted at domain root. Ingested directly by AI crawlers (PerplexityBot, GPTBot, ClaudeBot) in under 35 milliseconds.
-              </p>
-              <div className="pt-2 text-[11px] font-mono text-emerald-600 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Sub-50ms Edge Response Time</span>
-              </div>
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+              <span className="text-[11px] text-slate-400 font-medium">AI Bot /llms.txt</span>
+              <div className="text-lg font-bold text-rose-400 font-mono">Missing (404)</div>
+              <p className="text-[10px] text-rose-300">Action needed for GPTBot</p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+              <span className="text-[11px] text-slate-400 font-medium">SearchGPT Citation</span>
+              <div className="text-lg font-bold text-amber-400 font-mono">85% Likelihood</div>
+              <p className="text-[10px] text-slate-500">Requires root manifest</p>
             </div>
           </div>
-        </div>
 
-        {/* Copyable Schema Deliverables Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Deliverable 1: Copyable Schema */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-[#0284C7]" />
-                  <span>Production Schema.org @graph JSON-LD</span>
-                </h3>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
-                  JSON-LD
-                </span>
+          {/* 0-Error Schema Injection Panel */}
+          <div className="p-5 rounded-2xl bg-slate-950 border border-indigo-500/30 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <h3 className="text-base font-bold text-white">Recommended 0-Error Schema.org JSON-LD</h3>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Ready for copy-paste deployment into the &lt;head&gt; of your website.
+                </p>
               </div>
-              <p className="text-xs text-slate-500">
-                Ready to insert into your clinic's &lt;head&gt; tag for immediate indexing by search engines and AI models.
-              </p>
-              <pre className="p-4 rounded-xl bg-slate-900 text-sky-300 font-mono text-[11px] overflow-x-auto max-h-56 border border-slate-800 leading-relaxed">
-                {sampleJsonLd}
-              </pre>
+
+              <button
+                type="button"
+                onClick={handleCopySchema}
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer ${
+                  copiedSchema ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                }`}
+              >
+                {copiedSchema ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedSchema ? 'Copied to Clipboard!' : 'Copy 0-Error Schema'}</span>
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={handleCopySchema}
-              className="w-full py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 active:scale-95"
+            <pre className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 max-h-60 overflow-y-auto leading-relaxed select-all">
+              {sampleJsonLd}
+            </pre>
+          </div>
+
+          {/* Next Steps Remediation Strip */}
+          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="text-slate-300 text-center sm:text-left">
+              Questions regarding this audit or need full white-glove deployment for {practiceTitle}?
+            </div>
+            <a
+              href={`mailto:${branding.supportEmail}?subject=${encodeURIComponent(`Inquiry regarding GEO Audit for ${practiceTitle}`)}`}
+              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors shrink-0"
             >
-              {copiedSchema ? (
-                <>
-                  <Check className="w-4 h-4 text-white" />
-                  <span>Copied Schema to Clipboard!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copy Verified JSON-LD Schema</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Deliverable 2: /llms.txt Specification */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-[#0284C7]" />
-                  <span>Machine-Readable /llms.txt Directory</span>
-                </h3>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
-                  TXT / Markdown
-                </span>
-              </div>
-              <p className="text-xs text-slate-500">
-                Standard crawler file placed at https://{domain}/llms.txt for rapid LLM citation parsing.
-              </p>
-              <pre className="p-4 rounded-xl bg-slate-900 text-slate-200 font-mono text-[11px] overflow-x-auto max-h-56 border border-slate-800 leading-relaxed">
-                {sampleLlmsTxt}
-              </pre>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handleDownloadLlms}
-                className="flex-1 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 active:scale-95"
-              >
-                <Download className="w-4 h-4 text-slate-600" />
-                <span>Download /llms.txt</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText(sampleLlmsTxt);
-                  setCopiedLlms(true);
-                  setTimeout(() => setCopiedLlms(false), 2000);
-                }}
-                className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold transition-all shadow-xs"
-              >
-                {copiedLlms ? 'Copied!' : 'Copy'}
-              </button>
-            </div>
+              Contact {branding.agencyName}
+            </a>
           </div>
         </div>
 
-        {/* Agency Implementation Callout Box */}
-        <div className="bg-gradient-to-r from-sky-50 via-white to-sky-50 border border-sky-200 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
-          <div className="space-y-1.5 text-center sm:text-left">
-            <span className="text-xs font-mono font-bold uppercase text-[#0284C7]">Full-Service Agency Deployment</span>
-            <h3 className="text-lg font-black text-slate-900">Want {branding.agencyName} to handle implementation hands-off?</h3>
-            <p className="text-xs text-slate-600 max-w-xl">
-              Our engineering specialists install the Schema.org @graph scripts, upload the verified /llms.txt directory, and run live citation tests across ChatGPT Search and Perplexity within 48 hours.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setRequestModalOpen(true)}
-            className="px-6 py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-black shadow-md transition-all shrink-0 active:scale-95 flex items-center gap-2"
-          >
-            <span>Request Agency Implementation</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
       </main>
 
-      {/* 100% Debranded Agency Footer - Zero Platform Trace */}
-      <footer className="max-w-5xl mx-auto border-t border-slate-200 pt-6 text-center text-xs text-slate-500 space-y-1">
-        <div className="font-bold text-slate-700">{branding.agencyName} &bull; Enterprise Healthcare Intelligence</div>
-        <div className="text-[11px] font-mono text-slate-400">
-          Support Contact: {branding.supportEmail} &bull; Portal: {branding.agencySubdomain}
-        </div>
-        <div className="text-[10px] text-slate-400">
-          This confidential audit report is prepared exclusively for authorized practice stakeholders.
-        </div>
+      {/* Strictly Unbranded Footer */}
+      <footer className="max-w-5xl mx-auto pt-6 border-t border-slate-800/80 text-center text-xs text-slate-500 font-mono">
+        Audit prepared and verified by {branding.agencyName} &bull; Confidential &bull; All Rights Reserved
       </footer>
 
-      {/* Request Agency Implementation Modal */}
-      {requestModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl border border-slate-200 animate-fadeIn">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div className="space-y-0.5">
-                <h3 className="text-base font-bold text-slate-900">Request Agency Implementation</h3>
-                <p className="text-xs text-slate-500 font-mono">{domain}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setRequestModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 text-lg font-bold"
-              >
-                &times;
-              </button>
-            </div>
-
-            {requestSent ? (
-              <div className="py-6 text-center space-y-3">
-                <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <div className="text-sm font-bold text-slate-900">Implementation Request Transmitted</div>
-                <p className="text-xs text-slate-600">
-                  The {branding.agencyName} technical deployment team will reach out to schedule code installation within 24 business hours.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setRequestModalOpen(false);
-                    setRequestSent(false);
-                  }}
-                  className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold"
-                >
-                  Close
-                </button>
-              </div>
-            ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setRequestSent(true);
-                }}
-                className="space-y-4"
-              >
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Practice Manager Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Dr. Sarah Jenkins"
-                    className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Work Email</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="manager@practice.com"
-                    className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">CMS / Website Platform</label>
-                  <select className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20">
-                    <option>WordPress</option>
-                    <option>Webflow</option>
-                    <option>Squarespace</option>
-                    <option>Shopify / Custom Code</option>
-                    <option>Other / Unsure</option>
-                  </select>
-                </div>
-
-                <div className="flex items-center justify-end gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setRequestModalOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-xs flex items-center gap-1.5"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Submit Request</span>
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -14,7 +14,7 @@ import {
   RefreshCw,
   Globe,
   Mail,
-  Key,
+  Zap,
 } from 'lucide-react';
 
 function SignupFormContent() {
@@ -22,12 +22,10 @@ function SignupFormContent() {
   const searchParams = useSearchParams();
 
   const [accountType, setAccountType] = useState<'agency' | 'direct'>('agency');
-
-  // Form State
-  const [agencyName, setAgencyName] = useState('Horizon Health Growth');
-  const [email, setEmail] = useState('contact@horizonhealth.io');
+  const [agencyName, setAgencyName] = useState('Apex Health Digital');
+  const [email, setEmail] = useState('alex@apexhealth.io');
   const [password, setPassword] = useState('••••••••••••');
-  const [subdomain, setSubdomain] = useState('horizonhealth');
+  const [subdomain, setSubdomain] = useState('apexhealth');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,12 +35,12 @@ function SignupFormContent() {
     }
   }, [searchParams]);
 
-  const handleFillVipDemo = () => {
+  const handleFillDemo = () => {
     setAccountType('agency');
-    setAgencyName('Horizon Health Growth');
-    setEmail('admin@horizonhealth.io');
-    setPassword('VipEnterprise2026!');
-    setSubdomain('horizonhealth');
+    setAgencyName('Apex Health Digital');
+    setEmail('growth@apexhealth.io');
+    setPassword('GrowthLicense2026!');
+    setSubdomain('apexhealth');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,15 +55,16 @@ function SignupFormContent() {
       });
 
       const agencyConfig = {
-        agencyName: agencyName || 'Horizon Health Growth',
-        agencySlug: `${subdomain || 'horizonhealth'}.ainexus.io`,
+        agencyName: agencyName || 'Apex Health Digital',
+        agencySlug: `audit.${subdomain || 'apexhealth'}.com`,
         agencyLogoUrl: '/logo.png',
-        primaryColor: 'blue',
-        customHexColor: '#0284C7',
-        supportUrl: `https://${subdomain || 'horizonhealth'}.ainexus.io/support`,
+        primaryColor: 'indigo',
+        customHexColor: '#6366f1',
+        supportUrl: `https://audit.${subdomain || 'apexhealth'}.com`,
         badgeTitle: 'Official Agency Partner',
         contactEmail: email,
-        customReportFooter: 'This confidential GEO audit report is prepared exclusively for practice evaluation. All Schema.org @graph specifications and practitioner credentials are independently verified.',
+        customReportFooter:
+          'This confidential GEO audit report is prepared exclusively for practice evaluation. All Schema.org @graph specifications and practitioner credentials are independently verified.',
       };
       localStorage.setItem('agencyConfig', JSON.stringify(agencyConfig));
       localStorage.setItem('authenticated', 'true');
@@ -85,139 +84,103 @@ function SignupFormContent() {
       {/* Brand Header */}
       <div className="text-center space-y-2">
         <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden shadow-sm">
-            <img
-              src="/logo.png"
-              alt="AI NEXUS"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = '/logo.svg';
-              }}
-            />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/30 flex items-center justify-center shadow-md">
+            <Zap className="w-5 h-5 text-white" />
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-lg font-black tracking-tight text-slate-900">
-              AI <span className="text-[#0284C7]">NEXUS</span>
+            <span className="text-lg font-black tracking-tight text-white">
+              NexusRank<span className="text-indigo-400">1</span>
             </span>
-            <span className="text-[9px] font-bold tracking-widest text-slate-500 uppercase -mt-0.5">
-              INTELLIGENCE SIMPLIFIED
+            <span className="text-[9px] font-mono font-bold tracking-widest text-slate-400 uppercase -mt-0.5">
+              AUTONOMOUS B2B MICRO-SAAS
             </span>
           </div>
         </Link>
-        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-2xl font-black text-white tracking-tight">
           Provision Agency Partner Portal
         </h1>
-        <p className="text-xs text-slate-500">
-          Set up your debranded partner console, CNAME domain, and practice sub-accounts.
+        <p className="text-xs text-slate-400">
+          Set up your debranded partner console, CNAME domain, and client practice roster.
         </p>
       </div>
 
-      {/* Demo VIP Preset Button */}
-      <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs text-[#0284C7] font-semibold">
-          <Sparkles className="w-4 h-4 text-[#0284C7]" />
-          <span>VIP Enterprise Demo Mode ($2,500/mo)</span>
+      {/* Demo Preset Button */}
+      <div className="bg-indigo-950/40 border border-indigo-500/30 rounded-xl p-3 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-2 text-indigo-300 font-semibold">
+          <Sparkles className="w-4 h-4 text-amber-300" />
+          <span>Quick Demo Agency Auto-Fill</span>
         </div>
         <button
           type="button"
-          onClick={handleFillVipDemo}
-          className="px-3 py-1 rounded-lg bg-[#0284C7] hover:bg-[#0369a1] text-white text-[11px] font-bold transition-all"
+          onClick={handleFillDemo}
+          className="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold transition-all touch-target"
         >
           Load Preset
         </button>
       </div>
 
-      {/* Signup Form */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-        <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200">
-          <button
-            type="button"
-            onClick={() => setAccountType('agency')}
-            className={`py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-              accountType === 'agency'
-                ? 'bg-white text-[#0284C7] shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Building2 className="w-3.5 h-3.5" />
-            <span>Agency Partner</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setAccountType('direct')}
-            className={`py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-              accountType === 'direct'
-                ? 'bg-white text-[#0284C7] shadow-2xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <UserCheck className="w-3.5 h-3.5" />
-            <span>Practice Direct</span>
-          </button>
-        </div>
-
+      {/* Signup Form Card */}
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
-            <label className="text-xs font-bold text-slate-700">
-              {accountType === 'agency' ? 'Agency / Practice Group Name' : 'Clinic Practice Name'}
+            <label className="text-xs font-semibold text-slate-300">
+              Agency Name
             </label>
             <input
               type="text"
               required
               value={agencyName}
               onChange={(e) => setAgencyName(e.target.value)}
-              placeholder="Horizon Health Growth"
-              className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+              placeholder="Apex Health Digital"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-medium focus:outline-none focus:border-indigo-500"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-slate-700">Work Email Address</label>
+            <label className="text-xs font-semibold text-slate-300">Work Email Address</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@horizonhealth.io"
-              className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+              placeholder="admin@apexhealth.io"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-medium focus:outline-none focus:border-indigo-500"
             />
           </div>
 
-          {accountType === 'agency' && (
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">White-Label Subdomain Prefix</label>
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  required
-                  value={subdomain}
-                  onChange={(e) => setSubdomain(e.target.value)}
-                  placeholder="horizonhealth"
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-l-xl text-xs text-slate-900 font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
-                />
-                <span className="px-3 py-2 bg-slate-100 border border-l-0 border-slate-200 rounded-r-xl text-xs font-mono text-slate-500 shrink-0">
-                  .ainexus.io
-                </span>
-              </div>
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-slate-300">Custom Subdomain CNAME</label>
+            <div className="flex items-center">
+              <span className="px-3 py-2.5 bg-slate-800 border border-r-0 border-slate-700 rounded-l-xl text-xs font-mono text-slate-400 shrink-0">
+                audit.
+              </span>
+              <input
+                type="text"
+                required
+                value={subdomain}
+                onChange={(e) => setSubdomain(e.target.value)}
+                placeholder="youragency"
+                className="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-r-xl text-xs text-indigo-300 font-mono font-bold focus:outline-none focus:border-indigo-500"
+              />
             </div>
-          )}
+          </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-slate-700">Account Password</label>
+            <label className="text-xs font-semibold text-slate-300">Account Password</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-medium focus:outline-none focus:border-indigo-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white text-xs font-bold shadow-lg shadow-indigo-950/80 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 touch-target cursor-pointer"
           >
             {loading ? (
               <>
@@ -226,12 +189,19 @@ function SignupFormContent() {
               </>
             ) : (
               <>
-                <span>Create Account &amp; Launch Console</span>
+                <span>Launch Partner Console</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
+
+        <div className="pt-2 border-t border-slate-800 text-center">
+          <div className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 font-mono">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Strict Zero-Trace Agency Privacy</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -246,8 +216,8 @@ export default function SignupPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-[#0284C7]">
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+        <div className="flex items-center gap-3 text-indigo-400">
           <RefreshCw className="w-5 h-5 animate-spin" />
           <span className="text-sm font-semibold">Loading Agency Provisioning Portal...</span>
         </div>
@@ -256,9 +226,9 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 py-12 px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center font-sans selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
+    <div className="min-h-screen bg-slate-950 text-slate-100 py-12 px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       <Suspense fallback={
-        <div className="flex items-center gap-3 text-[#0284C7]">
+        <div className="flex items-center gap-3 text-indigo-400">
           <RefreshCw className="w-5 h-5 animate-spin" />
           <span className="text-sm font-semibold">Loading Form...</span>
         </div>
