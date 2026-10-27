@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { discoverClinicUrl } from '@/lib/agentic-search';
+import { discoverClinicUrl, isSafePublicUrl, isUrlCandidate } from '@/lib/agentic-search';
 import { executeOssScraperPipeline } from '@/lib/oss-scrapers-engine';
 import { distillDomAndExtractSchema } from '@/lib/stagehand-distiller';
 import { AuditResponse } from '@/lib/types';
@@ -14,6 +14,15 @@ const FALLBACK_CASCADE = [
   'qwen/qwen-2.5-72b-instruct',
   'openrouter/auto',
 ];
+
+// In-Memory 1-Hour Domain Audit Cache (Prevents redundant scraping & LLM costs)
+const auditCache = new Map<string, { data: AuditResponse; timestamp: number }>();
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+// In-Memory Rate Limiter (30 audits per minute per IP)
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 30;
 
 function generateClinicalPayloads(targetUrl: string, title: string) {
   let hostname = 'your-dental-client.com';
@@ -179,6 +188,39 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Rate Limiting Check (30 reqs/min per IP)
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || '127.0.0.1';
+    const now = Date.now();
+    const timestamps = (rateLimitMap.get(clientIp) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+    if (timestamps.length >= MAX_REQUESTS_PER_WINDOW) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait a moment before running another audit.' },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      );
+    }
+    timestamps.push(now);
+    rateLimitMap.set(clientIp, timestamps);
+
+    // SSRF Security Check: reject private/internal network addresses
+    if (isUrlCandidate(rawInput) && !isSafePublicUrl(rawInput)) {
+      return NextResponse.json(
+        { error: 'Invalid or restricted domain. Queries to private or internal addresses are blocked.' },
+        { status: 400 }
+      );
+    }
+
+    // In-Memory Cache Lookup (1-hour TTL)
+    const normalizedCacheKey = rawInput.toLowerCase().trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const cachedEntry = auditCache.get(normalizedCacheKey);
+    if (cachedEntry && now - cachedEntry.timestamp < CACHE_TTL_MS) {
+      return NextResponse.json(cachedEntry.data, {
+        headers: {
+          'X-Cache': 'HIT',
+          'X-Cache-TTL': `${Math.round((CACHE_TTL_MS - (now - cachedEntry.timestamp)) / 1000)}s`,
+        },
+      });
+    }
+
     // 1. Agentic Discovery & URL Normalization
     let targetUrl = rawInput.trim();
     let isDirectUrl = true;
@@ -323,7 +365,12 @@ export async function POST(req: NextRequest) {
       modelUsed: openRouterResult?.modelUsed || 'deepseek/deepseek-chat (Clinical Diagnostic Engine)',
     };
 
-    return NextResponse.json(responseData);
+    // Store in 1-hour in-memory cache
+    auditCache.set(normalizedCacheKey, { data: responseData, timestamp: Date.now() });
+
+    return NextResponse.json(responseData, {
+      headers: { 'X-Cache': 'MISS' },
+    });
   } catch (err: any) {
     // Robust try/catch fallback defaults to prevent 500 crashes
     const fallbackUrl = 'https://your-dental-client.com';

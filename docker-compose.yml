@@ -1,0 +1,22 @@
+services:
+  nexusrank:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexusrank-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-deepseek/deepseek-chat}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://nexusrank1.com}
+      - ADMIN_ACCESS_KEY=${ADMIN_ACCESS_KEY:-citemed2026}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/auth"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -44,6 +44,51 @@ export function normalizeUrl(rawUrl: string): string {
   return urlStr;
 }
 
+/**
+ * SSRF Security Guard: Disallows loopback, link-local, and private RFC-1918 networks
+ */
+export function isSafePublicUrl(rawUrl: string): boolean {
+  try {
+    const parsed = new URL(normalizeUrl(rawUrl));
+    const hostname = parsed.hostname.toLowerCase();
+
+    // 1. Loopback and internal names
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '::1' ||
+      hostname === '0.0.0.0' ||
+      hostname.endsWith('.local') ||
+      hostname.endsWith('.internal')
+    ) {
+      return false;
+    }
+
+    // 2. Link-local cloud metadata (AWS, GCP, Azure 169.254.169.254)
+    if (hostname.startsWith('169.254.')) {
+      return false;
+    }
+
+    // 3. RFC-1918 Private ranges
+    if (
+      hostname.startsWith('10.') ||
+      hostname.startsWith('192.168.') ||
+      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname)
+    ) {
+      return false;
+    }
+
+    // 4. Only allow HTTP and HTTPS protocols
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function discoverClinicUrl(queryOrUrl: string): Promise<DiscoveryResponse> {
   const trimmed = queryOrUrl.trim();
 

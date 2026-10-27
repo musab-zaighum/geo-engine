@@ -123,3 +123,38 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Crisp Dark-on-Light Stylesheet for Client PDF & Print Export */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+  header button,
+  header a,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  .bg-slate-900,
+  .bg-slate-950,
+  .bg-slate-900\/90 {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+  .text-white {
+    color: #0f172a !important;
+  }
+  .text-slate-400,
+  .text-slate-500 {
+    color: #475569 !important;
+  }
+  pre {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+    page-break-inside: avoid;
+  }
+}
