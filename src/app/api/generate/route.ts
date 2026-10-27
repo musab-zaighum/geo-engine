@@ -193,7 +193,7 @@ export async function POST(req: NextRequest) {
 
     const typedData = data as GenerateRequest;
     const apiKey = process.env.OPENROUTER_API_KEY;
-    const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3.5-sonnet';
+    const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat';
 
     if (!apiKey || apiKey.trim() === '' || apiKey.includes('your_openrouter_api_key')) {
       // Use fallback generator engine if OpenRouter API key is not configured
@@ -241,7 +241,7 @@ Return ONLY the raw JSON object. Do not include markdown code fence formatting a
       });
 
       if (!response.ok) {
-        // Fallback to OpenAI gpt-4o-mini on OpenRouter if primary model returned non-200
+        // Fallback to Google Gemini 2.0 Flash on OpenRouter if primary model returned non-200
         const fallbackModelRes = await fetch(
           'https://openrouter.ai/api/v1/chat/completions',
           {
@@ -253,7 +253,7 @@ Return ONLY the raw JSON object. Do not include markdown code fence formatting a
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'openai/gpt-4o-mini',
+              model: 'google/gemini-2.0-flash-001',
               messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: userPrompt },

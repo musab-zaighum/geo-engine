@@ -9,8 +9,8 @@ export const openrouter = new OpenAI({
   },
 });
 
-export const DEFAULT_MODEL = "openai/gpt-4o-mini";
-export const FALLBACK_MODEL = "anthropic/claude-3.5-haiku";
+export const DEFAULT_MODEL = "deepseek/deepseek-chat";
+export const FALLBACK_MODEL = "google/gemini-2.0-flash-001";
 
 /**
  * System prompt persona for Dr. CiteBot

@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey = process.env.OPENROUTER_API_KEY;
-    const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3.5-sonnet';
+    const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat';
 
     const systemPrompt = `You are the Master NexusRank1 AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
 Use the following official NexusRank1 / CiteMed Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
@@ -175,7 +175,7 @@ Instructions:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'openai/gpt-4o-mini',
+            model: 'google/gemini-2.0-flash-001',
             messages: formattedMessages,
             temperature: 0.3,
           }),

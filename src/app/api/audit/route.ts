@@ -7,11 +7,11 @@ import { AuditResponse } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
-// Multi-provider fallback cascade per specification prioritizing Gemini 4 Argon
+// High-efficiency, ultra-low-cost multi-model cascade (DeepSeek V3, Gemini 2.0 Flash, Qwen 2.5)
 const FALLBACK_CASCADE = [
-  'google/gemini-4-argon',
+  'deepseek/deepseek-chat',
   'google/gemini-2.0-flash-001',
-  'anthropic/claude-3.5-sonnet',
+  'qwen/qwen-2.5-72b-instruct',
   'openrouter/auto',
 ];
 
@@ -320,7 +320,7 @@ export async function POST(req: NextRequest) {
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
       remediationHighlight: 'Generates and validates this entire unbranded medical GEO package in 30 seconds.',
-      modelUsed: openRouterResult?.modelUsed || 'google/gemini-4-argon (Clinical Diagnostic Engine)',
+      modelUsed: openRouterResult?.modelUsed || 'deepseek/deepseek-chat (Clinical Diagnostic Engine)',
     };
 
     return NextResponse.json(responseData);
@@ -367,7 +367,7 @@ export async function POST(req: NextRequest) {
       suggestedSchemaJsonLd,
       suggestedLlmsTxt,
       remediationHighlight: 'Generates and validates this entire unbranded medical GEO package in 30 seconds.',
-      modelUsed: 'google/gemini-4-argon (Fail-Safe Medical Engine)',
+      modelUsed: 'deepseek/deepseek-chat (Fail-Safe Medical Engine)',
     };
 
     return NextResponse.json(fallbackResponse);
