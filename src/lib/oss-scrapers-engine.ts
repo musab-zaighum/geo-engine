@@ -33,15 +33,21 @@ export interface OssScraperResult {
 }
 
 export async function executeOssScraperPipeline(targetUrl: string): Promise<OssScraperResult> {
+  // Normalize target URL with defensive scheme
+  let cleanUrl = (targetUrl || '').trim();
+  if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+    cleanUrl = `https://${cleanUrl}`;
+  }
+
   // 1. Check llms.txt at origin domain
   let hasLlmsTxt = false;
   let llmsTxtStatus = 0;
   try {
-    const origin = new URL(targetUrl).origin;
+    const origin = new URL(cleanUrl).origin;
     const llmsRes = await fetch(`${origin}/llms.txt`, {
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
       },
       signal: AbortSignal.timeout(5000),
     });
@@ -61,15 +67,15 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
   if (firecrawlKey && firecrawlKey.trim() !== '') {
     try {
       const firecrawl = new FirecrawlApp({ apiKey: firecrawlKey });
-      const scrapeRes: any = await firecrawl.scrapeUrl(targetUrl, {
+      const scrapeRes: any = await firecrawl.scrapeUrl(cleanUrl, {
         formats: ['markdown', 'html'],
       });
 
       if (scrapeRes && scrapeRes.success && scrapeRes.html) {
-        const readability = extractReadabilityMarkdown(scrapeRes.html, targetUrl);
+        const readability = extractReadabilityMarkdown(scrapeRes.html, cleanUrl);
         const schemaValidation = validateMedicalSchemaJson(scrapeRes.html);
         return {
-          url: targetUrl,
+          url: cleanUrl,
           success: true,
           html: scrapeRes.html,
           markdown: scrapeRes.markdown || readability.markdown,
@@ -96,7 +102,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     const pythonOutput = await new Promise<string>((resolve, reject) => {
       execFile(
         pythonPath,
-        [scriptPath, targetUrl],
+        [scriptPath, cleanUrl],
         { maxBuffer: 10 * 1024 * 1024, timeout: 15000 },
         (err, stdout) => {
           if (err && !stdout) {
@@ -110,10 +116,10 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     if (pythonOutput) {
       const data = JSON.parse(pythonOutput);
       if (data.success && data.html) {
-        const readability = extractReadabilityMarkdown(data.html, targetUrl);
+        const readability = extractReadabilityMarkdown(data.html, cleanUrl);
         const schemaValidation = validateMedicalSchemaJson(data.html);
         return {
-          url: data.url || targetUrl,
+          url: data.url || cleanUrl,
           success: true,
           html: data.html,
           markdown: data.markdown || readability.markdown,
@@ -134,11 +140,11 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
 
   // 4. Fast HTTP Fetch + Mozilla Readability & Turndown Parser
   try {
-    const pageRes = await fetch(targetUrl, {
+    const pageRes = await fetch(cleanUrl, {
       method: 'GET',
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
       signal: AbortSignal.timeout(8000),
@@ -147,11 +153,11 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
 
     if (pageRes.ok) {
       const html = await pageRes.text();
-      const readability = extractReadabilityMarkdown(html, targetUrl);
+      const readability = extractReadabilityMarkdown(html, cleanUrl);
       const schemaValidation = validateMedicalSchemaJson(html);
 
       return {
-        url: targetUrl,
+        url: cleanUrl,
         success: true,
         html,
         markdown: readability.markdown,
@@ -167,7 +173,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     }
   } catch (err: any) {
     return {
-      url: targetUrl,
+      url: cleanUrl,
       success: false,
       html: '',
       markdown: '',
@@ -182,7 +188,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
   }
 
   return {
-    url: targetUrl,
+    url: cleanUrl,
     success: false,
     html: '',
     markdown: '',

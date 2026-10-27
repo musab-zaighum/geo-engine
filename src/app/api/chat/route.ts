@@ -102,8 +102,14 @@ How can I assist your practice or agency today?`;
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const messages: ChatMessage[] = body.messages || [];
+    let body: any = {};
+    try {
+      body = await req.json();
+    } catch {
+      body = {};
+    }
+
+    const messages: ChatMessage[] = Array.isArray(body.messages) ? body.messages : [];
 
     if (!messages || messages.length === 0) {
       return NextResponse.json(
@@ -115,14 +121,14 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.OPENROUTER_API_KEY;
     const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3.5-sonnet';
 
-    const systemPrompt = `You are the Master CiteMed AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
-Use the following official CiteMed Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
+    const systemPrompt = `You are the Master NexusRank1 AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
+Use the following official NexusRank1 / CiteMed Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
 
 ${CITEMED_MASTER_KNOWLEDGE_BASE}
 
 Instructions:
 - Provide structured, actionable, and formatted Markdown responses.
-- Emphasize Ahpra/NPI/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and the $1,497 solo / $2,497 clinic pricing tiers.
+- Emphasize Ahpra/NPI/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and agency pricing tiers ($297/mo Growth with custom CNAME).
 - If asked for cold emails, objection handling, or technical schemas, output full ready-to-use templates.`;
 
     if (!apiKey || apiKey.trim() === '' || apiKey.includes('your_openrouter_api_key')) {
@@ -147,8 +153,8 @@ Instructions:
         method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          'HTTP-Referer': 'https://citemed-geo.internal',
-          'X-Title': 'CiteMed Master Chatbot',
+          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://nexusrank1.com',
+          'X-Title': 'NexusRank1 Master Chatbot',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -164,8 +170,8 @@ Instructions:
           method: 'POST',
           headers: {
             Authorization: `Bearer ${apiKey}`,
-            'HTTP-Referer': 'https://citemed-geo.internal',
-            'X-Title': 'CiteMed Master Chatbot',
+            'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://nexusrank1.com',
+            'X-Title': 'NexusRank1 Master Chatbot',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

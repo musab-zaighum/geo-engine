@@ -22,8 +22,30 @@ export function validateMedicalSchemaJson(jsonLdString: string): SchemaValidatio
   let hasRegistrationId = false;
 
   try {
-    const parsed = JSON.parse(jsonLdString);
-    isValidJson = true;
+    let parsedObjects: any[] = [];
+    const trimmed = (jsonLdString || '').trim();
+
+    if (trimmed.startsWith('<') || trimmed.includes('<script')) {
+      // It's an HTML document; extract all application/ld+json blocks
+      const scriptRegex = /<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+      let match;
+      while ((match = scriptRegex.exec(trimmed)) !== null) {
+        try {
+          const raw = match[1].trim();
+          if (raw) {
+            parsedObjects.push(JSON.parse(raw));
+          }
+        } catch {
+          // ignore malformed embedded script tag
+        }
+      }
+      if (parsedObjects.length > 0) {
+        isValidJson = true;
+      }
+    } else {
+      parsedObjects = [JSON.parse(trimmed)];
+      isValidJson = true;
+    }
 
     const traverse = (obj: any) => {
       if (!obj) return;
@@ -41,7 +63,7 @@ export function validateMedicalSchemaJson(jsonLdString: string): SchemaValidatio
           });
         }
 
-        if (obj['identifier'] || obj['registrationNumber'] || obj['license']) {
+        if (obj['identifier'] || obj['registrationNumber'] || obj['license'] || obj['npi']) {
           hasRegistrationId = true;
         }
 
@@ -51,9 +73,9 @@ export function validateMedicalSchemaJson(jsonLdString: string): SchemaValidatio
       }
     };
 
-    traverse(parsed);
+    parsedObjects.forEach((p) => traverse(p));
   } catch {
-    validationWarnings.push('Invalid JSON syntax provided.');
+    validationWarnings.push('Invalid JSON or HTML schema syntax provided.');
     return {
       isValidJson: false,
       isSpecCompliant: false,

@@ -4,8 +4,8 @@ export const openrouter = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   apiKey: process.env.OPENROUTER_API_KEY || "dummy-key-for-fallback",
   defaultHeaders: {
-    "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL || "https://citemed.io",
-    "X-Title": "CiteMed Healthcare GEO Platform",
+    "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL || "https://nexusrank1.com",
+    "X-Title": "NexusRank1 Healthcare GEO Platform",
   },
 });
 
