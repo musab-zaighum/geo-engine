@@ -23,15 +23,15 @@ export function ChatbotTab() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: `### 👋 Welcome to the Master CiteMed AI Advisor & Tutor
+      content: `### 👋 Welcome to the Master NexusRank1 AI Advisor & Tutor
 
-I am your embedded AI strategist trained on the entire **CiteMed Knowledge Base**.
+I am your embedded AI strategist trained on the entire **NexusRank1 Knowledge Base**.
 
 Ask me anything about:
 - **CMS Code Insertion:** Step-by-step for WordPress, Shopify, Webflow, Squarespace & Wix
-- **Agency Pricing & Margins:** Solo Doctors ($1,497 retail / $497 wholesale) vs Clinics ($2,497 retail / $897 wholesale)
+- **Agency Pricing & Margins:** $297/mo Growth License (93%+ net margin) for $750–$2,497/mo client retainers
 - **Cold Outreach Scripts:** High-converting email & pitch templates for surgeons and practice directors
-- **Technical GEO Standards:** Schema.org \`@graph\` markup, Ahpra/NPI credentials, and \`/llms.txt\` setup
+- **Technical GEO Standards:** Schema.org \`@graph\` markup, NPI credentials, and \`/llms.txt\` setup
 
 Click any quick topic below or type your question!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -108,7 +108,7 @@ Click any quick topic below or type your question!`,
         {
           id: Date.now().toString(),
           role: 'assistant',
-          content: `⚠️ Error: ${err?.message || 'Unable to communicate with CiteMed AI.'}`,
+          content: `⚠️ Error: ${err?.message || 'Unable to communicate with NexusRank1 AI.'}`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -133,7 +133,7 @@ Click any quick topic below or type your question!`,
           </div>
           <div>
             <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              Master CiteMed AI Advisor & Tutor
+              Master NexusRank1 AI Advisor & Tutor
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-extrabold">
                 Online & Ready
               </span>
@@ -205,7 +205,7 @@ Click any quick topic below or type your question!`,
             </div>
             <div className="p-4 bg-white border border-slate-200 rounded-2xl rounded-tl-none text-xs text-slate-500 flex items-center gap-2 shadow-sm">
               <RefreshCw className="w-4 h-4 animate-spin text-teal-600" />
-              <span>Consulting CiteMed Master Knowledge Base...</span>
+              <span>Consulting NexusRank1 Master Knowledge Base...</span>
             </div>
           </div>
         )}

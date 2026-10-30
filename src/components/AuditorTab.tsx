@@ -89,7 +89,7 @@ export function AuditorTab({ onFixWithGenerator }: AuditorTabProps) {
             Audit Your Practice's AI Search Engine Visibility
           </h2>
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Enter your practice domain or doctor profile URL. CiteMed analyzes your <code className="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">/llms.txt</code> compliance, medical JSON-LD schema depth, and practitioner registration signals required by Perplexity, SearchGPT, and Claude.
+            Enter your practice domain or doctor profile URL. NexusRank1 analyzes your <code className="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">/llms.txt</code> compliance, medical JSON-LD schema depth, and practitioner registration signals required by Perplexity, SearchGPT, and Claude.
           </p>
 
           {/* Audit Input Form */}
@@ -327,7 +327,7 @@ export function AuditorTab({ onFixWithGenerator }: AuditorTabProps) {
             <div className="space-y-2 text-center sm:text-left">
               <div className="text-cyan-400 font-bold text-lg flex items-center justify-center sm:justify-start gap-2">
                 <Sparkles className="w-5 h-5" />
-                Fix These Issues Instantly with CiteMed Generator
+                Fix These Issues Instantly with NexusRank1 Generator
               </div>
               <p className="text-slate-300 text-sm max-w-xl">
                 Generate production-ready Medical JSON-LD, <code className="text-cyan-300 bg-slate-800/80 px-1.5 py-0.5 rounded">/llms.txt</code>, and a Standalone Markdown Profile in under 10 seconds.

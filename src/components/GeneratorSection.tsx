@@ -347,7 +347,7 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
           <div className="p-3 bg-amber-50 border border-amber-200 rounded-2xl text-amber-900 text-xs flex items-start gap-2.5">
             <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <span>
-              <strong>No-Website Fallback Mode Active:</strong> For practice listings without a custom domain, CiteMed generates a standalone <strong>Raw Markdown Profile</strong> to anchor your Google Business Profile into Perplexity and ChatGPT Search.
+              <strong>No-Website Fallback Mode Active:</strong> For practice listings without a custom domain, NexusRank1 generates a standalone <strong>Raw Markdown Profile</strong> to anchor your Google Business Profile into Perplexity and ChatGPT Search.
             </span>
           </div>
         )}
@@ -606,8 +606,8 @@ export function GeneratorSection({ initialUrl }: GeneratorSectionProps) {
               type="button"
               onClick={() =>
                 downloadFile(
-                  `${entityName.toLowerCase().replace(/\s+/g, '-')}-citemed-bundle.md`,
-                  `# CITEMED GEO BUNDLE FOR ${entityName}\n\n## 1. JSON-LD SCHEMA\n\`\`\`json\n${result.schemaJsonLd}\n\`\`\`\n\n## 2. LLMS.TXT\n${result.llmsTxt}\n\n## 3. RAW MARKDOWN PROFILE\n${result.rawMarkdownProfile}`,
+                  `${entityName.toLowerCase().replace(/\s+/g, '-')}-nexusrank-bundle.md`,
+                  `# NEXUSRANK1 GEO BUNDLE FOR ${entityName}\n\n## 1. JSON-LD SCHEMA\n\`\`\`json\n${result.schemaJsonLd}\n\`\`\`\n\n## 2. LLMS.TXT\n${result.llmsTxt}\n\n## 3. RAW MARKDOWN PROFILE\n${result.rawMarkdownProfile}`,
                   'text/markdown'
                 )
               }

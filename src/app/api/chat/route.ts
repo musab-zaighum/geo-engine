@@ -47,21 +47,17 @@ function buildFallbackChatResponse(userQuery: string): string {
     queryLower.includes('margin') ||
     queryLower.includes('profit')
   ) {
-    return `### 💰 CiteMed Tiered Agency Pricing & Financial Structure
+    return `### 💰 NexusRank1 Tiered Agency Pricing & Financial Structure
 
-#### Tier 1: Solo Specialist Doctor
-- **Suggested Retail Price:** **$1,497 one-off** (or $197/mo retainer).
-- **Wholesale CiteMed Cost:** **$497 one-off**.
-- **Agency Net Margin:** **$1,000 profit per practitioner**.
-- **Deliverables:** Single \`Physician\` Schema.org JSON-LD, validated Ahpra/NPI registration credentials, \`/llms.txt\` entry, Google Business Profile markdown entity bio.
+#### Agency Growth License ($297/mo)
+- **Wholesale Platform Cost:** **$297/month flat** for unlimited healthcare GEO audits, Schema.org @graph generation, and /llms.txt builds.
+- **Client Retainer Recommendations:**
+  - **Solo Specialist Doctor:** **$750 - $1,497/mo** (or $1,497 one-off setup).
+  - **Multi-Doctor Medical Clinic:** **$1,250 - $2,497/mo** (or $2,497 one-off setup).
+- **Agency Net Margin:** **93%+ net profit margins** with sub-5-minute automated delivery.
+- **Deliverables:** Complete MedicalClinic/Physician @graph JSON-LD, validated NPI registry credentials, /llms.txt manifest, and GBP Markdown entity bio.
 
-#### Tier 2: Multi-Doctor Medical Clinic
-- **Suggested Retail Price:** **$2,497 one-off** (or $349/mo retainer).
-- **Wholesale CiteMed Cost:** **$897 one-off**.
-- **Agency Net Margin:** **$1,600 profit per clinic**.
-- **Deliverables:** Complete \`MedicalClinic\` \`@graph\` ontology with multiple nested doctor nodes, location/operating hours, \`/llms.txt\` root discovery file, clinic triage profile.
-
-For example, closing **5 Solo Doctors** and **5 Medical Clinics** generates **$19,970 in Total Client Revenue** and **$13,000 Net Agency Profit**!`;
+For example, retaining **10 clinical clients at $997/mo** generates **$9,970/mo in recurring agency revenue** on a single $297/mo platform cost—yielding **$9,673/mo net agency profit (97% margin)**!`;
   }
 
   if (
@@ -77,25 +73,25 @@ For example, closing **5 Solo Doctors** and **5 Medical Clinics** generates **$1
 
 > Hi Dr. [Last Name],
 >
-> When prospective patients query ChatGPT Search or Perplexity for top [Procedure, e.g. Rhinoplasty] specialists in [City], AI engines bypass general directories and verify Ahpra/NPI license IDs in structured data before making recommendations.
+> When prospective patients query ChatGPT Search or Perplexity for top [Procedure, e.g. Rhinoplasty] specialists in [City], AI engines bypass general directories and verify official NPI licensure in structured data before making recommendations.
 >
-> We ran a quick GEO scan on your profile—your AI readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt file.
+> We ran a quick GEO scan on your domain—your AI search readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt file.
 >
-> Our $1,497 setup installs this entire infrastructure in 48 hours. Would you like to review your 2-minute diagnostic report?
+> We have generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 2-minute diagnostic video showing you how to install this?
 >
 > Best regards,  
-> [Your Name] | CiteMed GEO Advisor`;
+> [Your Name] | NexusRank1 GEO Advisor`;
   }
 
-  return `### 🤖 Master CiteMed AI Advisor
+  return `### 🤖 Master NexusRank1 AI Advisor
 
-I am fully initialized with the expanded **CiteMed Knowledge Base**.
+I am fully initialized with the expanded **NexusRank1 Clinical Knowledge Base**.
 
 You can ask me about:
 1. **CMS Code Insertion Guides:** Step-by-step for WordPress, Shopify, Webflow, Squarespace & Wix
-2. **Tiered Agency Pricing:** Solo Doctors ($1,497 retail / $497 wholesale) vs Clinics ($2,497 retail / $897 wholesale)
+2. **Agency Pricing & Margins:** $297/mo Growth License with 93%+ net margin on $750–$2,497/mo client retainers
 3. **Pitches & Cold Email Scripts** tailored for specialist surgeons & practice directors
-4. **Schema.org @graph & /llms.txt Standards** (Ahpra, NPI, GMC license credentials)
+4. **Schema.org @graph & /llms.txt Standards** (NPI licensure, Ahpra, GMC credentials)
 
 How can I assist your practice or agency today?`;
 }
@@ -122,13 +118,13 @@ export async function POST(req: NextRequest) {
     const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat';
 
     const systemPrompt = `You are the Master NexusRank1 AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
-Use the following official NexusRank1 / CiteMed Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
+Use the following official NexusRank1 Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
 
 ${CITEMED_MASTER_KNOWLEDGE_BASE}
 
 Instructions:
 - Provide structured, actionable, and formatted Markdown responses.
-- Emphasize Ahpra/NPI/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and agency pricing tiers ($297/mo Growth with custom CNAME).
+- Emphasize NPI/Ahpra/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and agency pricing tiers ($297/mo Growth License with 93%+ margins).
 - If asked for cold emails, objection handling, or technical schemas, output full ready-to-use templates.`;
 
     if (!apiKey || apiKey.trim() === '' || apiKey.includes('your_openrouter_api_key')) {

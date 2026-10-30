@@ -20,11 +20,11 @@ export function CornerChatWidget() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: `**CiteMed Clinical GEO Advisor**
+      content: `**NexusRank1 Clinical GEO Advisor**
 
 How can I help you optimize your practice or agency today?
 
-- **Pricing:** $1,000 Wholesale / $2,500 Retail packages
+- **Wholesale Margins:** $297/mo Growth License with 93%+ net margin
 - **Clinical Scripts:** Cold Email & Physician outreach outlines
 - **Objections:** Handling "We already pay for SEO" or "No Website (GBP Only)"`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -114,22 +114,22 @@ How can I help you optimize your practice or agency today?
             <MessageSquare className="w-5 h-5" />
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 border-2 border-blue-600 rounded-full" />
           </div>
-          <span className="text-xs font-semibold pr-1.5 hidden sm:inline">CiteMed Advisor</span>
+          <span className="text-xs font-semibold pr-1.5 hidden sm:inline">NexusRank1 Advisor</span>
         </button>
       )}
 
       {/* Expanded Corner Drawer Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[400px] h-[520px] bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[400px] h-[520px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           {/* Header */}
-          <div className="p-3.5 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+          <div className="p-3.5 bg-slate-950 text-white flex items-center justify-between border-b border-slate-800">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
               <div>
                 <div className="text-xs font-bold flex items-center gap-1.5">
-                  CiteMed AI Advisor
+                  NexusRank1 AI Advisor
                   <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
                 </div>
                 <div className="text-[10px] text-slate-400">Clinical Strategy &amp; GEO Architecture</div>

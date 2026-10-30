@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'http://localhost:3001',
-        'X-Title': 'CiteMed Polish',
+        'HTTP-Referer': 'https://nexusrank1.com',
+        'X-Title': 'NexusRank1 Clinical Polish',
       },
       body: JSON.stringify({
         model: 'openai/gpt-4o-mini',

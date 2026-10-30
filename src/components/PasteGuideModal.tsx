@@ -141,7 +141,7 @@ export function PasteGuideModal({ isOpen, onClose }: PasteGuideModalProps) {
 
         {/* Footer */}
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-          <span>Need help? Ask our embedded Master CiteMed AI Advisor.</span>
+          <span>Need help? Ask our embedded Master NexusRank1 AI Advisor.</span>
           <button
             type="button"
             onClick={onClose}

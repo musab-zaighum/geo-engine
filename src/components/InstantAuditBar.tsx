@@ -25,6 +25,11 @@ import {
   Activity,
   Layers,
   Video,
+  Send,
+  X,
+  Building2,
+  Phone,
+  User,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from './EntityGraphVisualizer';
@@ -142,6 +147,15 @@ export function InstantAuditBar({
   const [copiedLlms, setCopiedLlms] = useState(false);
   const [copiedPitch, setCopiedPitch] = useState(false);
   const [copiedVideoScript, setCopiedVideoScript] = useState(false);
+
+  // Lead capture & CRM Webhook state
+  const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [leadContactName, setLeadContactName] = useState('');
+  const [leadEmail, setLeadEmail] = useState('');
+  const [leadPhone, setLeadPhone] = useState('');
+  const [leadWebhookUrl, setLeadWebhookUrl] = useState('');
+  const [leadNotes, setLeadNotes] = useState('');
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -459,6 +473,62 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
     setCopiedVideoScript(true);
     toast.success('Copied 60-Second Loom Video Script to clipboard!');
     setTimeout(() => setCopiedVideoScript(false), 2500);
+  };
+
+  const handleOpenLeadModal = () => {
+    if (!auditData) return;
+    setLeadContactName(auditData.clinicName || 'Practice Director');
+    setLeadNotes(`Interested in $997/mo Clinical Schema & /llms.txt Retainer for ${auditData.cleanDomain}`);
+    if (typeof window !== 'undefined') {
+      const savedWebhook = localStorage.getItem('nr1_agency_webhook') || '';
+      setLeadWebhookUrl(savedWebhook);
+    }
+    setIsLeadModalOpen(true);
+  };
+
+  const handleSubmitLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!auditData || !leadEmail) {
+      toast.error('Please enter a valid recipient email.');
+      return;
+    }
+    setIsSubmittingLead(true);
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          domain: auditData.cleanDomain,
+          name: leadContactName,
+          email: leadEmail,
+          phone: leadPhone,
+          notes: leadNotes,
+          webhookUrl: leadWebhookUrl,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit lead.');
+      }
+      if (typeof window !== 'undefined' && leadWebhookUrl) {
+        localStorage.setItem('nr1_agency_webhook', leadWebhookUrl);
+      }
+      try {
+        const confettiMod = await import('canvas-confetti');
+        const confetti = confettiMod.default || confettiMod;
+        confetti({
+          particleCount: 75,
+          spread: 60,
+          origin: { y: 0.6 },
+        });
+      } catch {}
+      toast.success('Practice proposal logged and webhook dispatched successfully!');
+      setIsLeadModalOpen(false);
+    } catch (err: any) {
+      toast.error(err?.message || 'Error dispatching lead.');
+    } finally {
+      setIsSubmittingLead(false);
+    }
   };
 
   return (
@@ -942,11 +1012,11 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     </div>
                   </div>
 
-                  <div className="pt-2 flex items-center gap-2">
+                  <div className="pt-2 flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={handleCopyColdPitch}
-                      className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer ${
+                      className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer min-w-[180px] ${
                         copiedPitch ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-950/60'
                       }`}
                     >
@@ -956,11 +1026,20 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
 
                     <button
                       type="button"
+                      onClick={handleOpenLeadModal}
+                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-950/40 transition-all touch-target cursor-pointer"
+                    >
+                      <Send className="w-4 h-4 text-white" />
+                      <span>Send Proposal / CRM</span>
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={handleEmailWebmaster}
-                      className="px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium border border-slate-800 flex items-center gap-1.5 transition-colors touch-target"
+                      className="px-3.5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium border border-slate-800 flex items-center gap-1.5 transition-colors touch-target"
                     >
                       <Mail className="w-4 h-4 text-slate-400" />
-                      <span>Open in Mail</span>
+                      <span>Mail App</span>
                     </button>
                   </div>
                 </div>
@@ -1065,11 +1144,20 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
 
               <button
                 type="button"
-                onClick={() => handleDownloadFile(activeCodeTab)}
+                onClick={handleDownloadFile.bind(null, activeCodeTab)}
                 className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
               >
                 <Download className="w-3.5 h-3.5 text-slate-400" />
                 <span>Download {activeCodeTab === 'schema' ? '.json' : '.txt'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleOpenLeadModal}
+                className="px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Send Proposal / CRM</span>
               </button>
 
               <button
@@ -1104,6 +1192,142 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
             </div>
           </div>
 
+        </div>
+      )}
+
+      {/* Lead Capture & CRM Webhook Modal */}
+      {isLeadModalOpen && auditData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg rounded-3xl nr-glass-card p-6 sm:p-7 border border-slate-700/80 shadow-2xl space-y-5">
+            {/* Modal Header */}
+            <div className="flex items-start justify-between">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-mono font-bold">
+                  <Send className="w-3 h-3" />
+                  Lead Registration & CRM Sync
+                </div>
+                <h3 className="text-lg font-bold text-white tracking-tight">
+                  Dispatch Proposal & Log Practice Lead
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Target: <span className="font-mono text-indigo-300">{auditData.cleanDomain}</span> ({auditData.clinicName})
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsLeadModalOpen(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleSubmitLead} className="space-y-3.5 text-xs">
+              <div className="space-y-1">
+                <label className="text-slate-300 font-semibold flex items-center gap-1">
+                  <User className="w-3.5 h-3.5 text-slate-400" />
+                  Contact Name / Recipient
+                </label>
+                <input
+                  type="text"
+                  value={leadContactName}
+                  onChange={(e) => setLeadContactName(e.target.value)}
+                  placeholder="e.g. Dr. Jane Smith or Practice Director"
+                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-slate-300 font-semibold flex items-center gap-1">
+                    <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                    Recipient Email <span className="text-rose-400">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={leadEmail}
+                    onChange={(e) => setLeadEmail(e.target.value)}
+                    placeholder="director@clinic.com"
+                    className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-slate-300 font-semibold flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                    Direct Phone (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    value={leadPhone}
+                    onChange={(e) => setLeadPhone(e.target.value)}
+                    placeholder="+1 (555) 234-5678"
+                    className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-slate-300 font-semibold flex items-center justify-between">
+                  <span className="flex items-center gap-1">
+                    <Network className="w-3.5 h-3.5 text-cyan-400" />
+                    Agency CRM Webhook URL (Zapier / GoHighLevel / Slack)
+                  </span>
+                  <span className="text-[10px] text-slate-500">Auto-saved</span>
+                </label>
+                <input
+                  type="url"
+                  value={leadWebhookUrl}
+                  onChange={(e) => setLeadWebhookUrl(e.target.value)}
+                  placeholder="https://services.leadconnectorhq.com/hooks/... or Zapier webhook"
+                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-white font-mono placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-[11px]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-slate-300 font-semibold">
+                  Proposal Notes & Package Recommendation
+                </label>
+                <textarea
+                  rows={2}
+                  value={leadNotes}
+                  onChange={(e) => setLeadNotes(e.target.value)}
+                  className="w-full px-3.5 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs"
+                />
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleEmailWebmaster}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-slate-800 flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Open in Mail App</span>
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isSubmittingLead}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/50 transition-all disabled:opacity-50"
+                >
+                  {isSubmittingLead ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Dispatching...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Dispatch Lead &amp; Webhook</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

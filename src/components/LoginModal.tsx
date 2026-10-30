@@ -60,7 +60,7 @@ export function LoginModal({ isOpen, onAuthenticated }: LoginModalProps) {
 
           <div className="space-y-1">
             <h2 className="text-2xl font-bold text-white tracking-tight">
-              CiteMed Platform Gate
+              NexusRank1 Platform Gate
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm">
               Enter your access passcode to protect AI Gateway API credits and unlock the workspace.
@@ -68,7 +68,7 @@ export function LoginModal({ isOpen, onAuthenticated }: LoginModalProps) {
           </div>
 
           <div className="px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-300 text-xs font-mono inline-block">
-            Default Passcode: <span className="font-bold text-white">citemed2026</span>
+            Default Passcode: <span className="font-bold text-white">nexus2026</span>
           </div>
         </div>
 

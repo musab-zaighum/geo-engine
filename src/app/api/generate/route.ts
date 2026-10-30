@@ -38,7 +38,7 @@ function buildDeterministicFallback(data: GenerateRequest): GenerateResponse {
     schemaObj = {
       '@context': 'https://schema.org',
       '@type': 'MedicalClinic',
-      name: data.entityName || 'CiteMed Specialist Clinic',
+      name: data.entityName || 'NexusRank1 Specialist Clinic',
       url: url,
       telephone: data.phone || '+61 2 9000 1234',
       address: address,

@@ -142,7 +142,7 @@ export function PricingCalculatorModal({ isOpen, onClose }: PricingCalculatorMod
             </div>
 
             <div>
-              <span className="text-[11px] text-slate-400 block font-medium">CiteMed Wholesale Cost</span>
+              <span className="text-[11px] text-slate-400 block font-medium">NexusRank1 Platform Cost</span>
               <span className="text-xl font-bold text-slate-300">${totalWholesale.toLocaleString()}</span>
             </div>
 
