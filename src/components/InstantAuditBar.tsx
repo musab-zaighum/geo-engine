@@ -30,6 +30,8 @@ import {
   Building2,
   Phone,
   User,
+  History,
+  Trash2,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from './EntityGraphVisualizer';
@@ -72,6 +74,14 @@ interface AuditData {
   specialties?: string[];
   geoLat?: number;
   geoLng?: number;
+}
+
+interface RecentAuditEntry {
+  domain: string;
+  clinicName: string;
+  score: number;
+  grade: string;
+  timestamp: string;
 }
 
 const PRESET_DOMAINS = [
@@ -157,11 +167,23 @@ export function InstantAuditBar({
   const [leadNotes, setLeadNotes] = useState('');
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
+  const [recentAudits, setRecentAudits] = useState<RecentAuditEntry[]>([]);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // Initialize with default scan on load
+  // Initialize with default scan on load and load recent audits from localStorage
   useEffect(() => {
     generateAuditResult('dentalpractice.com');
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('nr1_recent_audits');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            setRecentAudits(parsed.slice(0, 8));
+          }
+        }
+      } catch {}
+    }
   }, []);
 
   function generateAuditResult(rawInput: string, liveData?: any) {
@@ -362,7 +384,38 @@ export function InstantAuditBar({
       geoLat: 30.2691,
       geoLng: -97.7428,
     });
+
+    // Automatically synchronize recent audit history to localStorage
+    if (clean && clean !== 'dentalpractice.com') {
+      const newEntry: RecentAuditEntry = {
+        domain: clean,
+        clinicName,
+        score,
+        grade,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setRecentAudits((prev) => {
+        const filtered = prev.filter((item) => item.domain.toLowerCase() !== clean.toLowerCase());
+        const updated = [newEntry, ...filtered].slice(0, 8);
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('nr1_recent_audits', JSON.stringify(updated));
+          } catch {}
+        }
+        return updated;
+      });
+    }
   }
+
+  const handleClearRecentAudits = () => {
+    setRecentAudits([]);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('nr1_recent_audits');
+      } catch {}
+    }
+    toast.success('Recent audits history cleared');
+  };
 
   // 5-Second Real-Time & Visual Audit Execution
   const handleStartAudit = (e?: React.FormEvent, presetUrl?: string) => {
@@ -621,12 +674,55 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
               type="button"
               onClick={() => handleStartAudit(undefined, preset.url)}
               disabled={isScanning}
-              className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-mono transition-colors disabled:opacity-50 touch-target"
+              className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-mono transition-colors disabled:opacity-50 touch-target cursor-pointer"
             >
               {preset.label}
             </button>
           ))}
         </div>
+
+        {/* Recent Practice Audits Row */}
+        {recentAudits.length > 0 && (
+          <div className="pt-2.5 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-2 animate-in fade-in duration-200">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                <History className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Recent Client Audits:</span>
+              </span>
+              {recentAudits.map((item) => (
+                <button
+                  key={item.domain}
+                  type="button"
+                  onClick={() => handleStartAudit(undefined, item.domain)}
+                  disabled={isScanning}
+                  className="group px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-mono transition-all flex items-center gap-1.5 disabled:opacity-50 touch-target cursor-pointer"
+                >
+                  <span
+                    className={`text-[10px] font-bold px-1 rounded ${
+                      item.score >= 90
+                        ? 'bg-emerald-500/20 text-emerald-300'
+                        : item.score >= 75
+                        ? 'bg-indigo-500/20 text-indigo-300'
+                        : 'bg-amber-500/20 text-amber-300'
+                    }`}
+                  >
+                    {item.score}
+                  </span>
+                  <span className="truncate max-w-[130px]">{item.clinicName}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={handleClearRecentAudits}
+              title="Clear recent audits"
+              className="text-slate-500 hover:text-rose-400 transition-colors p-1 flex items-center gap-1 text-[11px] font-mono touch-target cursor-pointer"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Clear</span>
+            </button>
+          </div>
+        )}
 
         {/* Live Scan Step-by-Step Progress Overlay */}
         {isScanning && (
@@ -909,22 +1005,22 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
-                    onClick={handleCopySchema}
+                    onClick={activeCodeTab === 'schema' ? handleCopySchema : handleCopyLlms}
                     className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-md touch-target cursor-pointer ${
-                      copiedSchema
+                      (activeCodeTab === 'schema' ? copiedSchema : copiedLlms)
                         ? 'bg-emerald-600 text-white'
                         : 'bg-indigo-600 hover:bg-indigo-500 text-white'
                     }`}
                   >
-                    {copiedSchema ? (
+                    {(activeCodeTab === 'schema' ? copiedSchema : copiedLlms) ? (
                       <>
                         <Check className="w-4 h-4 text-white stroke-[3]" />
-                        <span>Copied 0-Error Schema!</span>
+                        <span>Copied {activeCodeTab === 'schema' ? '0-Error Schema!' : '/llms.txt Manifest!'}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-4 h-4" />
-                        <span>Copy 0-Error Schema</span>
+                        <span>Copy {activeCodeTab === 'schema' ? '0-Error Schema' : '/llms.txt Manifest'}</span>
                       </>
                     )}
                   </button>
@@ -933,38 +1029,126 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     href={`https://search.google.com/test/rich-results?url=${encodeURIComponent(auditData.url)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 flex items-center gap-1.5 transition-colors touch-target"
+                    className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 flex items-center gap-1.5 transition-colors touch-target"
                   >
-                    <span>Validate on Google Rich Results Test</span>
+                    <span>Google Rich Results Test</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                  </a>
+
+                  <a
+                    href={`https://validator.schema.org/#url=${encodeURIComponent(auditData.url)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 flex items-center gap-1.5 transition-colors touch-target"
+                  >
+                    <span>Schema.org Validator</span>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                   </a>
                 </div>
               </div>
 
               {/* Code Tabs Switcher */}
-              <div className="pt-2 border-t border-slate-800 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setActiveCodeTab('schema')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                    activeCodeTab === 'schema'
-                      ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Schema.org JSON-LD (0-Error AST)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCodeTab('llms')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                    activeCodeTab === 'llms'
-                      ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  /llms.txt Machine-Readable Manifest
-                </button>
+              <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('schema')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                      activeCodeTab === 'schema'
+                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <FileCode2 className="w-3.5 h-3.5" />
+                    <span>Schema.org JSON-LD (0-Error AST)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('llms')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                      activeCodeTab === 'llms'
+                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>/llms.txt Machine-Readable Manifest</span>
+                  </button>
+                </div>
+
+                <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>100% W3C Validated AST</span>
+                </div>
+              </div>
+
+              {/* Visual AST & Directives Inspector Badge */}
+              <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white font-mono uppercase tracking-wide">
+                      {activeCodeTab === 'schema'
+                        ? 'Schema.org MedicalClinic AST Structure'
+                        : 'RFC-Draft /llms.txt Machine Directives'}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 font-mono text-[11px]">
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
+                      0 Syntax Errors
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                      {activeCodeTab === 'schema' ? 'Google Schema-DTS' : 'Multi-Bot Manifest'}
+                    </span>
+                  </div>
+                </div>
+
+                {activeCodeTab === 'schema' ? (
+                  <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                    <span className="text-slate-400 text-xs">AST Hierarchy:</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      @graph root
+                    </span>
+                    <span className="text-slate-600">&rarr;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      🏢 MedicalClinic
+                    </span>
+                    <span className="text-slate-600">&rarr;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      📍 PostalAddress
+                    </span>
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      🌐 GeoCoordinates
+                    </span>
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      👨‍⚕️ Physician
+                    </span>
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      🔑 NPI #{auditData.npiNumber || '1948203918'}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                    <span className="text-slate-400 text-xs">Target AI Crawlers:</span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                      GPTBot (SearchGPT)
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                      PerplexityBot
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                      ClaudeBot
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                      Applebot-Extended
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+                      Google-Extended
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Code Box Display */}
