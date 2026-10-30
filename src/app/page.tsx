@@ -133,8 +133,8 @@ export default function NexusRankLandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* Step 1 */}
-              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
                   01
                 </div>
                 <h3 className="text-lg font-bold text-white">5-Second Target Audit</h3>
@@ -147,8 +147,8 @@ export default function NexusRankLandingPage() {
               </div>
 
               {/* Step 2 */}
-              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
                   02
                 </div>
                 <h3 className="text-lg font-bold text-white">Autonomous Clinical Audit &amp; GEO Verification</h3>
@@ -161,8 +161,8 @@ export default function NexusRankLandingPage() {
               </div>
 
               {/* Step 3 */}
-              <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 hover:border-indigo-500/40 transition-all">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
                   03
                 </div>
                 <h3 className="text-lg font-bold text-white">1-Click Schema Injection</h3>
@@ -246,36 +246,36 @@ export default function NexusRankLandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Testimonial 1 */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-slate-800 space-y-4">
+              <div className="p-6 sm:p-8 rounded-3xl nr-glass-card space-y-4 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center gap-1 text-amber-400 text-sm">
                   {'★'.repeat(5)}
                 </div>
                 <p className="text-sm sm:text-base text-slate-300 leading-relaxed italic">
                   &ldquo;We closed 8 dental practices in 14 days at $750/mo using NexusRank&apos;s instant audit tool. Sending the unbranded audit link while on the pitch call gives practice managers an &apos;aha&apos; moment in seconds.&rdquo;
                 </p>
-                <div className="pt-2 flex items-center justify-between border-t border-slate-800 text-xs">
+                <div className="pt-2 flex items-center justify-between border-t border-slate-800/80 text-xs">
                   <div>
                     <div className="font-bold text-white">Marcus Vance</div>
                     <div className="text-slate-400">Founder, Apex Dental Media (14 Clients)</div>
                   </div>
-                  <span className="text-emerald-400 font-mono font-bold">$10.5k/mo ARR Added</span>
+                  <span className="text-emerald-400 font-mono font-bold bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-500/20">$10.5k/mo ARR Added</span>
                 </div>
               </div>
 
               {/* Testimonial 2 */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/70 border border-slate-800 space-y-4">
+              <div className="p-6 sm:p-8 rounded-3xl nr-glass-card space-y-4 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center gap-1 text-amber-400 text-sm">
                   {'★'.repeat(5)}
                 </div>
                 <p className="text-sm sm:text-base text-slate-300 leading-relaxed italic">
                   &ldquo;The 0-error Schema copy button and direct Google Rich Results test button is pure genius. Our clients can verify the valid green checkmark on Google right in front of them. The 93% margin on the $297 wholesale plan is insane.&rdquo;
                 </p>
-                <div className="pt-2 flex items-center justify-between border-t border-slate-800 text-xs">
+                <div className="pt-2 flex items-center justify-between border-t border-slate-800/80 text-xs">
                   <div>
                     <div className="font-bold text-white">Sarah Lin</div>
                     <div className="text-slate-400">Director of SEO, Horizon Health Group</div>
                   </div>
-                  <span className="text-emerald-400 font-mono font-bold">95.2% Net Margin</span>
+                  <span className="text-emerald-400 font-mono font-bold bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-500/20">95.2% Net Margin</span>
                 </div>
               </div>
             </div>

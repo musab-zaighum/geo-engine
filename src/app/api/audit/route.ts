@@ -26,8 +26,14 @@ const MAX_REQUESTS_PER_WINDOW = 30;
 
 import { resolvePracticeLicensure, lookupNpiByNumber, NpiProviderRecord } from '@/lib/npi-registry';
 import { buildDeterministicClinicalGraph } from '@/lib/schema-validator';
+import { type StructuredClinicalData } from '@/lib/playwright-scraper';
 
-async function generateClinicalPayloads(targetUrl: string, title: string, extractedText?: string) {
+async function generateClinicalPayloads(
+  targetUrl: string,
+  title: string,
+  extractedText?: string,
+  clinicalData?: StructuredClinicalData
+) {
   let hostname = 'your-dental-client.com';
   try {
     const parsed = new URL(targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`);
@@ -36,9 +42,16 @@ async function generateClinicalPayloads(targetUrl: string, title: string, extrac
     hostname = targetUrl.replace(/https?:\/\//, '').split('/')[0] || 'your-dental-client.com';
   }
 
-  const cleanTitle = title || hostname.replace('www.', '').split('.')[0]
+  const isErrorTitle = (t?: string) =>
+    !t || /error|access denied|403|blocked|could not be satisfied|request blocked|cloudflare|attention required/i.test(t);
+
+  const fallbackClinicName = hostname.replace('www.', '').split('.')[0]
     .replace(/[-_]/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase()) + ' Clinic';
+
+  const cleanTitle = (!isErrorTitle(clinicalData?.clinicName) ? clinicalData?.clinicName : undefined) ||
+    (!isErrorTitle(title) ? title : undefined) ||
+    fallbackClinicName;
 
   // 1. Try resolving real Federal NPI and state licensure from CMS NPPES
   let npiRecord: NpiProviderRecord | null = null;
@@ -47,6 +60,15 @@ async function generateClinicalPayloads(targetUrl: string, title: string, extrac
     const textNpiMatch = (extractedText || '').match(/\b(1\d{9})\b/);
     if (textNpiMatch) {
       npiRecord = await lookupNpiByNumber(textNpiMatch[1]);
+    }
+
+    if (!npiRecord && clinicalData?.doctors && clinicalData.doctors.length > 0) {
+      const docWithNpi = clinicalData.doctors.find((d) => d.npi && /^\d{10}$/.test(d.npi));
+      if (docWithNpi?.npi) {
+        npiRecord = await lookupNpiByNumber(docWithNpi.npi);
+      } else {
+        npiRecord = await resolvePracticeLicensure(clinicalData.doctors[0].name);
+      }
     }
 
     if (!npiRecord) {
@@ -61,6 +83,10 @@ async function generateClinicalPayloads(targetUrl: string, title: string, extrac
   const astResult = buildDeterministicClinicalGraph({
     clinicName: cleanTitle,
     websiteUrl: targetUrl,
+    telephone: clinicalData?.telephones && clinicalData.telephones.length > 0 ? clinicalData.telephones[0] : undefined,
+    address: clinicalData?.address,
+    leadDoctorName: clinicalData?.doctors?.[0]?.name,
+    leadDoctorCredential: clinicalData?.doctors?.[0]?.credential,
     npiRecord,
   });
 
@@ -203,6 +229,7 @@ export async function POST(req: NextRequest) {
     let hasLlmsTxt = false;
     let llmsTxtStatus = 404;
     let engineUsed = 'DirectHTTP';
+    let clinicalData: StructuredClinicalData | undefined;
 
     try {
       const scrapeResult = await executeOssScraperPipeline(targetUrl);
@@ -211,6 +238,7 @@ export async function POST(req: NextRequest) {
       hasLlmsTxt = scrapeResult.hasLlmsTxt;
       llmsTxtStatus = scrapeResult.llmsTxtStatus;
       engineUsed = scrapeResult.engineUsed;
+      clinicalData = scrapeResult.clinicalData;
     } catch {
       pageFetchOk = false;
       hasLlmsTxt = false;
@@ -239,7 +267,7 @@ export async function POST(req: NextRequest) {
 
     // Generate production-grade 0-error Schema & llms.txt payloads via Deterministic AST + CMS NPPES
     const { suggestedSchemaJsonLd, suggestedLlmsTxt, cleanTitle, hostname, npiRecord } =
-      await generateClinicalPayloads(targetUrl, distilledTitle, html);
+      await generateClinicalPayloads(targetUrl, distilledTitle, html, clinicalData);
 
     // If CMS NPPES resolved an official provider, record verified credentials
     if (npiRecord && !registrationNumbers.includes(npiRecord.npi)) {

@@ -13,7 +13,7 @@
 import FirecrawlApp from '@mendable/firecrawl-js';
 import { extractReadabilityMarkdown } from './readability-turndown';
 import { validateMedicalSchemaJson } from './schema-validator';
-import { scrapeWithPlaywright } from './playwright-scraper';
+import { scrapeWithPlaywright, type StructuredClinicalData } from './playwright-scraper';
 import { execFile } from 'child_process';
 import path from 'path';
 
@@ -30,6 +30,7 @@ export interface OssScraperResult {
   pageTitle?: string;
   metaDescription?: string;
   engineUsed: string;
+  clinicalData?: StructuredClinicalData;
   errorMessage?: string;
 }
 
@@ -199,6 +200,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
         hasRegistrationId: schemaValidation.hasRegistrationId,
         pageTitle: pwResult.pageTitle || readability.title,
         metaDescription: pwResult.metaDescription || readability.excerpt,
+        clinicalData: pwResult.clinicalData,
         engineUsed: 'Playwright Headless Chrome + Mozilla Readability',
       };
     }

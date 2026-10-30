@@ -1,6 +1,25 @@
 import { chromium, type Browser } from 'playwright';
 import * as cheerio from 'cheerio';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import fs from 'fs';
+
+export interface StructuredClinicalData {
+  clinicName?: string;
+  telephones: string[];
+  address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+  };
+  doctors: Array<{
+    name: string;
+    credential?: string;
+    npi?: string;
+  }>;
+  operatingHours: string[];
+}
 
 export interface PlaywrightScrapeResult {
   url: string;
@@ -13,6 +32,7 @@ export interface PlaywrightScrapeResult {
   pageTitle?: string;
   metaDescription?: string;
   isPlaywrightRendered: boolean;
+  clinicalData?: StructuredClinicalData;
   errorMessage?: string;
 }
 
@@ -67,7 +87,16 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
     const execPath = getChromeExecutablePath();
     const launchOptions: any = {
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-infobars',
+        '--no-default-browser-check',
+        '--ignore-certificate-errors',
+      ],
     };
     if (execPath) {
       launchOptions.executablePath = execPath;
@@ -77,27 +106,64 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
 
     const context = await browser.newContext({
       userAgent:
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
       viewport: { width: 1280, height: 800 },
+      locale: 'en-US',
+      timezoneId: 'America/New_York',
+      bypassCSP: true,
+      ignoreHTTPSErrors: true,
     });
 
     const page = await context.newPage();
-    
+
+    // Anti-bot stealth init scripts (masks navigator.webdriver, mocks window.chrome, evades CDP detection)
+    await page.addInitScript(() => {
+      // 1. Mask navigator.webdriver
+      Object.defineProperty(navigator, 'webdriver', {
+        get: () => undefined,
+      });
+
+      // 2. Mock window.chrome runtime object
+      (window as any).chrome = {
+        runtime: {},
+        loadTimes: () => {},
+        csi: () => {},
+        app: {},
+      };
+
+      // 3. Spoof plugins and languages
+      Object.defineProperty(navigator, 'plugins', {
+        get: () => [1, 2, 3, 4, 5],
+      });
+
+      Object.defineProperty(navigator, 'languages', {
+        get: () => ['en-US', 'en'],
+      });
+
+      // 4. Spoof notification permissions query
+      const originalQuery = window.navigator.permissions.query;
+      window.navigator.permissions.query = (parameters: any) =>
+        parameters.name === 'notifications'
+          ? Promise.resolve({ state: Notification.permission } as any)
+          : originalQuery(parameters);
+    });
+
     await page.goto(cleanUrl, {
       waitUntil: 'domcontentloaded',
       timeout: 12000,
     });
 
-    await page.waitForTimeout(1500);
+    // Give dynamic client-side single page apps (Wix, Webflow, React) a short beat to hydrate JSON-LD
+    await page.waitForTimeout(1000);
 
     const html = await page.content();
     const pageTitle = await page.title();
-    
+
     await browser.close();
     browser = null;
 
     if (html && html.trim().length > 50) {
-      const parsedData = parseHtmlAndSchemas(html);
+      const parsedData = parseClinicalHtmlAndSchemas(html);
       return {
         url: targetUrl,
         pageFetchOk: true,
@@ -109,6 +175,7 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
         pageTitle: pageTitle || parsedData.pageTitle,
         metaDescription: parsedData.metaDescription,
         isPlaywrightRendered: true,
+        clinicalData: parsedData.clinicalData,
       };
     }
   } catch (err: any) {
@@ -124,11 +191,11 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
 
   // 3. Fallback to standard fetch + cheerio if browser launch fails or times out
   try {
-    const pageRes = await fetch(targetUrl, {
+    const pageRes = await fetch(cleanUrl, {
       method: 'GET',
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
       signal: AbortSignal.timeout(8000),
@@ -137,7 +204,7 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
 
     if (pageRes.ok) {
       const html = await pageRes.text();
-      const parsedData = parseHtmlAndSchemas(html);
+      const parsedData = parseClinicalHtmlAndSchemas(html);
       return {
         url: targetUrl,
         pageFetchOk: true,
@@ -149,6 +216,7 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
         pageTitle: parsedData.pageTitle,
         metaDescription: parsedData.metaDescription,
         isPlaywrightRendered: false,
+        clinicalData: parsedData.clinicalData,
       };
     }
   } catch (err: any) {
@@ -161,6 +229,7 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
       detectedSchemas: [],
       hasMedicalSchema: false,
       isPlaywrightRendered: false,
+      clinicalData: { telephones: [], doctors: [], operatingHours: [] },
       errorMessage: err?.message || 'Failed to fetch domain HTML.',
     };
   }
@@ -174,13 +243,19 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
     detectedSchemas: [],
     hasMedicalSchema: false,
     isPlaywrightRendered: false,
+    clinicalData: { telephones: [], doctors: [], operatingHours: [] },
     errorMessage: 'Unable to render site content.',
   };
 }
 
-function parseHtmlAndSchemas(html: string) {
+export function parseClinicalHtmlAndSchemas(html: string) {
   const $ = cheerio.load(html);
   const detectedSchemas: string[] = [];
+  const rawPhones = new Set<string>();
+  const doctors: Array<{ name: string; credential?: string; npi?: string }> = [];
+  const operatingHours: string[] = [];
+  let clinicName: string | undefined;
+  let address: StructuredClinicalData['address'] = undefined;
 
   $('script[type="application/ld+json"]').each((_, element) => {
     try {
@@ -203,6 +278,39 @@ function parseHtmlAndSchemas(html: string) {
               }
             });
           }
+
+          // Extract clinic details
+          const typeStr = JSON.stringify(obj['@type'] || '');
+          if (/MedicalClinic|Dentist|Physician|Hospital|MedicalOrganization|MedicalBusiness/i.test(typeStr)) {
+            if (obj.name && !clinicName) clinicName = String(obj.name).trim();
+            if (obj.telephone) rawPhones.add(String(obj.telephone));
+            if (obj.address && typeof obj.address === 'object' && !address) {
+              address = {
+                street: obj.address.streetAddress,
+                city: obj.address.addressLocality,
+                state: obj.address.addressRegion,
+                postalCode: obj.address.postalCode,
+                country: obj.address.addressCountry || 'US',
+              };
+            }
+            if (obj.openingHours) {
+              if (Array.isArray(obj.openingHours)) {
+                operatingHours.push(...obj.openingHours.map(String));
+              } else {
+                operatingHours.push(String(obj.openingHours));
+              }
+            }
+          }
+
+          // Extract Doctor entities
+          if (/Physician|Person/i.test(typeStr) && obj.name) {
+            doctors.push({
+              name: String(obj.name).trim(),
+              credential: obj.jobTitle || obj.credentialCategory,
+              npi: obj.identifier?.value || (typeof obj.identifier === 'string' ? obj.identifier : undefined),
+            });
+          }
+
           if (obj['@graph'] && Array.isArray(obj['@graph'])) {
             obj['@graph'].forEach((item: any) => extractTypes(item));
           }
@@ -212,6 +320,36 @@ function parseHtmlAndSchemas(html: string) {
       extractTypes(parsed);
     } catch {
       // ignore parse error
+    }
+  });
+
+  // Extract phone links from DOM <a href="tel:...">
+  $('a[href^="tel:"]').each((_, el) => {
+    const href = $(el).attr('href') || '';
+    const cleanPhone = href.replace(/^tel:/i, '').trim();
+    if (cleanPhone) rawPhones.add(cleanPhone);
+  });
+
+  // Format and validate phones deterministically with libphonenumber-js
+  const validatedPhones: string[] = [];
+  rawPhones.forEach((p) => {
+    try {
+      const parsedNum = parsePhoneNumberFromString(p, 'US');
+      if (parsedNum && parsedNum.isValid()) {
+        const formatted = parsedNum.formatNational();
+        if (!validatedPhones.includes(formatted)) {
+          validatedPhones.push(formatted);
+        }
+      } else if (p.replace(/\D/g, '').length >= 10) {
+        // Fallback for valid digit sequences
+        const digits = p.replace(/\D/g, '').slice(-10);
+        const formatted = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+        if (!validatedPhones.includes(formatted)) {
+          validatedPhones.push(formatted);
+        }
+      }
+    } catch {
+      // ignore invalid phone
     }
   });
 
@@ -240,5 +378,12 @@ function parseHtmlAndSchemas(html: string) {
     hasMedicalSchema,
     pageTitle,
     metaDescription,
+    clinicalData: {
+      clinicName,
+      telephones: validatedPhones,
+      address,
+      doctors,
+      operatingHours,
+    },
   };
 }

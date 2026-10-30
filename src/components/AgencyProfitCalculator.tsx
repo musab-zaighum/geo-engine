@@ -52,7 +52,7 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
         </div>
 
         {/* Calculator Main Grid Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 rounded-3xl bg-slate-900/90 border border-slate-800 p-6 sm:p-8 md:p-10 shadow-2xl backdrop-blur-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 rounded-3xl nr-glass-card p-6 sm:p-8 md:p-10 shadow-2xl backdrop-blur-2xl">
           
           {/* Left Column: Interactive Sliders */}
           <div className="lg:col-span-7 space-y-8 flex flex-col justify-between">
@@ -66,7 +66,7 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
                       How many local clients do you manage?
                     </label>
                   </div>
-                  <span className="text-lg font-black font-mono text-indigo-400 bg-indigo-950/60 border border-indigo-500/30 px-3 py-1 rounded-lg">
+                  <span className="text-lg font-black font-mono text-indigo-400 bg-indigo-950/80 border border-indigo-500/40 px-3.5 py-1 rounded-xl shadow-inner">
                     {clientCount} {clientCount === 1 ? 'Client' : 'Clients'}
                   </span>
                 </div>
@@ -78,12 +78,12 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
                   step="1"
                   value={clientCount}
                   onChange={(e) => setClientCount(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 touch-target"
+                  className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-indigo-400 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 touch-target"
                 />
                 
                 <div className="flex justify-between text-[11px] text-slate-500 font-mono">
                   <span>1 Client</span>
-                  <span>10 Clients (Typical)</span>
+                  <span className="text-indigo-400/80 font-bold">10 Clients (Typical)</span>
                   <span>25 Clients</span>
                   <span>50 Clients</span>
                 </div>
@@ -98,7 +98,7 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
                       Monthly GEO Retainer per Client
                     </label>
                   </div>
-                  <span className="text-lg font-black font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-lg">
+                  <span className="text-lg font-black font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-3.5 py-1 rounded-xl shadow-inner">
                     ${monthlyRetainer} <span className="text-xs font-normal text-slate-400">/mo</span>
                   </span>
                 </div>
@@ -110,30 +110,30 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
                   step="50"
                   value={monthlyRetainer}
                   onChange={(e) => setMonthlyRetainer(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 touch-target"
+                  className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-400 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 touch-target"
                 />
 
                 <div className="flex justify-between text-[11px] text-slate-500 font-mono">
                   <span>$300/mo (Basic)</span>
-                  <span>$650/mo (Standard Schema + /llms.txt)</span>
+                  <span className="text-emerald-400/80 font-bold">$650/mo (Standard Schema + /llms.txt)</span>
                   <span>$1,500/mo (Full GEO)</span>
                 </div>
               </div>
             </div>
 
             {/* Micro Benchmark Indicators */}
-            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-2 text-xs text-slate-300">
+            <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2.5 text-xs text-slate-300 shadow-inner">
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Total Client Revenue:</span>
-                <span className="font-bold text-white font-mono">${grossMonthlyRevenue.toLocaleString()} / mo</span>
+                <span className="font-bold text-white font-mono text-sm">${grossMonthlyRevenue.toLocaleString()} / mo</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">NexusRank Growth Wholesale License:</span>
-                <span className="font-bold text-rose-400 font-mono">-${wholesaleCost} / mo (Flat)</span>
+                <span className="font-bold text-rose-400 font-mono text-sm">-${wholesaleCost} / mo (Flat)</span>
               </div>
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-sm font-bold">
+              <div className="pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-sm font-bold">
                 <span className="text-indigo-300">Your Calculated Net Margin:</span>
-                <span className="font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
+                <span className="font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/40 shadow-sm">
                   {netMarginPercent}% Net
                 </span>
               </div>
