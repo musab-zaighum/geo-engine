@@ -23,6 +23,8 @@ import {
   Zap,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import EntityGraphVisualizer from '@/components/EntityGraphVisualizer';
+import GeoCitationSimulator from '@/components/GeoCitationSimulator';
 
 export default function StandaloneClientReportPage() {
   const routeParams = useParams();
@@ -239,6 +241,36 @@ export default function StandaloneClientReportPage() {
               <p className="text-[10px] text-slate-500">Requires root manifest</p>
             </div>
           </div>
+
+          {/* Interactive Knowledge Graph Visualizer */}
+          <EntityGraphVisualizer
+            clinicName={practiceTitle}
+            domain={domain}
+            npiNumber="1928374650"
+            doctorName="Dr. Sarah Jenkins"
+            doctorCredential="DDS, FAGD"
+            licenseNumber="TX-16292"
+            licenseState="TX"
+            taxonomyDesc="Dentist, General Practice & Cosmetic Surgery"
+            streetAddress="100 Clinical Center Suite 400"
+            city="Austin"
+            state="TX"
+            postalCode="78701"
+            specialties={['General Practice', 'Cosmetic Dentistry', 'Implantology', 'Oral Surgery']}
+            geoLat={30.2672}
+            geoLng={-97.7431}
+            hasLlmsTxt={false}
+          />
+
+          {/* Generative Engine Citation Simulator */}
+          <GeoCitationSimulator
+            clinicName={practiceTitle}
+            domain={domain}
+            overallScore={84}
+            npiVerified={true}
+            hasMedicalSchema={true}
+            hasLlmsTxt={false}
+          />
 
           {/* 0-Error Schema Injection Panel */}
           <div className="p-5 rounded-2xl bg-slate-950 border border-indigo-500/30 space-y-4">
