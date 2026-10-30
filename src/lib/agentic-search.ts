@@ -19,17 +19,8 @@ export function isUrlCandidate(str: string): boolean {
   const trimmed = str.trim().toLowerCase();
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return true;
   if (
-    (trimmed.includes('.com') ||
-      trimmed.includes('.org') ||
-      trimmed.includes('.net') ||
-      trimmed.includes('.io') ||
-      trimmed.includes('.au') ||
-      trimmed.includes('.uk') ||
-      trimmed.includes('.ca') ||
-      trimmed.includes('.clinic') ||
-      trimmed.includes('.health') ||
-      trimmed.includes('.med')) &&
-    !trimmed.includes(' ')
+    !trimmed.includes(' ') &&
+    /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,}(:[0-9]{1,5})?(\/.*)?$/i.test(trimmed)
   ) {
     return true;
   }

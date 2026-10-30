@@ -53,15 +53,17 @@ export async function GET(req: NextRequest) {
 
     try {
       await page.goto(targetUrl, {
-        waitUntil: 'networkidle',
-        timeout: 12000,
-      });
-    } catch {
-      // Fallback to load state if networkidle times out
-      await page.goto(targetUrl, {
         waitUntil: 'load',
-        timeout: 8000,
+        timeout: 6000,
       });
+      await page.waitForTimeout(400);
+    } catch {
+      // Fallback to domcontentloaded if load state times out
+      await page.goto(targetUrl, {
+        waitUntil: 'domcontentloaded',
+        timeout: 5000,
+      });
+      await page.waitForTimeout(400);
     }
 
     // Apply print media styling rules to guarantee crisp vector elements
