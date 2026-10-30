@@ -79,6 +79,7 @@ export function InstantAuditBar({
   const [activeCodeTab, setActiveCodeTab] = useState<'schema' | 'llms'>('schema');
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
+  const [copiedPitch, setCopiedPitch] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -324,6 +325,44 @@ export function InstantAuditBar({
       `Hi Webmaster Team,\n\nPlease add the following Schema.org JSON-LD to the <head> of ${auditData.url} and deploy the /llms.txt file to the web root so ChatGPT, Perplexity, and Google Rich Results can accurately ground our practice:\n\n${auditData.jsonLd}\n\nThank you,\n${auditData.clinicName}`
     );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+
+  const handleCopyColdPitch = () => {
+    if (!auditData) return;
+    const reportUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://nexusrank1.com'}/report/${auditData.cleanDomain}?unbranded=true`;
+    const pitch = `Subject: AI Search Visibility Blindspot on ${auditData.clinicName} (${auditData.overallScore}/100)
+
+Hi Dr. / Practice Director,
+
+When prospective patients query ChatGPT Search, Perplexity, or Apple Intelligence for top dental and medical specialists in your area, AI answer engines bypass regular directories and look for machine-readable Schema.org @graph credentials and a root /llms.txt file.
+
+We ran a quick AI Visibility scan on ${auditData.cleanDomain} — your practice currently scores ${auditData.overallScore}/100 because your site is missing a validated MedicalClinic entity graph and an /llms.txt manifest.
+
+We have already generated your 0-error schema package. You can review your verified audit report here:
+${reportUrl}
+
+Would you like our agency to deploy this turnkey in 48 hours so your clinic is directly cited?
+
+Best regards,
+Healthcare Intelligence Team`;
+
+    try {
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(pitch);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = pitch;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopiedPitch(true);
+      toast.success('Cold Outreach Pitch copied to clipboard!');
+      setTimeout(() => setCopiedPitch(false), 2200);
+    } catch {
+      toast.error('Failed to copy pitch');
+    }
   };
 
   return (
@@ -628,7 +667,30 @@ export function InstantAuditBar({
                 </button>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleCopyColdPitch}
+                  className={`px-3 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target cursor-pointer ${
+                    copiedPitch
+                      ? 'bg-emerald-600 text-white border-emerald-500'
+                      : 'bg-indigo-950/60 hover:bg-indigo-900/60 border-indigo-500/40 text-indigo-300 hover:text-white'
+                  }`}
+                >
+                  {copiedPitch ? <Check className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5 text-amber-300" />}
+                  <span>{copiedPitch ? 'Copied Client Pitch!' : 'Copy Cold Pitch Email'}</span>
+                </button>
+
+                <a
+                  href={`/report/${auditData.cleanDomain}?unbranded=true`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Live Client View</span>
+                </a>
+
                 <button
                   type="button"
                   onClick={() => handleDownloadFile(activeCodeTab)}

@@ -1,5 +1,6 @@
-import { chromium, Browser } from 'playwright';
+import { chromium, type Browser } from 'playwright';
 import * as cheerio from 'cheerio';
+import fs from 'fs';
 
 export interface PlaywrightScrapeResult {
   url: string;
@@ -15,18 +16,38 @@ export interface PlaywrightScrapeResult {
   errorMessage?: string;
 }
 
+function getChromeExecutablePath(): string | undefined {
+  if (process.env.CHROME_BIN) return process.env.CHROME_BIN;
+  const possiblePaths = [
+    '/run/current-system/sw/bin/google-chrome',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome-stable',
+  ];
+  for (const p of possiblePaths) {
+    try {
+      if (fs.existsSync(/* turbopackIgnore: true */ p)) return p;
+    } catch {
+      // ignore
+    }
+  }
+  return undefined;
+}
+
 export async function scrapeWithPlaywright(targetUrl: string): Promise<PlaywrightScrapeResult> {
   let browser: Browser | null = null;
+  const cleanUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
 
   // 1. Check llms.txt at origin domain
   let hasLlmsTxt = false;
   let llmsTxtStatus = 0;
   try {
-    const origin = new URL(targetUrl).origin;
+    const origin = new URL(cleanUrl).origin;
     const llmsRes = await fetch(`${origin}/llms.txt`, {
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
       },
       signal: AbortSignal.timeout(5000),
     });
@@ -41,23 +62,28 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
     llmsTxtStatus = 0;
   }
 
-  // 2. Launch Playwright Chromium using system Google Chrome binary on NixOS
+  // 2. Launch Playwright Chromium with system Google Chrome
   try {
-    browser = await chromium.launch({
-      executablePath: '/run/current-system/sw/bin/google-chrome',
+    const execPath = getChromeExecutablePath();
+    const launchOptions: any = {
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-    });
+    };
+    if (execPath) {
+      launchOptions.executablePath = execPath;
+    }
+
+    browser = await chromium.launch(launchOptions);
 
     const context = await browser.newContext({
       userAgent:
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CiteMedAuditor/1.0',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
       viewport: { width: 1280, height: 800 },
     });
 
     const page = await context.newPage();
     
-    await page.goto(targetUrl, {
+    await page.goto(cleanUrl, {
       waitUntil: 'domcontentloaded',
       timeout: 12000,
     });

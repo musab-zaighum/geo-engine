@@ -13,6 +13,7 @@
 import FirecrawlApp from '@mendable/firecrawl-js';
 import { extractReadabilityMarkdown } from './readability-turndown';
 import { validateMedicalSchemaJson } from './schema-validator';
+import { scrapeWithPlaywright } from './playwright-scraper';
 import { execFile } from 'child_process';
 import path from 'path';
 
@@ -153,40 +154,59 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
 
     if (pageRes.ok) {
       const html = await pageRes.text();
-      const readability = extractReadabilityMarkdown(html, cleanUrl);
-      const schemaValidation = validateMedicalSchemaJson(html);
+      // If HTML is substantial, process and return
+      if (html && html.trim().length > 600) {
+        const readability = extractReadabilityMarkdown(html, cleanUrl);
+        const schemaValidation = validateMedicalSchemaJson(html);
+
+        return {
+          url: cleanUrl,
+          success: true,
+          html,
+          markdown: readability.markdown,
+          hasLlmsTxt,
+          llmsTxtStatus,
+          detectedSchemas: schemaValidation.detectedTypes,
+          hasMedicalSchema: schemaValidation.hasMedicalType,
+          hasRegistrationId: schemaValidation.hasRegistrationId,
+          pageTitle: readability.title,
+          metaDescription: readability.excerpt,
+          engineUsed: 'Mozilla Readability + Turndown GFM + Schema-DTS',
+        };
+      }
+    }
+  } catch (err: any) {
+    console.warn('Fast HTTP fetch note:', err?.message || err);
+  }
+
+  // 5. Headless Browser Ingestion Engine (Playwright Chromium)
+  // For JavaScript-rendered SPAs, Wix, Webflow, and dynamic sites
+  try {
+    const pwResult = await scrapeWithPlaywright(cleanUrl);
+    if (pwResult.pageFetchOk && pwResult.html) {
+      const readability = extractReadabilityMarkdown(pwResult.html, cleanUrl);
+      const schemaValidation = validateMedicalSchemaJson(pwResult.html);
 
       return {
         url: cleanUrl,
         success: true,
-        html,
+        html: pwResult.html,
         markdown: readability.markdown,
-        hasLlmsTxt,
-        llmsTxtStatus,
-        detectedSchemas: schemaValidation.detectedTypes,
-        hasMedicalSchema: schemaValidation.hasMedicalType,
+        hasLlmsTxt: hasLlmsTxt || pwResult.hasLlmsTxt,
+        llmsTxtStatus: llmsTxtStatus || pwResult.llmsTxtStatus,
+        detectedSchemas: schemaValidation.detectedTypes.length > 0 ? schemaValidation.detectedTypes : pwResult.detectedSchemas,
+        hasMedicalSchema: schemaValidation.hasMedicalType || pwResult.hasMedicalSchema,
         hasRegistrationId: schemaValidation.hasRegistrationId,
-        pageTitle: readability.title,
-        metaDescription: readability.excerpt,
-        engineUsed: 'Mozilla Readability + Turndown GFM + Schema-DTS',
+        pageTitle: pwResult.pageTitle || readability.title,
+        metaDescription: pwResult.metaDescription || readability.excerpt,
+        engineUsed: 'Playwright Headless Chrome + Mozilla Readability',
       };
     }
   } catch (err: any) {
-    return {
-      url: cleanUrl,
-      success: false,
-      html: '',
-      markdown: '',
-      hasLlmsTxt,
-      llmsTxtStatus,
-      detectedSchemas: [],
-      hasMedicalSchema: false,
-      hasRegistrationId: false,
-      engineUsed: 'Fast HTTP Fallback',
-      errorMessage: err?.message || 'Failed to fetch domain content.',
-    };
+    console.warn('Playwright browser engine note:', err?.message || err);
   }
 
+  // 6. Graceful Fail-Safe Diagnostic Return
   return {
     url: cleanUrl,
     success: false,
@@ -197,7 +217,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     detectedSchemas: [],
     hasMedicalSchema: false,
     hasRegistrationId: false,
-    engineUsed: 'Fast HTTP Fallback',
+    engineUsed: 'Fast HTTP + Playwright Fallback',
     errorMessage: 'Unable to process target URL.',
   };
 }
