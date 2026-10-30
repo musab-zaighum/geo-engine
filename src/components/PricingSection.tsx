@@ -46,7 +46,7 @@ export function PricingSection({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           
           {/* Tier 1: Starter Agency ($97 / mo) */}
-          <div className="rounded-3xl bg-slate-900/80 border border-slate-800 p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-slate-700 transition-all">
+          <div className="rounded-3xl nr-glass-card p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono font-bold tracking-wider text-slate-400 uppercase">
@@ -188,7 +188,7 @@ export function PricingSection({
           </div>
 
           {/* Tier 3: Scale / Enterprise ($697 / mo) */}
-          <div className="rounded-3xl bg-slate-900/80 border border-slate-800 p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-slate-700 transition-all">
+          <div className="rounded-3xl nr-glass-card p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-violet-500/40 hover:-translate-y-1 transition-all duration-300">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono font-bold tracking-wider text-slate-400 uppercase">
