@@ -16,14 +16,12 @@ import {
 } from 'lucide-react';
 import { InstantAuditBar } from '@/components/InstantAuditBar';
 import { AgencyProfitCalculator } from '@/components/AgencyProfitCalculator';
-import { WhiteLabelModal } from '@/components/WhiteLabelModal';
 import { PricingSection } from '@/components/PricingSection';
 import { MobileCheckoutDrawer, PlanTier } from '@/components/MobileCheckoutDrawer';
 
 export default function NexusRankLandingPage() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [checkoutTier, setCheckoutTier] = useState<PlanTier>('growth');
-  const [whiteLabelModalOpen, setWhiteLabelModalOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const handleOpenCheckout = (tier: PlanTier = 'growth') => {
@@ -33,12 +31,12 @@ export default function NexusRankLandingPage() {
 
   const faqs = [
     {
-      q: 'How does the 100% unbranded white-label report work?',
-      a: 'On our Growth ($297/mo) and Scale ($697/mo) tiers, all client-facing audit reports and portals are 100% debranded. There are zero mentions of NexusRank anywhere on the page, in the HTML metadata, or in downloadable PDFs. Your clients only see your agency logo, brand colors, and custom CNAME subdomain.',
+      q: 'How does NexusRank1 guarantee 0-error Schema.org compliance?',
+      a: 'NexusRank1 validates your practice MedicalClinic graphs and Physician AST nodes in real-time against official Schema.org standards and Google Rich Results guidelines. You can test any generated JSON-LD directly on Google official validator with a single click.',
     },
     {
-      q: 'How do I configure my custom CNAME (audit.youragency.com)?',
-      a: 'Simply add a single CNAME record in your DNS provider (Cloudflare, GoDaddy, Namecheap) pointing "audit" to "cname.nexusrank1.com". Our autonomous edge network automatically provisions a dedicated 256-bit SSL certificate in under 60 seconds.',
+      q: 'How does NexusRank1 improve practice visibility on Perplexity & SearchGPT?',
+      a: 'Modern generative search engines rely on semantic entity graphs and /llms.txt manifests to discover authoritative medical providers. NexusRank1 establishes verifiable entity links between your clinic, physician NPI registries, and specialty taxonomy so AI engines cite your practice first.',
     },
     {
       q: 'Why do local healthcare practices need Schema.org & /llms.txt manifests?',
@@ -73,9 +71,9 @@ export default function NexusRankLandingPage() {
             {/* Top Pill / Trust Strip */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs text-slate-300 shadow-xl backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-              <span className="font-semibold text-white">Autonomous B2B Micro-SaaS</span>
+              <span className="font-semibold text-white">Autonomous Healthcare GEO</span>
               <span className="text-slate-500">•</span>
-              <span className="text-indigo-400 font-mono">100% White-Label CNAME</span>
+              <span className="text-indigo-400 font-mono">0-Error Clinical Schema &amp; AI Ranking</span>
             </div>
 
             {/* Main Headline */}
@@ -88,7 +86,7 @@ export default function NexusRankLandingPage() {
 
             {/* Subheading */}
             <p className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Audit any dental practice or medical clinic in 5 seconds. Generate 0-error Schema.org JSON-LD and /llms.txt manifests. Deliver 100% unbranded reports under your agency CNAME with 93% net profit margins.
+              Audit any dental practice or medical clinic in 5 seconds. Generate 0-error Schema.org JSON-LD and /llms.txt manifests. Deliver certified clinical intelligence reports stamped by NexusRank1 with 93% net profit margins.
             </p>
 
             {/* Micro Trust Stats */}
@@ -99,7 +97,7 @@ export default function NexusRankLandingPage() {
               </div>
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-indigo-400" />
-                <span>100% Strict Debranding</span>
+                <span>100% Schema Accuracy</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Smartphone className="w-4 h-4 text-amber-400" />
@@ -110,7 +108,6 @@ export default function NexusRankLandingPage() {
             {/* PART 1 & 2: MOBILE-OPTIMIZED INSTANT AUDIT ENGINE */}
             <div className="pt-6 max-w-3xl mx-auto">
               <InstantAuditBar
-                onOpenWhiteLabelModal={() => setWhiteLabelModalOpen(true)}
                 onOpenCheckout={handleOpenCheckout}
               />
             </div>
@@ -154,12 +151,12 @@ export default function NexusRankLandingPage() {
                 <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-black text-lg">
                   02
                 </div>
-                <h3 className="text-lg font-bold text-white">Send 100% Unbranded Report</h3>
+                <h3 className="text-lg font-bold text-white">Autonomous Clinical Audit &amp; GEO Verification</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Send your prospective client an unbranded link on your custom subdomain (e.g. <code className="text-indigo-300 font-mono">audit.youragency.com</code>). Zero NexusRank mentions protect your agency wholesale relationship.
+                  Send your prospective client an official verified clinical report generated by NexusRank1 Clinical Intelligence. Validated physician NPI licensure and crawler status prove immediate value.
                 </p>
                 <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> Strict White-Label Guarantee
+                  <Check className="w-3.5 h-3.5" /> Official NexusRank1 Verification Stamp
                 </div>
               </div>
 
@@ -184,30 +181,30 @@ export default function NexusRankLandingPage() {
         {/* PART 3: INTERACTIVE AGENCY PROFIT CALCULATOR */}
         <AgencyProfitCalculator onOpenCheckout={handleOpenCheckout} />
 
-        {/* PART 4: WHITE-LABEL CNAME SPOTLIGHT */}
-        <section className="py-16 sm:py-20 border-y border-slate-800/80 bg-slate-900/60">
+        {/* PART 4: CLINICAL GEO & AI ENGINE SPOTLIGHT */}
+        <section id="features" className="py-16 sm:py-20 border-y border-slate-800/80 bg-slate-900/60">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="space-y-4 max-w-xl text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Strict Branding Architecture</span>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Clinical Search Engine Optimization</span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
-                  Your Custom CNAME. Your Brand. Zero NexusRank Mentions.
+                  Autonomous Clinical Intelligence. Verified for AI Search.
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Client trust is your agency&apos;s greatest asset. Growth and Scale tiers give you a fully autonomous white-label portal at <code className="text-indigo-300 font-mono bg-slate-950 px-1.5 py-0.5 rounded">audit.youragency.com</code> with SSL automatically configured.
+                  Modern patients search via Perplexity, SearchGPT, and Google AI Overviews. NexusRank1 automatically provisions 0-error MedicalClinic graphs, links verified physician NPI licensure, and compiles /llms.txt manifests so AI engines cite your practices first.
                 </p>
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs font-mono text-slate-400">
                   <span className="flex items-center gap-1.5 text-emerald-400">
-                    <Check className="w-3.5 h-3.5" /> Custom Agency Logo
+                    <Check className="w-3.5 h-3.5" /> 0-Error Schema.org JSON-LD
                   </span>
                   <span className="flex items-center gap-1.5 text-emerald-400">
-                    <Check className="w-3.5 h-3.5" /> Custom Brand Palette
+                    <Check className="w-3.5 h-3.5" /> Physician NPI Registry Graphs
                   </span>
                   <span className="flex items-center gap-1.5 text-emerald-400">
-                    <Check className="w-3.5 h-3.5" /> Custom Report Footer
+                    <Check className="w-3.5 h-3.5" /> SearchGPT /llms.txt Manifest
                   </span>
                 </div>
               </div>
@@ -215,15 +212,15 @@ export default function NexusRankLandingPage() {
               <div className="shrink-0 flex flex-col items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
-                  onClick={() => setWhiteLabelModalOpen(true)}
+                  onClick={() => handleOpenCheckout('growth')}
                   className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-xl shadow-indigo-950/80 active:scale-[0.98] touch-target cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Preview Your Agency Portal</span>
+                  <span>Deploy Clinical GEO Suite</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <span className="text-[11px] text-slate-500 font-mono">
-                  Interactive real-time preview canvas
+                  Instant Apple Pay / Card provisioning
                 </span>
               </div>
             </div>
@@ -233,7 +230,6 @@ export default function NexusRankLandingPage() {
         {/* PART 5 & PRICING: 3-TIER PRICING ARCHITECTURE */}
         <PricingSection
           onOpenCheckout={handleOpenCheckout}
-          onOpenWhiteLabelModal={() => setWhiteLabelModalOpen(true)}
         />
 
         {/* REAL AGENCY SOCIAL PROOF */}
@@ -342,7 +338,7 @@ export default function NexusRankLandingPage() {
             </h2>
 
             <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
-              Start auditing target clinics immediately. Provision your custom CNAME with 1 click and join 120+ agencies scaling local healthcare retainers.
+              Start auditing target clinics immediately. Generate 0-error Schema.org graphs and join 120+ practices and agencies scaling healthcare AI search rankings.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
@@ -354,14 +350,6 @@ export default function NexusRankLandingPage() {
                 <Sparkles className="w-4 h-4 text-amber-300" />
                 <span>Claim $297/mo Wholesale License</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setWhiteLabelModalOpen(true)}
-                className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-sm border border-slate-700 transition-colors touch-target"
-              >
-                Preview White-Label CNAME
               </button>
             </div>
 
@@ -425,12 +413,6 @@ export default function NexusRankLandingPage() {
         isOpen={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
         initialPlan={checkoutTier}
-      />
-
-      <WhiteLabelModal
-        isOpen={whiteLabelModalOpen}
-        onClose={() => setWhiteLabelModalOpen(false)}
-        onOpenCheckout={() => handleOpenCheckout('growth')}
       />
 
     </div>

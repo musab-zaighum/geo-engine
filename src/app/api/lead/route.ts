@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       email,
       phone: phone || '',
       notes: notes || 'Interested in 0-Error Schema & /llms.txt AI Fix Deployment',
-      source: 'NexusRank1 White-Label Agency Audit Portal',
+      source: 'NexusRank1 Clinical Intelligence Audit Portal',
     };
 
     // If agency configured a custom Webhook URL (Zapier, GoHighLevel, Slack, Make)

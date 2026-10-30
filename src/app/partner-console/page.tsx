@@ -185,7 +185,7 @@ export default function UnifiedPartnerConsolePage() {
     setTimeout(() => {
       setIsSaving(false);
       setSaveSuccess(true);
-      toast.success('White-label agency configuration saved to edge!');
+      toast.success('Agency configuration saved to edge!');
       setTimeout(() => setSaveSuccess(false), 3000);
     }, 400);
   };
@@ -229,10 +229,10 @@ export default function UnifiedPartnerConsolePage() {
   };
 
   const handleCopyClientLink = (domain: string) => {
-    const fullUrl = `${window.location.origin}/report/${domain}?unbranded=true`;
+    const fullUrl = `${window.location.origin}/report/${domain}`;
     navigator.clipboard.writeText(fullUrl);
     setCopiedLink(domain);
-    toast.success('Unbranded report link copied!');
+    toast.success('Clinical report link copied!');
     setTimeout(() => setCopiedLink(null), 2000);
   };
 
@@ -323,7 +323,7 @@ export default function UnifiedPartnerConsolePage() {
             </span>
           </button>
 
-          {/* TAB 2: White-Label Engine */}
+          {/* TAB 2: Agency Profile & Verification */}
           <button
             type="button"
             onClick={() => setActiveTab('brand')}
@@ -334,12 +334,7 @@ export default function UnifiedPartnerConsolePage() {
             }`}
           >
             <Palette className="w-4 h-4 text-indigo-400" />
-            <span>White-Label Branding</span>
-            {debrandedToggle && (
-              <span className="ml-1 text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded-full border border-emerald-500/20">
-                100% Debranded
-              </span>
-            )}
+            <span>Agency Profile &amp; Verification</span>
           </button>
 
           {/* TAB 3: Economics & P&L Calculator */}
@@ -516,20 +511,20 @@ export default function UnifiedPartnerConsolePage() {
           </div>
         )}
 
-        {/* TAB 2: WHITE-LABEL BRANDING */}
+        {/* TAB 2: AGENCY PROFILE & VERIFICATION */}
         {activeTab === 'brand' && (
           <div className="max-w-4xl space-y-6">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
               <div>
-                <h3 className="text-lg font-bold text-white">White-Label Branding Settings</h3>
+                <h3 className="text-lg font-bold text-white">Agency Profile &amp; Clinical Settings</h3>
                 <p className="text-xs text-slate-400 mt-1">
-                  Customize your client-facing portal and PDF outputs. Strict zero-mention guarantee enabled.
+                  Configure your partner details and clinical intelligence presentation.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Agency Name</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Agency Partner Name</label>
                   <input
                     type="text"
                     value={portalName}
@@ -567,18 +562,13 @@ export default function UnifiedPartnerConsolePage() {
                 </div>
 
                 <div className="pt-2">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={debrandedToggle}
-                      onChange={(e) => setDebrandedToggle(e.target.checked)}
-                      className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-950 border-slate-700"
-                    />
+                  <div className="p-3.5 rounded-xl bg-indigo-950/30 border border-indigo-500/20 text-xs text-indigo-200 flex items-start gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold text-white">Strict Zero-Trace Debranding Active</div>
-                      <div className="text-[11px] text-slate-400">Completely hides any mention of NexusRank from reports and code exports.</div>
+                      <div className="text-xs font-bold text-white">NexusRank1 Clinical Intelligence Active</div>
+                      <div className="text-[11px] text-slate-400">All practice audit links and schema outputs include verified 0-error clinical badging.</div>
                     </div>
-                  </label>
+                  </div>
                 </div>
               </div>
             </div>

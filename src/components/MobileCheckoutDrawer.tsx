@@ -42,7 +42,7 @@ export const PRICING_PLANS: Record<PlanTier, PlanDetail> = {
     period: '/mo',
     audits: '15 audits/mo',
     cname: 'Standard shared queue',
-    branding: 'PDF reports with agency logo',
+    branding: 'NexusRank1 Verified Audit Badging',
     monitoring: 'Clinical JSON-LD & /llms.txt generator',
   },
   growth: {
@@ -53,8 +53,8 @@ export const PRICING_PLANS: Record<PlanTier, PlanDetail> = {
     badge: 'MOST POPULAR • 93% MARGIN',
     popular: true,
     audits: '100 audits/mo',
-    cname: 'Full Custom CNAME (audit.youragency.com)',
-    branding: '100% Unbranded (Zero NexusRank mentions)',
+    cname: 'Automated Daily AI Re-indexing',
+    branding: 'Official Clinical Intelligence Stamping & PDF',
     monitoring: 'Automated weekly schema monitoring',
   },
   scale: {
@@ -64,7 +64,7 @@ export const PRICING_PLANS: Record<PlanTier, PlanDetail> = {
     period: '/mo',
     audits: 'Unlimited audits',
     cname: 'Full REST API + Bulk CSV Engine',
-    branding: '100% Unbranded + Custom SLA',
+    branding: 'Dedicated Healthcare Cloud + Custom SLA',
     monitoring: 'Unlimited team seats + Priority Support',
   },
 };
@@ -239,21 +239,21 @@ export function MobileCheckoutDrawer({
                 </div>
               </div>
 
-              {/* Strict Branding Rule Notice for Growth & Scale */}
+              {/* Clinical GEO Guarantee Notice */}
               {selectedPlan === 'growth' || selectedPlan === 'scale' ? (
                 <div className="p-3 rounded-lg bg-indigo-950/30 border border-indigo-500/20 text-xs text-indigo-200 flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold text-white">Strict White-Label Guarantee: </span>
-                    Your clients will see 100% unbranded outputs on your custom subdomain (e.g. <code className="text-indigo-300 bg-indigo-950/80 px-1 py-0.5 rounded">audit.youragency.com</code>) with zero NexusRank mentions.
+                    <span className="font-bold text-white">Clinical GEO Intelligence Guarantee: </span>
+                    All audits and schemas are stamped with 0-error MedicalClinic graphs and /llms.txt manifests verified for Perplexity, ChatGPT Search, and Google AI Overviews.
                   </div>
                 </div>
               ) : (
                 <div className="p-3 rounded-lg bg-slate-950/50 border border-slate-800 text-xs text-slate-400 flex items-start gap-2.5">
-                  <Lock className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-medium text-slate-300">Starter Tier Note: </span>
-                    Includes agency logo on PDF reports. Upgrade to Growth ($297) anytime for full custom CNAME and 100% debranded reports.
+                    Includes instant clinical audits, 0-error schema exports, and direct Google Rich Results validation.
                   </div>
                 </div>
               )}
@@ -378,7 +378,7 @@ export function MobileCheckoutDrawer({
                   className="w-full h-11 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg touch-target"
                 >
                   <Building2 className="w-4 h-4" />
-                  <span>Open Partner Console &amp; Setup CNAME</span>
+                  <span>Open Partner Command Center</span>
                   <ArrowRight className="w-4 h-4" />
                 </a>
 

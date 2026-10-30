@@ -19,12 +19,10 @@ import { PlanTier } from './MobileCheckoutDrawer';
 
 interface PricingSectionProps {
   onOpenCheckout: (tier: PlanTier) => void;
-  onOpenWhiteLabelModal: () => void;
 }
 
 export function PricingSection({
   onOpenCheckout,
-  onOpenWhiteLabelModal,
 }: PricingSectionProps) {
   return (
     <section id="pricing" className="py-16 sm:py-24 relative">
@@ -89,13 +87,13 @@ export function PricingSection({
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>Standard diagnostic scan queue</span>
                 </li>
-                <li className="flex items-start gap-2.5 text-slate-500">
-                  <Lock className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
-                  <span>Custom CNAME (Gated to Growth+)</span>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>Official NexusRank1 Verified Audit Badging</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-slate-500">
                   <Lock className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
-                  <span>100% Unbranded web reports (Gated)</span>
+                  <span>Continuous 24/7 Schema Monitoring (Growth+)</span>
                 </li>
               </ul>
             </div>
@@ -135,7 +133,7 @@ export function PricingSection({
               <div>
                 <h3 className="text-2xl font-black text-white">Growth Agency</h3>
                 <p className="text-xs text-slate-300 mt-1">
-                  Full unbranded white-label deployment for agencies managing 5 to 25 local clients.
+                  Autonomous clinical search engine optimization for practices and agencies managing 5 to 25 clients.
                 </p>
               </div>
 
@@ -152,11 +150,11 @@ export function PricingSection({
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                  <span><strong>Full Custom CNAME</strong> (<code className="text-indigo-300 font-mono">audit.youragency.com</code>)</span>
+                  <span><strong>Automated Daily AI Re-indexing</strong> (SearchGPT, Perplexity &amp; Claude)</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                  <span><strong>100% Unbranded reports</strong> (Zero NexusRank mentions)</span>
+                  <span><strong>Official Clinical Intelligence Stamping</strong> &amp; PDF certification</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -168,7 +166,7 @@ export function PricingSection({
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Client proposal generator &amp; white-label PDF exporter</span>
+                  <span>Client proposal generator &amp; verified clinical PDF exporter</span>
                 </li>
               </ul>
             </div>
@@ -233,7 +231,7 @@ export function PricingSection({
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Multi-subdomain CNAME provisioning</span>
+                  <span>Dedicated high-throughput clinical worker nodes &amp; custom domain routing</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -259,23 +257,23 @@ export function PricingSection({
 
         </div>
 
-        {/* Feature Comparison Matrix Drawer trigger */}
+        {/* Enterprise Healthcare Compliance Strip */}
         <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center shrink-0">
-              <Globe className="w-5 h-5 text-indigo-400" />
+              <ShieldCheck className="w-5 h-5 text-indigo-400" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">Need to see the white-label portal in action before subscribing?</h4>
-              <p className="text-xs text-slate-400">Preview what your clients will see with custom branding and zero vendor mentions.</p>
+              <h4 className="text-sm font-bold text-white">Guaranteed 0-Error Schema.org &amp; /llms.txt Compliance</h4>
+              <p className="text-xs text-slate-400">All generated graphs pass official Google Rich Results and schema.org validators with 100% precision.</p>
             </div>
           </div>
           <button
             type="button"
-            onClick={onOpenWhiteLabelModal}
-            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target shrink-0"
+            onClick={() => onOpenCheckout('growth')}
+            className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target shrink-0 cursor-pointer"
           >
-            <span>Open White-Label Preview</span>
+            <span>Get Started with Growth</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

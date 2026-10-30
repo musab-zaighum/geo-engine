@@ -18,12 +18,10 @@ import {
 import { PricingSection } from '@/components/PricingSection';
 import { AgencyProfitCalculator } from '@/components/AgencyProfitCalculator';
 import { MobileCheckoutDrawer, PlanTier } from '@/components/MobileCheckoutDrawer';
-import { WhiteLabelModal } from '@/components/WhiteLabelModal';
 
 export default function PricingPage() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [checkoutTier, setCheckoutTier] = useState<PlanTier>('growth');
-  const [whiteLabelOpen, setWhiteLabelOpen] = useState(false);
 
   const handleOpenCheckout = (tier: PlanTier = 'growth') => {
     setCheckoutTier(tier);
@@ -43,7 +41,7 @@ export default function PricingPage() {
           Transparent Wholesale Pricing Built for <span className="text-indigo-400">93% Agency Margins</span>
         </h1>
         <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Deploy unbranded healthcare schema audits and clinical /llms.txt manifests under your agency CNAME. Scale recurring retainers with zero technical overhead.
+          Deploy 0-error healthcare schema audits and clinical /llms.txt manifests. Scale recurring patient rankings and agency retainers with zero technical overhead.
         </p>
       </div>
 
@@ -51,7 +49,6 @@ export default function PricingPage() {
       <div className="max-w-6xl mx-auto">
         <PricingSection
           onOpenCheckout={handleOpenCheckout}
-          onOpenWhiteLabelModal={() => setWhiteLabelOpen(true)}
         />
       </div>
 
@@ -64,24 +61,23 @@ export default function PricingPage() {
       <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-4">
         <h3 className="text-xl font-bold text-white">Have custom enterprise volume or multi-seat agency questions?</h3>
         <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-          Our partner engineering team assists with bulk CSV domain imports, custom CRM webhooks, and private CNAME SSL routing.
+          Our partner engineering team assists with bulk CSV domain imports, custom CRM webhooks, and private routing.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"
             onClick={() => handleOpenCheckout('growth')}
-            className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all touch-target"
+            className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all touch-target cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
             <span>Claim $297/mo Growth License</span>
           </button>
-          <button
-            type="button"
-            onClick={() => setWhiteLabelOpen(true)}
+          <Link
+            href="/#audit-engine"
             className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition-colors touch-target"
           >
-            Preview White-Label CNAME
-          </button>
+            Run Instant Clinical Audit
+          </Link>
         </div>
       </div>
 
@@ -90,12 +86,6 @@ export default function PricingPage() {
         isOpen={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
         initialPlan={checkoutTier}
-      />
-
-      <WhiteLabelModal
-        isOpen={whiteLabelOpen}
-        onClose={() => setWhiteLabelOpen(false)}
-        onOpenCheckout={() => handleOpenCheckout('growth')}
       />
 
     </div>

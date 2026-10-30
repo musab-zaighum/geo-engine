@@ -11,26 +11,26 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'NexusRank1.com | Autonomous B2B White-Label Micro-SaaS for Marketing Agencies',
+  title: 'NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform',
   description:
-    'Turn local healthcare schema into a high-margin agency retainer. Run 5-second clinical audits, generate 0-error Schema.org JSON-LD and /llms.txt manifests, and deploy under your own custom agency CNAME with 93% net profit margins.',
+    'Turn local healthcare schema into higher patient rankings on Perplexity, SearchGPT, and Google AI Overviews. Run 5-second clinical audits, generate 0-error Schema.org JSON-LD and /llms.txt manifests with 93% net profit margins.',
   keywords: [
     'NexusRank',
     'NexusRank1.com',
-    'B2B White-Label SaaS',
-    'Marketing Agency Micro-SaaS',
     'Healthcare GEO',
-    'Medical Clinic Schema',
     'Generative Engine Optimization',
-    'Custom CNAME Audit Portal',
+    'Medical Clinic Schema',
+    'Perplexity Search Optimization',
+    'SearchGPT Ranking',
     'Dental Schema Generator',
-    'Wholesale Agency Software',
+    'Physician NPI Registry Graph',
+    'Autonomous Healthcare SEO',
   ],
   authors: [{ name: 'NexusRank Engineering' }],
   openGraph: {
-    title: 'NexusRank1.com | Autonomous B2B White-Label Micro-SaaS for Marketing Agencies',
+    title: 'NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform',
     description:
-      'Prove value in 5 seconds. Generate 0-error Schema.org JSON-LD and /llms.txt manifests. 100% unbranded white-label reports with your agency CNAME.',
+      'Prove value in 5 seconds. Generate 0-error Schema.org JSON-LD and /llms.txt manifests. Official clinical intelligence audits stamped by NexusRank1.',
     url: 'https://nexusrank1.com',
     siteName: 'NexusRank1.com',
     type: 'website',

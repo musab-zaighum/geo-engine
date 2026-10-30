@@ -172,11 +172,11 @@ export function AgencyProfitCalculator({ onOpenCheckout }: AgencyProfitCalculato
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Custom CNAME (<code className="text-indigo-300 font-mono">audit.youragency.com</code>)</span>
+                <span>Automated daily SearchGPT &amp; Perplexity re-indexing</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>100% Unbranded outputs (Zero vendor mentions)</span>
+                <span>Verified 0-error MedicalClinic Schema &amp; /llms.txt</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />

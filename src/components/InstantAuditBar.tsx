@@ -63,12 +63,10 @@ const SCAN_STEPS = [
 ];
 
 interface InstantAuditBarProps {
-  onOpenWhiteLabelModal?: () => void;
   onOpenCheckout?: (tier?: 'starter' | 'growth' | 'scale') => void;
 }
 
 export function InstantAuditBar({
-  onOpenWhiteLabelModal,
   onOpenCheckout,
 }: InstantAuditBarProps) {
   const [domainInput, setDomainInput] = useState('dentalpractice.com');
@@ -717,25 +715,19 @@ Healthcare Intelligence Team`;
               </pre>
             </div>
 
-            {/* Bottom Conversion Bar to White-Label & Pricing */}
+            {/* Bottom Conversion Bar */}
             <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
               <div className="text-slate-300 text-center sm:text-left">
-                Want to deliver this report under your own agency brand with <strong className="text-white">zero NexusRank mentions</strong>?
+                Ready to automate 0-error Schema.org and /llms.txt across your practice roster? <strong className="text-white">Unlock Full Healthcare GEO Suite</strong>
               </div>
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   type="button"
-                  onClick={onOpenWhiteLabelModal}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors touch-target cursor-pointer"
-                >
-                  Preview White-Label CNAME
-                </button>
-                <button
-                  type="button"
                   onClick={() => onOpenCheckout && onOpenCheckout('growth')}
-                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-colors touch-target cursor-pointer"
+                  className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-extrabold transition-all touch-target cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-950/60"
                 >
-                  Claim Growth License ($297/mo)
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Claim Growth License ($297/mo)</span>
                 </button>
               </div>
             </div>

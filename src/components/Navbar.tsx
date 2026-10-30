@@ -19,14 +19,12 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { MobileCheckoutDrawer, PlanTier } from './MobileCheckoutDrawer';
-import { WhiteLabelModal } from './WhiteLabelModal';
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [checkoutTier, setCheckoutTier] = useState<PlanTier>('growth');
-  const [whiteLabelOpen, setWhiteLabelOpen] = useState(false);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -77,7 +75,7 @@ export function Navbar() {
                   </span>
                 </div>
                 <span className="text-[9px] font-mono font-bold tracking-wider text-slate-400 uppercase -mt-0.5">
-                  B2B WHITE-LABEL SAAS
+                  AUTONOMOUS HEALTHCARE GEO
                 </span>
               </div>
             </Link>
@@ -101,20 +99,20 @@ export function Navbar() {
 
             <button
               type="button"
+              onClick={() => handleScrollTo('features')}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Clinical GEO</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => handleScrollTo('profit-calculator')}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
             >
               <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
               <span>93% Margin Calc</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setWhiteLabelOpen(true)}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
-            >
-              <Globe className="w-3.5 h-3.5 text-indigo-400" />
-              <span>White-Label CNAME</span>
             </button>
 
             <button
@@ -198,15 +196,12 @@ export function Navbar() {
 
               <button
                 type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setWhiteLabelOpen(true);
-                }}
+                onClick={() => handleScrollTo('features')}
                 className="w-full py-3 px-3 rounded-xl text-left text-sm font-semibold text-slate-200 hover:bg-slate-900 hover:text-white flex items-center justify-between touch-target"
               >
                 <div className="flex items-center gap-2.5">
-                  <Globe className="w-4 h-4 text-indigo-400" />
-                  <span>White-Label CNAME Preview</span>
+                  <Sparkles className="w-4 h-4 text-indigo-400" />
+                  <span>Clinical GEO Architecture</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </button>
@@ -229,7 +224,7 @@ export function Navbar() {
               >
                 <div className="flex items-center gap-2.5">
                   <Building2 className="w-4 h-4 text-slate-400" />
-                  <span>Partner Console &amp; DNS Management</span>
+                  <span>Partner Command Center</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </Link>
@@ -251,7 +246,7 @@ export function Navbar() {
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 4-Sec Apple Pay / GPay
                 </span>
                 <span>•</span>
-                <span>100% Unbranded CNAME</span>
+                <span>Verified 0-Error Schema</span>
               </div>
             </div>
           </div>
@@ -263,12 +258,6 @@ export function Navbar() {
         isOpen={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
         initialPlan={checkoutTier}
-      />
-
-      <WhiteLabelModal
-        isOpen={whiteLabelOpen}
-        onClose={() => setWhiteLabelOpen(false)}
-        onOpenCheckout={() => handleOpenCheckout('growth')}
       />
     </>
   );

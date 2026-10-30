@@ -33,35 +33,9 @@ export default function StandaloneClientReportPage() {
   const [mounted, setMounted] = useState(false);
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
-  const [requestModalOpen, setRequestModalOpen] = useState(false);
-  const [requestSent, setRequestSent] = useState(false);
-
-  // Agency branding - loaded from agencyConfig or default white-label
-  const [branding, setBranding] = useState({
-    agencyName: 'Apex Health Systems',
-    agencyLogoUrl: '/logo.png',
-    primaryColorHex: '#6366f1',
-    supportEmail: 'growth@apexhealthpartners.com',
-    agencySubdomain: 'audit.apexhealthpartners.com',
-  });
 
   useEffect(() => {
     setMounted(true);
-    try {
-      const stored = localStorage.getItem('agencyConfig');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setBranding({
-          agencyName: parsed.agencyName || 'Apex Health Systems',
-          agencyLogoUrl: parsed.agencyLogoUrl || '/logo.png',
-          primaryColorHex: parsed.customHexColor || '#6366f1',
-          supportEmail: parsed.contactEmail || 'growth@apexhealthpartners.com',
-          agencySubdomain: parsed.agencySlug || 'audit.apexhealthpartners.com',
-        });
-      }
-    } catch {
-      // Use defaults
-    }
   }, []);
 
   if (!mounted) {
@@ -159,23 +133,22 @@ export default function StandaloneClientReportPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8 space-y-8 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       
-      {/* 100% Debranded Agency Header (Zero-Trace White-Label) */}
+      {/* Official NexusRank1 Clinical Intelligence Header */}
       <header className="max-w-5xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-md"
-            style={{ backgroundColor: branding.primaryColorHex }}
-          >
-            {branding.agencyName.slice(0, 2).toUpperCase()}
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/30 flex items-center justify-center shadow-lg shadow-indigo-950/50">
+            <Zap className="w-6 h-6 text-white fill-white/20" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-black text-white tracking-tight">{branding.agencyName}</h1>
+              <h1 className="text-lg font-black text-white tracking-tight">
+                NexusRank<span className="text-indigo-400">1</span> Clinical Intelligence
+              </h1>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                Verified Client Report
+                Official Clinical Audit
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-mono">Confidential Practice AI Audit &bull; {domain}</p>
+            <p className="text-xs text-slate-400 font-mono">Autonomous Healthcare GEO Engine &bull; {domain}</p>
           </div>
         </div>
 
@@ -291,22 +264,22 @@ export default function StandaloneClientReportPage() {
           {/* Next Steps Remediation Strip */}
           <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div className="text-slate-300 text-center sm:text-left">
-              Questions regarding this audit or need full white-glove deployment for {practiceTitle}?
+              Questions regarding this audit or need 0-error schema deployment for {practiceTitle}?
             </div>
             <a
-              href={`mailto:${branding.supportEmail}?subject=${encodeURIComponent(`Inquiry regarding GEO Audit for ${practiceTitle}`)}`}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors shrink-0"
+              href={`mailto:support@nexusrank1.com?subject=${encodeURIComponent(`Inquiry regarding Clinical GEO Audit for ${practiceTitle}`)}`}
+              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors shrink-0"
             >
-              Contact {branding.agencyName}
+              Contact NexusRank1 Clinical Team
             </a>
           </div>
         </div>
 
       </main>
 
-      {/* Strictly Unbranded Footer */}
+      {/* Official NexusRank1 Clinical Intelligence Footer */}
       <footer className="max-w-5xl mx-auto pt-6 border-t border-slate-800/80 text-center text-xs text-slate-500 font-mono">
-        Audit prepared and verified by {branding.agencyName} &bull; Confidential &bull; All Rights Reserved
+        Audit generated and certified by NexusRank1 Clinical Intelligence &bull; 0-Error Schema.org &amp; AI Engine Optimization &bull; All Rights Reserved
       </footer>
 
     </div>
