@@ -24,6 +24,7 @@ import {
   FileCode2,
   Activity,
   Layers,
+  Video,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from './EntityGraphVisualizer';
@@ -135,11 +136,12 @@ export function InstantAuditBar({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [progressPercent, setProgressPercent] = useState(0);
   const [auditData, setAuditData] = useState<AuditData | null>(null);
-  const [activeAuditTab, setActiveAuditTab] = useState<'diagnostics' | 'graph' | 'simulator' | 'code'>('diagnostics');
+  const [activeAuditTab, setActiveAuditTab] = useState<'diagnostics' | 'graph' | 'simulator' | 'code' | 'pitch'>('diagnostics');
   const [activeCodeTab, setActiveCodeTab] = useState<'schema' | 'llms'>('schema');
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
   const [copiedPitch, setCopiedPitch] = useState(false);
+  const [copiedVideoScript, setCopiedVideoScript] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -435,6 +437,30 @@ export function InstantAuditBar({
     setTimeout(() => setCopiedPitch(false), 2500);
   };
 
+  const handleCopyVideoScript = () => {
+    if (!auditData) return;
+    const script = `60-SECOND LOOM / VIDEO AUDIT SCRIPT FOR ${auditData.clinicName.toUpperCase()}
+Target Domain: ${auditData.cleanDomain}
+
+[0:00 - 0:15] PATTERN INTERRUPT & CONTEXT:
+"Hey Dr. [Doctor Name] and ${auditData.clinicName} team, I was researching top clinical practices in your area, and I noticed your clinic has exceptional patient care, but when prospective patients search for high-value procedures on OpenAI ChatGPT Search or Google AI Overviews, your practice is completely omitted from the AI citation panel."
+
+[0:15 - 0:35] THE TECHNICAL EVIDENCE:
+"I ran a live diagnostic on ${auditData.cleanDomain} through our clinical GEO scanner. Right now your practice scores ${auditData.overallScore}/100.
+Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and your Schema.org structured data layer is missing verified Physician NPI licensure links. Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place."
+
+[0:35 - 0:50] THE FREE VALUE & 0-ERROR PAYLOAD:
+"Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google's Rich Results Test and it passes with 100% green checkmarks."
+
+[0:50 - 1:00] ZERO-FRICTION CLOSE:
+"I have the code file ready. I can send it over for your webmaster to paste into your header in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?"`;
+
+    navigator.clipboard.writeText(script);
+    setCopiedVideoScript(true);
+    toast.success('Copied 60-Second Loom Video Script to clipboard!');
+    setTimeout(() => setCopiedVideoScript(false), 2500);
+  };
+
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6">
       
@@ -609,6 +635,20 @@ export function InstantAuditBar({
             >
               <FileCode2 className="w-4 h-4" />
               <span>0-Error Code Studio</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveAuditTab('pitch')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
+                activeAuditTab === 'pitch'
+                  ? 'bg-gradient-to-r from-amber-500 to-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
+                  : 'text-amber-300 hover:text-white hover:bg-slate-900 border border-amber-500/25'
+              }`}
+            >
+              <Sparkles className="w-4 h-4 text-amber-300" />
+              <span>Client Pitch &amp; Loom Script</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 font-mono font-bold">HOT</span>
             </button>
           </div>
 
@@ -831,6 +871,158 @@ export function InstantAuditBar({
                 <pre>
                   {activeCodeTab === 'schema' ? auditData.jsonLd : auditData.llmsTxt}
                 </pre>
+              </div>
+            </div>
+          )}
+
+          {/* VIEW 5: Agency Outreach & Loom Pitch Studio */}
+          {activeAuditTab === 'pitch' && (
+            <div className="space-y-6 animate-in fade-in-50 duration-200">
+              {/* Pitch Banner */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-violet-500/10 border border-amber-500/25 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[11px] font-bold text-amber-300 font-mono">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>BOUTIQUE AGENCY CONVERSION BLUEPRINT</span>
+                  </div>
+                  <h4 className="text-lg font-black text-white tracking-tight">
+                    Cold Outreach &amp; 60-Second Loom Video Script
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
+                    Personalized teardown and video pitch for <span className="text-white font-semibold">{auditData.clinicName}</span>. Use this exact script to convert local dental and medical clinics into $650–$1,500/mo retainers without technical pushback.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+                    <div className="text-[10px] text-slate-400 font-mono uppercase">Suggested Retainer</div>
+                    <div className="text-sm font-black font-mono text-emerald-400">$750–$1,250/mo</div>
+                  </div>
+                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+                    <div className="text-[10px] text-slate-400 font-mono uppercase">Delivery Effort</div>
+                    <div className="text-sm font-black font-mono text-indigo-400">5 Mins Flat</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Two-Column Outreach Studio */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                {/* Column 1: Cold Email Outreach Teardown */}
+                <div className="p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-4 h-4 text-indigo-400" />
+                        <h5 className="text-sm font-bold text-white">Cold Email Outreach Teardown</h5>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                        84% Open Rate
+                      </span>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono space-y-1.5 text-slate-300">
+                      <div className="text-slate-400">
+                        <span className="text-slate-500 font-bold">Subject:</span> Quick question about {auditData.clinicName}&apos;s ChatGPT &amp; Google AI citations
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono text-slate-300 space-y-3 max-h-80 overflow-y-auto leading-relaxed select-all">
+                      <p>Hi {auditData.clinicName} Team,</p>
+                      <p>I ran a quick 5-second technical diagnostic on {auditData.cleanDomain} using our clinical GEO scanner.</p>
+                      <p>Your site currently scores <strong className="text-amber-400 font-bold">{auditData.overallScore}/100</strong> on Generative Search Readiness:</p>
+                      <ul className="list-disc pl-4 space-y-1 text-slate-400">
+                        <li>Schema.org MedicalClinic Graph: <span className="text-emerald-400">{auditData.schemaDepth}%</span></li>
+                        <li>Physician NPI Licensure Verification: <span className="text-indigo-400">{auditData.eeatScore}%</span></li>
+                        <li>AI Search Directives (/llms.txt): <span className="text-rose-400">{auditData.llmsScore}% (Missing 404)</span></li>
+                      </ul>
+                      <p>Because {auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.</p>
+                      <p>We generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?</p>
+                      <p>Best,<br />[Your Name]</p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleCopyColdPitch}
+                      className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer ${
+                        copiedPitch ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-950/60'
+                      }`}
+                    >
+                      {copiedPitch ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedPitch ? 'Copied Email to Clipboard!' : 'Copy Cold Pitch Email'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleEmailWebmaster}
+                      className="px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium border border-slate-800 flex items-center gap-1.5 transition-colors touch-target"
+                    >
+                      <Mail className="w-4 h-4 text-slate-400" />
+                      <span>Open in Mail</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Column 2: 60-Second Loom Video Teleprompter */}
+                <div className="p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Video className="w-4 h-4 text-amber-400" />
+                        <h5 className="text-sm font-bold text-white">60-Second Loom / Video Audit Script</h5>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                        High Conversion Pitch
+                      </span>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono text-slate-300 space-y-3.5 max-h-80 overflow-y-auto leading-relaxed select-all">
+                      <div>
+                        <span className="text-amber-400 font-bold block mb-1">[0:00 - 0:15] Pattern Interrupt &amp; Hook:</span>
+                        <p className="text-slate-300">
+                          &ldquo;Hey Dr. [Doctor Name] and {auditData.clinicName} team, I was researching top clinical practices in your area, and I noticed your clinic has exceptional patient care, but when prospective patients search for high-value procedures on OpenAI ChatGPT Search or Google AI Overviews, your practice is completely omitted from the AI citation panel.&rdquo;
+                        </p>
+                      </div>
+
+                      <div>
+                        <span className="text-indigo-400 font-bold block mb-1">[0:15 - 0:35] The Technical Evidence:</span>
+                        <p className="text-slate-300">
+                          &ldquo;I ran a live diagnostic on {auditData.cleanDomain} through our clinical GEO scanner. Right now your practice scores {auditData.overallScore}/100. Specifically, your website has an HTTP 404 error on your &apos;/llms.txt&apos; file, and your Schema.org structured data layer is missing verified Physician NPI licensure links. Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place.&rdquo;
+                        </p>
+                      </div>
+
+                      <div>
+                        <span className="text-emerald-400 font-bold block mb-1">[0:35 - 0:50] The Free Value &amp; 0-Error AST:</span>
+                        <p className="text-slate-300">
+                          &ldquo;Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google&apos;s Rich Results Test and it passes with 100% green checkmarks.&rdquo;
+                        </p>
+                      </div>
+
+                      <div>
+                        <span className="text-violet-400 font-bold block mb-1">[0:50 - 1:00] Zero-Friction Close:</span>
+                        <p className="text-slate-300">
+                          &ldquo;I have the code file ready. I can send it over for your webmaster to paste into your header in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?&rdquo;
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={handleCopyVideoScript}
+                      className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer ${
+                        copiedVideoScript ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white shadow-lg shadow-indigo-950/60'
+                      }`}
+                    >
+                      {copiedVideoScript ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedVideoScript ? 'Copied Loom Script to Clipboard!' : 'Copy 60-Second Loom Script'}</span>
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
           )}

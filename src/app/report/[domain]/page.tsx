@@ -136,7 +136,7 @@ export default function StandaloneClientReportPage() {
     <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8 space-y-8 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       
       {/* Official NexusRank1 Clinical Intelligence Header */}
-      <header className="max-w-5xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <header className="max-w-5xl mx-auto nr-glass-card rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 border border-indigo-400/30 flex items-center justify-center shadow-lg shadow-indigo-950/50">
             <Zap className="w-6 h-6 text-white fill-white/20" />
@@ -154,11 +154,11 @@ export default function StandaloneClientReportPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="flex items-center gap-2 w-full sm:w-auto no-print">
           <a
             href={`/api/report/pdf?domain=${encodeURIComponent(domain)}`}
             download
-            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-indigo-950/70 hover:bg-indigo-900/80 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-500/40 flex items-center justify-center gap-1.5 transition-colors touch-target"
+            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-indigo-950/70 hover:bg-indigo-900/80 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-500/40 flex items-center justify-center gap-1.5 transition-colors touch-target shadow-sm"
           >
             <Download className="w-3.5 h-3.5 text-indigo-400" />
             <span>Download Vector PDF</span>
@@ -167,7 +167,7 @@ export default function StandaloneClientReportPage() {
           <button
             type="button"
             onClick={() => window.print()}
-            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5 transition-colors touch-target"
+            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5 transition-colors touch-target"
           >
             <Printer className="w-3.5 h-3.5 text-slate-400" />
             <span>Print View</span>
@@ -177,7 +177,7 @@ export default function StandaloneClientReportPage() {
             href={`https://search.google.com/test/rich-results?url=${encodeURIComponent(`https://${domain}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors touch-target"
+            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors touch-target shadow-lg shadow-indigo-950/60"
           >
             <span>Google Rich Results</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -189,8 +189,8 @@ export default function StandaloneClientReportPage() {
       <main className="max-w-5xl mx-auto space-y-6">
         
         {/* Practice Overview Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+        <div className="nr-glass-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono">
                 Domain Entity Analysis
@@ -288,7 +288,7 @@ export default function StandaloneClientReportPage() {
               <button
                 type="button"
                 onClick={handleCopySchema}
-                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer ${
+                className={`no-print px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer ${
                   copiedSchema ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
                 }`}
               >
@@ -309,7 +309,7 @@ export default function StandaloneClientReportPage() {
             </div>
             <a
               href={`mailto:support@nexusrank1.com?subject=${encodeURIComponent(`Inquiry regarding Clinical GEO Audit for ${practiceTitle}`)}`}
-              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors shrink-0"
+              className="no-print px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors shrink-0"
             >
               Contact NexusRank1 Clinical Team
             </a>
