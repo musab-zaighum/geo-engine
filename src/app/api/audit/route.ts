@@ -231,6 +231,8 @@ export async function POST(req: NextRequest) {
     let llmsTxtStatus = 404;
     let engineUsed = 'DirectHTTP';
     let clinicalData: StructuredClinicalData | undefined;
+    let blockedAiBots: string[] = [];
+    let aiBotsAllowed = true;
 
     try {
       const scrapeResult = await executeOssScraperPipeline(targetUrl);
@@ -240,6 +242,8 @@ export async function POST(req: NextRequest) {
       llmsTxtStatus = scrapeResult.llmsTxtStatus;
       engineUsed = scrapeResult.engineUsed;
       clinicalData = scrapeResult.clinicalData;
+      blockedAiBots = scrapeResult.blockedAiBots || [];
+      aiBotsAllowed = scrapeResult.aiBotsAllowed ?? true;
     } catch {
       pageFetchOk = false;
       hasLlmsTxt = false;
@@ -295,6 +299,9 @@ export async function POST(req: NextRequest) {
       hasLlmsTxt
         ? '/llms.txt Machine-Readable Directory: 200 OK'
         : '❌ /llms.txt Machine-Readable Directory: 404 Not Found',
+      blockedAiBots.length > 0
+        ? `❌ robots.txt AI Bot Crawl Block: Disallows ${blockedAiBots.join(', ')}`
+        : 'robots.txt AI Bot Crawl Directives: Permitted (GPTBot & Perplexity Allowed)',
       '❌ Regular GEO Search Citation Index: Unindexed on Perplexity / ChatGPT',
     ];
 
@@ -308,6 +315,9 @@ export async function POST(req: NextRequest) {
       ...(hasLlmsTxt
         ? []
         : ['/llms.txt Machine-Readable Directory: 404 Not Found at domain root.']),
+      ...(blockedAiBots.length > 0
+        ? [`robots.txt Crawl Block: Domain explicitly blocks ${blockedAiBots.join(', ')} from indexing content.`]
+        : []),
       'Regular GEO Search Citation Index: Domain lacks structured vector indexing on Perplexity & OpenAI SearchGPT.',
     ];
 
@@ -315,6 +325,9 @@ export async function POST(req: NextRequest) {
       'Deploy full-breadth Schema.org @graph with MedicalClinic and Physician definitions.',
       'Bind NPI / AHPRA practitioner license IDs directly into JSON-LD entity nodes.',
       'Publish /llms.txt markdown index at domain root for direct LLM ingestion.',
+      ...(blockedAiBots.length > 0
+        ? ['Remove Disallow rules in robots.txt for GPTBot, PerplexityBot, and Google-Extended to allow AI search indexing.']
+        : []),
       'Syndicate unbranded Regular GEO citations across medical directory graphs.',
     ];
 
@@ -325,6 +338,7 @@ export async function POST(req: NextRequest) {
     if (hasMedicalSchema) score += 25;
     if (hasLlmsTxt) score += 20;
     if (registrationNumbers.length > 0) score += 10;
+    if (blockedAiBots.length > 0) score = Math.max(10, score - 20); // Penalty for blocking AI search bots
 
     const finalScore = openRouterResult?.parsed?.readinessScore
       ? Math.min(100, Math.max(10, openRouterResult.parsed.readinessScore))
@@ -339,6 +353,8 @@ export async function POST(req: NextRequest) {
       snippet: snippet || `Regular GEO Audit profile for ${hostname}`,
       hasLlmsTxt,
       llmsTxtStatus,
+      blockedAiBots,
+      aiBotsAllowed,
       hasMedicalSchema,
       schemaStatus: hasMedicalSchema ? 'MedicalClinic Graph Detected' : 'Missing MedicalClinic Schema',
       detectedSchemas,

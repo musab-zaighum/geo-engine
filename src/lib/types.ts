@@ -46,6 +46,8 @@ export interface AuditResponse {
   npiStatus?: string;
   npiVerified?: boolean;
   registrationNumbers?: string[];
+  blockedAiBots?: string[];
+  aiBotsAllowed?: boolean;
   criticalIssues: string[];
   issuesFound?: string[];
   recommendations: string[];

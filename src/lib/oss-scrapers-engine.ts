@@ -24,6 +24,9 @@ export interface OssScraperResult {
   markdown: string;
   hasLlmsTxt: boolean;
   llmsTxtStatus: number;
+  robotsTxtStatus?: number;
+  blockedAiBots?: string[];
+  aiBotsAllowed?: boolean;
   detectedSchemas: string[];
   hasMedicalSchema: boolean;
   hasRegistrationId: boolean;
@@ -49,7 +52,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     const llmsRes = await fetch(`${origin}/llms.txt`, {
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
       },
       signal: AbortSignal.timeout(5000),
     });
@@ -146,7 +149,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
       method: 'GET',
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
       signal: AbortSignal.timeout(8000),
@@ -195,6 +198,9 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
         markdown: readability.markdown,
         hasLlmsTxt: hasLlmsTxt || pwResult.hasLlmsTxt,
         llmsTxtStatus: llmsTxtStatus || pwResult.llmsTxtStatus,
+        robotsTxtStatus: pwResult.robotsTxtStatus,
+        blockedAiBots: pwResult.blockedAiBots,
+        aiBotsAllowed: pwResult.aiBotsAllowed,
         detectedSchemas: schemaValidation.detectedTypes.length > 0 ? schemaValidation.detectedTypes : pwResult.detectedSchemas,
         hasMedicalSchema: schemaValidation.hasMedicalType || pwResult.hasMedicalSchema,
         hasRegistrationId: schemaValidation.hasRegistrationId,

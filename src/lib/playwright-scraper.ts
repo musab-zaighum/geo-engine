@@ -31,6 +31,9 @@ export interface PlaywrightScrapeResult {
   html: string;
   hasLlmsTxt: boolean;
   llmsTxtStatus: number;
+  robotsTxtStatus?: number;
+  blockedAiBots?: string[];
+  aiBotsAllowed?: boolean;
   detectedSchemas: string[];
   hasMedicalSchema: boolean;
   pageTitle?: string;
@@ -38,6 +41,56 @@ export interface PlaywrightScrapeResult {
   isPlaywrightRendered: boolean;
   clinicalData?: StructuredClinicalData;
   errorMessage?: string;
+}
+
+export function parseRobotsTxt(content: string): string[] {
+  const lines = content.split(/\r?\n/);
+  const blocks: Record<string, string[]> = {};
+  let currentAgents: string[] = [];
+
+  for (const line of lines) {
+    const clean = line.replace(/#.*$/, '').trim();
+    if (!clean) {
+      currentAgents = [];
+      continue;
+    }
+    const uaMatch = clean.match(/^User-agent:\s*(.+)$/i);
+    if (uaMatch) {
+      const agent = uaMatch[1].trim().toLowerCase();
+      currentAgents.push(agent);
+      if (!blocks[agent]) blocks[agent] = [];
+    } else {
+      const disallowMatch = clean.match(/^Disallow:\s*(.*)$/i);
+      if (disallowMatch) {
+        const path = disallowMatch[1].trim();
+        for (const ag of currentAgents) {
+          blocks[ag].push(path);
+        }
+      }
+    }
+  }
+
+  const blocked: string[] = [];
+  if (blocks['*'] && blocks['*'].includes('/')) {
+    blocked.push('All Crawlers (*)');
+  }
+  const aiBots = ['gptbot', 'perplexitybot', 'claudebot', 'google-extended', 'applebot-extended'];
+  for (const bot of aiBots) {
+    if (blocks[bot] && blocks[bot].includes('/')) {
+      const properName =
+        bot === 'gptbot'
+          ? 'GPTBot (ChatGPT Search)'
+          : bot === 'perplexitybot'
+          ? 'PerplexityBot'
+          : bot === 'claudebot'
+          ? 'ClaudeBot'
+          : bot === 'google-extended'
+          ? 'Google-Extended (Gemini)'
+          : 'Applebot-Extended';
+      blocked.push(properName);
+    }
+  }
+  return blocked;
 }
 
 function getChromeExecutablePath(): string | undefined {
@@ -63,27 +116,56 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
   let browser: Browser | null = null;
   const cleanUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
 
-  // 1. Check llms.txt at origin domain
+  // 1. Concurrently check /llms.txt and /robots.txt at origin domain
   let hasLlmsTxt = false;
   let llmsTxtStatus = 0;
+  let robotsTxtStatus = 0;
+  const blockedAiBots: string[] = [];
+  let aiBotsAllowed = true;
+
   try {
     const origin = new URL(cleanUrl).origin;
-    const llmsRes = await fetch(`${origin}/llms.txt`, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
-      },
-      signal: AbortSignal.timeout(5000),
-    });
-    llmsTxtStatus = llmsRes.status;
-    if (llmsRes.ok) {
-      const text = await llmsRes.text();
-      if (text && text.trim().length > 10) {
-        hasLlmsTxt = true;
+    const [llmsRes, robotsRes] = await Promise.allSettled([
+      fetch(`${origin}/llms.txt`, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
+        },
+        signal: AbortSignal.timeout(4000),
+      }),
+      fetch(`${origin}/robots.txt`, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
+        },
+        signal: AbortSignal.timeout(4000),
+      }),
+    ]);
+
+    if (llmsRes.status === 'fulfilled') {
+      llmsTxtStatus = llmsRes.value.status;
+      if (llmsRes.value.ok) {
+        const text = await llmsRes.value.text();
+        if (text && text.trim().length > 10) {
+          hasLlmsTxt = true;
+        }
+      }
+    }
+
+    if (robotsRes.status === 'fulfilled') {
+      robotsTxtStatus = robotsRes.value.status;
+      if (robotsRes.value.ok) {
+        const robotsContent = await robotsRes.value.text();
+        const detectedBlocked = parseRobotsTxt(robotsContent);
+        if (detectedBlocked.length > 0) {
+          blockedAiBots.push(...detectedBlocked);
+          aiBotsAllowed = false;
+        }
       }
     }
   } catch {
     llmsTxtStatus = 0;
+    robotsTxtStatus = 0;
   }
 
   // 2. Launch Playwright Chromium with system Google Chrome
@@ -174,6 +256,9 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
         html,
         hasLlmsTxt,
         llmsTxtStatus,
+        robotsTxtStatus,
+        blockedAiBots,
+        aiBotsAllowed,
         detectedSchemas: parsedData.detectedSchemas,
         hasMedicalSchema: parsedData.hasMedicalSchema,
         pageTitle: pageTitle || parsedData.pageTitle,
@@ -215,6 +300,9 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
         html,
         hasLlmsTxt,
         llmsTxtStatus,
+        robotsTxtStatus,
+        blockedAiBots,
+        aiBotsAllowed,
         detectedSchemas: parsedData.detectedSchemas,
         hasMedicalSchema: parsedData.hasMedicalSchema,
         pageTitle: parsedData.pageTitle,
@@ -230,6 +318,9 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
       html: '',
       hasLlmsTxt,
       llmsTxtStatus,
+      robotsTxtStatus,
+      blockedAiBots,
+      aiBotsAllowed,
       detectedSchemas: [],
       hasMedicalSchema: false,
       isPlaywrightRendered: false,
@@ -244,6 +335,9 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
     html: '',
     hasLlmsTxt,
     llmsTxtStatus,
+    robotsTxtStatus,
+    blockedAiBots,
+    aiBotsAllowed,
     detectedSchemas: [],
     hasMedicalSchema: false,
     isPlaywrightRendered: false,
