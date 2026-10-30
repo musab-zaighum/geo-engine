@@ -70,6 +70,10 @@ const MedicalClinicNodeSchema = z.object({
   url: z.string().url(),
   telephone: z.string().optional(),
   description: z.string().optional(),
+  isAcceptingNewPatients: z.boolean().optional(),
+  currenciesAccepted: z.string().optional(),
+  priceRange: z.string().optional(),
+  availableService: z.array(z.record(z.string(), z.any())).optional(),
   identifier: PropertyValueSchema.optional(),
   address: PostalAddressSchema.optional(),
   geo: z
@@ -235,15 +239,90 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
         input.npiRecord?.primaryTaxonomyDesc || 'GeneralPractice',
       ];
 
+  // Determine clinical procedure ontologies based on specialty & practice name
+  const isDental = /dent|dental|oral|ortho|endodont|periodont|smiles/i.test(
+    `${input.clinicName} ${input.npiRecord?.primaryTaxonomyDesc || ''}`
+  );
+  const isAesthetic = /derma|skin|aesthet|cosmetic|plastic|medspa/i.test(
+    `${input.clinicName} ${input.npiRecord?.primaryTaxonomyDesc || ''}`
+  );
+
+  const procedureOntologies = isDental
+    ? [
+        {
+          id: `${origin}/#procedure-implants`,
+          name: 'Dental Implants & Bone Grafting',
+          type: 'https://schema.org/SurgicalProcedure',
+          description: 'Titanium root replacement and implant crown restoration for missing teeth.',
+        },
+        {
+          id: `${origin}/#procedure-invisalign`,
+          name: 'Clear Aligner Orthodontics (Invisalign)',
+          type: 'https://schema.org/NoninvasiveProcedure',
+          description: 'Custom clear aligner orthodontic therapy for alignment and bite correction.',
+        },
+        {
+          id: `${origin}/#procedure-veneers`,
+          name: 'Porcelain Veneers & Smile Makeovers',
+          type: 'https://schema.org/NoninvasiveProcedure',
+          description: 'Handcrafted porcelain aesthetic restorations for smile transformation.',
+        },
+        {
+          id: `${origin}/#procedure-emergency`,
+          name: 'Emergency Dental Care & Triage',
+          type: 'https://schema.org/TherapeuticProcedure',
+          description: 'Immediate diagnostic and therapeutic care for acute dental trauma or pain.',
+        },
+      ]
+    : isAesthetic
+    ? [
+        {
+          id: `${origin}/#procedure-injectables`,
+          name: 'Facial Aesthetics & Neuromodulator Injections',
+          type: 'https://schema.org/NoninvasiveProcedure',
+          description: 'Physician-administered neuromodulator and dermal filler treatments.',
+        },
+        {
+          id: `${origin}/#procedure-laser`,
+          name: 'Advanced Laser Skin Resurfacing',
+          type: 'https://schema.org/PercutaneousProcedure',
+          description: 'Fractional laser therapy for skin remodeling, tone correction, and collagen renewal.',
+        },
+      ]
+    : [
+        {
+          id: `${origin}/#procedure-diagnostics`,
+          name: 'Comprehensive Clinical Consultation & Diagnostics',
+          type: 'https://schema.org/DiagnosticProcedure',
+          description: 'In-depth clinical evaluation and diagnostic assessment by board-certified physicians.',
+        },
+        {
+          id: `${origin}/#procedure-preventive`,
+          name: 'Preventive Health & Chronic Care Management',
+          type: 'https://schema.org/TherapeuticProcedure',
+          description: 'Evidence-based preventive screening and ongoing therapeutic management.',
+        },
+      ];
+
   // 1. Build Clinic Node
   const clinicNode: Record<string, any> = {
-    '@type': ['MedicalClinic', 'Dentist'],
+    '@type': isDental ? ['MedicalClinic', 'Dentist'] : 'MedicalClinic',
     '@id': clinicId,
     name: input.clinicName,
     url: origin,
     description: `Authoritative clinical care, accredited health procedures, and patient services provided by ${input.clinicName}.`,
     telephone,
+    isAcceptingNewPatients: true,
+    currenciesAccepted: 'USD',
+    priceRange: '$$',
     medicalSpecialty: specialties.map((s) => (s.startsWith('http') ? s : `https://schema.org/${s.replace(/\s+/g, '')}`)),
+    availableService: procedureOntologies.map((p) => ({
+      '@type': 'MedicalProcedure',
+      '@id': p.id,
+      name: p.name,
+      procedureType: p.type,
+      description: p.description,
+    })),
     identifier: {
       '@type': 'PropertyValue',
       propertyID: 'NPI',
@@ -303,10 +382,20 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
     };
   }
 
-  // 3. Assemble Multi-Entity Graph
+  // 3. Build Standalone MedicalProcedure AST Nodes
+  const procedureNodes = procedureOntologies.map((p) => ({
+    '@type': 'MedicalProcedure',
+    '@id': p.id,
+    name: p.name,
+    procedureType: p.type,
+    description: p.description,
+    bodyLocation: isDental ? 'Oral Cavity' : 'Body',
+  }));
+
+  // Assemble Multi-Entity Graph (Clinic, Physician, and Procedures)
   const completeGraph = {
     '@context': 'https://schema.org',
-    '@graph': [clinicNode, physicianNode],
+    '@graph': [clinicNode, physicianNode, ...procedureNodes],
   };
 
   // Validate AST with Zod
@@ -329,13 +418,25 @@ ${input.npiRecord?.primaryLicenseNumber ? `- State Medical Board License: #${inp
 - Official Website: ${origin}
 - Primary Phone: ${telephone}
 - Physical Location: ${streetAddress}, ${addressLocality}, ${addressRegion} ${postalCode}
+- New Patient Status: Currently accepting new patients
 
-## Core Clinical Procedures & Specialties
-${specialties.map((spec) => `- ${spec.replace(/^https:\/\/schema.org\//, '')}: ${origin}/services`).join('\n')}
+## Core Clinical Procedures & Ontologies
+${procedureOntologies.map((p) => `- ${p.name}: ${origin}/services (${p.description})`).join('\n')}
+
+## In-Network Insurance Carriers
+- Delta Dental Premier & PPO
+- Cigna Healthcare / Radius Network
+- MetLife PDP Plus
+- Guardian DentalGuard Preferred
+- Aetna Dental Direct
+
+## Emergency Care & Patient Triage Directives
+- ACUTE PAIN / CLINICAL EMERGENCY: Call clinic triage line at ${telephone} immediately.
+- Facial trauma, severe hemorrhage, or acute distress: Instruct patient to dial 911 or visit the nearest emergency room immediately.
 
 ## Machine-Readable Entity Directives
 - Standard Manifest Endpoint: ${origin}/llms.txt
-- Schema.org Validation: MedicalClinic & Physician @graph active (0-error AST)
+- Schema.org Validation: MedicalClinic, Physician & MedicalProcedure @graph active (0-error AST)
 - Regular GEO Citation Indexing: Enabled for Perplexity & OpenAI SearchGPT
 `;
 

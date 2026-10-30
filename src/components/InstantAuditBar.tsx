@@ -222,6 +222,8 @@ export function InstantAuditBar({
       "url": "https://${clean}",
       "telephone": "+1-800-555-0199",
       "isAcceptingNewPatients": true,
+      "currenciesAccepted": "USD",
+      "priceRange": "$$",
       "identifier": {
         "@type": "PropertyValue",
         "propertyID": "NPI",
@@ -230,6 +232,32 @@ export function InstantAuditBar({
       "medicalSpecialty": [
         "https://schema.org/Dentistry",
         "https://schema.org/CosmeticDentistry"
+      ],
+      "availableService": [
+        {
+          "@type": "MedicalProcedure",
+          "@id": "https://${clean}/#procedure-implants",
+          "name": "Dental Implants & Bone Grafting",
+          "procedureType": "https://schema.org/SurgicalProcedure"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "@id": "https://${clean}/#procedure-invisalign",
+          "name": "Clear Aligner Orthodontics (Invisalign)",
+          "procedureType": "https://schema.org/NoninvasiveProcedure"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "@id": "https://${clean}/#procedure-veneers",
+          "name": "Porcelain Veneers & Smile Makeovers",
+          "procedureType": "https://schema.org/NoninvasiveProcedure"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "@id": "https://${clean}/#procedure-emergency",
+          "name": "Emergency Dental Care & Triage",
+          "procedureType": "https://schema.org/TherapeuticProcedure"
+        }
       ],
       "address": {
         "@type": "PostalAddress",
@@ -263,6 +291,34 @@ export function InstantAuditBar({
           ]
         }
       ]
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${clean}/#procedure-implants",
+      "name": "Dental Implants & Bone Grafting",
+      "procedureType": "https://schema.org/SurgicalProcedure",
+      "bodyLocation": "Oral Cavity"
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${clean}/#procedure-invisalign",
+      "name": "Clear Aligner Orthodontics (Invisalign)",
+      "procedureType": "https://schema.org/NoninvasiveProcedure",
+      "bodyLocation": "Oral Cavity"
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${clean}/#procedure-veneers",
+      "name": "Porcelain Veneers & Smile Makeovers",
+      "procedureType": "https://schema.org/NoninvasiveProcedure",
+      "bodyLocation": "Oral Cavity"
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${clean}/#procedure-emergency",
+      "name": "Emergency Dental Care & Triage",
+      "procedureType": "https://schema.org/TherapeuticProcedure",
+      "bodyLocation": "Oral Cavity"
     }
   ]
 }`;
@@ -1123,6 +1179,10 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     <span className="text-slate-600">&bull;</span>
                     <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
                       👨‍⚕️ Physician
+                    </span>
+                    <span className="text-slate-600">&bull;</span>
+                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+                      🩺 4 MedicalProcedure Nodes
                     </span>
                     <span className="text-slate-600">&bull;</span>
                     <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
