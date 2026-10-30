@@ -379,7 +379,7 @@ export default function UnifiedPartnerConsolePage() {
           <div className="space-y-6">
             {/* KPI Ribbon */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
+              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Total Practice Accounts</div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-2xl font-black font-mono text-white">{practices.length}</span>
@@ -390,7 +390,7 @@ export default function UnifiedPartnerConsolePage() {
                 <div className="text-[10px] text-slate-500 font-mono">100 audits/mo on Growth Tier</div>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
+              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Client Revenue (MRR)</div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-2xl font-black font-mono text-white">${monthlyRevenue.toLocaleString()}</span>
@@ -399,7 +399,7 @@ export default function UnifiedPartnerConsolePage() {
                 <div className="text-[10px] text-slate-500 font-mono">Wholesale deduction: -$297/mo</div>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
+              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Average GEO Health</div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-2xl font-black font-mono text-indigo-400">95.2%</span>
@@ -410,7 +410,7 @@ export default function UnifiedPartnerConsolePage() {
                 <div className="text-[10px] text-slate-500 font-mono">Verified @graph + /llms.txt</div>
               </div>
 
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-1">
+              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
                 <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Branded Subdomain</div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-xs font-mono font-bold text-slate-300 truncate">{customSubdomain}</span>
@@ -422,7 +422,7 @@ export default function UnifiedPartnerConsolePage() {
             </div>
 
             {/* Practices Table */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <div className="nr-glass-card rounded-2xl p-5 space-y-4 shadow-xl">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="relative flex-1 max-w-sm">
                   <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />

@@ -58,7 +58,7 @@ export default function PricingPage() {
       </div>
 
       {/* FAQ Callout */}
-      <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-4">
+      <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl nr-glass-card text-center space-y-4 shadow-2xl">
         <h3 className="text-xl font-bold text-white">Have custom enterprise volume or multi-seat agency questions?</h3>
         <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
           Our partner engineering team assists with bulk CSV domain imports, custom CRM webhooks, and private routing.

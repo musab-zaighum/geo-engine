@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center p-4 bg-slate-950 text-slate-100">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
+      <div className="nr-glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
         <div className="space-y-3 text-center">
           <div className="w-12 h-12 bg-indigo-600/20 border border-indigo-500/30 rounded-2xl mx-auto shadow-md flex items-center justify-center text-indigo-400">
             <Zap className="w-6 h-6" />

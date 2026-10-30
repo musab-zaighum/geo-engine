@@ -120,7 +120,7 @@ function SignupFormContent() {
       </div>
 
       {/* Signup Form Card */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <div className="nr-glass-card rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-slate-300">
