@@ -153,13 +153,22 @@ export default function StandaloneClientReportPage() {
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
+          <a
+            href={`/api/report/pdf?domain=${encodeURIComponent(domain)}`}
+            download
+            className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-indigo-950/70 hover:bg-indigo-900/80 text-indigo-300 hover:text-white text-xs font-semibold border border-indigo-500/40 flex items-center justify-center gap-1.5 transition-colors touch-target"
+          >
+            <Download className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Download Vector PDF</span>
+          </a>
+
           <button
             type="button"
             onClick={() => window.print()}
             className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5 transition-colors touch-target"
           >
             <Printer className="w-3.5 h-3.5 text-slate-400" />
-            <span>Print PDF</span>
+            <span>Print View</span>
           </button>
 
           <a

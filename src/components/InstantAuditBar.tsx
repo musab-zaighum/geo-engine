@@ -12,6 +12,7 @@ import {
   Check,
   ExternalLink,
   Download,
+  FileText,
   Mail,
   Sparkles,
   Zap,
@@ -687,6 +688,16 @@ Healthcare Intelligence Team`;
                 >
                   <ExternalLink className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Live Client View</span>
+                </a>
+
+                <a
+                  href={`/api/report/pdf?domain=${encodeURIComponent(auditData.cleanDomain)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-indigo-950/70 hover:bg-indigo-900/80 border border-indigo-500/40 text-indigo-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target"
+                >
+                  <FileText className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Export Vector PDF</span>
                 </a>
 
                 <button
