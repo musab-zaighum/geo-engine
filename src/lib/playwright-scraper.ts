@@ -13,6 +13,10 @@ export interface StructuredClinicalData {
     postalCode?: string;
     country?: string;
   };
+  geo?: {
+    latitude: number;
+    longitude: number;
+  };
   doctors: Array<{
     name: string;
     credential?: string;
@@ -67,7 +71,7 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
     const llmsRes = await fetch(`${origin}/llms.txt`, {
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 NexusRank1Auditor/1.0',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
       },
       signal: AbortSignal.timeout(5000),
     });
@@ -256,6 +260,7 @@ export function parseClinicalHtmlAndSchemas(html: string) {
   const operatingHours: string[] = [];
   let clinicName: string | undefined;
   let address: StructuredClinicalData['address'] = undefined;
+  let geo: StructuredClinicalData['geo'] = undefined;
 
   $('script[type="application/ld+json"]').each((_, element) => {
     try {
@@ -292,6 +297,13 @@ export function parseClinicalHtmlAndSchemas(html: string) {
                 postalCode: obj.address.postalCode,
                 country: obj.address.addressCountry || 'US',
               };
+            }
+            if (obj.geo && typeof obj.geo === 'object' && !geo) {
+              const lat = parseFloat(obj.geo.latitude);
+              const lng = parseFloat(obj.geo.longitude);
+              if (!isNaN(lat) && !isNaN(lng)) {
+                geo = { latitude: lat, longitude: lng };
+              }
             }
             if (obj.openingHours) {
               if (Array.isArray(obj.openingHours)) {
@@ -353,6 +365,42 @@ export function parseClinicalHtmlAndSchemas(html: string) {
     }
   });
 
+  // Extract geo coordinates from meta tags if not already extracted
+  if (!geo) {
+    const geoPos = $('meta[name="geo.position"]').attr('content') || $('meta[name="ICBM"]').attr('content');
+    if (geoPos) {
+      const parts = geoPos.split(/[,;\s]+/).map((s) => parseFloat(s.trim()));
+      if (parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        geo = { latitude: parts[0], longitude: parts[1] };
+      }
+    }
+  }
+
+  // Microdata fallback for physical address
+  if (!address) {
+    const street = $('[itemprop="streetAddress"]').first().text().trim();
+    const city = $('[itemprop="addressLocality"]').first().text().trim();
+    const state = $('[itemprop="addressRegion"]').first().text().trim();
+    const postalCode = $('[itemprop="postalCode"]').first().text().trim();
+    if (street || city || state || postalCode) {
+      address = {
+        street: street || undefined,
+        city: city || undefined,
+        state: state || undefined,
+        postalCode: postalCode || undefined,
+        country: 'US',
+      };
+    }
+  }
+
+  // Fallback clinic name from OpenGraph if missing
+  if (!clinicName) {
+    const ogSite = $('meta[property="og:site_name"]').attr('content')?.trim();
+    if (ogSite && ogSite.length > 2 && ogSite.length < 70) {
+      clinicName = ogSite;
+    }
+  }
+
   const medicalKeywords = [
     'MedicalClinic',
     'Physician',
@@ -382,6 +430,7 @@ export function parseClinicalHtmlAndSchemas(html: string) {
       clinicName,
       telephones: validatedPhones,
       address,
+      geo,
       doctors,
       operatingHours,
     },

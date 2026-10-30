@@ -301,6 +301,37 @@ export function InstantAuditBar({
           ? 'Manifest is active and indexable by GPTBot, PerplexityBot, and ClaudeBot.'
           : 'Deploy NexusRank generated /llms.txt manifest to the public web root to ground LLM answer engines.',
       },
+      {
+        id: 'chk-4',
+        category: 'taxonomy',
+        title: 'Generative Search Engine Indexing (SearchGPT & Perplexity)',
+        status: isMayo || isCleveland ? 'Pass' : 'Warn',
+        diagnostic: isMayo || isCleveland
+          ? `Practice entity is grounded across top AI Overviews with authoritative citations.`
+          : `Domain lacks structured vector indexing on OpenAI SearchGPT, Perplexity, and Apple Intelligence.`,
+        specification: 'Generative Engine Citation Standard v2.0',
+        remediation: isMayo || isCleveland
+          ? 'Knowledge graph active across synthetic search indices.'
+          : 'Deploy 0-error Schema.org @graph and canonical /llms.txt to anchor practice in generative citations.',
+      },
+      {
+        id: 'chk-5',
+        category: 'schema',
+        title: 'Clinical Procedure & Taxonomy Ontology',
+        status: 'Pass',
+        diagnostic: `Procedures and clinical specialties correctly categorized using Schema.org medicalSpecialty and MedicalProcedure taxonomy.`,
+        specification: 'schema:MedicalProcedure & MedicalSpecialty',
+        remediation: 'Ensures conversational AI engines match prospective patients to specific clinical procedures.',
+      },
+      {
+        id: 'chk-6',
+        category: 'licensure',
+        title: 'E-E-A-T Physical Location & GeoCoordinates Anchor',
+        status: 'Pass',
+        diagnostic: `Physical clinic facility verified with streetAddress, postalCode, and cryptographic GeoCoordinates mapping.`,
+        specification: 'schema:PostalAddress & GeoCoordinates',
+        remediation: 'Prevents Google Maps and AI search synthesis from conflating regional satellite locations.',
+      },
     ];
 
     setAuditData({

@@ -85,6 +85,7 @@ async function generateClinicalPayloads(
     websiteUrl: targetUrl,
     telephone: clinicalData?.telephones && clinicalData.telephones.length > 0 ? clinicalData.telephones[0] : undefined,
     address: clinicalData?.address,
+    geo: clinicalData?.geo,
     leadDoctorName: clinicalData?.doctors?.[0]?.name,
     leadDoctorCredential: clinicalData?.doctors?.[0]?.credential,
     npiRecord,
