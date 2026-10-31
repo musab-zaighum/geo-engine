@@ -43,6 +43,55 @@ export interface OssScraperResult {
   errorMessage?: string;
 }
 
+async function fetchWithGotScraping(
+  url: string,
+  timeoutMs = 4500
+): Promise<{ ok: boolean; status: number; text: () => Promise<string> }> {
+  try {
+    const { gotScraping } = await import('got-scraping');
+    const res = await gotScraping({
+      url,
+      headerGeneratorOptions: {
+        browsers: [{ name: 'chrome', minVersion: 125 }],
+        devices: ['desktop'],
+        locales: ['en-US'],
+      },
+      timeout: { request: timeoutMs },
+      retry: { limit: 1 },
+    });
+    return {
+      ok: res.statusCode >= 200 && res.statusCode < 300,
+      status: res.statusCode,
+      text: async () => res.body,
+    };
+  } catch (err: any) {
+    const statusCode = err?.response?.statusCode || 0;
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
+          Accept: 'text/html,text/plain,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        },
+        signal: AbortSignal.timeout(timeoutMs),
+        redirect: 'follow',
+      });
+      return {
+        ok: res.ok,
+        status: res.status,
+        text: () => res.text(),
+      };
+    } catch {
+      return {
+        ok: false,
+        status: statusCode,
+        text: async () => '',
+      };
+    }
+  }
+}
+
 export async function executeOssScraperPipeline(targetUrl: string): Promise<OssScraperResult> {
   // Normalize target URL with defensive scheme
   let cleanUrl = (targetUrl || '').trim();
@@ -62,47 +111,9 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
   try {
     const origin = new URL(cleanUrl).origin;
     const [pageRes, llmsRes, robotsRes] = await Promise.allSettled([
-      (async () => {
-        try {
-          const { gotScraping } = await import('got-scraping');
-          const res = await gotScraping({
-            url: cleanUrl,
-            headerGeneratorOptions: {
-              browsers: [{ name: 'chrome', minVersion: 125 }],
-              devices: ['desktop'],
-              locales: ['en-US'],
-            },
-            timeout: { request: 5000 },
-            retry: { limit: 1 },
-          });
-          return { ok: res.statusCode >= 200 && res.statusCode < 300, text: async () => res.body };
-        } catch {
-          return fetch(cleanUrl, {
-            method: 'GET',
-            headers: {
-              'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
-              Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            },
-            signal: AbortSignal.timeout(5000),
-            redirect: 'follow',
-          });
-        }
-      })(),
-      fetch(`${origin}/llms.txt`, {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
-        },
-        signal: AbortSignal.timeout(3500),
-      }),
-      fetch(`${origin}/robots.txt`, {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
-        },
-        signal: AbortSignal.timeout(3500),
-      }),
+      fetchWithGotScraping(cleanUrl, 5000),
+      fetchWithGotScraping(`${origin}/llms.txt`, 3500),
+      fetchWithGotScraping(`${origin}/robots.txt`, 3500),
     ]);
 
     if (llmsRes.status === 'fulfilled') {
