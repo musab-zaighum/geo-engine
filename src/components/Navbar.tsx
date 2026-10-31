@@ -83,7 +83,7 @@ export function Navbar() {
             {/* Status Pill */}
             <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono">Autonomous Sales Engine</span>
+              <span className="font-mono">Direct Practice GEO Defense</span>
             </div>
           </div>
 
@@ -94,7 +94,7 @@ export function Navbar() {
               onClick={() => handleScrollTo('audit-engine')}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors"
             >
-              Instant Audit
+              Practice Audit
             </button>
 
             <button
@@ -108,11 +108,11 @@ export function Navbar() {
 
             <button
               type="button"
-              onClick={() => handleScrollTo('profit-calculator')}
+              onClick={() => handleScrollTo('patient-roi-calculator')}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
             >
               <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-              <span>93% Margin Calc</span>
+              <span>Patient ROI Modeler</span>
             </button>
 
             <button
@@ -120,7 +120,7 @@ export function Navbar() {
               onClick={() => handleScrollTo('pricing')}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors"
             >
-              Pricing ($97-$697)
+              Pricing ($199-$699)
             </button>
 
             <Link
@@ -128,30 +128,30 @@ export function Navbar() {
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
             >
               <Building2 className="w-3.5 h-3.5 text-slate-400" />
-              <span>Partner Console</span>
+              <span>Clinic Command Center</span>
             </Link>
           </nav>
 
           {/* Right CTA Action Buttons */}
           <div className="flex items-center gap-2">
-            {/* Desktop Agency Login */}
+            {/* Desktop Practice Login */}
             <Link
               href="/partner-console"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
             >
               <Lock className="w-3.5 h-3.5 text-slate-400" />
-              <span>Agency Login</span>
+              <span>Practice Login</span>
             </Link>
 
-            {/* Claim Wholesale License Button (Desktop & Mobile) */}
+            {/* Claim Clinic License Button (Desktop & Mobile) */}
             <button
               type="button"
               onClick={() => handleOpenCheckout('growth')}
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-950/60 transition-all duration-200 active:scale-[0.98] touch-target cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-950/60 transition-all duration-200 active:scale-[0.98] touch-target cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-              <span className="hidden xs:inline">Claim $297/mo License</span>
-              <span className="xs:hidden">Claim $297</span>
+              <span className="hidden xs:inline">Protect Practice ($349/mo)</span>
+              <span className="xs:hidden">Protect ($349)</span>
             </button>
 
             {/* Mobile Hamburger Menu Toggle Button (Touch Target >= 44px) */}
@@ -177,19 +177,19 @@ export function Navbar() {
               >
                 <div className="flex items-center gap-2.5">
                   <Search className="w-4 h-4 text-indigo-400" />
-                  <span>Instant Domain Audit Bar</span>
+                  <span>Instant Practice Audit Bar</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </button>
 
               <button
                 type="button"
-                onClick={() => handleScrollTo('profit-calculator')}
+                onClick={() => handleScrollTo('patient-roi-calculator')}
                 className="w-full py-3 px-3 rounded-xl text-left text-sm font-semibold text-slate-200 hover:bg-slate-900 hover:text-white flex items-center justify-between touch-target"
               >
                 <div className="flex items-center gap-2.5">
                   <TrendingUp className="w-4 h-4 text-emerald-400" />
-                  <span>Agency Profit Calculator (93% Net)</span>
+                  <span>Patient ROI Modeler</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </button>
@@ -213,7 +213,7 @@ export function Navbar() {
               >
                 <div className="flex items-center gap-2.5">
                   <DollarSign className="w-4 h-4 text-amber-400" />
-                  <span>3-Tier Agency Pricing ($97-$697)</span>
+                  <span>Practice Pricing ($199-$699)</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </button>
@@ -224,7 +224,7 @@ export function Navbar() {
               >
                 <div className="flex items-center gap-2.5">
                   <Building2 className="w-4 h-4 text-slate-400" />
-                  <span>Partner Command Center</span>
+                  <span>Clinic Command Center</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-slate-600" />
               </Link>
@@ -235,10 +235,10 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => handleOpenCheckout('growth')}
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-950/80 touch-target"
+                className="w-full h-12 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/80 touch-target"
               >
                 <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Claim $297/mo Wholesale License</span>
+                <span>Protect Practice ($349/mo)</span>
               </button>
 
               <div className="flex items-center justify-center gap-3 text-[11px] text-slate-400 pt-1">

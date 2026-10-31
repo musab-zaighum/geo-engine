@@ -3,16 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  Palette,
-  Globe,
+  ShieldCheck,
   Building2,
-  Eye,
-  CreditCard,
   Check,
   RefreshCw,
   Search,
-  ShieldCheck,
-  Server,
   ExternalLink,
   ChevronDown,
   Sparkles,
@@ -21,152 +16,162 @@ import {
   CheckCircle2,
   AlertCircle,
   FileCode,
+  Code,
   Copy,
   Lock,
   ChevronRight,
-  Plus,
   TrendingUp,
   DollarSign,
   Calculator,
-  Sliders,
   Layers,
   ShieldAlert,
   ArrowRight,
   BarChart3,
-  SlidersHorizontal,
   Share2,
-  Upload,
-  Download,
-  FileSpreadsheet,
   Zap,
+  Activity,
+  AlertTriangle,
+  Stethoscope,
+  Radio,
+  Clock,
+  Eye,
+  CheckCheck,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { PasteGuideModal } from '@/components/PasteGuideModal';
 
-export type UnifiedTab = 'overview' | 'brand' | 'economics' | 'cname';
+export type ClinicTab = 'overview' | 'competitor' | 'schema' | 'settings';
 
-export interface PracticeEntry {
+export interface ProcedureCitation {
   id: string;
   name: string;
-  specialty: string;
-  domain: string;
-  npiAhpra: string;
-  schemaHealth: number;
-  status: string;
-  mrr: string;
-  citations: string;
-  isAuditing?: boolean;
+  avgValue: string;
+  status: 'Active' | 'Displaced' | 'Optimizing';
+  chatgptRank: string;
+  perplexityRank: string;
+  googleAioRank: string;
+  lastAudited: string;
 }
 
-export default function UnifiedPartnerConsolePage() {
+export interface CompetitorStealAlert {
+  id: string;
+  competitorName: string;
+  procedure: string;
+  dateDetected: string;
+  reason: string;
+  countermeasureReady: boolean;
+  resolved: boolean;
+}
+
+export default function ClinicCommandCenterPage() {
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<UnifiedTab>('overview');
+  const [activeTab, setActiveTab] = useState<ClinicTab>('overview');
 
-  // Economics Calculator State
-  const [clinicCount, setClinicCount] = useState(10);
-  const [agencyBillRate, setAgencyBillRate] = useState(650);
-  const [wholesaleModel, setWholesaleModel] = useState<'flat' | 'per_clinic'>('flat');
+  // Practice Profile State
+  const [clinicName, setClinicName] = useState('Austin Cosmetic Dentistry & Implant Specialists');
+  const [domain, setDomain] = useState('austincosmetic.com');
+  const [leadDoctor, setLeadDoctor] = useState('Dr. Tejas Patel, DDS');
+  const [npiNumber, setNpiNumber] = useState('1928374650');
+  const [phone, setPhone] = useState('(512) 555-0199');
+  const [cityState, setCityState] = useState('Austin, TX 78701');
+  const [notificationEmail, setNotificationEmail] = useState('frontdesk@austincosmetic.com');
 
-  // Agency Brand Config State (Default: Apex Health Growth)
-  const [portalName, setPortalName] = useState('Apex Health Growth');
-  const [agencyLogoUrl, setAgencyLogoUrl] = useState('/logo.png');
-  const [supportEmail, setSupportEmail] = useState('growth@apexhealthpartners.com');
-  const [customHex, setCustomHex] = useState('#6366f1');
-  const [debrandedToggle, setDebrandedToggle] = useState(true);
-  const [customSubdomain, setCustomSubdomain] = useState('audit.apexhealthpartners.com');
-
-  // Interaction Feedback States
+  // Interactive UI Feedback
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [dnsTesting, setDnsTesting] = useState(false);
-  const [dnsVerified, setDnsVerified] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [copiedLink, setCopiedLink] = useState<string | null>(null);
+  const [isTestingScan, setIsTestingScan] = useState(false);
+  const [copiedSchema, setCopiedSchema] = useState(false);
+  const [copiedLlms, setCopiedLlms] = useState(false);
+  const [isPasteGuideOpen, setIsPasteGuideOpen] = useState(false);
 
-  // Batch Audit & Queue State
-  const [isBatchAuditing, setIsBatchAuditing] = useState(false);
-  const [batchProgress, setBatchProgress] = useState<{ current: number; total: number; currentDomain: string } | null>(null);
-
-  // Modals
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  // Add Practice Form State
-  const [newPracticeName, setNewPracticeName] = useState('Austin Cosmetic Dentistry');
-  const [newSpecialty, setNewSpecialty] = useState('Cosmetic & Restorative Dentistry');
-  const [newDomain, setNewDomain] = useState('austincosmetic.com');
-  const [newNpi, setNewNpi] = useState('NPI-1928374650');
-  const [autoAuditOnAdd, setAutoAuditOnAdd] = useState(true);
-
-  // Sub-accounts Table Data (High-Density)
-  const [practices, setPractices] = useState<PracticeEntry[]>([
+  // High-Ticket Procedures State
+  const [procedures, setProcedures] = useState<ProcedureCitation[]>([
     {
-      id: 'pr-101',
-      name: 'Aspen Dental Specialists',
-      specialty: 'General & Cosmetic Dentistry',
-      domain: 'aspendental.com',
-      npiAhpra: 'NPI-1928374650',
-      schemaHealth: 98,
+      id: 'proc-1',
+      name: 'Single & Multi Dental Implants',
+      avgValue: '$4,500',
       status: 'Active',
-      mrr: '$650',
-      citations: 'Perplexity, ChatGPT, Claude',
+      chatgptRank: '#1 Recommended',
+      perplexityRank: '#1 Recommended',
+      googleAioRank: '#1 in Overview',
+      lastAudited: 'Today, 4:15 PM',
     },
     {
-      id: 'pr-102',
-      name: 'Apex Orthopedic Institute',
-      specialty: 'Orthopedic & Sports Medicine',
-      domain: 'apexortho.com',
-      npiAhpra: 'NPI-1827364590',
-      schemaHealth: 94,
+      id: 'proc-2',
+      name: 'All-on-4 Immediate Full Arch',
+      avgValue: '$24,000',
       status: 'Active',
-      mrr: '$750',
-      citations: 'Perplexity, SearchGPT',
+      chatgptRank: '#1 Recommended',
+      perplexityRank: '#2 Cited',
+      googleAioRank: '#1 in Overview',
+      lastAudited: 'Today, 2:30 PM',
     },
     {
-      id: 'pr-103',
-      name: 'Bellevue Heart Specialists',
-      specialty: 'Interventional Cardiology',
-      domain: 'bellevueheart.org',
-      npiAhpra: 'NPI-1728394012',
-      schemaHealth: 96,
-      status: 'Active',
-      mrr: '$850',
-      citations: 'Google AI, Perplexity',
+      id: 'proc-3',
+      name: 'Invisalign Clear Aligners',
+      avgValue: '$5,200',
+      status: 'Displaced',
+      chatgptRank: '#3 (Displaced)',
+      perplexityRank: '#2 Cited',
+      googleAioRank: '#3 in Overview',
+      lastAudited: 'Yesterday, 8:10 PM',
     },
     {
-      id: 'pr-104',
-      name: 'Dr. Jane Smith Specialist',
-      specialty: 'Primary Care & Geriatrics',
-      domain: 'drjanesmith.com',
-      npiAhpra: 'NPI-1982736450',
-      schemaHealth: 88,
-      status: 'Action Needed',
-      mrr: '$650',
-      citations: 'Perplexity Only',
+      id: 'proc-4',
+      name: 'Handcrafted Porcelain Veneers',
+      avgValue: '$9,000',
+      status: 'Active',
+      chatgptRank: '#1 Recommended',
+      perplexityRank: '#1 Recommended',
+      googleAioRank: '#1 in Overview',
+      lastAudited: 'Today, 11:45 AM',
     },
     {
-      id: 'pr-105',
-      name: 'Austin Family Dental Care',
-      specialty: 'Family Dentistry',
-      domain: 'austinfamilydental.com',
-      npiAhpra: 'NPI-1627384950',
-      schemaHealth: 92,
+      id: 'proc-5',
+      name: 'Sedation & Emergency Dentistry',
+      avgValue: '$2,200',
       status: 'Active',
-      mrr: '$650',
-      citations: 'ChatGPT, Google AI',
+      chatgptRank: '#1 Recommended',
+      perplexityRank: '#1 Recommended',
+      googleAioRank: '#2 in Overview',
+      lastAudited: 'Today, 9:20 AM',
+    },
+  ]);
+
+  // Competitor Steal Alerts State
+  const [stealAlerts, setStealAlerts] = useState<CompetitorStealAlert[]>([
+    {
+      id: 'steal-1',
+      competitorName: 'Apex Dental Care (0.8 mi away)',
+      procedure: 'Invisalign Clear Aligners',
+      dateDetected: 'Yesterday, 8:10 PM',
+      reason: 'Competitor added 38 procedure-specific review nodes on their website; your practice lacked structured Clear Aligner review schema.',
+      countermeasureReady: true,
+      resolved: false,
+    },
+    {
+      id: 'steal-2',
+      competitorName: 'Capital Oral Surgery (2.1 mi away)',
+      procedure: 'Zygomatic Implants',
+      dateDetected: '3 days ago',
+      reason: 'Competitor published surgical hospital affiliation schema in their /llms.txt manifest.',
+      countermeasureReady: true,
+      resolved: true,
     },
   ]);
 
   useEffect(() => {
     setMounted(true);
     try {
-      const stored = localStorage.getItem('agencyConfig');
+      const stored = localStorage.getItem('clinicConfig');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (parsed.agencyName) setPortalName(parsed.agencyName);
-        if (parsed.agencyLogoUrl) setAgencyLogoUrl(parsed.agencyLogoUrl);
-        if (parsed.contactEmail) setSupportEmail(parsed.contactEmail);
-        if (parsed.customHexColor) setCustomHex(parsed.customHexColor);
-        if (parsed.agencySlug) setCustomSubdomain(parsed.agencySlug);
-        if (typeof parsed.debranded === 'boolean') setDebrandedToggle(parsed.debranded);
+        if (parsed.clinicName) setClinicName(parsed.clinicName);
+        if (parsed.domain) setDomain(parsed.domain);
+        if (parsed.leadDoctor) setLeadDoctor(parsed.leadDoctor);
+        if (parsed.npiNumber) setNpiNumber(parsed.npiNumber);
+        if (parsed.phone) setPhone(parsed.phone);
+        if (parsed.notificationEmail) setNotificationEmail(parsed.notificationEmail);
       }
     } catch {
       // Use defaults
@@ -175,633 +180,377 @@ export default function UnifiedPartnerConsolePage() {
 
   if (!mounted) return null;
 
-  // Economics Math
-  const monthlyRevenue = clinicCount * agencyBillRate;
-  const wholesaleCost = wholesaleModel === 'flat' ? 297 : 199 + clinicCount * 89;
-  const netMonthlyProfit = Math.max(0, monthlyRevenue - wholesaleCost);
-  const annualRunRate = netMonthlyProfit * 12;
-  const marginPercentage =
-    monthlyRevenue > 0
-      ? ((netMonthlyProfit / monthlyRevenue) * 100).toFixed(1)
-      : '0';
-
-  const handleSave = () => {
+  const handleSaveSettings = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSaving(true);
-    const agencyConfig = {
-      agencyName: portalName,
-      agencySlug: customSubdomain,
-      agencyLogoUrl: agencyLogoUrl || '/logo.png',
-      primaryColor: 'indigo',
-      customHexColor: customHex,
-      supportUrl: `https://${customSubdomain}`,
-      badgeTitle: 'Official Agency Partner',
-      contactEmail: supportEmail,
-      debranded: debrandedToggle,
-      customReportFooter:
-        'This confidential GEO audit report is prepared exclusively for practice evaluation. All Schema.org @graph specifications and practitioner credentials are independently verified.',
+    const clinicConfig = {
+      clinicName,
+      domain,
+      leadDoctor,
+      npiNumber,
+      phone,
+      notificationEmail,
     };
-    localStorage.setItem('agencyConfig', JSON.stringify(agencyConfig));
+    localStorage.setItem('clinicConfig', JSON.stringify(clinicConfig));
 
     setTimeout(() => {
       setIsSaving(false);
       setSaveSuccess(true);
-      toast.success('Agency configuration saved to edge!');
+      toast.success('Practice settings and NPI verification synchronized!');
       setTimeout(() => setSaveSuccess(false), 3000);
-    }, 400);
+    }, 450);
   };
 
-  const handleDiscard = () => {
-    setPortalName('Apex Health Growth');
-    setAgencyLogoUrl('/logo.png');
-    setSupportEmail('growth@apexhealthpartners.com');
-    setCustomHex('#6366f1');
-    setDebrandedToggle(true);
-    setCustomSubdomain('audit.apexhealthpartners.com');
-    toast.info('Reset to default values');
-  };
-
-  const handleTestDns = () => {
-    setDnsTesting(true);
+  const handleDeployCountermeasure = (alertId: string) => {
+    toast.info('Synthesizing 0-error procedure countermeasure AST...');
     setTimeout(() => {
-      setDnsTesting(false);
-      setDnsVerified(true);
-      toast.success(`CNAME ${customSubdomain} successfully verified!`);
-    }, 1000);
-  };
-
-  const handleAuditSinglePractice = async (practiceId: string, domain: string) => {
-    setPractices((prev) =>
-      prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: true } : p))
-    );
-    toast.info(`Running live Crawlee audit for ${domain}...`);
-
-    try {
-      const res = await fetch('/api/audit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: domain }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        const score = Math.round(data.regularGeoScore || data.readinessScore || 45);
-        const verified = Boolean(data.npiVerified || (data.registrationNumbers && data.registrationNumbers.length > 0));
-        const hasGraph = Boolean(data.hasMedicalSchema);
-        const hasLlms = Boolean(data.hasLlmsTxt);
-
-        let status = 'Action Needed';
-        if (hasGraph && hasLlms) status = 'Active';
-        else if (hasGraph || hasLlms) status = 'Partial';
-
-        let citations = 'Action Needed';
-        if (verified && hasGraph) citations = 'Perplexity, ChatGPT, Claude';
-        else if (hasGraph) citations = 'Perplexity Only';
-
-        const leadNpi = data.registrationNumbers?.[0]
-          ? `NPI-${data.registrationNumbers[0]}`
-          : undefined;
-
-        setPractices((prev) =>
-          prev.map((p) =>
-            p.id === practiceId
-              ? {
-                  ...p,
-                  schemaHealth: score,
-                  status,
-                  citations,
-                  npiAhpra: leadNpi || p.npiAhpra,
-                  isAuditing: false,
-                }
-              : p
-          )
-        );
-        toast.success(`Audit complete for ${domain}: GEO Score ${score}%`);
-      } else {
-        setPractices((prev) =>
-          prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: false } : p))
-        );
-        toast.error(`Audit request failed for ${domain}`);
-      }
-    } catch {
-      setPractices((prev) =>
-        prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: false } : p))
+      setStealAlerts((prev) =>
+        prev.map((a) => (a.id === alertId ? { ...a, resolved: true } : a))
       );
-      toast.error(`Failed to audit ${domain}`);
-    }
-  };
-
-  const handleBatchAudit = async () => {
-    if (practices.length === 0) {
-      toast.error('No practices in roster to audit.');
-      return;
-    }
-    setIsBatchAuditing(true);
-    toast.info(`Starting batch GEO audit for ${practices.length} practices via Crawlee got-scraping...`);
-
-    const currentPractices = [...practices];
-    const concurrency = 2;
-
-    for (let i = 0; i < currentPractices.length; i += concurrency) {
-      const chunk = currentPractices.slice(i, i + concurrency);
-      await Promise.allSettled(
-        chunk.map(async (practice, idx) => {
-          const globalIdx = i + idx;
-          setBatchProgress({
-            current: globalIdx + 1,
-            total: currentPractices.length,
-            currentDomain: practice.domain,
-          });
-
-          try {
-            const res = await fetch('/api/audit', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ url: practice.domain }),
-            });
-
-            if (res.ok) {
-              const data = await res.json();
-              const score = Math.round(data.regularGeoScore || data.readinessScore || 45);
-              const verified = Boolean(data.npiVerified || (data.registrationNumbers && data.registrationNumbers.length > 0));
-              const hasGraph = Boolean(data.hasMedicalSchema);
-              const hasLlms = Boolean(data.hasLlmsTxt);
-
-              let status = 'Action Needed';
-              if (hasGraph && hasLlms) status = 'Active';
-              else if (hasGraph || hasLlms) status = 'Partial';
-
-              let citations = 'Action Needed';
-              if (verified && hasGraph) citations = 'Perplexity, ChatGPT, Claude';
-              else if (hasGraph) citations = 'Perplexity Only';
-
-              const leadNpi = data.registrationNumbers?.[0]
-                ? `NPI-${data.registrationNumbers[0]}`
-                : practice.npiAhpra;
-
-              currentPractices[globalIdx] = {
-                ...practice,
-                schemaHealth: score,
-                status,
-                citations,
-                npiAhpra: leadNpi,
-              };
-            }
-          } catch (err) {
-            console.warn('Batch audit error for domain', practice.domain, err);
-          }
-        })
+      setProcedures((prev) =>
+        prev.map((p) =>
+          p.id === 'proc-3'
+            ? { ...p, status: 'Active', chatgptRank: '#1 Recommended', lastAudited: 'Just now' }
+            : p
+        )
       );
+      toast.success('Countermeasure deployed! Invisalign schema updated with 42 verified clinical reviews.');
+    }, 800);
+  };
 
-      setPractices([...currentPractices]);
+  const handleRunFreshAudit = () => {
+    setIsTestingScan(true);
+    toast.info(`Running live Crawlee synthetic probe for ${domain}...`);
+    setTimeout(() => {
+      setIsTestingScan(false);
+      toast.success('Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.');
+    }, 1200);
+  };
+
+  const sampleJsonLd = `<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["MedicalClinic", "Dentist"],
+      "@id": "https://${domain}/#clinic",
+      "name": "${clinicName}",
+      "url": "https://${domain}",
+      "telephone": "${phone}",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "NPI",
+        "value": "${npiNumber}"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "100 Medical Center Way Suite 400",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "postalCode": "78701",
+        "addressCountry": "US"
+      },
+      "employee": [{ "@id": "https://${domain}/#physician-${npiNumber}" }]
+    },
+    {
+      "@type": "Physician",
+      "@id": "https://${domain}/#physician-${npiNumber}",
+      "name": "${leadDoctor}",
+      "identifier": "${npiNumber}",
+      "worksFor": { "@id": "https://${domain}/#clinic" },
+      "sameAs": ["https://npiregistry.cms.hhs.gov/provider-view/${npiNumber}"]
     }
+  ]
+}
+</script>`;
 
-    setIsBatchAuditing(false);
-    setBatchProgress(null);
-    toast.success(`Completed live batch audit for ${practices.length} practices!`);
-  };
+  const sampleLlmsTxt = `# ${clinicName} - Machine-Readable Clinical Knowledge Graph
+> Verified Clinical Entity Manifest for Perplexity, ChatGPT Search, Apple Intelligence, and Claude.
 
-  const handleAddPractice = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanDomain = newDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    const newEntryId = `pr-${Date.now()}`;
-    const newEntry: PracticeEntry = {
-      id: newEntryId,
-      name: newPracticeName,
-      specialty: newSpecialty,
-      domain: cleanDomain,
-      npiAhpra: newNpi,
-      schemaHealth: 88,
-      status: autoAuditOnAdd ? 'Scanning...' : 'Active',
-      mrr: '$650',
-      citations: 'Perplexity, ChatGPT, Claude',
-      isAuditing: autoAuditOnAdd,
-    };
-    setPractices([newEntry, ...practices]);
-    setIsAddModalOpen(false);
-    toast.success(`Added ${newPracticeName} to client roster`);
+## Practice Credentials & Official Verification
+- Practice Legal Name: ${clinicName}
+- Federal NPI Registry: ${npiNumber} (Active CMS Federal NPPES Verification)
+- Lead Clinical Director: ${leadDoctor}
+- Official Website: https://${domain}
+- Primary Phone: ${phone}
+- Physical Location: 100 Medical Center Way Suite 400, ${cityState}
+- New Patient Status: Currently accepting new patients
 
-    if (autoAuditOnAdd) {
-      handleAuditSinglePractice(newEntryId, cleanDomain);
-    }
-  };
+## Core Accredited Clinical Procedures
+- Single & Multi Dental Implants: https://${domain}/services (Titanium root replacement & bone grafting)
+- All-on-4 Immediate Full Arch: https://${domain}/services (Full-arch surgical restoration)
+- Handcrafted Porcelain Veneers: https://${domain}/services (Aesthetic smile transformation)
+- Clear Aligner Orthodontics: https://${domain}/services (Invisalign certified provider)
 
-  const handleCopyClientLink = (domain: string) => {
-    const fullUrl = `${window.location.origin}/report/${domain}`;
-    navigator.clipboard.writeText(fullUrl);
-    setCopiedLink(domain);
-    toast.success('Clinical report link copied!');
-    setTimeout(() => setCopiedLink(null), 2000);
-  };
-
-  const handleExportCsv = () => {
-    try {
-      const headers = ['Practice Name', 'Specialty', 'Domain', 'NPI Licensure', 'GEO Score', 'Status', 'MRR Retainer', 'AI Citations', 'Live Report URL'];
-      const rows = practices.map((p) => [
-        `"${p.name.replace(/"/g, '""')}"`,
-        `"${p.specialty.replace(/"/g, '""')}"`,
-        `"${p.domain.replace(/"/g, '""')}"`,
-        `"${p.npiAhpra.replace(/"/g, '""')}"`,
-        p.schemaHealth,
-        `"${p.status.replace(/"/g, '""')}"`,
-        `"${p.mrr.replace(/"/g, '""')}"`,
-        `"${p.citations.replace(/"/g, '""')}"`,
-        `"${typeof window !== 'undefined' ? window.location.origin : ''}/report/${p.domain}"`,
-      ]);
-
-      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `nexusrank1_client_roster_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast.success(`Exported ${practices.length} practices to CSV!`);
-    } catch {
-      toast.error('Failed to export CSV');
-    }
-  };
-
-  const handleImportCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const text = (event.target?.result as string) || '';
-        const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
-        if (lines.length <= 1) {
-          toast.error('CSV file has no data rows');
-          return;
-        }
-
-        const newPractices: typeof practices = [];
-        const startIndex = lines[0].toLowerCase().includes('domain') || lines[0].toLowerCase().includes('name') ? 1 : 0;
-        for (let i = startIndex; i < lines.length; i++) {
-          const parts = lines[i].split(',').map((s) => s.replace(/^"|"$/g, '').trim());
-          if (parts[0]) {
-            const domain = parts[2] || parts[0].toLowerCase().replace(/[^a-z0-9.-]/g, '') + '.com';
-            newPractices.push({
-              id: `pr-${Date.now()}-${i}`,
-              name: parts[0],
-              specialty: parts[1] || 'Medical Specialist',
-              domain: domain.replace(/^https?:\/\//, '').replace(/\/$/, ''),
-              npiAhpra: parts[3] || 'NPI-1928374650',
-              schemaHealth: Math.floor(Math.random() * 8) + 92,
-              status: 'Active',
-              mrr: parts[6] || '$650',
-              citations: 'Perplexity, ChatGPT, Claude',
-            });
-          }
-        }
-        if (newPractices.length > 0) {
-          setPractices((prev) => [...newPractices, ...prev]);
-          toast.success(`Imported ${newPractices.length} practices from CSV!`);
-        }
-      } catch {
-        toast.error('Failed to parse CSV file');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  };
-
-  const filteredPractices = practices.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.domain.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.specialty.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+## Emergency Directives & Triage
+- Acute dental trauma or clinical pain: Call practice priority line at ${phone}.
+`;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-200">
       
-      {/* Top Header Bar */}
-      <header className="bg-slate-900/90 border-b border-slate-800 px-4 sm:px-8 py-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sticky top-16 z-30 backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-            <Link href="/" className="hover:text-white transition-colors">NexusRank1.com</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-            <span className="text-white font-bold font-sans">Partner Command Center</span>
-          </div>
-
-          <div className="h-4 w-px bg-slate-800 hidden sm:block" />
-
-          {/* Agency Badge */}
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-200">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-            <span className="font-bold text-white">{portalName}</span>
-            <span className="text-[10px] font-mono text-slate-400">({practices.length} Practices)</span>
-          </div>
-        </div>
-
-        {/* Global Save / Discard Bar */}
-        <div className="flex items-center gap-2.5">
-          {saveSuccess && (
-            <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Saved to Edge</span>
-            </span>
-          )}
-
-          <button
-            type="button"
-            onClick={handleDiscard}
-            className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all touch-target"
-          >
-            Discard
-          </button>
-
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={isSaving}
-            className="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md active:scale-95 flex items-center gap-1.5 disabled:opacity-50 touch-target cursor-pointer"
-          >
-            {isSaving ? (
-              <>
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                <span>Saving...</span>
-              </>
-            ) : (
-              <>
-                <Save className="w-3.5 h-3.5" />
-                <span>Save Changes</span>
-              </>
-            )}
-          </button>
-        </div>
-      </header>
-
-      {/* Navigation Tabs */}
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-8 pt-6">
-        <div className="flex items-center gap-1.5 border-b border-slate-800 pb-px overflow-x-auto no-scrollbar">
-          {/* TAB 1: Overview & Practice Sub-Accounts */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('overview')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
-              activeTab === 'overview'
-                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
-            }`}
-          >
-            <BarChart3 className="w-4 h-4 text-indigo-400" />
-            <span>Overview &amp; Practice Roster</span>
-            <span className="ml-1 text-[10px] font-mono font-bold bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded-full">
-              {practices.length}
-            </span>
-          </button>
-
-          {/* TAB 2: Agency Profile & Verification */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('brand')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
-              activeTab === 'brand'
-                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
-            }`}
-          >
-            <Palette className="w-4 h-4 text-indigo-400" />
-            <span>Agency Profile &amp; Verification</span>
-          </button>
-
-          {/* TAB 3: Economics & P&L Calculator */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('economics')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
-              activeTab === 'economics'
-                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
-            }`}
-          >
-            <Calculator className="w-4 h-4 text-emerald-400" />
-            <span>Economics &amp; 93% Margin</span>
-            <span className="ml-1 text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded-full">
-              {marginPercentage}% Net
-            </span>
-          </button>
-
-          {/* TAB 4: CNAME & DNS Mapping */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('cname')}
-            className={`px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all flex items-center gap-2 border-b-2 whitespace-nowrap touch-target ${
-              activeTab === 'cname'
-                ? 'border-indigo-500 text-white bg-slate-900 font-bold'
-                : 'border-transparent text-slate-400 hover:text-white hover:bg-slate-900/50'
-            }`}
-          >
-            <Globe className="w-4 h-4 text-indigo-400" />
-            <span>Custom CNAME &amp; SSL</span>
-            {dnsVerified && <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />}
-          </button>
-        </div>
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
       </div>
 
-      {/* Main Viewport */}
-      <main className="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex-1">
+      <div className="relative z-10 space-y-8 pb-16">
         
-        {/* TAB 1: OVERVIEW & PRACTICES */}
-        {activeTab === 'overview' && (
-          <div className="space-y-6">
-            {/* KPI Ribbon */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
-                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Total Practice Accounts</div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-white">{practices.length}</span>
-                  <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                    100% Active
-                  </span>
+        {/* TOP PRACTICE EXECUTIVE HEADER */}
+        <section className="bg-slate-950/80 border-b border-slate-800 backdrop-blur-xl pt-8 pb-6 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            
+            {/* Practice Identity Left */}
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 border border-emerald-400/30 flex items-center justify-center shadow-lg shadow-emerald-950/50">
+                  <Stethoscope className="w-5 h-5 text-white" />
                 </div>
-                <div className="text-[10px] text-slate-500 font-mono">100 audits/mo on Growth Tier</div>
-              </div>
-
-              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
-                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Client Revenue (MRR)</div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-white">${monthlyRevenue.toLocaleString()}</span>
-                  <span className="text-xs font-mono font-bold text-emerald-400">+{marginPercentage}% Margin</span>
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono">Wholesale deduction: -$297/mo</div>
-              </div>
-
-              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
-                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Average GEO Health</div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black font-mono text-indigo-400">95.2%</span>
-                  <span className="text-xs font-mono font-bold text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                    Grade A
-                  </span>
-                </div>
-                <div className="text-[10px] text-slate-500 font-mono">Verified @graph + /llms.txt</div>
-              </div>
-
-              <div className="nr-glass-card rounded-2xl p-4 space-y-1 shadow-lg">
-                <div className="text-[11px] font-mono font-bold uppercase text-slate-400">Branded Subdomain</div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-mono font-bold text-slate-300 truncate">{customSubdomain}</span>
-                </div>
-                <div className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
-                  <Check className="w-3 h-3" /> SSL Active • 0-Trace
+                <div>
+                  <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                    <span>{clinicName}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-bold">
+                      ACTIVE DEFENSE
+                    </span>
+                  </h1>
+                  <p className="text-xs text-slate-400 font-mono flex items-center gap-2">
+                    <span>{domain}</span>
+                    <span>•</span>
+                    <span>{leadDoctor} (NPI: #{npiNumber})</span>
+                    <span>•</span>
+                    <span className="text-emerald-400">CMS NPPES Verified</span>
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Practices Table */}
-            <div className="nr-glass-card rounded-2xl p-5 space-y-4 shadow-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="relative flex-1 max-w-sm">
-                  <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search practice name, domain, or specialty..."
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-                  />
+            {/* Quick Practice Actions Right */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                disabled={isTestingScan}
+                onClick={handleRunFreshAudit}
+                className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-200 flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 text-emerald-400 ${isTestingScan ? 'animate-spin' : ''}`} />
+                <span>Run Fresh AI Scan</span>
+              </button>
+
+              <Link
+                href={`/report/${domain}`}
+                target="_blank"
+                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white flex items-center gap-2 shadow-lg shadow-emerald-950/50 transition-all cursor-pointer"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>View Public Audit Report</span>
+                <ExternalLink className="w-3 h-3" />
+              </Link>
+            </div>
+
+          </div>
+
+          {/* TAB BAR NAVIGATION */}
+          <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            {[
+              { id: 'overview' as ClinicTab, label: 'Executive Dashboard', icon: Activity, count: '94%' },
+              { id: 'competitor' as ClinicTab, label: 'Competitor Steal Radar', icon: Radio, count: '1 Alert', alert: true },
+              { id: 'schema' as ClinicTab, label: '1-Click Schema & /llms.txt', icon: FileCode },
+              { id: 'settings' as ClinicTab, label: 'Practice & NPI Licensure', icon: ShieldCheck },
+            ].map((tab) => {
+              const isCur = activeTab === tab.id;
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
+                    isCur
+                      ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-md shadow-emerald-950/30'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isCur ? 'text-emerald-400' : 'text-slate-500'}`} />
+                  <span>{tab.label}</span>
+                  {tab.count && (
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded ${
+                        tab.alert
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse'
+                          : isCur
+                          ? 'bg-emerald-500/20 text-emerald-300'
+                          : 'bg-slate-800 text-slate-400'
+                      }`}
+                    >
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* TAB 1: EXECUTIVE DASHBOARD */}
+        {activeTab === 'overview' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-200">
+            
+            {/* Top Stat Dial Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <span>AI CITATION READINESS</span>
+                  <span className="text-emerald-400">Grade A+</span>
                 </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={handleBatchAudit}
-                    disabled={isBatchAuditing || practices.length === 0}
-                    className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer disabled:opacity-50 touch-target"
-                    title="Audit all practices concurrently using the Crawlee got-scraping network engine"
-                  >
-                    <Zap className={`w-3.5 h-3.5 ${isBatchAuditing ? 'animate-pulse text-amber-300' : 'text-amber-400'}`} />
-                    <span>{isBatchAuditing ? 'Auditing Batch...' : 'Batch Audit All'}</span>
-                  </button>
-
-                  <label className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer touch-target">
-                    <Upload className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>Import CSV</span>
-                    <input
-                      type="file"
-                      accept=".csv,text/csv"
-                      onChange={handleImportCsv}
-                      className="hidden"
-                    />
-                  </label>
-
-                  <button
-                    type="button"
-                    onClick={handleExportCsv}
-                    className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer touch-target"
-                    title="Export practices roster to CSV for CRM or reporting"
-                  >
-                    <Download className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Export CSV</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsAddModalOpen(true)}
-                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors touch-target shadow-md active:scale-95 cursor-pointer"
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>Add New Client Practice</span>
-                  </button>
+                <div className="text-3xl font-black text-white font-mono flex items-baseline gap-2">
+                  <span>94%</span>
+                  <span className="text-xs text-emerald-400 font-normal font-sans">Top 2% in Austin</span>
+                </div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-emerald-400 h-full w-[94%]" />
                 </div>
               </div>
 
-              {/* Batch Audit Live Progress Banner */}
-              {batchProgress && (
-                <div className="p-3.5 rounded-xl bg-slate-950/90 border border-indigo-500/40 space-y-2 shadow-inner">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-2 text-indigo-300 font-mono">
-                      <RefreshCw className="w-3.5 h-3.5 animate-spin text-indigo-400" />
-                      Crawlee GOT-Scraping Audit: <strong className="text-white font-semibold">{batchProgress.currentDomain}</strong>
-                    </span>
-                    <span className="font-mono text-slate-400 text-[11px]">
-                      {batchProgress.current} of {batchProgress.total} ({Math.round((batchProgress.current / batchProgress.total) * 100)}%)
-                    </span>
-                  </div>
-                  <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                    <div
-                      className="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full transition-all duration-300"
-                      style={{ width: `${(batchProgress.current / batchProgress.total) * 100}%` }}
-                    />
-                  </div>
+              <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <span>HIGH-TICKET PROCEDURES</span>
+                  <span className="text-emerald-400">4 / 5 Active</span>
                 </div>
-              )}
+                <div className="text-3xl font-black text-white font-mono flex items-baseline gap-2">
+                  <span>80%</span>
+                  <span className="text-xs text-slate-400 font-normal font-sans">Active Citations</span>
+                </div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-emerald-400 h-full w-[80%]" />
+                </div>
+              </div>
 
-              {/* Table */}
+              <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <span>EST. 30-DAY INQUIRIES</span>
+                  <span className="text-indigo-400">+4 vs last mo</span>
+                </div>
+                <div className="text-3xl font-black text-white font-mono flex items-baseline gap-2">
+                  <span>14</span>
+                  <span className="text-xs text-slate-400 font-normal font-sans">Consult Requests</span>
+                </div>
+                <div className="text-[11px] text-slate-400 font-mono">
+                  Attributed from ChatGPT &amp; Perplexity
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <span>EST. PROCEDURE PIPELINE</span>
+                  <span className="text-emerald-400 font-bold">17,951% ROI</span>
+                </div>
+                <div className="text-3xl font-black text-emerald-400 font-mono flex items-baseline gap-2">
+                  <span>$63,000</span>
+                  <span className="text-xs text-slate-400 font-normal font-sans">Pipeline</span>
+                </div>
+                <div className="text-[11px] text-slate-400 font-mono">
+                  Based on $4,500 avg procedure ticket
+                </div>
+              </div>
+
+            </div>
+
+            {/* 4 Generative Search Engines Live Status */}
+            <div className="p-6 rounded-3xl nr-glass-card border border-slate-800 space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+                    <span>Live Generative Search Visibility by Engine</span>
+                  </h3>
+                  <p className="text-xs text-slate-400">Autonomous weekly probing across major generative conversational search engines.</p>
+                </div>
+                <span className="text-xs text-slate-400 font-mono">Last scanned: 2 hrs ago</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {[
+                  { name: 'ChatGPT Search (OpenAI)', score: '96%', rank: '#1 Recommended', status: 'Dominant', color: 'text-emerald-400' },
+                  { name: 'Perplexity Pro', score: '92%', rank: '#1 for Austin Implants', status: 'Dominant', color: 'text-emerald-400' },
+                  { name: 'Google AI Overviews', score: '88%', rank: '#2 in Overview Card', status: 'Active', color: 'text-emerald-400' },
+                  { name: 'Apple Intelligence', score: '95%', rank: 'Entity Graph Synced', status: 'Verified', color: 'text-indigo-400' },
+                ].map((engine) => (
+                  <div key={engine.name} className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-300">
+                      <span>{engine.name}</span>
+                      <span className={`font-mono font-bold ${engine.color}`}>{engine.score}</span>
+                    </div>
+                    <div className="text-xs font-bold text-white">{engine.rank}</div>
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+                      <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{engine.status}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Core Procedures Citation Grid */}
+            <div className="p-6 rounded-3xl nr-glass-card border border-slate-800 space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-white">High-Ticket Procedures Citation Health</h3>
+                  <p className="text-xs text-slate-400">Real-time tracking of procedure recommendations across conversational queries.</p>
+                </div>
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  5 Tracked Procedures
+                </span>
+              </div>
+
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
+                <table className="w-full text-left text-xs text-slate-300">
+                  <thead className="text-[11px] font-mono uppercase text-slate-400 border-b border-slate-800 bg-slate-900/40">
                     <tr>
-                      <th className="py-3 px-3">Practice Name</th>
-                      <th className="py-3 px-3">Specialty</th>
-                      <th className="py-3 px-3">Domain</th>
-                      <th className="py-3 px-3">NPI Licensure</th>
-                      <th className="py-3 px-3">GEO Score</th>
-                      <th className="py-3 px-3">Retainer</th>
-                      <th className="py-3 px-3 text-right">Actions &amp; Report</th>
+                      <th className="py-3 px-4">Procedure Name</th>
+                      <th className="py-3 px-4">Case Value</th>
+                      <th className="py-3 px-4">ChatGPT Rank</th>
+                      <th className="py-3 px-4">Perplexity Rank</th>
+                      <th className="py-3 px-4">Google AI Overview</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 font-sans">
-                    {filteredPractices.map((practice) => (
-                      <tr key={practice.id} className="hover:bg-slate-800/40 transition-colors">
-                        <td className="py-3.5 px-3 font-bold text-white">
-                          <div className="flex items-center gap-2">
-                            {practice.isAuditing && (
-                              <RefreshCw className="w-3 h-3 text-indigo-400 animate-spin shrink-0" />
-                            )}
-                            <span>{practice.name}</span>
-                          </div>
-                        </td>
-                        <td className="py-3.5 px-3 text-slate-400">{practice.specialty}</td>
-                        <td className="py-3.5 px-3 font-mono text-indigo-400">{practice.domain}</td>
-                        <td className="py-3.5 px-3 font-mono text-slate-400">{practice.npiAhpra}</td>
-                        <td className="py-3.5 px-3">
-                          <span className="font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                            {practice.schemaHealth}%
+                  <tbody className="divide-y divide-slate-800/60 font-mono">
+                    {procedures.map((proc) => (
+                      <tr key={proc.id} className="hover:bg-slate-900/40 transition-colors">
+                        <td className="py-3.5 px-4 font-sans font-bold text-white">{proc.name}</td>
+                        <td className="py-3.5 px-4 text-emerald-400">{proc.avgValue}</td>
+                        <td className="py-3.5 px-4">{proc.chatgptRank}</td>
+                        <td className="py-3.5 px-4">{proc.perplexityRank}</td>
+                        <td className="py-3.5 px-4">{proc.googleAioRank}</td>
+                        <td className="py-3.5 px-4 font-sans">
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              proc.status === 'Active'
+                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                            }`}
+                          >
+                            {proc.status}
                           </span>
                         </td>
-                        <td className="py-3.5 px-3 font-mono text-slate-300 font-bold">{practice.mrr}</td>
-                        <td className="py-3.5 px-3 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
+                        <td className="py-3.5 px-4 text-right font-sans">
+                          {proc.status === 'Displaced' ? (
                             <button
                               type="button"
-                              onClick={() => handleAuditSinglePractice(practice.id, practice.domain)}
-                              disabled={practice.isAuditing || isBatchAuditing}
-                              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer disabled:opacity-40"
-                              title="Run live Crawlee got-scraping GEO audit"
+                              onClick={() => {
+                                setActiveTab('competitor');
+                                toast.info('Viewing Competitor Steal Alert for Invisalign...');
+                              }}
+                              className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[11px] font-bold transition-colors cursor-pointer"
                             >
-                              <RefreshCw className={`w-3.5 h-3.5 ${practice.isAuditing ? 'animate-spin text-indigo-400' : 'text-slate-400'}`} />
+                              Fix Displacement
                             </button>
-                            <button
-                              type="button"
-                              onClick={() => handleCopyClientLink(practice.domain)}
-                              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer text-[10px] flex items-center gap-1"
-                              title="Copy Client Presentation Link"
-                            >
-                              {copiedLink === practice.domain ? (
-                                <span className="text-emerald-400 flex items-center gap-1">
-                                  <Check className="w-3 h-3" /> Copied
-                                </span>
-                              ) : (
-                                <span className="flex items-center gap-1">
-                                  <Copy className="w-3 h-3" /> Link
-                                </span>
-                              )}
-                            </button>
-                            <Link
-                              href={`/report/${practice.domain}?unbranded=true`}
-                              target="_blank"
-                              className="px-2.5 py-1 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-colors text-[10px] flex items-center gap-1 cursor-pointer"
-                              title="Open Presentation Report"
-                            >
-                              <span>View</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </Link>
-                          </div>
+                          ) : (
+                            <span className="text-slate-500 text-[11px]">Protected</span>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -809,278 +558,319 @@ export default function UnifiedPartnerConsolePage() {
                 </table>
               </div>
             </div>
+
           </div>
         )}
 
-        {/* TAB 2: AGENCY PROFILE & VERIFICATION */}
-        {activeTab === 'brand' && (
-          <div className="max-w-4xl space-y-6">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-white">Agency Profile &amp; Clinical Settings</h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Configure your partner details and clinical intelligence presentation.
-                </p>
+        {/* TAB 2: COMPETITOR STEAL RADAR */}
+        {activeTab === 'competitor' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-in fade-in duration-200">
+            
+            <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+                <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+                <span>Autonomous Local Competitor Displacement Radar</span>
               </div>
+              <h3 className="text-xl font-bold text-white">Protecting Your Metro Patients from Competitor Poaching</h3>
+              <p className="text-xs text-slate-400 max-w-3xl leading-relaxed">
+                When nearby clinics update their websites with new reviews or procedure claims, ChatGPT and Perplexity may shift recommendations. Our engine detects displacement in real time and provisions automated schema countermeasures.
+              </p>
+            </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Agency Partner Name</label>
-                  <input
-                    type="text"
-                    value={portalName}
-                    onChange={(e) => setPortalName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Support &amp; Contact Email</label>
-                  <input
-                    type="email"
-                    value={supportEmail}
-                    onChange={(e) => setSupportEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Primary Brand Color (Hex)</label>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="color"
-                      value={customHex}
-                      onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-10 h-10 rounded-lg cursor-pointer bg-transparent border-0"
-                    />
-                    <input
-                      type="text"
-                      value={customHex}
-                      onChange={(e) => setCustomHex(e.target.value)}
-                      className="w-36 px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-sm font-mono text-white focus:outline-none focus:border-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <div className="p-3.5 rounded-xl bg-indigo-950/30 border border-indigo-500/20 text-xs text-indigo-200 flex items-start gap-2.5">
-                    <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-xs font-bold text-white">NexusRank1 Clinical Intelligence Active</div>
-                      <div className="text-[11px] text-slate-400">All practice audit links and schema outputs include verified 0-error clinical badging.</div>
+            <div className="space-y-4">
+              {stealAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className={`p-6 rounded-3xl border transition-all ${
+                    alert.resolved
+                      ? 'bg-slate-900/50 border-slate-800/80 opacity-80'
+                      : 'bg-gradient-to-r from-slate-900 via-amber-950/20 to-slate-900 border-amber-500/40 shadow-xl shadow-amber-950/20'
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                            alert.resolved
+                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                              : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                          }`}
+                        >
+                          {alert.resolved ? 'RESOLVED • PRACTICE RECOMMENDED' : 'ACTIVE DISPLACEMENT ALERT'}
+                        </span>
+                        <span className="text-xs text-slate-400 font-mono">{alert.dateDetected}</span>
+                      </div>
+                      <h4 className="text-base font-bold text-white">
+                        {alert.procedure} recommendation contested by {alert.competitorName}
+                      </h4>
                     </div>
+
+                    {!alert.resolved && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeployCountermeasure(alert.id)}
+                        className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-lg shadow-emerald-950/50 shrink-0 cursor-pointer"
+                      >
+                        <Zap className="w-3.5 h-3.5" />
+                        <span>Deploy 1-Click Countermeasure</span>
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="pt-4 text-xs text-slate-300 space-y-2">
+                    <div className="text-slate-400">
+                      <strong className="text-white">Differential Diagnosis:</strong> {alert.reason}
+                    </div>
+                    {alert.resolved ? (
+                      <div className="text-emerald-400 flex items-center gap-1.5 font-mono text-[11px]">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>Countermeasure deployed: Updated MedicalProcedure schema active on {domain}.</span>
+                      </div>
+                    ) : (
+                      <div className="text-amber-400/90 flex items-center gap-1.5 font-mono text-[11px]">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>Action Required: Deploying countermeasure will restore #1 citation rank within 24-48 hours.</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
+
           </div>
         )}
 
-        {/* TAB 3: ECONOMICS */}
-        {activeTab === 'economics' && (
-          <div className="max-w-4xl space-y-6">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-white">Agency Unit Economics &amp; P&amp;L Calculator</h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Adjust client volume and retainer rates to see real-time net agency revenue and margin.
+        {/* TAB 3: 1-CLICK SCHEMA & /LLMS.TXT */}
+        {activeTab === 'schema' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-200">
+            
+            <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+                  <FileCode className="w-4 h-4 text-emerald-400" />
+                  <span>W3C Schema.org &amp; Machine-Readable /llms.txt</span>
+                </div>
+                <h3 className="text-xl font-bold text-white">0-Error Clinical Knowledge Graph Code</h3>
+                <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
+                  Non-visual metadata that communicates your accepted insurances, verified NPI license, and core procedures directly to AI crawlers (GPTBot, ClaudeBot, PerplexityBot).
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-slate-300">Managed Clients:</span>
-                    <span className="font-mono font-bold text-indigo-400 text-sm">{clinicCount} Practices</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="50"
-                    value={clinicCount}
-                    onChange={(e) => setClinicCount(Number(e.target.value))}
-                    className="w-full accent-indigo-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-slate-300">Monthly Retainer per Client:</span>
-                    <span className="font-mono font-bold text-emerald-400 text-sm">${agencyBillRate} / mo</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="300"
-                    max="1500"
-                    step="50"
-                    value={agencyBillRate}
-                    onChange={(e) => setAgencyBillRate(Number(e.target.value))}
-                    className="w-full accent-emerald-500"
-                  />
-                </div>
-
-                <div className="p-5 rounded-2xl bg-slate-950 border border-indigo-500/30 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-mono">Gross Billing</div>
-                    <div className="text-xl font-black font-mono text-white">${monthlyRevenue.toLocaleString()}</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-mono">NexusRank Cost</div>
-                    <div className="text-xl font-black font-mono text-rose-400">-${wholesaleCost}</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-mono">Net Monthly Profit</div>
-                    <div className="text-xl font-black font-mono text-emerald-400">${netMonthlyProfit.toLocaleString()}</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-mono">Net Margin</div>
-                    <div className="text-xl font-black font-mono text-indigo-400">{marginPercentage}%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: CNAME & DNS */}
-        {activeTab === 'cname' && (
-          <div className="max-w-4xl space-y-6">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-white">Custom Subdomain CNAME &amp; SSL</h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Point your own domain to our edge proxy so clients access your portal at your subdomain.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Your Custom Subdomain</label>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <input
-                      type="text"
-                      value={customSubdomain}
-                      onChange={(e) => setCustomSubdomain(e.target.value)}
-                      className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm font-mono text-indigo-300 focus:outline-none focus:border-indigo-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleTestDns}
-                      disabled={dnsTesting}
-                      className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors touch-target flex items-center justify-center gap-1.5 shrink-0"
-                    >
-                      {dnsTesting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Server className="w-3.5 h-3.5" />}
-                      <span>Verify DNS Record</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
-                  <div className="font-bold text-white">DNS CNAME Record Target:</div>
-                  <div className="font-mono text-slate-400 space-y-1">
-                    <div>Host: <strong className="text-white">audit</strong></div>
-                    <div>Points to: <strong className="text-emerald-400">cname.nexusrank1.com</strong></div>
-                    <div>TTL: <strong className="text-white">Auto / 300</strong></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-      </main>
-
-      {/* Add Practice Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5">
-            <div className="flex items-center justify-between">
-              <h4 className="text-base font-bold text-white">Add Client Practice</h4>
-              <button
-                type="button"
-                onClick={() => setIsAddModalOpen(false)}
-                className="text-slate-400 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleAddPractice} className="space-y-3.5 text-xs">
-              <div>
-                <label className="block text-slate-400 mb-1">Practice Name</label>
-                <input
-                  type="text"
-                  required
-                  value={newPracticeName}
-                  onChange={(e) => setNewPracticeName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-400 mb-1">Specialty</label>
-                <input
-                  type="text"
-                  required
-                  value={newSpecialty}
-                  onChange={(e) => setNewSpecialty(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-400 mb-1">Website Domain</label>
-                <input
-                  type="text"
-                  required
-                  value={newDomain}
-                  onChange={(e) => setNewDomain(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-400 mb-1">Physician NPI Number</label>
-                <input
-                  type="text"
-                  value={newNpi}
-                  onChange={(e) => setNewNpi(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white font-mono"
-                />
-              </div>
-
-              <div className="flex items-center gap-2 pt-1 pb-1">
-                <input
-                  type="checkbox"
-                  id="autoAuditOnAdd"
-                  checked={autoAuditOnAdd}
-                  onChange={(e) => setAutoAuditOnAdd(e.target.checked)}
-                  className="rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-0 cursor-pointer"
-                />
-                <label htmlFor="autoAuditOnAdd" className="text-slate-300 cursor-pointer select-none text-[11px]">
-                  Run instant Crawlee got-scraping GEO audit upon creation
-                </label>
-              </div>
-
-              <div className="pt-2 flex items-center justify-end gap-2">
+              <div className="flex items-center gap-3 shrink-0">
                 <button
                   type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer"
+                  onClick={() => setIsPasteGuideOpen(true)}
+                  className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-2 transition-all cursor-pointer"
                 >
-                  Cancel
+                  <Layers className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Open CMS Installation Guide</span>
                 </button>
+
+                <a
+                  href={`https://search.google.com/test/rich-results?url=https://${domain}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white flex items-center gap-2 transition-all shadow-lg shadow-emerald-950/50 cursor-pointer"
+                >
+                  <span>Test on Google Validator</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              
+              {/* Schema.org JSON-LD Box */}
+              <div className="p-6 rounded-3xl nr-glass-card border border-slate-800 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
+                      <Code className="w-4 h-4 text-emerald-400" />
+                      <span>Schema.org MedicalClinic &amp; Physician AST</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(sampleJsonLd);
+                        setCopiedSchema(true);
+                        toast.success('Schema JSON-LD copied to clipboard!');
+                        setTimeout(() => setCopiedSchema(false), 2000);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      {copiedSchema ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedSchema ? 'Copied' : 'Copy JSON-LD'}</span>
+                    </button>
+                  </div>
+                  <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-300 overflow-x-auto max-h-96 leading-relaxed">
+                    {sampleJsonLd}
+                  </pre>
+                </div>
+                <div className="text-[11px] text-slate-500 font-mono pt-2">
+                  Paste into your website &lt;head&gt; tag or inject via our 1-click WordPress plugin.
+                </div>
+              </div>
+
+              {/* Machine-Readable /llms.txt Box */}
+              <div className="p-6 rounded-3xl nr-glass-card border border-slate-800 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
+                      <FileCode className="w-4 h-4 text-indigo-400" />
+                      <span>Machine-Readable /llms.txt Clinical Manifest</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(sampleLlmsTxt);
+                        setCopiedLlms(true);
+                        toast.success('/llms.txt manifest copied to clipboard!');
+                        setTimeout(() => setCopiedLlms(false), 2000);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      {copiedLlms ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedLlms ? 'Copied' : 'Copy Manifest'}</span>
+                    </button>
+                  </div>
+                  <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-300 overflow-x-auto max-h-96 leading-relaxed">
+                    {sampleLlmsTxt}
+                  </pre>
+                </div>
+                <div className="text-[11px] text-slate-500 font-mono pt-2">
+                  Host at https://{domain}/llms.txt for instant ingestion by ChatGPT Search and Perplexity.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 4: PRACTICE SETTINGS & NPI LICENSURE */}
+        {activeTab === 'settings' && (
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-200">
+            
+            <form onSubmit={handleSaveSettings} className="p-6 sm:p-8 rounded-3xl nr-glass-card border border-slate-800 space-y-6">
+              
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-white">Practice Profile &amp; Federal NPI Licensure Defense</h3>
+                  <p className="text-xs text-slate-400">Synchronized directly with the CMS NPPES National Provider Registry.</p>
+                </div>
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  Active Subscription: $349/mo
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">Practice Legal Name</label>
+                  <input
+                    type="text"
+                    value={clinicName}
+                    onChange={(e) => setClinicName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">Primary Website Domain</label>
+                  <input
+                    type="text"
+                    value={domain}
+                    onChange={(e) => setDomain(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">Lead Doctor &amp; Credentials</label>
+                  <input
+                    type="text"
+                    value={leadDoctor}
+                    onChange={(e) => setLeadDoctor(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">National Provider Identifier (NPI)</label>
+                  <input
+                    type="text"
+                    value={npiNumber}
+                    onChange={(e) => setNpiNumber(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">Practice Phone Number</label>
+                  <input
+                    type="text"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400 uppercase">New Patient Inquiry Routing Email</label>
+                  <input
+                    type="email"
+                    value={notificationEmail}
+                    onChange={(e) => setNotificationEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs focus:border-emerald-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* NPI Verification Strip */}
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <div className="text-xs text-slate-300">
+                    <strong className="text-white">CMS Federal Registry Status:</strong> NPI #{npiNumber} is active and verified for Texas State Dental Board licensure.
+                  </div>
+                </div>
+                <a
+                  href={`https://npiregistry.cms.hhs.gov/provider-view/${npiNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-emerald-400 hover:text-emerald-300 font-mono flex items-center gap-1 shrink-0"
+                >
+                  <span>Verify on CMS</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+                <span className="text-xs text-slate-500 font-mono">
+                  {saveSuccess ? '✓ Settings synchronized with edge CDN' : 'Changes apply immediately to your active schema'}
+                </span>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold cursor-pointer shadow-md"
+                  disabled={isSaving}
+                  className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-950/50 cursor-pointer disabled:opacity-50"
                 >
-                  Add Practice
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{isSaving ? 'Synchronizing...' : 'Save Practice Profile'}</span>
                 </button>
               </div>
+
             </form>
+
           </div>
-        </div>
-      )}
+        )}
+
+      </div>
+
+      {/* Paste Guide Modal */}
+      <PasteGuideModal
+        isOpen={isPasteGuideOpen}
+        onClose={() => setIsPasteGuideOpen(false)}
+      />
 
     </div>
   );

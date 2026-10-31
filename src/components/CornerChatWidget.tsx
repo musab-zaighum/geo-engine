@@ -20,13 +20,13 @@ export function CornerChatWidget() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: `**NexusRank1 Clinical GEO Advisor**
+      content: `**NexusRank1 Clinical Practice GEO Advisor**
 
-How can I help you optimize your practice or agency today?
+How can I help protect your clinic's search presence today?
 
-- **Wholesale Margins:** $297/mo Growth License with 93%+ net margin
-- **Clinical Scripts:** Cold Email & Physician outreach outlines
-- **Objections:** Handling "We already pay for SEO" or "No Website (GBP Only)"`,
+- **Practice Plans:** Solo ($199/mo), Growth ($349/mo), Surgical Group ($699/mo)
+- **Competitor Steal Radar:** Alerts when ChatGPT recommends a rival clinic
+- **Clinical Schema & /llms.txt:** CMS guides for WordPress, Webflow & Squarespace`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -197,10 +197,10 @@ How can I help you optimize your practice or agency today?
           <div className="px-3 py-1.5 bg-white border-t border-slate-100 flex overflow-x-auto gap-1.5 text-[11px]">
             <button
               type="button"
-              onClick={() => handleSend('What is the $1,000 wholesale / $2,500 retail pricing model?')}
+              onClick={() => handleSend('What are the direct practice pricing tiers and 1-patient ROI guarantee?')}
               className="px-2.5 py-1 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 transition-colors whitespace-nowrap shrink-0 font-medium"
             >
-              Pricing Model
+              Practice Pricing
             </button>
             <button
               type="button"

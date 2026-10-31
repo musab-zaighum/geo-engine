@@ -42,22 +42,36 @@ function buildFallbackChatResponse(userQuery: string): string {
   if (
     queryLower.includes('pricing') ||
     queryLower.includes('cost') ||
-    queryLower.includes('wholesale') ||
-    queryLower.includes('retail') ||
-    queryLower.includes('margin') ||
-    queryLower.includes('profit')
+    queryLower.includes('tier') ||
+    queryLower.includes('roi') ||
+    queryLower.includes('plan') ||
+    queryLower.includes('price')
   ) {
-    return `### 💰 NexusRank1 Tiered Agency Pricing & Financial Structure
+    return `### 💰 NexusRank1 Direct Practice Pricing & ROI Structure
 
-#### Agency Growth License ($297/mo)
-- **Wholesale Platform Cost:** **$297/month flat** for unlimited healthcare GEO audits, Schema.org @graph generation, and /llms.txt builds.
-- **Client Retainer Recommendations:**
-  - **Solo Specialist Doctor:** **$750 - $1,497/mo** (or $1,497 one-off setup).
-  - **Multi-Doctor Medical Clinic:** **$1,250 - $2,497/mo** (or $2,497 one-off setup).
-- **Agency Net Margin:** **93%+ net profit margins** with sub-5-minute automated delivery.
-- **Deliverables:** Complete MedicalClinic/Physician @graph JSON-LD, validated NPI registry credentials, /llms.txt manifest, and GBP Markdown entity bio.
+#### 1. Solo Practice ($199/mo or $159/mo billed annually)
+- **Facility:** 1 Clinical Location & 1 Lead Physician
+- **Monitoring:** 24/7 AI Citation Monitoring across ChatGPT, Perplexity, Google AI Overviews & Apple Intelligence
+- **Structured Data:** 0-Error Schema.org MedicalClinic & Physician JSON-LD AST + Machine-Readable /llms.txt Manifest
+- **Alerts:** Weekly Local Competitor Displacement & Steal Alerts
 
-For example, retaining **10 clinical clients at $997/mo** generates **$9,970/mo in recurring agency revenue** on a single $297/mo platform cost—yielding **$9,673/mo net agency profit (97% margin)**!`;
+#### 2. Growth Clinic ($349/mo or $279/mo billed annually) — *Most Popular*
+- **Facility:** Up to 3 Physicians & 1 Clinical Facility
+- **Everything in Solo Practice plus:**
+- **Real-Time Competitor Steal Radar™:** Instant alerts when a local competitor is cited for high-ticket procedures (Implants, Veneers, Facelifts, etc.)
+- **Automated 1-Click CMS Injection Guide:** Seamless setup for WordPress, Webflow, Squarespace, and Shopify
+- **Patient Lead Attribution:** Tracking of consult requests originating from generative search
+- **RFC 9309 Crawler Defense:** Guaranteed crawler access for GPTBot, PerplexityBot, and ClaudeBot
+
+#### 3. Surgical Group ($699/mo or $559/mo billed annually)
+- **Facility:** Up to 5 Practice Locations & 10 Physicians
+- **Everything in Growth Clinic plus:**
+- **Multi-Location Cross-Linked Entity Graph:** Unified knowledge graph across all regional facilities
+- **Custom Clinical Ontologies:** Custom procedure mapping for complex surgical specialties
+- **HIPAA CRM Webhooks:** Direct lead dispatch to Dentrix, ModMed, AthenaHealth, or Kareo
+
+#### 🎯 The "1 High-Ticket Patient" ROI Guarantee:
+Capturing just 1 dental implant ($4,500), Invisalign case ($5,200), or surgical procedure ($12,000+) covers your entire annual subscription multiple times over—generating **500% to 3,000%+ Net Practice ROI**!`;
   }
 
   if (
@@ -67,33 +81,33 @@ For example, retaining **10 clinical clients at $997/mo** generates **$9,970/mo 
     queryLower.includes('email') ||
     queryLower.includes('surgeon')
   ) {
-    return `### ✉️ Cold Outreach Script for Solo Specialist Surgeons
+    return `### ✉️ Clinical Inquiry Script for Practice Owners & Medical Directors
 
-**Subject:** Missing /llms.txt file on [Doctor / Clinic Name] (AI Search Blindspot)
+**Subject:** Missing /llms.txt file on [Clinic Name] (AI Search Blindspot)
 
 > Hi Dr. [Last Name],
 >
-> When prospective patients query ChatGPT Search or Perplexity for top [Procedure, e.g. Rhinoplasty] specialists in [City], AI engines bypass general directories and verify official NPI licensure in structured data before making recommendations.
+> When prospective patients query ChatGPT Search or Perplexity for top [Procedure, e.g. Dental Implants or Rhinoplasty] specialists in [City], AI engines bypass traditional websites and verify official NPI licensure in structured data before making recommendations.
 >
-> We ran a quick GEO scan on your domain—your AI search readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt file.
+> We ran a quick GEO scan on your practice domain—your AI search readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt manifest.
 >
-> We have generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 2-minute diagnostic video showing you how to install this?
+> We have generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your clinic. Would you be open to a 2-minute diagnostic showing how this prevents local competitors from winning your patient recommendations?
 >
 > Best regards,  
-> [Your Name] | NexusRank1 GEO Advisor`;
+> Clinical GEO Defense Team | NexusRank1`;
   }
 
-  return `### 🤖 Master NexusRank1 AI Advisor
+  return `### 🤖 Master NexusRank1 Practice AI Advisor
 
-I am fully initialized with the expanded **NexusRank1 Clinical Knowledge Base**.
+I am fully initialized with the official **NexusRank1 Clinical Practice GEO Knowledge Base**.
 
 You can ask me about:
-1. **CMS Code Insertion Guides:** Step-by-step for WordPress, Shopify, Webflow, Squarespace & Wix
-2. **Agency Pricing & Margins:** $297/mo Growth License with 93%+ net margin on $750–$2,497/mo client retainers
-3. **Pitches & Cold Email Scripts** tailored for specialist surgeons & practice directors
-4. **Schema.org @graph & /llms.txt Standards** (NPI licensure, Ahpra, GMC credentials)
+1. **CMS Code Insertion Guides:** Step-by-step instructions for WordPress, Shopify, Webflow, Squarespace & Wix
+2. **Direct Practice Pricing & Patient ROI:** Solo ($199/mo), Growth ($349/mo), and Surgical Group ($699/mo)
+3. **Competitor Steal Radar:** How to reclaim patients when ChatGPT or Perplexity recommends a local rival
+4. **Schema.org @graph & /llms.txt Standards:** Federal NPI registry, state licensure, and accredited procedure ontologies
 
-How can I assist your practice or agency today?`;
+How can I assist your practice with AI search defense today?`;
 }
 
 export async function POST(req: NextRequest) {
@@ -117,15 +131,15 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.OPENROUTER_API_KEY;
     const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat';
 
-    const systemPrompt = `You are the Master NexusRank1 AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
+    const systemPrompt = `You are the Master NexusRank1 Practice AI Advisor, an elite Healthcare Generative Engine Optimization (GEO) strategist.
 Use the following official NexusRank1 Knowledge Base to answer user questions with complete accuracy, authority, and professional clarity:
 
 ${CITEMED_MASTER_KNOWLEDGE_BASE}
 
 Instructions:
 - Provide structured, actionable, and formatted Markdown responses.
-- Emphasize NPI/Ahpra/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and agency pricing tiers ($297/mo Growth License with 93%+ margins).
-- If asked for cold emails, objection handling, or technical schemas, output full ready-to-use templates.`;
+- Emphasize NPI/Ahpra/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and direct clinic pricing tiers (Solo Practice $199/mo, Growth Clinic $349/mo, Surgical Group $699/mo) with the 1 High-Ticket Patient ROI Guarantee.
+- If asked for practice emails, objection handling, or technical schemas, output full ready-to-use templates.`;
 
     if (!apiKey || apiKey.trim() === '' || apiKey.includes('your_openrouter_api_key')) {
       const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || '';

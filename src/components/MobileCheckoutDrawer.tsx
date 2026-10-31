@@ -37,35 +37,35 @@ interface PlanDetail {
 export const PRICING_PLANS: Record<PlanTier, PlanDetail> = {
   starter: {
     id: 'starter',
-    name: 'Starter Agency',
-    price: 97,
+    name: 'Solo Practice',
+    price: 199,
     period: '/mo',
-    audits: '15 audits/mo',
-    cname: 'Standard shared queue',
-    branding: 'NexusRank1 Verified Audit Badging',
-    monitoring: 'Clinical JSON-LD & /llms.txt generator',
+    audits: '1 Location • 1 Lead Physician',
+    cname: '24/7 AI Citation Monitoring',
+    branding: '0-Error Schema.org & /llms.txt',
+    monitoring: 'Weekly Competitor Displacement Alerts',
   },
   growth: {
     id: 'growth',
-    name: 'Growth Agency',
-    price: 297,
+    name: 'Growth Clinic',
+    price: 349,
     period: '/mo',
-    badge: 'MOST POPULAR • 93% MARGIN',
+    badge: 'MOST POPULAR • BEST ROI',
     popular: true,
-    audits: '100 audits/mo',
-    cname: 'Automated Daily AI Re-indexing',
-    branding: 'Official Clinical Intelligence Stamping & PDF',
-    monitoring: 'Automated weekly schema monitoring',
+    audits: 'Up to 3 Physicians • 1 Facility',
+    cname: 'Real-Time Competitor Steal Radar',
+    branding: '1-Click CMS Injection Guide',
+    monitoring: 'High-Ticket Patient Lead Attribution',
   },
   scale: {
     id: 'scale',
-    name: 'Scale / Enterprise',
-    price: 697,
+    name: 'Surgical Group',
+    price: 699,
     period: '/mo',
-    audits: 'Unlimited audits',
-    cname: 'Full REST API + Bulk CSV Engine',
-    branding: 'Dedicated Healthcare Cloud + Custom SLA',
-    monitoring: 'Unlimited team seats + Priority Support',
+    audits: 'Up to 5 Locations • 10 Doctors',
+    cname: 'Multi-Location Entity Graph',
+    branding: 'HIPAA CRM Webhook Integration',
+    monitoring: 'Dedicated GEO Engineer & 99.9% SLA',
   },
 };
 
@@ -170,7 +170,7 @@ export function MobileCheckoutDrawer({
               {/* Plan Switcher Pills */}
               <div>
                 <label className="block text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">
-                  Select Agency Wholesale Tier
+                  Select Practice Protection Plan
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {(['starter', 'growth', 'scale'] as PlanTier[]).map((tierKey) => {
@@ -349,13 +349,13 @@ export function MobileCheckoutDrawer({
               <div>
                 <h3 className="text-xl font-extrabold text-white">Subscription Active!</h3>
                 <p className="text-xs text-slate-300 mt-1">
-                  Your <strong className="text-white">{currentPlan.name}</strong> wholesale license has been provisioned.
+                  Your <strong className="text-white">{currentPlan.name}</strong> practice license has been provisioned.
                 </p>
               </div>
 
               {/* License Key Box */}
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-left space-y-1.5">
-                <span className="text-[10px] uppercase font-mono font-bold text-slate-400">Your Master Agency License Key:</span>
+                <span className="text-[10px] uppercase font-mono font-bold text-slate-400">Your Practice GEO License Key:</span>
                 <div className="flex items-center justify-between gap-2">
                   <code className="text-xs font-mono font-bold text-indigo-400 select-all truncate">
                     {licenseKey}
