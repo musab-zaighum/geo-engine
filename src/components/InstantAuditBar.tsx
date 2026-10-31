@@ -78,6 +78,8 @@ interface AuditData {
   specialties?: string[];
   geoLat?: number;
   geoLng?: number;
+  blockedAiBots?: string[];
+  aiBotsAllowed?: boolean;
 }
 
 interface RecentAuditEntry {
@@ -361,6 +363,7 @@ export function InstantAuditBar({
     const hasMedicalSchema = isMayo || isCleveland ? true : (liveData?.hasMedicalSchema ?? false);
     const hasLlmsTxt = isMayo || isCleveland ? true : (liveData?.hasLlmsTxt ?? false);
     const npiVerified = isMayo || isCleveland ? true : (liveData?.npiVerified ?? false);
+    const blockedAiBots = liveData?.blockedAiBots || [];
 
     const items: AuditItem[] = [
       {
@@ -441,6 +444,19 @@ export function InstantAuditBar({
           ? 'Prevents Google Maps and AI search synthesis from conflating regional satellite locations.'
           : 'Embed exact latitude/longitude coordinates and PostalAddress in clinic JSON-LD.',
       },
+      {
+        id: 'chk-7',
+        category: 'crawler',
+        title: 'robots.txt AI Search Crawl Accessibility (GPTBot, Perplexity, Applebot)',
+        status: blockedAiBots.length > 0 ? 'Fail' : 'Pass',
+        diagnostic: blockedAiBots.length > 0
+          ? `robots.txt explicitly blocks generative AI crawlers: Disallows ${blockedAiBots.join(', ')}. This completely prevents OpenAI SearchGPT and Perplexity from indexing clinic entity nodes.`
+          : 'robots.txt permits all major AI search indexers (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot). Practice pages are accessible for AI search ingestion.',
+        specification: 'RFC 9309 Robots Exclusion Protocol',
+        remediation: blockedAiBots.length > 0
+          ? `Update ${clean}/robots.txt to remove Disallow directives for ${blockedAiBots.join(', ')}.`
+          : 'AI search bot accessibility verified with 0 crawl blocks.',
+      },
     ];
 
     setAuditData({
@@ -470,6 +486,8 @@ export function InstantAuditBar({
       specialties: ['Cosmetic Dentistry', 'Implantology', 'Sedation Dentistry', 'Periodontics'],
       geoLat: 30.2691,
       geoLng: -97.7428,
+      blockedAiBots,
+      aiBotsAllowed: blockedAiBots.length === 0,
     });
 
     // Automatically synchronize recent audit history to localStorage
@@ -615,6 +633,10 @@ export function InstantAuditBar({
 
   const handleCopyColdPitch = () => {
     if (!auditData) return;
+    const blockedNote = auditData.blockedAiBots && auditData.blockedAiBots.length > 0
+      ? `\n- robots.txt AI Bot Block: Disallows ${auditData.blockedAiBots.join(', ')} (Explicit Crawl Block)`
+      : '';
+
     const coldPitchText = `Subject: Quick question about ${auditData.clinicName}'s ChatGPT & Google AI citations
 
 Hi ${auditData.clinicName} Team,
@@ -624,7 +646,7 @@ I ran a quick 5-second technical diagnostic on ${auditData.cleanDomain} using ou
 Your site currently scores ${auditData.overallScore}/100 on Generative Search Readiness:
 - Schema.org MedicalClinic Graph: ${auditData.schemaDepth}%
 - Physician NPI Licensure Verification: ${auditData.eeatScore}%
-- AI Search Engine Directives (/llms.txt): ${auditData.llmsScore}% (Missing 404)
+- AI Search Engine Directives (/llms.txt): ${auditData.llmsScore}% (Missing 404)${blockedNote}
 
 Because ${auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.
 
@@ -643,6 +665,10 @@ Best,
 
   const handleCopyVideoScript = () => {
     if (!auditData) return;
+    const blockedVideoNote = auditData.blockedAiBots && auditData.blockedAiBots.length > 0
+      ? ` Furthermore, your robots.txt explicitly blocks ${auditData.blockedAiBots.join(', ')}, locking out conversational AI search indexing.`
+      : '';
+
     const script = `60-SECOND LOOM / VIDEO AUDIT SCRIPT FOR ${auditData.clinicName.toUpperCase()}
 Target Domain: ${auditData.cleanDomain}
 
@@ -651,7 +677,7 @@ Target Domain: ${auditData.cleanDomain}
 
 [0:15 - 0:35] THE TECHNICAL EVIDENCE:
 "I ran a live diagnostic on ${auditData.cleanDomain} through our clinical GEO scanner. Right now your practice scores ${auditData.overallScore}/100.
-Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and your Schema.org structured data layer is missing verified Physician NPI licensure links. Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place."
+Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and your Schema.org structured data layer is missing verified Physician NPI licensure links.${blockedVideoNote} Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place."
 
 [0:35 - 0:50] THE FREE VALUE & 0-ERROR PAYLOAD:
 "Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google's Rich Results Test and it passes with 100% green checkmarks."
@@ -858,7 +884,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
           {/* Target Practice Summary Header Card */}
           <div className="rounded-3xl nr-glass-card p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono">Target Practice Profile</span>
                 <span className="nr-pulse-pill">
                   <span className="nr-pulse-dot">
@@ -867,6 +893,17 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                   </span>
                   <span>CMS NPPES VERIFIED</span>
                 </span>
+                {auditData.blockedAiBots && auditData.blockedAiBots.length > 0 ? (
+                  <span className="px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[10px] font-mono font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                    <span>robots.txt Disallows {auditData.blockedAiBots.length} AI Bots</span>
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span>AI Crawlers Permitted</span>
+                  </span>
+                )}
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">{auditData.clinicName}</h3>
               <p className="text-xs font-mono text-indigo-400 truncate max-w-md">{auditData.url}</p>
@@ -1454,6 +1491,9 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                         <li>Schema.org MedicalClinic Graph: <span className="text-emerald-400">{auditData.schemaDepth}%</span></li>
                         <li>Physician NPI Licensure Verification: <span className="text-indigo-400">{auditData.eeatScore}%</span></li>
                         <li>AI Search Directives (/llms.txt): <span className="text-rose-400">{auditData.llmsScore}% (Missing 404)</span></li>
+                        {auditData.blockedAiBots && auditData.blockedAiBots.length > 0 && (
+                          <li>robots.txt AI Bot Block: <span className="text-rose-400">Disallows {auditData.blockedAiBots.join(', ')}</span></li>
+                        )}
                       </ul>
                       <p>Because {auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.</p>
                       <div className="p-2.5 rounded-lg bg-indigo-950/50 border border-indigo-500/30 text-indigo-200">

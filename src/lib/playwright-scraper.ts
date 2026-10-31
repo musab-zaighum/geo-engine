@@ -48,7 +48,7 @@ export interface PlaywrightScrapeResult {
 
 export function parseRobotsTxt(content: string): string[] {
   const lines = content.split(/\r?\n/);
-  const blocks: Record<string, string[]> = {};
+  const blocks: Record<string, { disallow: string[]; allow: string[] }> = {};
   let currentAgents: string[] = [];
 
   for (const line of lines) {
@@ -61,38 +61,55 @@ export function parseRobotsTxt(content: string): string[] {
     if (uaMatch) {
       const agent = uaMatch[1].trim().toLowerCase();
       currentAgents.push(agent);
-      if (!blocks[agent]) blocks[agent] = [];
+      if (!blocks[agent]) blocks[agent] = { disallow: [], allow: [] };
     } else {
       const disallowMatch = clean.match(/^Disallow:\s*(.*)$/i);
+      const allowMatch = clean.match(/^Allow:\s*(.*)$/i);
       if (disallowMatch) {
         const path = disallowMatch[1].trim();
         for (const ag of currentAgents) {
-          blocks[ag].push(path);
+          if (blocks[ag] && path) blocks[ag].disallow.push(path);
+        }
+      } else if (allowMatch) {
+        const path = allowMatch[1].trim();
+        for (const ag of currentAgents) {
+          if (blocks[ag] && path) blocks[ag].allow.push(path);
         }
       }
     }
   }
 
   const blocked: string[] = [];
-  if (blocks['*'] && blocks['*'].includes('/')) {
-    blocked.push('All Crawlers (*)');
-  }
-  const aiBots = ['gptbot', 'perplexitybot', 'claudebot', 'google-extended', 'applebot-extended'];
-  for (const bot of aiBots) {
-    if (blocks[bot] && blocks[bot].includes('/')) {
-      const properName =
-        bot === 'gptbot'
-          ? 'GPTBot (ChatGPT Search)'
-          : bot === 'perplexitybot'
-          ? 'PerplexityBot'
-          : bot === 'claudebot'
-          ? 'ClaudeBot'
-          : bot === 'google-extended'
-          ? 'Google-Extended (Gemini)'
-          : 'Applebot-Extended';
-      blocked.push(properName);
+  const wildcardBlockedAll = Boolean(
+    blocks['*']?.disallow.includes('/') && !blocks['*']?.allow.includes('/')
+  );
+
+  const aiBots: Record<string, string> = {
+    gptbot: 'GPTBot (ChatGPT Search)',
+    perplexitybot: 'PerplexityBot',
+    claudebot: 'ClaudeBot',
+    'anthropic-ai': 'Anthropic-AI',
+    'google-extended': 'Google-Extended (Gemini)',
+    'applebot-extended': 'Applebot-Extended',
+    bytespider: 'ByteSpider (TikTok AI)',
+    'cohere-ai': 'Cohere-AI',
+  };
+
+  for (const [botKey, displayName] of Object.entries(aiBots)) {
+    const botRules = blocks[botKey];
+    if (botRules) {
+      if (botRules.disallow.includes('/') && !botRules.allow.includes('/')) {
+        blocked.push(displayName);
+      }
+    } else if (wildcardBlockedAll) {
+      blocked.push(displayName);
     }
   }
+
+  if (wildcardBlockedAll && blocked.length === 0) {
+    blocked.push('All Crawlers (*)');
+  }
+
   return blocked;
 }
 
