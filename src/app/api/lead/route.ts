@@ -31,10 +31,11 @@ export async function POST(req: NextRequest) {
       source: 'NexusRank1 Clinical Intelligence Audit Portal',
     };
 
-    // If agency configured a custom Webhook URL (Zapier, GoHighLevel, Slack, Make)
-    if (webhookUrl && typeof webhookUrl === 'string' && webhookUrl.startsWith('http')) {
+    // If agency configured a custom Webhook URL (Zapier, GoHighLevel, Slack, Make, HubSpot)
+    const targetWebhook = webhookUrl || process.env.AGENCY_WEBHOOK_URL;
+    if (targetWebhook && typeof targetWebhook === 'string' && targetWebhook.startsWith('http')) {
       try {
-        await fetch(webhookUrl, {
+        await fetch(targetWebhook, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(leadPayload),
