@@ -165,7 +165,7 @@ export async function POST(req: NextRequest) {
       body = {};
     }
 
-    const rawInput = body.url || body.query || body.domain || '';
+    const rawInput = body.url || body.query || body.domain || body.input || '';
 
     if (!rawInput || typeof rawInput !== 'string' || rawInput.trim() === '') {
       return NextResponse.json(

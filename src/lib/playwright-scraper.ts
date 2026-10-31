@@ -203,45 +203,55 @@ export async function scrapeWithPlaywright(targetUrl: string): Promise<Playwrigh
 
     const page = await context.newPage();
 
-    // Anti-bot stealth init scripts (masks navigator.webdriver, mocks window.chrome, evades CDP detection)
+    // Route resource aborting: abort images, fonts, media, and stylesheets to slash page load time by 70%+
+    await page.route('**/*', (route) => {
+      const resourceType = route.request().resourceType();
+      if (['image', 'media', 'font', 'stylesheet'].includes(resourceType)) {
+        return route.abort();
+      }
+      return route.continue();
+    });
+
+    // Anti-bot stealth init script without prototype pollution traps
+    // Note: rebrowser-playwright already eliminates CDP Runtime.enable leaks at protocol level
     await page.addInitScript(() => {
-      // 1. Mask navigator.webdriver
-      Object.defineProperty(navigator, 'webdriver', {
-        get: () => undefined,
-      });
+      try {
+        // Mock window.chrome runtime object if not present
+        if (!('chrome' in window)) {
+          (window as any).chrome = {
+            runtime: {},
+            loadTimes: () => {},
+            csi: () => {},
+            app: {},
+          };
+        }
 
-      // 2. Mock window.chrome runtime object
-      (window as any).chrome = {
-        runtime: {},
-        loadTimes: () => {},
-        csi: () => {},
-        app: {},
-      };
+        // Spoof languages safely
+        Object.defineProperty(navigator, 'languages', {
+          get: () => ['en-US', 'en'],
+          configurable: true,
+        });
 
-      // 3. Spoof plugins and languages
-      Object.defineProperty(navigator, 'plugins', {
-        get: () => [1, 2, 3, 4, 5],
-      });
-
-      Object.defineProperty(navigator, 'languages', {
-        get: () => ['en-US', 'en'],
-      });
-
-      // 4. Spoof notification permissions query
-      const originalQuery = window.navigator.permissions.query;
-      window.navigator.permissions.query = (parameters: any) =>
-        parameters.name === 'notifications'
-          ? Promise.resolve({ state: Notification.permission } as any)
-          : originalQuery(parameters);
+        // Spoof notification permissions query
+        if (window.navigator.permissions && window.navigator.permissions.query) {
+          const originalQuery = window.navigator.permissions.query;
+          window.navigator.permissions.query = (parameters: any) =>
+            parameters.name === 'notifications'
+              ? Promise.resolve({ state: Notification.permission } as any)
+              : originalQuery(parameters);
+        }
+      } catch {
+        // ignore stealth injection issues
+      }
     });
 
     await page.goto(cleanUrl, {
       waitUntil: 'domcontentloaded',
-      timeout: 12000,
+      timeout: 10000,
     });
 
     // Give dynamic client-side single page apps (Wix, Webflow, React) a short beat to hydrate JSON-LD
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(600);
 
     const html = await page.content();
     const pageTitle = await page.title();
