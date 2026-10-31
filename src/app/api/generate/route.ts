@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GenerateRequest, GenerateResponse } from '@/lib/types';
+import {
+  buildDeterministicClinicalGraph,
+  canonicalizeAndRepairClinicSchema,
+} from '@/lib/schema-validator';
 
 export const runtime = 'nodejs';
 
@@ -7,12 +11,11 @@ function buildDeterministicFallback(data: GenerateRequest): GenerateResponse {
   const isClinic = data.practiceType === 'clinic';
   const url = data.websiteOrProfileUrl || 'https://example-medical-practice.com';
   const address = {
-    '@type': 'PostalAddress',
-    streetAddress: data.streetAddress || '123 Medical Specialist Way, Suite 400',
-    addressLocality: data.city || 'Sydney',
-    addressRegion: data.state || 'NSW',
-    postalCode: data.postalCode || '2000',
-    addressCountry: data.country || 'Australia',
+    street: data.streetAddress || '123 Medical Specialist Way, Suite 400',
+    city: data.city || 'Austin',
+    state: data.state || 'TX',
+    postalCode: data.postalCode || '78701',
+    country: data.country || 'US',
   };
 
   const servicesList =
@@ -25,98 +28,29 @@ function buildDeterministicFallback(data: GenerateRequest): GenerateResponse {
       ? data.doctors
       : [
           {
-            name: data.entityName || 'Dr. Jane Specialist',
-            title: 'MD Medical Specialist',
-            registrationNumber: 'MED000123456',
+            name: data.entityName || 'Dr. Lead Clinical Director',
+            title: 'DDS / Medical Specialist',
+            registrationNumber: '1928374650',
             specialties: servicesList,
           },
         ];
 
-  // 1. Generate JSON-LD Schema
-  let schemaObj: any = {};
-  if (isClinic) {
-    schemaObj = {
-      '@context': 'https://schema.org',
-      '@type': 'MedicalClinic',
-      name: data.entityName || 'NexusRank1 Specialist Clinic',
-      url: url,
-      telephone: data.phone || '+61 2 9000 1234',
-      address: address,
-      medicalSpecialty: Array.from(
-        new Set(doctorsList.flatMap((d) => d.specialties || servicesList))
-      ),
-      availableService: servicesList.map((service) => ({
-        '@type': 'MedicalProcedure',
-        name: service,
-      })),
-      medicalStaff: doctorsList.map((doc) => ({
-        '@type': 'Physician',
-        name: doc.name,
-        jobTitle: doc.title,
-        identifier: {
-          '@type': 'PropertyValue',
-          name: 'Medical Registration ID (AHPRA/NPI/GMC)',
-          value: doc.registrationNumber || 'N/A',
-        },
-        medicalSpecialty: doc.specialties,
-      })),
-    };
-  } else {
-    const mainDoc = doctorsList[0];
-    schemaObj = {
-      '@context': 'https://schema.org',
-      '@type': 'Physician',
-      name: data.entityName || mainDoc.name,
-      jobTitle: mainDoc.title || 'Medical Specialist',
-      identifier: {
-        '@type': 'PropertyValue',
-        name: 'Medical Registration ID (AHPRA/NPI/GMC)',
-        value: mainDoc.registrationNumber || 'N/A',
-      },
-      url: url,
-      telephone: data.phone || '+61 2 9000 1234',
-      address: address,
-      medicalSpecialty: mainDoc.specialties || servicesList,
-      availableService: servicesList.map((service) => ({
-        '@type': 'MedicalProcedure',
-        name: service,
-      })),
-    };
-  }
+  const leadDoctor = doctorsList[0];
 
-  const schemaJsonLd = JSON.stringify(schemaObj, null, 2);
+  // Generate 100% 0-error W3C AST graph with Wikidata sameAs links and opening hours
+  const astResult = buildDeterministicClinicalGraph({
+    clinicName: data.entityName || 'NexusRank1 Specialist Practice',
+    websiteUrl: url,
+    telephone: data.phone || '+1-800-555-0199',
+    address,
+    medicalSpecialties: servicesList,
+    leadDoctorName: leadDoctor?.name,
+    leadDoctorCredential: leadDoctor?.title,
+    detectedProcedures: servicesList,
+  });
 
-  // 2. Generate llms.txt
-  const llmsTxt = `# ${data.entityName}
-
-> Official LLM / AI Search Index File for ${data.entityName}. Verified healthcare entity metadata for Perplexity, SearchGPT, Claude, and AI engines.
-
-## Practice Overview
-- **Entity Type:** ${isClinic ? 'Medical Clinic / Healthcare Facility' : 'Solo Medical Practitioner'}
-- **Official Title:** ${data.entityName}
-- **Website / Profile:** ${url}
-- **Contact Telephone:** ${data.phone}
-- **Physical Address:** ${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}, ${address.addressCountry}
-
-## Medical Staff & Practitioner Registration Credentials
-${doctorsList
-  .map(
-    (doc) => `### ${doc.name}
-- **Professional Title:** ${doc.title}
-- **Registration / License ID:** ${doc.registrationNumber}
-- **Specialties:** ${doc.specialties.join(', ')}`
-  )
-  .join('\n\n')}
-
-## Core Medical Services & Procedures Catalog
-${servicesList.map((s) => `- ${s}`).join('\n')}
-
-## Canonical Data Links & Resources
-- [Official Website / Profile](${url})
-- [Structured Medical JSON-LD Schema](${url}#schema)
-- [Practitioner Registration Credentials](${url}#credentials)
-- [Patient Appointment Request](${url}#contact)
-`;
+  const schemaJsonLd = astResult.jsonLdString;
+  const llmsTxt = astResult.llmsTxtString;
 
   // 3. Generate Standalone Raw Markdown Profile
   const rawMarkdownProfile = `# Healthcare Entity Verification Profile: ${data.entityName}
@@ -128,7 +62,7 @@ ${servicesList.map((s) => `- ${s}`).join('\n')}
 - **Practice Category:** ${isClinic ? 'Specialist Medical Clinic' : 'Solo Specialist Practice'}
 - **Website / Profile Link:** ${url} ${data.hasWebsite ? '' : '(No Main Website - Verified via GBP & Directory Profile)'}
 - **Phone Number:** ${data.phone}
-- **Full Address:** ${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}, ${address.addressCountry}
+- **Full Address:** ${address.street}, ${address.city}, ${address.state} ${address.postalCode}, ${address.country}
 
 ---
 
@@ -159,7 +93,7 @@ ${servicesList.map((s, idx) => `${idx + 1}. **${s}**\n   - Full specialist clini
 A: ${doctorsList.map((d) => `${d.name} (${d.title}, License: ${d.registrationNumber})`).join('; ')}.
 
 **Q: Where is ${data.entityName} located?**
-A: Located at ${address.streetAddress}, ${address.addressLocality}, ${address.addressRegion} ${address.postalCode}, ${address.addressCountry}. Contact phone: ${data.phone}.
+A: Located at ${address.street}, ${address.city}, ${address.state} ${address.postalCode}, ${address.country}. Contact phone: ${data.phone}.
 
 **Q: What treatments or services are offered by ${data.entityName}?**
 A: Services include ${servicesList.join(', ')}.
@@ -270,11 +204,16 @@ Return ONLY the raw JSON object. Do not include markdown code fence formatting a
           const content = resData.choices?.[0]?.message?.content;
           if (content) {
             const parsed = JSON.parse(content);
+            let cleanSchema =
+              typeof parsed.schemaJsonLd === 'string'
+                ? parsed.schemaJsonLd
+                : JSON.stringify(parsed.schemaJsonLd, null, 2);
+            try {
+              cleanSchema = await canonicalizeAndRepairClinicSchema(JSON.parse(cleanSchema));
+            } catch {}
+
             return NextResponse.json({
-              schemaJsonLd:
-                typeof parsed.schemaJsonLd === 'string'
-                  ? parsed.schemaJsonLd
-                  : JSON.stringify(parsed.schemaJsonLd, null, 2),
+              schemaJsonLd: cleanSchema,
               llmsTxt: parsed.llmsTxt,
               rawMarkdownProfile: parsed.rawMarkdownProfile,
             });
@@ -292,11 +231,16 @@ Return ONLY the raw JSON object. Do not include markdown code fence formatting a
       }
 
       const parsed = JSON.parse(content);
+      let cleanSchema =
+        typeof parsed.schemaJsonLd === 'string'
+          ? parsed.schemaJsonLd
+          : JSON.stringify(parsed.schemaJsonLd, null, 2);
+      try {
+        cleanSchema = await canonicalizeAndRepairClinicSchema(JSON.parse(cleanSchema));
+      } catch {}
+
       return NextResponse.json({
-        schemaJsonLd:
-          typeof parsed.schemaJsonLd === 'string'
-            ? parsed.schemaJsonLd
-            : JSON.stringify(parsed.schemaJsonLd, null, 2),
+        schemaJsonLd: cleanSchema,
         llmsTxt: parsed.llmsTxt || '',
         rawMarkdownProfile: parsed.rawMarkdownProfile || '',
       });
