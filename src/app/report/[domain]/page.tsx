@@ -655,18 +655,18 @@ export default function StandaloneClientReportPage() {
                 clinicName={practiceTitle}
                 domain={domain}
                 npiNumber={npiNumber}
-                doctorName="Dr. Sarah Jenkins"
-                doctorCredential="DDS, FAGD"
+                doctorName={liveData?.clinicalProfile?.doctorName || 'Dr. Sarah Jenkins'}
+                doctorCredential={liveData?.clinicalProfile?.doctorCredential || 'DDS, FAGD'}
                 licenseNumber="TX-294819"
-                licenseState="TX"
+                licenseState={liveData?.clinicalProfile?.state || 'TX'}
                 taxonomyDesc="Dentist, General Practice & Cosmetic Surgery"
-                streetAddress="700 Congress Avenue, Suite 1400"
-                city="Austin"
-                state="TX"
-                postalCode="78701"
-                specialties={['Cosmetic Dentistry', 'Implantology', 'Sedation Dentistry', 'Oral Surgery']}
-                geoLat={30.2691}
-                geoLng={-97.7428}
+                streetAddress={liveData?.clinicalProfile?.streetAddress || '700 Congress Avenue, Suite 1400'}
+                city={liveData?.clinicalProfile?.city || 'Austin'}
+                state={liveData?.clinicalProfile?.state || 'TX'}
+                postalCode={liveData?.clinicalProfile?.postalCode || '78701'}
+                specialties={liveData?.clinicalProfile?.specialties || ['Cosmetic Dentistry', 'Implantology', 'Sedation Dentistry', 'Oral Surgery']}
+                geoLat={liveData?.clinicalProfile?.geoLat || 30.2691}
+                geoLng={liveData?.clinicalProfile?.geoLng || -97.7428}
                 hasLlmsTxt={hasLlmsTxt}
               />
             </div>

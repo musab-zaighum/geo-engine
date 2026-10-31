@@ -345,6 +345,25 @@ export async function POST(req: NextRequest) {
       ? Math.min(100, Math.max(10, openRouterResult.parsed.readinessScore))
       : Math.min(95, Math.max(15, score));
 
+    const doc = clinicalData?.doctors?.[0];
+    const npiDoctorName = npiRecord?.firstName && npiRecord?.lastName ? `Dr. ${npiRecord.firstName} ${npiRecord.lastName}` : undefined;
+    const npiLoc = npiRecord?.addresses?.[0];
+
+    const clinicalProfile = {
+      doctorName: doc?.name || npiDoctorName,
+      doctorCredential: doc?.credential || npiRecord?.credential,
+      specialties: clinicalData?.detectedProcedures && clinicalData.detectedProcedures.length > 0 ? clinicalData.detectedProcedures : undefined,
+      streetAddress: clinicalData?.address?.street || npiLoc?.street,
+      city: clinicalData?.address?.city || npiLoc?.city,
+      state: clinicalData?.address?.state || npiLoc?.state,
+      postalCode: clinicalData?.address?.postalCode || npiLoc?.postalCode,
+      country: clinicalData?.address?.country || 'US',
+      geoLat: clinicalData?.geo?.latitude,
+      geoLng: clinicalData?.geo?.longitude,
+      detectedProcedures: clinicalData?.detectedProcedures,
+      telephones: clinicalData?.telephones,
+    };
+
     const responseData: AuditResponse = {
       url: targetUrl,
       query: rawInput,
@@ -372,6 +391,7 @@ export async function POST(req: NextRequest) {
       suggestedLlmsTxt,
       remediationHighlight: 'Generates and validates this entire unbranded medical GEO package in 30 seconds.',
       modelUsed: openRouterResult?.modelUsed || 'deepseek/deepseek-chat (Clinical Diagnostic Engine)',
+      clinicalProfile,
     };
 
     // Store in 1-hour in-memory cache

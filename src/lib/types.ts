@@ -55,6 +55,20 @@ export interface AuditResponse {
   suggestedLlmsTxt?: string;
   remediationHighlight?: string;
   modelUsed?: string;
+  clinicalProfile?: {
+    doctorName?: string;
+    doctorCredential?: string;
+    specialties?: string[];
+    streetAddress?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+    geoLat?: number;
+    geoLng?: number;
+    detectedProcedures?: string[];
+    telephones?: string[];
+  };
 }
 
 export interface ChatMessage {
