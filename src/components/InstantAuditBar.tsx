@@ -32,6 +32,10 @@ import {
   User,
   History,
   Trash2,
+  DollarSign,
+  TrendingUp,
+  Calculator,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from './EntityGraphVisualizer';
@@ -168,6 +172,17 @@ export function InstantAuditBar({
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const [recentAudits, setRecentAudits] = useState<RecentAuditEntry[]>([]);
+  
+  // Practice ROI & Retainer Proposal state
+  const [pitchCaseValue, setPitchCaseValue] = useState(3500);
+  const [pitchNewPatients, setPitchNewPatients] = useState(3);
+  const [pitchRetainerFee, setPitchRetainerFee] = useState(997);
+
+  const monthlyRevenueLift = pitchCaseValue * pitchNewPatients;
+  const netMonthlyProfit = monthlyRevenueLift - pitchRetainerFee;
+  const practiceRoiPercent = Math.max(0, Math.round(((monthlyRevenueLift - pitchRetainerFee) / pitchRetainerFee) * 100));
+  const annualRevenueLift = monthlyRevenueLift * 12;
+
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Initialize with default scan on load and load recent audits from localStorage
@@ -584,7 +599,26 @@ export function InstantAuditBar({
 
   const handleCopyColdPitch = () => {
     if (!auditData) return;
-    const coldPitchText = `Subject: Quick question about ${auditData.clinicName}'s ChatGPT & Google AI citations\n\nHi ${auditData.clinicName} Team,\n\nI ran a quick 5-second technical diagnostic on ${auditData.cleanDomain} using our clinical GEO scanner.\n\nYour site currently scores ${auditData.overallScore}/100 on Generative Search Readiness:\n- Schema.org MedicalClinic Graph: ${auditData.schemaDepth}%\n- Physician NPI Licensure Verification: ${auditData.eeatScore}%\n- AI Search Engine Directives (/llms.txt): ${auditData.llmsScore}% (Missing 404)\n\nBecause ${auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.\n\nWe generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?\n\nBest,\n[Your Name]`;
+    const coldPitchText = `Subject: Quick question about ${auditData.clinicName}'s ChatGPT & Google AI citations
+
+Hi ${auditData.clinicName} Team,
+
+I ran a quick 5-second technical diagnostic on ${auditData.cleanDomain} using our clinical GEO scanner.
+
+Your site currently scores ${auditData.overallScore}/100 on Generative Search Readiness:
+- Schema.org MedicalClinic Graph: ${auditData.schemaDepth}%
+- Physician NPI Licensure Verification: ${auditData.eeatScore}%
+- AI Search Engine Directives (/llms.txt): ${auditData.llmsScore}% (Missing 404)
+
+Because ${auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.
+
+Financial Impact for ${auditData.clinicName}:
+Acquiring just ${pitchNewPatients} new high-ticket patient cases per month (e.g. implants, ortho, or specialized care at $${pitchCaseValue.toLocaleString()} each) represents $${monthlyRevenueLift.toLocaleString()}/mo ($${annualRevenueLift.toLocaleString()}/year) in new clinical production. Against our complete GEO retainer of $${pitchRetainerFee.toLocaleString()}/mo, this represents a ${practiceRoiPercent}% practice ROI.
+
+We generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?
+
+Best,
+[Your Name]`;
     navigator.clipboard.writeText(coldPitchText);
     setCopiedPitch(true);
     toast.success('Copied cold email pitch to clipboard!');
@@ -606,8 +640,8 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
 [0:35 - 0:50] THE FREE VALUE & 0-ERROR PAYLOAD:
 "Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google's Rich Results Test and it passes with 100% green checkmarks."
 
-[0:50 - 1:00] ZERO-FRICTION CLOSE:
-"I have the code file ready. I can send it over for your webmaster to paste into your header in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?"`;
+[0:50 - 1:00] ZERO-FRICTION CLOSE & PRACTICE ROI:
+"To put this in perspective for ${auditData.clinicName}, capturing just ${pitchNewPatients} new patient cases a month at $${pitchCaseValue.toLocaleString()} produces $${monthlyRevenueLift.toLocaleString()} in new production against a $${pitchRetainerFee.toLocaleString()}/mo retainer — that's a ${practiceRoiPercent}% ROI. I have the code file ready for your webmaster to paste in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?"`;
 
     navigator.clipboard.writeText(script);
     setCopiedVideoScript(true);
@@ -1250,6 +1284,130 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 </div>
               </div>
 
+              {/* Interactive Practice ROI & Retainer Proposal Modeler */}
+              <div className="p-5 sm:p-6 rounded-2xl nr-glass-card border border-indigo-500/30 space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center">
+                      <Calculator className="w-4 h-4 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-bold text-white flex items-center gap-2">
+                        <span>Practice Patient Value &amp; Retainer ROI Modeler</span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
+                          Live Pitch Variables
+                        </span>
+                      </h5>
+                      <p className="text-[11px] text-slate-400">
+                        Adjust these levers to personalize the financial ROI projections in your pitch email and Loom video.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-400 font-mono">Projected ROI:</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono font-black text-sm">
+                      {practiceRoiPercent}% ROI
+                    </span>
+                  </div>
+                </div>
+
+                {/* 3 Modeler Sliders / Inputs */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Control 1: Avg Case Value */}
+                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">Avg Procedure Value</span>
+                      <span className="font-bold text-white">${pitchCaseValue.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[1500, 3500, 5000, 8000].map((val) => (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => setPitchCaseValue(val)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            pitchCaseValue === val
+                              ? 'bg-indigo-600 text-white shadow-sm'
+                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          ${val >= 1000 ? `${val / 1000}k` : val}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Control 2: Monthly New AI Patients */}
+                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">New AI Search Patients/mo</span>
+                      <span className="font-bold text-emerald-400">+{pitchNewPatients} Patients</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[1, 2, 3, 5].map((count) => (
+                        <button
+                          key={count}
+                          type="button"
+                          onClick={() => setPitchNewPatients(count)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            pitchNewPatients === count
+                              ? 'bg-emerald-600 text-white shadow-sm'
+                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          +{count}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Control 3: Proposed Agency Retainer */}
+                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">Proposed GEO Retainer</span>
+                      <span className="font-bold text-indigo-400">${pitchRetainerFee.toLocaleString()}/mo</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[650, 997, 1250, 1500].map((fee) => (
+                        <button
+                          key={fee}
+                          type="button"
+                          onClick={() => setPitchRetainerFee(fee)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            pitchRetainerFee === fee
+                              ? 'bg-indigo-600 text-white shadow-sm'
+                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          ${fee}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Financial Metrics Strip */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-1 text-center font-mono">
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400 uppercase">Monthly Practice Lift</div>
+                    <div className="text-base font-black text-white">+${monthlyRevenueLift.toLocaleString()}</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400 uppercase">Annual Production</div>
+                    <div className="text-base font-black text-indigo-400">+${annualRevenueLift.toLocaleString()}</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400 uppercase">Net Practice Profit</div>
+                    <div className="text-base font-black text-emerald-400">+${netMonthlyProfit.toLocaleString()}/mo</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400 uppercase">Client Payback</div>
+                    <div className="text-base font-black text-amber-300">&lt; 3 Days</div>
+                  </div>
+                </div>
+              </div>
+
               {/* Two-Column Outreach Studio */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
@@ -1282,6 +1440,12 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                         <li>AI Search Directives (/llms.txt): <span className="text-rose-400">{auditData.llmsScore}% (Missing 404)</span></li>
                       </ul>
                       <p>Because {auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.</p>
+                      <div className="p-2.5 rounded-lg bg-indigo-950/50 border border-indigo-500/30 text-indigo-200">
+                        <span className="font-bold text-white">Projected Practice Impact:</span>
+                        <p className="mt-1 text-slate-300">
+                          Capturing just <strong className="text-emerald-400 font-bold">{pitchNewPatients} new patient cases/mo</strong> (at ${pitchCaseValue.toLocaleString()} avg case value) produces <strong className="text-white font-bold">+${monthlyRevenueLift.toLocaleString()}/mo</strong> in new production. Against our ${pitchRetainerFee.toLocaleString()}/mo GEO retainer, this represents a <strong className="text-emerald-300 font-bold">{practiceRoiPercent}% practice ROI</strong>.
+                        </p>
+                      </div>
                       <p>We generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?</p>
                       <p>Best,<br />[Your Name]</p>
                     </div>
@@ -1355,9 +1519,9 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                       </div>
 
                       <div>
-                        <span className="text-violet-400 font-bold block mb-1">[0:50 - 1:00] Zero-Friction Close:</span>
+                        <span className="text-violet-400 font-bold block mb-1">[0:50 - 1:00] Zero-Friction Close &amp; Practice ROI:</span>
                         <p className="text-slate-300">
-                          &ldquo;I have the code file ready. I can send it over for your webmaster to paste into your header in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?&rdquo;
+                          &ldquo;To put this in perspective for {auditData.clinicName}, capturing just <strong className="text-emerald-400 font-bold">{pitchNewPatients} new patients/mo</strong> at ${pitchCaseValue.toLocaleString()} produces <strong className="text-white font-bold">+${monthlyRevenueLift.toLocaleString()}/mo</strong> in new clinical production against a ${pitchRetainerFee.toLocaleString()}/mo retainer — that&apos;s a <strong className="text-emerald-300 font-bold">{practiceRoiPercent}% ROI</strong>. I have the code file ready for your webmaster to paste in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?&rdquo;
                         </p>
                       </div>
                     </div>
