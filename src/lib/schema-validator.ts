@@ -86,6 +86,8 @@ const MedicalClinicNodeSchema = z.object({
     .optional(),
   medicalSpecialty: z.union([z.string(), z.array(z.string())]).optional(),
   employee: z.array(z.object({ '@id': z.string() })).optional(),
+  sameAs: z.array(z.string()).optional(),
+  openingHoursSpecification: z.array(z.record(z.string(), z.any())).optional(),
 });
 
 /**
@@ -363,6 +365,22 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
         '@id': doctorId,
       },
     ],
+    sameAs: [
+      `https://npiregistry.cms.hhs.gov/provider-view/${npi}`,
+      isDental
+        ? 'https://www.wikidata.org/wiki/Q27349'
+        : isAesthetic
+        ? 'https://www.wikidata.org/wiki/Q1395188'
+        : 'https://www.wikidata.org/wiki/Q16917',
+    ],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '08:00',
+        closes: '17:00',
+      },
+    ],
   };
 
   if (input.geo && input.geo.latitude && input.geo.longitude) {
@@ -382,6 +400,13 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
     worksFor: {
       '@id': clinicId,
     },
+    sameAs: [
+      `https://npiregistry.cms.hhs.gov/provider-view/${npi}`,
+      isDental
+        ? 'https://www.wikidata.org/wiki/Q108044'
+        : 'https://www.wikidata.org/wiki/Q39631',
+    ],
+    knowsAbout: specialties.map((s) => s.replace(/\s+/g, '')),
     identifier: {
       '@type': 'PropertyValue',
       propertyID: 'NPI',
