@@ -89,6 +89,7 @@ async function generateClinicalPayloads(
     leadDoctorName: clinicalData?.doctors?.[0]?.name,
     leadDoctorCredential: clinicalData?.doctors?.[0]?.credential,
     npiRecord,
+    detectedProcedures: clinicalData?.detectedProcedures,
   });
 
   return {

@@ -23,6 +23,7 @@ export interface StructuredClinicalData {
     npi?: string;
   }>;
   operatingHours: string[];
+  detectedProcedures?: string[];
 }
 
 export interface PlaywrightScrapeResult {
@@ -487,11 +488,61 @@ export function parseClinicalHtmlAndSchemas(html: string) {
     }
   }
 
-  // Fallback clinic name from OpenGraph if missing
+  // 1. Fallback clinic name from OpenGraph / title if missing
   if (!clinicName) {
     const ogSite = $('meta[property="og:site_name"]').attr('content')?.trim();
-    if (ogSite && ogSite.length > 2 && ogSite.length < 70) {
+    if (ogSite && ogSite.length > 2 && ogSite.length < 70 && !/wordpress|wix|squarespace|home/i.test(ogSite)) {
       clinicName = ogSite;
+    } else {
+      const ogTitle = $('meta[property="og:title"]').attr('content')?.trim();
+      if (ogTitle && ogTitle.length > 2 && ogTitle.length < 70) {
+        const cleanOg = ogTitle.replace(/^(home|welcome to)\s*[-|:]\s*/i, '').split(/\s*[-|–—]\s*/)[0].trim();
+        if (cleanOg.length > 2 && cleanOg.length < 50) {
+          clinicName = cleanOg;
+        }
+      }
+    }
+  }
+
+  // 2. Scan DOM text for doctors and NPI numbers if missing from JSON-LD
+  const bodyText = $('body').text();
+  if (doctors.length === 0) {
+    const docMatch = bodyText.match(/\b(Dr\.\s+[A-Z][a-z]+(?:\s+[A-Z]\.?)?\s+[A-Z][a-z]+(?:,\s*(?:DDS|DMD|MD|DO|FAGD|FACS))?)\b/);
+    if (docMatch) {
+      const fullDoc = docMatch[1].trim();
+      const parts = fullDoc.split(/,\s*/);
+      const name = parts[0];
+      const credential = parts[1] || 'DDS / Clinical Director';
+      const npiMatch = bodyText.match(/\b(?:NPI|Provider ID|Lic(?:ense)?\s*#?)[:#\s]+(1\d{9})\b/i);
+      doctors.push({
+        name,
+        credential,
+        npi: npiMatch ? npiMatch[1] : undefined,
+      });
+    }
+  }
+
+  // 3. Scan for clinical procedures in text
+  const detectedProcedures: string[] = [];
+  const procedureCatalog = [
+    'Dental Implants',
+    'Invisalign',
+    'Clear Aligners',
+    'Porcelain Veneers',
+    'Teeth Whitening',
+    'Root Canal Therapy',
+    'Bone Grafting',
+    'Cosmetic Dentistry',
+    'Emergency Dental Care',
+    'Periodontal Therapy',
+    'Sedation Dentistry',
+    'Crowns & Bridges',
+    'Wisdom Teeth Removal',
+  ];
+  for (const proc of procedureCatalog) {
+    const regex = new RegExp(`\\b${proc}\\b`, 'i');
+    if (regex.test(bodyText)) {
+      detectedProcedures.push(proc);
     }
   }
 
@@ -527,6 +578,7 @@ export function parseClinicalHtmlAndSchemas(html: string) {
       geo,
       doctors,
       operatingHours,
+      detectedProcedures,
     },
   };
 }

@@ -35,6 +35,7 @@ export interface ClinicalGraphInput {
   npiRecord?: NpiProviderRecord | null;
   leadDoctorName?: string;
   leadDoctorCredential?: string;
+  detectedProcedures?: string[];
 }
 
 export interface ClinicalGraphOutput {
@@ -303,6 +304,25 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
           description: 'Evidence-based preventive screening and ongoing therapeutic management.',
         },
       ];
+
+  // Dynamically merge any detected procedures from the clinic website
+  if (input.detectedProcedures && input.detectedProcedures.length > 0) {
+    for (const proc of input.detectedProcedures) {
+      const slug = proc.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (!procedureOntologies.some((p) => p.name.toLowerCase() === proc.toLowerCase())) {
+        procedureOntologies.push({
+          id: `${origin}/#procedure-${slug}`,
+          name: proc,
+          type: /implant|surgery|extraction|grafting/i.test(proc)
+            ? 'https://schema.org/SurgicalProcedure'
+            : /diagnostic|consultation/i.test(proc)
+            ? 'https://schema.org/DiagnosticProcedure'
+            : 'https://schema.org/NoninvasiveProcedure',
+          description: `Accredited ${proc} clinical services provided by ${input.clinicName}.`,
+        });
+      }
+    }
+  }
 
   // 1. Build Clinic Node
   const clinicNode: Record<string, any> = {
