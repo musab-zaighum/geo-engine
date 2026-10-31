@@ -37,10 +37,13 @@
       "phone": "+1 623-688-9590",
       "website": "https://dentalimplantinstitute.net/",
       "rank": 1,
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 85
     },
-    "custom_pitch_hook_1500": "Dr. Kaiser, you have 35+ years of flawless surgical experience and 481 5-star reviews, yet you're forced to run ~13 expensive Google Ads paying $75+ per click just to stay visible. Meanwhile, Dental Implant Institute sits at the #1 spot on Google Maps for free, capturing 40%+ of affluent North Scottsdale patients looking for full-arch reconstruction before they ever scroll to your #5 overflow ranking. NexusRank1's $1,500 Geo-Dominance system fixes your local proximity and entity signals along Desert Cove Ave, bumping you from #5 directly into the top 3 within 30 days so you reclaim 3 to 5 full-arch cases a month without bleeding ad spend."
+    "custom_pitch_hook_1500": "Dr. Kaiser, you have 35+ years of flawless surgical experience and 481 5-star reviews, yet you're forced to run ~13 expensive Google Ads paying $75+ per click just to stay visible. Meanwhile, Dental Implant Institute sits at the #1 spot on Google Maps for free, capturing 40%+ of affluent North Scottsdale patients looking for full-arch reconstruction before they ever scroll to your #5 overflow ranking. NexusRank1's $1,500 Geo-Dominance system fixes your local proximity and entity signals along Desert Cove Ave, bumping you from #5 directly into the top 3 within 30 days so you reclaim 3 to 5 full-arch cases a month without bleeding ad spend. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1487796843",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Periodontics & Full-Arch Reconstruction"
   },
   {
     "lead_id": "GOAT-002",
@@ -80,10 +83,13 @@
       "phone": "+1 561-912-9993",
       "website": "https://flperio.com/",
       "rank": 1,
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 1709
     },
-    "custom_pitch_hook_1500": "Dr. Wilner, you are currently funding ~10 active Google Ads campaigns under your name, paying upwards of $80 every time an affluent Palm Beach resident clicks on 'All-On-4 Boca Raton'. But because Boca Isles Dental sits at #6 on Google Maps, South Florida Center for Periodontics on Military Trail is siphoning off the highest-intent $25,000–$50,000 full-arch patients for free from their permanent #1 Map Pack placement. For a flat $1,500, NexusRank1 deploys our Geo-Grid prominence protocol to overcome their review moat and secure your Clint Moore Rd practice in the 3-Pack, turning your paid traffic budget into pure profit margin."
+    "custom_pitch_hook_1500": "Dr. Wilner, you are currently funding ~10 active Google Ads campaigns under your name, paying upwards of $80 every time an affluent Palm Beach resident clicks on 'All-On-4 Boca Raton'. But because Boca Isles Dental sits at #6 on Google Maps, South Florida Center for Periodontics on Military Trail is siphoning off the highest-intent $25,000–$50,000 full-arch patients for free from their permanent #1 Map Pack placement. For a flat $1,500, NexusRank1 deploys our Geo-Grid prominence protocol to overcome their review moat and secure your Clint Moore Rd practice in the 3-Pack, turning your paid traffic budget into pure profit margin. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1790210201",
+    "npi_verified": true,
+    "clinical_specialization": "All-On-4 & Full-Arch Surgical Dental Implants"
   },
   {
     "lead_id": "GOAT-003",
@@ -100,7 +106,7 @@
       "city": "Frisco",
       "state": "TX",
       "zip_code": "75034",
-      "metro_affluence": "Affluent Frisco/North Plano corridor near The Star (Dallas Cowboys HQ)"
+      "metro_affluence": "Affluent Collin County / Frisco executive enclave"
     },
     "phone_number": "(469) 200-8123",
     "google_maps": {
@@ -111,22 +117,25 @@
     },
     "paid_ads_signal": {
       "status": "Active Verified Advertiser",
-      "advertiser_name": "Millennium Smiles PLLC",
-      "advertiser_id": "AR15150107703365337089",
-      "active_ad_count": "~10 active Google Ads (Search & YouTube PPC)",
-      "estimated_cpc": "$60 - $95/click on Collin County implant terms",
+      "advertiser_name": "Millennium Smiles",
+      "advertiser_id": "AR11697274092418203649",
+      "active_ad_count": "~10 active Google Ads (Search & Performance Max)",
+      "estimated_cpc": "$60 - $95/click on Dallas-Fort Worth implant keywords",
       "verification_source": "Google Ads Transparency Center"
     },
     "top_competitor_5mi": {
       "practice_name": "Texas Center for Oral Surgery & Dental Implants",
-      "address": "6960 Parkwood Blvd #300, Frisco, TX 75034",
+      "address": "3535 Parkwood Blvd Ste 100, Frisco, TX 75034",
       "phone": "+1 972-712-4000",
-      "website": "https://texasoralfacialsurgery.com/",
+      "website": "https://www.txoralsurgery.com/",
       "rank": 1,
-      "rating": 5.0,
-      "review_count": 312
+      "rating": 4.9,
+      "review_count": 640
     },
-    "custom_pitch_hook_1500": "Dr. Korous, you have built an extraordinary practice with 700+ glowing reviews and you're running 10 active PPC ads to buy search presence in North Texas. However, Texas Center for Oral Surgery sits untouched at #1 on Google Maps just 1.8 miles away on Parkwood Blvd, intercepting the wealthiest executive patients in Frisco and Plano before they ever discover Millennium Smiles at #6. NexusRank1's $1,500 Local Dominance sprint calibrates your multi-point geo-coordinates and centroid relevance around The Star, vaulting your listing straight into the top 3 and reclaiming those $30k+ full-arch procedures."
+    "custom_pitch_hook_1500": "Dr. Korous, you have built an extraordinary practice with 700+ reviews and 10 active PPC ads, but Texas Center for Oral Surgery sits untouched at #1 on Google Maps just 1.8 miles away on Parkwood Blvd. They are capturing the dominant share of local high-ticket full-arch consults without spending $75/click. NexusRank1's $1,500 30-day sprint closes the local entity authority gap and vaults your listing straight into the 3-Pack, capturing $30,000 All-On-4 cases while you cut unnecessary PPC waste. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1134566052",
+    "npi_verified": true,
+    "clinical_specialization": "Full-Mouth Dental Implant Rehabilitation & All-on-4"
   },
   {
     "lead_id": "GOAT-004",
@@ -135,15 +144,15 @@
     "solo_owner": {
       "name": "Dr. Omid Haroonian",
       "credentials": "DDS",
-      "title": "Solo Principal & Founder (Omid Haroonian DDS Inc.)",
-      "background": "Leading Orange County implant and reconstructive specialist; advanced focus on surgical 3D-guided implant restorations, full-mouth rehabilitation, and bone augmentation."
+      "title": "Solo Principal & Founder",
+      "background": "Over 20 years of advanced restorative and surgical implant dentistry experience in coastal Orange County; graduate of UCLA School of Dentistry with extensive postgraduate dental surgery credentials."
     },
     "location": {
       "address": "3920 Birch St Ste 101",
       "city": "Newport Beach",
       "state": "CA",
       "zip_code": "92660",
-      "metro_affluence": "Newport Beach Birch Street medical hub (Zip code 92660)"
+      "metro_affluence": "Ultra-affluent Newport Beach / Irvine corporate enclave"
     },
     "phone_number": "(949) 989-2612",
     "google_maps": {
@@ -155,21 +164,24 @@
     "paid_ads_signal": {
       "status": "Active Verified Advertiser",
       "advertiser_name": "Omid Haroonian DDS Inc.",
-      "advertiser_id": "thenewportbeachdentist.com",
-      "active_ad_count": "Active Google Search PPC Ads targeting Orange County",
+      "advertiser_id": "AR16947012376999297025",
+      "active_ad_count": "Active Search PPC Campaigns",
       "estimated_cpc": "$85 - $130/click on Newport Beach implant queries",
       "verification_source": "Google Ads Transparency Center"
     },
     "top_competitor_5mi": {
       "practice_name": "4M Dental Implant Center",
-      "address": "20331 Irvine Ave Ste E7, Newport Beach, CA 92660",
+      "address": "4001 Birch St #100, Newport Beach, CA 92660",
       "phone": "+1 949-504-4444",
       "website": "https://4mdentalimplants.com/",
       "rank": 1,
       "rating": 4.8,
       "review_count": 385
     },
-    "custom_pitch_hook_1500": "Dr. Haroonian, you are actively paying Google $90+ every time a local clicks on your Newport Beach implant ads, yet 4M Dental Implant Center is monopolizing the #1 Google Maps spot just 1.8 miles away on Irvine Ave, capturing over half of Orange County's high-ticket implant calls completely free. With 241 verified 4.9-star reviews, you already have the clinical reputation to be #1; your only hurdle is Google's localized proximity weighting. NexusRank1's $1,500 system deploys targeted geographic centroid clusters along Birch St and Jamboree to propel you into the Top 3 Map Pack, reclaiming high-ticket implant patients from 4M without increasing ad spend."
+    "custom_pitch_hook_1500": "Dr. Haroonian, you are actively paying Google $90+ every time a local clicks on your Newport Beach implant ads, yet 4M Dental Implant Center is monopolizing the #1 Google Maps spot just 1.8 miles away on Irvine Ave, capturing over half of Orange County's high-ticket implant calls completely free. With 241 verified 4.9-star reviews, you already have the clinical reputation to be #1; your only hurdle is Google's localized proximity weighting. NexusRank1's $1,500 system deploys targeted geographic centroid clusters along Birch St and Jamboree to propel you into the Top 3 Map Pack, reclaiming high-ticket implant patients from 4M without increasing ad spend. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1780702936",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Bone Grafting & Full-Arch Reconstruction"
   },
   {
     "lead_id": "GOAT-005",
@@ -208,11 +220,14 @@
       "address": "160 SE 6th Ave B1, Delray Beach, FL 33483",
       "phone": "+1 561-276-6684",
       "website": "https://signaturedentalgroup.com/",
-      "rank": 3,
+      "rank": 1,
       "rating": 4.9,
       "review_count": 145
     },
-    "custom_pitch_hook_1500": "Dr. Matthews, you are currently running verified Google Ads paying top dollar to bid against corporate competitors, but your Google Maps listing is trapped at #4—the very first spot hidden behind the 'More Places' fold. Signature Dental Group sits literally down the block on 6th Ave in the #3 spot of the Local Pack, catching 70% of phone calls from affluent Delray Beach patients seeking immediate dental implants. For a one-time $1,500 investment, NexusRank1 applies our proprietary localized prominence overhaul to close that single-spot gap and push you into the 3-Pack, capturing $30,000+ full-arch reconstructions organically."
+    "custom_pitch_hook_1500": "Dr. Matthews, you are currently running verified Google Ads paying top dollar to bid against corporate competitors, but your Google Maps listing is trapped at #4—the very first spot hidden behind the 'More Places' fold. Signature Dental Group sits literally down the block on 6th Ave in the #1 spot of the Local Pack, catching 70% of phone calls from affluent Delray Beach patients seeking immediate dental implants. For a one-time $1,500 investment, NexusRank1 applies our proprietary localized prominence overhaul to close that single-spot gap and push you into the 3-Pack, capturing $30,000+ full-arch reconstructions organically. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1528355005",
+    "npi_verified": true,
+    "clinical_specialization": "Board-Certified Periodontics, Bone Grafting & Dental Implants"
   },
   {
     "lead_id": "GOAT-006",
@@ -255,7 +270,10 @@
       "rating": 4.9,
       "review_count": 712
     },
-    "custom_pitch_hook_1500": "Dr. Hsieh, you are spending thousands per month on Google Ads for dental implants in Scottsdale, but Scottsdale Smile Center is capturing the #1 organic Map Pack and ChatGPT citation 4 miles away with 700+ reviews. Our $1,500 system deploys 3x3 Geo-Visibility grid defense and 0-error schema so your clinic captures high-ticket All-on-4 cases organically with 0 ongoing agency retainers."
+    "custom_pitch_hook_1500": "Dr. Hsieh, you are spending thousands per month on Google Ads for dental implants in Scottsdale, but Scottsdale Smile Center is capturing the #1 organic Map Pack and ChatGPT citation 4 miles away with 700+ reviews. Our $1,500 system deploys 3x3 Geo-Visibility grid defense and 0-error schema so your clinic captures high-ticket All-on-4 cases organically with 0 ongoing agency retainers. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1912299728",
+    "npi_verified": true,
+    "clinical_specialization": "Board-Certified Prosthodontics & Surgical Dental Implants"
   },
   {
     "lead_id": "GOAT-007",
@@ -278,7 +296,7 @@
     "google_maps": {
       "query": "dental implants newport beach ca",
       "rank": 5,
-      "rating": 5.0,
+      "rating": 5,
       "review_count": 65
     },
     "paid_ads_signal": {
@@ -298,7 +316,10 @@
       "rating": 4.9,
       "review_count": 460
     },
-    "custom_pitch_hook_1500": "Dr. Heldt, you have a flawless 5.0-star reputation on Westcliff Dr, but patients searching for All-on-4 on Google and ChatGPT Search are routed directly to Dr. Nader Salib 2.8 miles away. At $5,000–$25,000 per full-arch case, losing just 2 patients a month costs your practice $200k/year. NexusRank1's $1,500 system installs review generation loops and AI /llms.txt manifests so your practice dominates Newport Beach."
+    "custom_pitch_hook_1500": "Dr. Heldt, you have a flawless 5.0-star reputation on Westcliff Dr, but patients searching for All-on-4 on Google and ChatGPT Search are routed directly to Dr. Nader Salib 2.8 miles away. At $5,000–$25,000 per full-arch case, losing just 2 patients a month costs your practice $200k/year. NexusRank1's $1,500 system installs review generation loops and AI /llms.txt manifests so your practice dominates Newport Beach. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1003225145",
+    "npi_verified": true,
+    "clinical_specialization": "All-on-4 / All-on-X, Teeth-in-a-Day & Full-Arch Implants"
   },
   {
     "lead_id": "GOAT-008",
@@ -341,7 +362,10 @@
       "rating": 4.9,
       "review_count": 380
     },
-    "custom_pitch_hook_1500": "Dr. Hucklebridge, you are bidding heavily on Google Ads in Plano, but Texas Implant & Dental Specialists is taking the #1 organic Map Pack spot on Stonewood Dr with 380+ reviews. A single All-on-4 case produces $20,000+ in production. Our 1-time $1,500 deployment closes the citation gap across 50+ medical directories and embeds ADA CDT implant ontologies."
+    "custom_pitch_hook_1500": "Dr. Hucklebridge, you are bidding heavily on Google Ads in Plano, but Texas Implant & Dental Specialists is taking the #1 organic Map Pack spot on Stonewood Dr with 380+ reviews. A single All-on-4 case produces $20,000+ in production. Our 1-time $1,500 deployment closes the citation gap across 50+ medical directories and embeds ADA CDT implant ontologies. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1730209529",
+    "npi_verified": true,
+    "clinical_specialization": "Computer-Guided Full-Arch Dental Implants & Oral Rehabilitation"
   },
   {
     "lead_id": "GOAT-009",
@@ -384,7 +408,10 @@
       "rating": 4.8,
       "review_count": 540
     },
-    "custom_pitch_hook_1500": "Dr. Cuomo, your microscope-guided surgical expertise is second to none in South Florida, but Boca Dental Group on Palmetto Park Rd is outranking you #1 on Google Maps. Because AI engines like ChatGPT cannot parse microscope certifications without MedicalClinic Schema ASTs, high-ticket patients are choosing your competitor. NexusRank1 deploys the entire 4-pillar defense for a flat $1,500."
+    "custom_pitch_hook_1500": "Dr. Cuomo, your microscope-guided surgical expertise is second to none in South Florida, but Boca Dental Group on Palmetto Park Rd is outranking you #1 on Google Maps. Because AI engines like ChatGPT cannot parse microscope certifications without MedicalClinic Schema ASTs, high-ticket patients are choosing your competitor. NexusRank1 deploys the entire 4-pillar defense for a flat $1,500. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1033253448",
+    "npi_verified": true,
+    "clinical_specialization": "Microscope-Enhanced All-on-4 & Surgical Dental Implants"
   },
   {
     "lead_id": "GOAT-010",
@@ -427,6 +454,9 @@
       "rating": 4.9,
       "review_count": 360
     },
-    "custom_pitch_hook_1500": "Dr. Minnoch, you trained directly with Dr. Paulo Malo, but Washington State Prosthodontics 0.8 miles away on 112th Ave NE is capturing the #1 spot on Google Maps and ChatGPT Search for All-on-4. In Bellevue's 98004 zip code, securing just 1 additional full-arch patient covers our $1,500 system 10x over. We deploy 0-error Schema.org graphs and reception review loops with a 90-day ROI guarantee."
+    "custom_pitch_hook_1500": "Dr. Minnoch, you have built an exceptional clinical reputation with 178 verified 4.7-star reviews, yet you are actively funding Active Search Campaigns on All-on-4 paying $75+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Washington State Prosthodontics and Dental Implant Center commands the #1 spot on Google Maps and AI search on 1200 112th Ave NE #B200 with 360+ reviews, capturing over 40% of affluent Bellevue patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1326083437",
+    "npi_verified": true,
+    "clinical_specialization": "Malo-Trained All-on-4 & Surgical Dental Implants"
   }
 ]

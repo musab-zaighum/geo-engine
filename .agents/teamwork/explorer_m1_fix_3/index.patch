@@ -1,0 +1,124 @@
+--- src/lib/qualification/index.ts	2026-11-01 01:41:18.122146758 +0500
++++ .agents/teamwork/explorer_m1_fix_3/proposed_index.ts	2026-11-01 02:06:22.957692932 +0500
+@@ -8,7 +8,7 @@
+  * 4. Gate 4: Clinical Specialization (Implants/All-on-4 vs Medicaid/Peds/Routine)
+  * 5. Gate 5: DSO & Corporate Chain Blacklist (5-Tier Detection)
+  * 6. Gate 6: Solo Owner / Founder Licensure (CMS NPPES NPI-1)
+- * 7. Gate 7: Proximity Competitor (#1 within 5.0 miles)
++ * 7. Gate 7: Proximity Competitor (#1 within 5.0 miles strictly)
+  */
+ 
+ import {
+@@ -89,6 +89,14 @@
+           failureReason: 'Google Maps rank is missing or undefined',
+         };
+       }
++      if (typeof rank !== 'number' || isNaN(rank) || !Number.isInteger(rank)) {
++        return {
++          gate,
++          passed: false,
++          failureReason: `Google Maps rank must be a valid integer between 4 and 6 (received: ${rank})`,
++          details: { rank },
++        };
++      }
+       // Strictly must be #4, #5, or #6
+       if (rank < 4) {
+         return {
+@@ -202,7 +210,7 @@
+ 
+     case 'PROXIMITY_COMPETITOR': {
+       const comp = candidate.competitor;
+-      if (!comp) {
++      if (!comp || typeof comp !== 'object') {
+         return {
+           gate,
+           passed: false,
+@@ -210,6 +218,14 @@
+         };
+       }
+ 
++      if (!comp.name || typeof comp.name !== 'string' || comp.name.trim() === '') {
++        return {
++          gate,
++          passed: false,
++          failureReason: 'Competitor name is missing or invalid',
++        };
++      }
++
+       // Acceptance criterion 5: strictly #1 competitor
+       if (comp.rank !== 1) {
+         return {
+@@ -223,11 +239,11 @@
+       // Check distance (if coordinates provided or pre-calculated)
+       let distance = comp.distanceMiles;
+       if (
+-        distance === undefined &&
+-        candidate.latitude !== undefined &&
+-        candidate.longitude !== undefined &&
+-        comp.latitude !== undefined &&
+-        comp.longitude !== undefined
++        (distance === undefined || typeof distance !== 'number' || isNaN(distance)) &&
++        typeof candidate.latitude === 'number' && !isNaN(candidate.latitude) &&
++        typeof candidate.longitude === 'number' && !isNaN(candidate.longitude) &&
++        typeof comp.latitude === 'number' && !isNaN(comp.latitude) &&
++        typeof comp.longitude === 'number' && !isNaN(comp.longitude)
+       ) {
+         distance = calculateHaversineMiles(
+           candidate.latitude,
+@@ -237,7 +253,17 @@
+         );
+       }
+ 
+-      if (distance !== undefined && distance > 5.0) {
++      // Strictly require verified finite distance >= 0
++      if (distance === undefined || typeof distance !== 'number' || isNaN(distance) || distance < 0) {
++        return {
++          gate,
++          passed: false,
++          failureReason: 'Unable to verify competitor distance: missing valid distanceMiles and complete coordinates',
++          details: { competitorName: comp.name, competitorRank: comp.rank },
++        };
++      }
++
++      if (distance > 5.0) {
+         return {
+           gate,
+           passed: false,
+@@ -275,6 +301,20 @@
+   stopOnFirstFailure: boolean = true
+ ): Promise<QualificationPipelineResult> {
+   const startTime = Date.now();
++
++  if (!candidate || typeof candidate !== 'object') {
++    return {
++      qualified: false,
++      candidateName: '',
++      candidateDomain: '',
++      candidateZip: '',
++      failedGate: 'AFFLUENT_ZIP',
++      disqualificationReason: 'Candidate practice data is null or undefined',
++      gateResults: {} as any,
++      evaluationDurationMs: 0,
++    };
++  }
++
+   const gates: QualificationGate[] = [
+     'AFFLUENT_ZIP',
+     'MAPS_RANK',
+@@ -296,16 +336,6 @@
+   const affluentZipInfo = getAffluentZipInfo(candidate.zipCode) || undefined;
+ 
+   for (const gate of gates) {
+-    // If competitor data is not provided on candidate, skip competitor gate unless candidate has competitor object
+-    if (gate === 'PROXIMITY_COMPETITOR' && !candidate.competitor) {
+-      gateResults[gate] = {
+-        gate,
+-        passed: true,
+-        details: { skipped: true, reason: 'No competitor data provided on candidate practice' },
+-      };
+-      continue;
+-    }
+-
+     const evalResult = await evaluateGate(gate, candidate);
+     gateResults[gate] = evalResult;
+ 

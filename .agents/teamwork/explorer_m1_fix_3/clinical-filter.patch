@@ -1,0 +1,206 @@
+--- src/lib/qualification/clinical-filter.ts	2026-11-01 01:40:52.345691384 +0500
++++ .agents/teamwork/explorer_m1_fix_3/proposed_clinical-filter.ts	2026-11-01 02:06:01.344359524 +0500
+@@ -4,7 +4,7 @@
+  * Implements Gate 4 of the 7-Point Qualification Engine:
+  * Verifies high-ticket surgical dental implants, All-on-4, and full-arch restorative focus,
+  * while strictly auto-disqualifying:
+- * - Medicaid / Denti-Cal / State-funded dental assistance
++ * - Medicaid / Denti-Cal / State-funded dental assistance (with robust negation handling for cash-only clinics)
+  * - Pediatric and children's dentistry
+  * - Routine general family dentistry with zero surgical implant focus
+  * - Orthodontics-only practices
+@@ -146,25 +146,74 @@
+   return htmlContent
+     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+-    .replace(/<nav[\s\S]*?<\/nav>/gi, ' ') // Optionally keep nav if procedure links are there
++    .replace(/<nav[\s\S]*?<\/nav>/gi, ' ')
+     .replace(/<[^>]+>/g, ' ')
+-    .replace(/&nbsp;/g, ' ')
+-    .replace(/&amp;/g, '&')
++    .replace(/&nbsp;/gi, ' ')
++    .replace(/&amp;/gi, '&')
+     .replace(/\s+/g, ' ')
+     .toLowerCase();
+ }
+ 
+ /**
+- * Scans text for Medicaid / state assistance keywords.
++ * Evaluates whether a Medicaid keyword mention is grammatically negated
++ * (e.g., "does not accept Medicaid", "no Medicaid accepted", "100% cash fee-for-service").
++ */
++export function isNegatedMedicaidMention(text: string, matchIndex: number, matchLength: number): boolean {
++  // Look back up to 80 characters before the match, stopping at sentence boundaries
++  const start = Math.max(0, matchIndex - 80);
++  const precedingText = text.slice(start, matchIndex);
++  const sentenceBoundaryMatch = precedingText.match(/[.!?\n][^.!?\n]*$/);
++  const clauseBefore = sentenceBoundaryMatch ? sentenceBoundaryMatch[0].slice(1) : precedingText;
++
++  // Look ahead up to 50 characters after the match, stopping at sentence boundaries
++  const end = Math.min(text.length, matchIndex + matchLength + 50);
++  const followingText = text.slice(matchIndex + matchLength, end);
++  const clauseAfter = followingText.split(/[.!?\n]/)[0];
++
++  // Preceding negation patterns: "does not accept", "do not take", "no", "never", "cannot", "neither"
++  const precedingNegation =
++    /\b(do(?:es)?\s+not|don'?t|doesn'?t|no|not|never|cannot|can'?t|we\s+do\s+not|without|excluding|except|unable\s+to|neither)\s+(?:accept|take|participate\s+in|bill|honor)?\s*[^.!?\n]{0,60}$/i;
++
++  // Following negation patterns: "is not accepted", "does not cover", "not taken"
++  const followingNegation =
++    /^\s*(?:is|are|was|were|does|do)?\s*(?:not|never)?\s*(?:accepted|taken|participated|honored|covered|cover|pay|reimburse)/i;
++
++  // Explicit unaccepted header: "Not accepted: Medicaid"
++  const notAcceptedBefore = /\b(?:not\s+accepted|unaccepted)\s*[:\-]?\s*[^.!?\n]{0,30}$/i;
++
++  // Cash-only / Fee-for-service context with negation
++  const cashOnlyContext = /\b(cash\s+only|fee[- ]for[- ]service|out[- ]of[- ]network)\b/i;
++
++  if (
++    precedingNegation.test(clauseBefore) ||
++    notAcceptedBefore.test(clauseBefore) ||
++    followingNegation.test(clauseAfter) ||
++    (cashOnlyContext.test(clauseBefore) && /\b(?:no|not|neither)\b/i.test(clauseBefore))
++  ) {
++    return true;
++  }
++
++  return false;
++}
++
++/**
++ * Scans text for Medicaid / state assistance keywords, ignoring negated mentions.
+  */
+ export function detectMedicaidSignals(text: string): { detected: boolean; terms: string[] } {
+   const lower = text.toLowerCase();
+   const terms: string[] = [];
+ 
+   for (const kw of MEDICAID_KEYWORDS) {
+-    const regex = new RegExp(`\\b${kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
+-    if (regex.test(lower)) {
+-      terms.push(kw);
++    const escaped = kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
++    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
++    let match: RegExpExecArray | null;
++    while ((match = regex.exec(lower)) !== null) {
++      if (!isNegatedMedicaidMention(lower, match.index, kw.length)) {
++        if (!terms.includes(kw)) {
++          terms.push(kw);
++        }
++        break;
++      }
+     }
+   }
+ 
+@@ -182,7 +231,8 @@
+   const terms: string[] = [];
+ 
+   for (const kw of PEDIATRIC_KEYWORDS) {
+-    const regex = new RegExp(`\\b${kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
++    const escaped = kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
++    const regex = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, 'i');
+     if (regex.test(lower)) {
+       terms.push(kw);
+     }
+@@ -195,6 +245,41 @@
+ }
+ 
+ /**
++ * Deduplicates keywords to prevent substring double-counting (e.g. "dental implants" vs "dental implant").
++ */
++export function deduplicateSubstrings(keywords: string[]): string[] {
++  const sorted = [...keywords].sort((a, b) => b.length - a.length);
++  const result: string[] = [];
++
++  for (const kw of sorted) {
++    const kwNorm = kw.replace(/[-]/g, ' ');
++    const isSubstringOfExisting = result.some((existing) => {
++      const existingNorm = existing.replace(/[-]/g, ' ');
++      return existing.includes(kw) || existingNorm.includes(kwNorm);
++    });
++
++    if (!isSubstringOfExisting) {
++      result.push(kw);
++    }
++  }
++
++  return result;
++}
++
++/**
++ * Helper to match keywords with word boundaries and deduplicate substrings.
++ */
++function matchKeywordsWithBoundaries(text: string, keywords: string[]): string[] {
++  const lower = text.toLowerCase();
++  const matched = keywords.filter((kw) => {
++    const escaped = kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
++    const regex = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, 'i');
++    return regex.test(lower);
++  });
++  return deduplicateSubstrings(matched);
++}
++
++/**
+  * Evaluates whether practice is routine family dentistry only with zero implant focus.
+  */
+ export function detectRoutineOnlySignals(text: string): {
+@@ -202,19 +287,12 @@
+   routineCount: number;
+   implantCount: number;
+ } {
+-  const lower = text.toLowerCase();
+-  let routineCount = 0;
+-  for (const kw of ROUTINE_FAMILY_KEYWORDS) {
+-    if (lower.includes(kw)) routineCount++;
+-  }
++  const matchedRoutine = matchKeywordsWithBoundaries(text, ROUTINE_FAMILY_KEYWORDS);
++  const matchedImplants = matchKeywordsWithBoundaries(text, IMPLANT_KEYWORDS);
++  const matchedAllOnX = matchKeywordsWithBoundaries(text, ALL_ON_X_KEYWORDS);
+ 
+-  let implantCount = 0;
+-  for (const kw of IMPLANT_KEYWORDS) {
+-    if (lower.includes(kw)) implantCount++;
+-  }
+-  for (const kw of ALL_ON_X_KEYWORDS) {
+-    if (lower.includes(kw)) implantCount++;
+-  }
++  const routineCount = matchedRoutine.length;
++  const implantCount = matchedImplants.length + matchedAllOnX.length;
+ 
+   // Routine-only if it mentions routine terms but ZERO surgical implant or full-arch terms
+   const isRoutineOnly = routineCount > 0 && implantCount === 0;
+@@ -227,7 +305,7 @@
+ }
+ 
+ /**
+- * Calculates surgical implant procedural density score.
++ * Calculates surgical implant procedural density score with substring deduplication.
+  */
+ export function calculateImplantDensity(text: string): {
+   score: number;
+@@ -235,10 +313,13 @@
+   allOnXMatches: string[];
+   surgicalMatches: string[];
+ } {
+-  const lower = text.toLowerCase();
+-  const implantMatches = IMPLANT_KEYWORDS.filter((kw) => lower.includes(kw));
+-  const allOnXMatches = ALL_ON_X_KEYWORDS.filter((kw) => lower.includes(kw));
+-  const surgicalMatches = SURGICAL_SPECIALTY_KEYWORDS.filter((kw) => lower.includes(kw));
++  const rawImplantMatches = matchKeywordsWithBoundaries(text, IMPLANT_KEYWORDS);
++  const rawAllOnXMatches = matchKeywordsWithBoundaries(text, ALL_ON_X_KEYWORDS);
++  const rawSurgicalMatches = matchKeywordsWithBoundaries(text, SURGICAL_SPECIALTY_KEYWORDS);
++
++  const implantMatches = deduplicateSubstrings(rawImplantMatches);
++  const allOnXMatches = deduplicateSubstrings(rawAllOnXMatches);
++  const surgicalMatches = deduplicateSubstrings(rawSurgicalMatches);
+ 
+   // Compute a weighted score 0 - 100
+   // All-on-4 / Full-Arch: 15 points each (max 45)
+@@ -267,7 +348,7 @@
+ export function scoreClinicalSpecialization(htmlContent: string): ClinicalSpecializationResult {
+   const text = extractCleanText(htmlContent);
+ 
+-  // 1. Strict Negative Check: Medicaid / State Assistance
++  // 1. Strict Negative Check: Medicaid / State Assistance (with negation handling)
+   const medicaidCheck = detectMedicaidSignals(text);
+   if (medicaidCheck.detected) {
+     return {

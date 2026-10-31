@@ -1,0 +1,126 @@
+--- src/lib/qualification/dso-filter.ts	2026-11-01 01:44:30.055725593 +0500
++++ .agents/teamwork/explorer_m1_fix_3/proposed_dso-filter.ts	2026-11-01 02:05:32.313920549 +0500
+@@ -31,7 +31,7 @@
+     tier: 'TIER_1_MEGA_CHAIN',
+     parentEntity: 'TAG - The Aspen Group',
+     domains: ['clearchoice.com', 'clearchoicecenters.com', 'clearchoicemanagement.com'],
+-    keywords: ['clearchoice', 'clear choice dental', 'clearchoice management services'],
++    keywords: ['clearchoice', 'clear choice', 'clear choice dental', 'clearchoice management services'],
+     legalPatterns: [
+       /clearchoice\s+management\s+services/i,
+       /clearchoice\s+dental\s+implant\s+center/i,
+@@ -67,7 +67,7 @@
+     tier: 'TIER_1_MEGA_CHAIN',
+     parentEntity: 'Pacific Dental Services, LLC',
+     domains: ['pacificdentalservices.com', 'pdshealth.com', 'pacdental.com'],
+-    keywords: ['pacific dental services', 'pds health', 'supported by pacific dental'],
++    keywords: ['pacific dental services', 'pacific dental', 'pds health', 'supported by pacific dental'],
+     legalPatterns: [
+       /supported\s+by\s+pacific\s+dental/i,
+       /pacific\s+dental\s+services,\s+llc/i,
+@@ -205,7 +205,7 @@
+     tier: 'TIER_2_SURGICAL_SPECIALTY_MSO',
+     parentEntity: 'Charlesbank Capital Partners',
+     domains: ['mb2dental.com', 'mb2dentaljobs.com'],
+-    keywords: ['mb2 dental', 'mb2 dental solutions', 'an mb2 dental partner'],
++    keywords: ['mb2 dental', 'mb2', 'mb2 dental solutions', 'an mb2 dental partner'],
+     legalPatterns: [
+       /mb2\s+dental\s+solutions/i,
+       /an\s+mb2\s+dental\s+partner/i,
+@@ -351,27 +351,48 @@
+   { name: 'Allied OMS', regex: /\b(allied\s+oms|an\s+allied\s+oms\s+partner)\b/i },
+ ];
+ 
+-// Tier 5 Corporate Infrastructure ATS patterns
++// Tier 5 Corporate Infrastructure ATS patterns (Workday subdomains, Greenhouse embeds, Lever, Ultipro)
+ const TIER_5_ATS_REGEX =
+-  /(boards\.greenhouse\.io\/(tag|heartland|aspendental|pacificdentalservices|mb2dental|sonrava|smilebrands)|[a-z0-9-]+\.myworkdayjobs\.com\/(heartland|aspen|pds|clearchoice)|jobs\.lever\.co\/(clearchoice|mb2dental|specialty1)|ultipro\.com\/[a-z0-9-]+\/jobboard)/i;
++  /(boards\.greenhouse\.io\/[^\s"'<>]*?(tag|heartland|aspendental|pacificdentalservices|mb2dental|sonrava|smilebrands|clearchoice)|(?:[a-z0-9-]+\.myworkdayjobs\.com\/(?:[^\s"'<>/]+\/)?(heartland|aspen|pds|clearchoice|tag|mb2dental|sonrava|smilebrands)|(heartland|aspen|pds|clearchoice|tag|mb2dental|sonrava|smilebrands)\.myworkdayjobs\.com)|jobs\.lever\.co\/(clearchoice|mb2dental|specialty1)|ultipro\.com\/[a-z0-9-]+\/jobboard)/i;
+ 
+ /**
+- * Normalizes domain by removing protocol, path, and "www." prefix.
++ * Normalizes domain by removing protocol, path, port, basic auth, trailing DNS dots, and "www." prefix.
+  */
+ export function normalizeDomain(rawDomain: string): string {
+   if (!rawDomain) return '';
+   let clean = rawDomain.trim().toLowerCase();
+   clean = clean.replace(/^https?:\/\//, '');
+   clean = clean.split('/')[0];
+-  clean = clean.split('?')[0];
++  clean = clean.split(/[?#]/)[0];
++  // Strip userinfo (basic auth credentials e.g. user:pass@ or user@)
++  clean = clean.replace(/^[^@]+@/, '');
++  // Strip port e.g. domain.com:8443
+   clean = clean.split(':')[0];
++  // Strip trailing DNS root dots (FQDN notation e.g. domain.com.)
++  clean = clean.replace(/\.+$/, '');
+   if (clean.startsWith('www.')) {
+     clean = clean.slice(4);
+   }
++  clean = clean.replace(/\.+$/, '');
+   return clean;
+ }
+ 
+ /**
++ * Strips HTML tags and entities for reliable plain-text legal regex matching.
++ */
++export function stripHtmlForDisclaimer(text: string): string {
++  if (!text) return '';
++  return text
++    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
++    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
++    .replace(/<[^>]+>/g, ' ')
++    .replace(/&nbsp;/gi, ' ')
++    .replace(/&amp;/gi, '&')
++    .replace(/\s+/g, ' ')
++    .trim();
++}
++
++/**
+  * Checks if domain is in the pre-compiled DSO blacklist (Tier 3).
+  */
+ export function isBlacklistedDomain(domain: string): boolean {
+@@ -389,16 +410,18 @@
+ export function matchesDsoLegalDisclaimer(text: string): { matches: boolean; pattern?: string; dso?: string } {
+   if (!text) return { matches: false };
+ 
+-  // Check specific high-fidelity DSO legal patterns
++  const cleanText = stripHtmlForDisclaimer(text);
++
++  // Check specific high-fidelity DSO legal patterns against cleaned text
+   for (const item of TIER_4_SPECIFIC_DSO_REGEXES) {
+-    const match = text.match(item.regex);
++    const match = cleanText.match(item.regex);
+     if (match) {
+       return { matches: true, pattern: match[0], dso: item.name };
+     }
+   }
+ 
+-  // Check general statutory disclaimer
+-  const generalMatch = text.match(TIER_4_LEGAL_DISCLAIMER_REGEX);
++  // Check general statutory disclaimer against cleaned text
++  const generalMatch = cleanText.match(TIER_4_LEGAL_DISCLAIMER_REGEX);
+   if (generalMatch) {
+     const matchedPhrase = generalMatch[0];
+     const entity = generalMatch[2]?.trim();
+@@ -436,7 +459,6 @@
+   practiceName: string = ''
+ ): DsoCheckResult {
+   const cleanDomain = normalizeDomain(domain);
+-  const combinedText = `${practiceName} ${cleanDomain} ${htmlContent}`.toLowerCase();
+ 
+   // Tier 3: Direct Domain Blacklist Check (Confidence: 1.0)
+   if (isBlacklistedDomain(cleanDomain)) {
+@@ -455,9 +477,10 @@
+ 
+   // Tier 1 & 2: Brand & Name Matching in Practice Name or Domain
+   for (const entry of DSO_DIRECTORY) {
+-    // Check practice name against keywords
++    // Check practice name against keywords with word boundary matching
+     for (const kw of entry.keywords) {
+-      if (practiceName && practiceName.toLowerCase().includes(kw)) {
++      const kwRegex = new RegExp(`\\b${kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
++      if (practiceName && kwRegex.test(practiceName)) {
+         return {
+           isDso: true,
+           matchedDsoName: entry.name,
