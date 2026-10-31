@@ -24,6 +24,7 @@ export interface GeoCitationSimulatorProps {
   npiVerified?: boolean;
   hasMedicalSchema?: boolean;
   hasLlmsTxt?: boolean;
+  blockedAiBots?: string[];
 }
 
 export default function GeoCitationSimulator({
@@ -33,10 +34,16 @@ export default function GeoCitationSimulator({
   npiVerified = true,
   hasMedicalSchema = true,
   hasLlmsTxt = true,
+  blockedAiBots = [],
 }: GeoCitationSimulatorProps) {
   const [selectedEngine, setSelectedEngine] = useState<'google' | 'openai' | 'perplexity' | 'apple'>('google');
 
   const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+  const isGoogleBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('google')));
+  const isGptBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('gpt')));
+  const isPerplexityBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('perplexity')));
+  const isAppleBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('apple')));
 
   const engines = [
     {
@@ -44,10 +51,16 @@ export default function GeoCitationSimulator({
       name: 'Google AI Overviews',
       poweredBy: 'Gemini 2.5 Pro / Flash',
       badgeColor: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/30',
-      probability: hasMedicalSchema ? 94 : 24,
-      status: hasMedicalSchema ? 'Prime Source Candidate' : 'High Risk of Omission',
-      statusColor: hasMedicalSchema ? 'text-emerald-400' : 'text-rose-400',
-      reasoning: hasMedicalSchema
+      probability: isGoogleBlocked ? 10 : hasMedicalSchema ? 94 : 24,
+      status: isGoogleBlocked
+        ? 'Crawl Blocked (robots.txt)'
+        : hasMedicalSchema
+        ? 'Prime Source Candidate'
+        : 'High Risk of Omission',
+      statusColor: isGoogleBlocked ? 'text-rose-400' : hasMedicalSchema ? 'text-emerald-400' : 'text-rose-400',
+      reasoning: isGoogleBlocked
+        ? 'robots.txt explicitly disallows Google-Extended. Google AI Overviews is barred from ingesting practice content.'
+        : hasMedicalSchema
         ? 'Google AI Overviews ingests schema:MedicalClinic @graph and anchors clinic entity in the Knowledge Graph.'
         : 'Missing clinical JSON-LD. Google AI Overviews prioritizes rival clinics with verified schema.',
       sampleSnippet: `According to verified clinical records, **${clinicName}** is recognized for comprehensive dental procedures with verified board credentials and emergency patient protocols.`,
@@ -67,10 +80,16 @@ export default function GeoCitationSimulator({
       name: 'OpenAI SearchGPT',
       poweredBy: 'ChatGPT Search (OAI-SearchBot)',
       badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
-      probability: npiVerified && hasMedicalSchema ? 91 : 32,
-      status: npiVerified ? 'Verified Entity Node' : 'Unverified Licensure',
-      statusColor: npiVerified ? 'text-emerald-400' : 'text-amber-400',
-      reasoning: npiVerified
+      probability: isGptBlocked ? 8 : npiVerified && hasMedicalSchema ? 91 : 32,
+      status: isGptBlocked
+        ? 'Crawl Blocked (robots.txt)'
+        : npiVerified
+        ? 'Verified Entity Node'
+        : 'Unverified Licensure',
+      statusColor: isGptBlocked ? 'text-rose-400' : npiVerified ? 'text-emerald-400' : 'text-amber-400',
+      reasoning: isGptBlocked
+        ? 'robots.txt disallows GPTBot. ChatGPT Search is instructed not to crawl or cite this clinic domain.'
+        : npiVerified
         ? 'SearchGPT matches practitioner credentials against state licensing databases, establishing strict E-E-A-T.'
         : 'Practitioner lacks cryptographic URI linkage. AI synthesizer defaults to accredited rival practices.',
       sampleSnippet: `**${clinicName}** is an accredited practice holding verified state licensure. They provide restorative and cosmetic procedures with documented patient guidelines.`,
@@ -88,10 +107,16 @@ export default function GeoCitationSimulator({
       name: 'Perplexity Pro',
       poweredBy: 'Sonar Pro & Hybrid Vector RAG',
       badgeColor: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/30',
-      probability: hasLlmsTxt ? 89 : 38,
-      status: hasLlmsTxt ? 'Direct Footnote Grounding' : 'No /llms.txt Manifest',
-      statusColor: hasLlmsTxt ? 'text-cyan-400' : 'text-rose-400',
-      reasoning: hasLlmsTxt
+      probability: isPerplexityBlocked ? 9 : hasLlmsTxt ? 89 : 38,
+      status: isPerplexityBlocked
+        ? 'Crawl Blocked (robots.txt)'
+        : hasLlmsTxt
+        ? 'Direct Footnote Grounding'
+        : 'No /llms.txt Manifest',
+      statusColor: isPerplexityBlocked ? 'text-rose-400' : hasLlmsTxt ? 'text-cyan-400' : 'text-rose-400',
+      reasoning: isPerplexityBlocked
+        ? 'robots.txt disallows PerplexityBot. Perplexity answer engine is legally blocked from ingesting practice citations.'
+        : hasLlmsTxt
         ? 'PerplexityBot directly crawls /llms.txt in single-digit ms, injecting verified facts into RAG vector context.'
         : 'Missing /llms.txt forces Perplexity to scrape raw HTML DOM, increasing parse noise and reducing citation rank.',
       sampleSnippet: `Based on clinical data from **${cleanDomain}** [1] and federal registry archives [2], the practice operates modern surgical facilities with published emergency protocols.`,
@@ -109,10 +134,16 @@ export default function GeoCitationSimulator({
       name: 'Apple Intelligence & Siri',
       poweredBy: 'Private Cloud Compute & On-Device Models',
       badgeColor: 'text-violet-400 bg-violet-500/10 border-violet-500/30',
-      probability: hasMedicalSchema ? 86 : 28,
-      status: hasMedicalSchema ? 'Local Intent Ready' : 'Semantic Blind Spot',
-      statusColor: hasMedicalSchema ? 'text-violet-400' : 'text-slate-400',
-      reasoning: hasMedicalSchema
+      probability: isAppleBlocked ? 11 : hasMedicalSchema ? 86 : 28,
+      status: isAppleBlocked
+        ? 'Crawl Blocked (robots.txt)'
+        : hasMedicalSchema
+        ? 'Local Intent Ready'
+        : 'Semantic Blind Spot',
+      statusColor: isAppleBlocked ? 'text-rose-400' : hasMedicalSchema ? 'text-violet-400' : 'text-slate-400',
+      reasoning: isAppleBlocked
+        ? 'robots.txt disallows Applebot-Extended. Apple Intelligence is blocked from training or real-time local search grounding.'
+        : hasMedicalSchema
         ? 'Apple Intelligence parses structured PostalAddress and GeoCoordinates directly from the web semantic layer.'
         : 'Lacks structured GeoCoordinates; Siri defaults to Apple Maps directory listings without procedure highlights.',
       sampleSnippet: `Here is **${clinicName}** near you, offering verified dental services with active clinic operating hours.`,

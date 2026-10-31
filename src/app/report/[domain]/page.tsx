@@ -682,6 +682,7 @@ export default function StandaloneClientReportPage() {
                 npiVerified={npiVerified}
                 hasMedicalSchema={hasMedicalSchema}
                 hasLlmsTxt={hasLlmsTxt}
+                blockedAiBots={blockedAiBots}
               />
             </div>
           )}

@@ -1124,6 +1124,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 npiVerified={auditData.eeatScore > 80}
                 hasMedicalSchema={auditData.schemaDepth > 80}
                 hasLlmsTxt={auditData.llmsScore > 50}
+                blockedAiBots={auditData.blockedAiBots}
               />
             </div>
           )}
