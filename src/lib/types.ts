@@ -95,8 +95,6 @@ export interface PartnerBrandingConfig {
   customReportFooter: string;
 }
 
-export type WhiteLabelConfig = PartnerBrandingConfig;
-
 export interface CmsGuide {
   id: string;
   name: string;
