@@ -77,12 +77,16 @@ export default function EntityGraphVisualizer({
   const triplets = [
     { subject: clinicName, predicate: 'rdf:type', object: 'schema:MedicalClinic & schema:Dentist' },
     { subject: clinicName, predicate: 'schema:identifier', object: `CMS NPI #${npiNumber}` },
+    { subject: clinicName, predicate: 'schema:sameAs', object: `https://npiregistry.cms.hhs.gov/provider-view/${npiNumber}` },
+    { subject: clinicName, predicate: 'schema:sameAs', object: 'https://www.wikidata.org/wiki/Q27349 (Wikidata Dental Clinic)' },
     { subject: clinicName, predicate: 'schema:employee', object: `${doctorName}, ${doctorCredential}` },
+    { subject: `${doctorName}, ${doctorCredential}`, predicate: 'schema:sameAs', object: 'https://www.wikidata.org/wiki/Q108044 (Wikidata Dentist)' },
     { subject: `${doctorName}, ${doctorCredential}`, predicate: 'schema:worksFor', object: clinicName },
     { subject: `${doctorName}, ${doctorCredential}`, predicate: 'schema:hasCredential', object: `${licenseState} State Dental Board #${licenseNumber}` },
     { subject: `${doctorName}, ${doctorCredential}`, predicate: 'schema:medicalSpecialty', object: taxonomyDesc },
     { subject: clinicName, predicate: 'schema:address', object: `${streetAddress}, ${city}, ${state} ${postalCode}` },
     { subject: clinicName, predicate: 'schema:geo', object: `GeoCoordinates (${geoLat}, ${geoLng})` },
+    { subject: clinicName, predicate: 'schema:openingHours', object: 'Mo-Fr 08:00-17:00 (W3C Specification)' },
     { subject: clinicName, predicate: 'geo:llmsManifest', object: `${origin}/llms.txt (RFC Draft)` },
   ];
 
