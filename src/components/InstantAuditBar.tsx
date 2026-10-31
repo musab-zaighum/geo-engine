@@ -358,26 +358,34 @@ export function InstantAuditBar({
 - ACUTE PAIN / SEVERE INFECTION: Call clinic 24/7 emergency triage line at +1-800-555-0199.
 - For emergency trauma or uncontrolled bleeding, instruct patient to visit the nearest emergency room or dial 911 immediately.`;
 
+    const hasMedicalSchema = isMayo || isCleveland ? true : (liveData?.hasMedicalSchema ?? false);
+    const hasLlmsTxt = isMayo || isCleveland ? true : (liveData?.hasLlmsTxt ?? false);
+    const npiVerified = isMayo || isCleveland ? true : (liveData?.npiVerified ?? false);
+
     const items: AuditItem[] = [
       {
         id: 'chk-1',
         category: 'schema',
         title: 'Schema.org/MedicalClinic root graph',
-        status: 'Pass',
-        diagnostic: `Root graph entity for ${clinicName} is syntactically valid with legalName, address, and geo coordinates.`,
+        status: hasMedicalSchema ? 'Pass' : 'Fail',
+        diagnostic: hasMedicalSchema
+          ? `Root graph entity for ${clinicName} is syntactically valid with legalName, address, and geo coordinates.`
+          : `Missing Schema.org/MedicalClinic JSON-LD graph on ${clean}. Generative AI search engines cannot index clinical entity.`,
         specification: 'schema:MedicalClinic & PostalAddress',
-        remediation: 'Complies with Google Healthcare Rich Results & Schema.org Medical Entity specifications.',
+        remediation: hasMedicalSchema
+          ? 'Complies with Google Healthcare Rich Results & Schema.org Medical Entity specifications.'
+          : 'Deploy NexusRank1 generated 0-error Schema.org @graph payload to website root header.',
       },
       {
         id: 'chk-2',
         category: 'licensure',
         title: 'Physician registry tokens (CMS NPPES v2.1)',
-        status: isMayo || isCleveland || (liveData?.npiVerified) ? 'Pass' : 'Warn',
-        diagnostic: isMayo || isCleveland || (liveData?.npiVerified)
+        status: npiVerified ? 'Pass' : 'Warn',
+        diagnostic: npiVerified
           ? `Practitioner faculty cross-verified against official CMS NPPES Registry: NPI #${npiNumber}.`
           : 'Physician entity lacks cryptographic URI links to CMS NPPES NPI Registry or State Board verification.',
         specification: 'schema:Physician · hasCredential',
-        remediation: isMayo || isCleveland || (liveData?.npiVerified)
+        remediation: npiVerified
           ? 'All institutional credentials and board certifications verified.'
           : 'Add EducationalOccupationalCredential nodes containing 10-digit NPI or state medical board license IDs.',
       },
@@ -385,12 +393,12 @@ export function InstantAuditBar({
         id: 'chk-3',
         category: 'crawler',
         title: 'AI search engine crawler directives (/llms.txt)',
-        status: isMayo || isCleveland || (liveData?.hasLlmsTxt) ? 'Pass' : 'Fail',
-        diagnostic: isMayo || isCleveland || (liveData?.hasLlmsTxt)
+        status: hasLlmsTxt ? 'Pass' : 'Fail',
+        diagnostic: hasLlmsTxt
           ? 'Root /llms.txt manifest detected and parsed. Practice procedures and emergency disclaimers grounded.'
           : `HTTP 404: /llms.txt manifest not detected at ${clean}/llms.txt. AI bots risk hallucinating insurance coverage.`,
         specification: 'RFC Draft /llms.txt & /llms-full.txt',
-        remediation: isMayo || isCleveland || (liveData?.hasLlmsTxt)
+        remediation: hasLlmsTxt
           ? 'Manifest is active and indexable by GPTBot, PerplexityBot, and ClaudeBot.'
           : 'Deploy NexusRank generated /llms.txt manifest to the public web root to ground LLM answer engines.',
       },
@@ -398,12 +406,12 @@ export function InstantAuditBar({
         id: 'chk-4',
         category: 'taxonomy',
         title: 'Generative Search Engine Indexing (SearchGPT & Perplexity)',
-        status: isMayo || isCleveland ? 'Pass' : 'Warn',
-        diagnostic: isMayo || isCleveland
+        status: hasMedicalSchema && hasLlmsTxt ? 'Pass' : 'Warn',
+        diagnostic: hasMedicalSchema && hasLlmsTxt
           ? `Practice entity is grounded across top AI Overviews with authoritative citations.`
           : `Domain lacks structured vector indexing on OpenAI SearchGPT, Perplexity, and Apple Intelligence.`,
         specification: 'Generative Engine Citation Standard v2.0',
-        remediation: isMayo || isCleveland
+        remediation: hasMedicalSchema && hasLlmsTxt
           ? 'Knowledge graph active across synthetic search indices.'
           : 'Deploy 0-error Schema.org @graph and canonical /llms.txt to anchor practice in generative citations.',
       },
@@ -411,19 +419,27 @@ export function InstantAuditBar({
         id: 'chk-5',
         category: 'schema',
         title: 'Clinical Procedure & Taxonomy Ontology',
-        status: 'Pass',
-        diagnostic: `Procedures and clinical specialties correctly categorized using Schema.org medicalSpecialty and MedicalProcedure taxonomy.`,
+        status: hasMedicalSchema ? 'Pass' : 'Warn',
+        diagnostic: hasMedicalSchema
+          ? `Procedures and clinical specialties correctly categorized using Schema.org medicalSpecialty and MedicalProcedure taxonomy.`
+          : `Website lacks structured MedicalProcedure entity nodes for high-ticket cases (implants, Invisalign, veneers).`,
         specification: 'schema:MedicalProcedure & MedicalSpecialty',
-        remediation: 'Ensures conversational AI engines match prospective patients to specific clinical procedures.',
+        remediation: hasMedicalSchema
+          ? 'Ensures conversational AI engines match prospective patients to specific clinical procedures.'
+          : 'Add MedicalProcedure nodes with procedureType and bodyLocation to claim procedure queries in AI search.',
       },
       {
         id: 'chk-6',
         category: 'licensure',
         title: 'E-E-A-T Physical Location & GeoCoordinates Anchor',
-        status: 'Pass',
-        diagnostic: `Physical clinic facility verified with streetAddress, postalCode, and cryptographic GeoCoordinates mapping.`,
+        status: hasMedicalSchema ? 'Pass' : 'Warn',
+        diagnostic: hasMedicalSchema
+          ? `Physical clinic facility verified with streetAddress, postalCode, and cryptographic GeoCoordinates mapping.`
+          : `Domain lacks structured PostalAddress and GeoCoordinates schema. AI search risks hallucinating regional coverage.`,
         specification: 'schema:PostalAddress & GeoCoordinates',
-        remediation: 'Prevents Google Maps and AI search synthesis from conflating regional satellite locations.',
+        remediation: hasMedicalSchema
+          ? 'Prevents Google Maps and AI search synthesis from conflating regional satellite locations.'
+          : 'Embed exact latitude/longitude coordinates and PostalAddress in clinic JSON-LD.',
       },
     ];
 
@@ -434,10 +450,10 @@ export function InstantAuditBar({
       timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC',
       overallScore: score,
       grade,
-      schemaDepth: isMayo || isCleveland ? 99 : 94,
-      eeatScore: isMayo || isCleveland ? 98 : 88,
-      llmsScore: isMayo || isCleveland || (liveData?.hasLlmsTxt) ? 96 : 42,
-      citationScore: isMayo || isCleveland ? 97 : 85,
+      schemaDepth: hasMedicalSchema ? 94 : 18,
+      eeatScore: npiVerified ? 92 : 36,
+      llmsScore: hasLlmsTxt ? 96 : 14,
+      citationScore: hasMedicalSchema && hasLlmsTxt ? 88 : 28,
       items,
       jsonLd,
       llmsTxt,

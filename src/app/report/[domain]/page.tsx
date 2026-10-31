@@ -114,11 +114,11 @@ export default function StandaloneClientReportPage() {
           .replace(/\b\w/g, (c) => c.toUpperCase()) + ' Practice'
   );
 
-  const overallScore = liveData?.readinessScore ?? (isMayo ? 98 : isCleveland ? 96 : 84);
-  const grade = overallScore >= 90 ? 'A+' : overallScore >= 75 ? 'B+' : 'C';
-  const hasMedicalSchema = liveData?.hasMedicalSchema ?? true;
-  const hasLlmsTxt = liveData?.hasLlmsTxt ?? (isMayo || isCleveland);
-  const npiVerified = liveData?.npiVerified ?? true;
+  const overallScore = liveData?.readinessScore ?? (isMayo ? 98 : isCleveland ? 96 : 38);
+  const grade = overallScore >= 90 ? 'A+' : overallScore >= 75 ? 'B+' : overallScore >= 50 ? 'C' : 'F';
+  const hasMedicalSchema = isMayo || isCleveland ? true : (liveData?.hasMedicalSchema ?? false);
+  const hasLlmsTxt = isMayo || isCleveland ? true : (liveData?.hasLlmsTxt ?? false);
+  const npiVerified = isMayo || isCleveland ? true : (liveData?.npiVerified ?? false);
   const npiNumber = liveData?.registrationNumbers?.[0] || '1948203918';
   const blockedAiBots: string[] = liveData?.blockedAiBots || [];
 
@@ -408,7 +408,9 @@ export default function StandaloneClientReportPage() {
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                     : overallScore >= 75
                     ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400'
-                    : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                    : overallScore >= 50
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                    : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
                 }`}
               >
                 {grade}
@@ -420,7 +422,7 @@ export default function StandaloneClientReportPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
               <span className="text-[11px] text-slate-400 font-medium">Schema.org @graph</span>
-              <div className={`text-lg font-bold font-mono ${hasMedicalSchema ? 'text-emerald-400' : 'text-amber-400'}`}>
+              <div className={`text-lg font-bold font-mono ${hasMedicalSchema ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {hasMedicalSchema ? '94% Conforming' : 'Missing Root'}
               </div>
               <p className="text-[10px] text-slate-500">MedicalClinic &amp; Physician</p>
@@ -428,7 +430,7 @@ export default function StandaloneClientReportPage() {
 
             <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
               <span className="text-[11px] text-slate-400 font-medium">Physician NPI Registry</span>
-              <div className="text-lg font-bold text-indigo-400 font-mono">
+              <div className={`text-lg font-bold font-mono ${npiVerified ? 'text-indigo-400' : 'text-amber-400'}`}>
                 {npiVerified ? 'CMS Verified' : 'Unverified NPI'}
               </div>
               <p className="text-[10px] text-slate-500">NPPES Federal Token #{npiNumber}</p>
@@ -527,30 +529,54 @@ export default function StandaloneClientReportPage() {
                 <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      {hasMedicalSchema ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      ) : (
+                        <XCircle className="w-4 h-4 text-rose-400" />
+                      )}
                       Schema.org MedicalClinic Root Entity
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                      Pass
+                    <span
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                        hasMedicalSchema
+                          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20'
+                          : 'bg-rose-500/10 text-rose-300 border-rose-500/20'
+                      }`}
+                    >
+                      {hasMedicalSchema ? 'Pass' : 'Fail (Missing)'}
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
-                    Complies with Google Healthcare rich results and Schema.org v26.0 medical entity standards.
+                    {hasMedicalSchema
+                      ? 'Complies with Google Healthcare rich results and Schema.org v26.0 medical entity standards.'
+                      : `Missing Schema.org/MedicalClinic JSON-LD on ${domain}. Generative search engines cannot index clinical entity.`}
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-400" />
+                      {npiVerified ? (
+                        <CheckCircle2 className="w-4 h-4 text-indigo-400" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-amber-400" />
+                      )}
                       CMS NPPES Federal Provider Token (#{npiNumber})
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                      Verified
+                    <span
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                        npiVerified
+                          ? 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20'
+                          : 'bg-amber-500/10 text-amber-300 border-amber-500/20'
+                      }`}
+                    >
+                      {npiVerified ? 'Verified' : 'Unverified (Missing Link)'}
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
-                    Attending physician credentials anchored cryptographically to the CMS NPPES v2.1 Registry.
+                    {npiVerified
+                      ? 'Attending physician credentials anchored cryptographically to the CMS NPPES v2.1 Registry.'
+                      : 'Physician credentials lack cryptographic URI links to CMS NPPES NPI Registry or state medical board.'}
                   </p>
                 </div>
 
