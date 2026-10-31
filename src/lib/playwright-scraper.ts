@@ -2,6 +2,8 @@ import { chromium, type Browser } from 'playwright';
 import * as cheerio from 'cheerio';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import fs from 'fs';
+import { parseHTML } from 'linkedom';
+import { microdata } from '@cucumber/microdata';
 
 export interface StructuredClinicalData {
   clinicName?: string;
@@ -439,6 +441,54 @@ export function parseClinicalHtmlAndSchemas(html: string) {
       // ignore parse error
     }
   });
+
+  // 1b. WHATWG Microdata Extraction (for sites using itemscope / itemtype instead of JSON-LD)
+  if (html.includes('itemscope') || html.includes('itemtype')) {
+    try {
+      const { document } = parseHTML(html);
+      const targetMicrodataTypes = [
+        'http://schema.org/MedicalClinic',
+        'https://schema.org/MedicalClinic',
+        'http://schema.org/Dentist',
+        'https://schema.org/Dentist',
+        'http://schema.org/Physician',
+        'https://schema.org/Physician',
+        'http://schema.org/Hospital',
+        'https://schema.org/Hospital',
+        'http://schema.org/MedicalOrganization',
+        'https://schema.org/MedicalOrganization',
+        'http://schema.org/LocalBusiness',
+        'https://schema.org/LocalBusiness',
+      ];
+
+      for (const mType of targetMicrodataTypes) {
+        const item = microdata<any>(mType, document as any);
+        if (item && typeof item === 'object') {
+          const typeName = mType.replace(/^https?:\/\/schema\.org\//, '');
+          if (!detectedSchemas.includes(typeName)) {
+            detectedSchemas.push(typeName);
+          }
+          if (item.name && !clinicName) {
+            clinicName = String(item.name).trim();
+          }
+          if (item.telephone) {
+            rawPhones.add(String(item.telephone).replace(/^tel:/i, ''));
+          }
+          if (item.address && typeof item.address === 'object' && !address) {
+            address = {
+              street: item.address.streetAddress,
+              city: item.address.addressLocality,
+              state: item.address.addressRegion,
+              postalCode: item.address.postalCode,
+              country: item.address.addressCountry || 'US',
+            };
+          }
+        }
+      }
+    } catch {
+      // ignore microdata extraction issues
+    }
+  }
 
   // Extract phone links from DOM <a href="tel:...">
   $('a[href^="tel:"]').each((_, el) => {

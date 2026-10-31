@@ -21,6 +21,7 @@ import {
 } from './playwright-scraper';
 import { execFile } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 
 export interface OssScraperResult {
   url: string;
@@ -237,56 +238,58 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
     }
   }
 
-  // 5. Try official Python Crawl4AI AsyncWebCrawler process
-  try {
-    const pythonPath = path.join(process.cwd(), '.venv', 'bin', 'python3');
-    const scriptPath = path.join(process.cwd(), 'scripts', 'crawl4ai_runner.py');
+  // 5. Try Python Crawl4AI AsyncWebCrawler process IF python binary is installed
+  const pythonPath = process.env.PYTHON_BIN || path.join(process.cwd(), '.venv', 'bin', 'python3');
+  const scriptPath = path.join(process.cwd(), 'scripts', 'crawl4ai_runner.py');
 
-    const pythonOutput = await new Promise<string>((resolve, reject) => {
-      execFile(
-        pythonPath,
-        [scriptPath, cleanUrl],
-        { maxBuffer: 10 * 1024 * 1024, timeout: 12000 },
-        (err, stdout) => {
-          if (err && !stdout) {
-            return reject(err);
+  if (fs.existsSync(/* turbopackIgnore: true */ pythonPath) && fs.existsSync(/* turbopackIgnore: true */ scriptPath)) {
+    try {
+      const pythonOutput = await new Promise<string>((resolve, reject) => {
+        execFile(
+          /* turbopackIgnore: true */ pythonPath,
+          [scriptPath, cleanUrl],
+          { maxBuffer: 10 * 1024 * 1024, timeout: 12000 },
+          (err, stdout) => {
+            if (err && !stdout) {
+              return reject(err);
+            }
+            resolve(stdout);
           }
-          resolve(stdout);
-        }
-      );
-    });
+        );
+      });
 
-    if (pythonOutput) {
-      const data = JSON.parse(pythonOutput);
-      if (data.success && data.html) {
-        const readability = extractReadabilityMarkdown(data.html, cleanUrl);
-        const schemaValidation = validateMedicalSchemaJson(data.html);
-        const parsedClinical = parseClinicalHtmlAndSchemas(data.html);
-        return {
-          url: data.url || cleanUrl,
-          success: true,
-          html: data.html,
-          markdown: data.markdown || readability.markdown,
-          hasLlmsTxt,
-          llmsTxtStatus,
-          robotsTxtStatus,
-          blockedAiBots,
-          aiBotsAllowed,
-          detectedSchemas:
-            schemaValidation.detectedTypes.length > 0
-              ? schemaValidation.detectedTypes
-              : parsedClinical.detectedSchemas,
-          hasMedicalSchema: schemaValidation.hasMedicalType || parsedClinical.hasMedicalSchema,
-          hasRegistrationId: schemaValidation.hasRegistrationId,
-          pageTitle: readability.title || parsedClinical.pageTitle,
-          metaDescription: readability.excerpt || parsedClinical.metaDescription,
-          clinicalData: parsedClinical.clinicalData,
-          engineUsed: 'Crawl4AI + Mozilla Readability + Google Schema-DTS',
-        };
+      if (pythonOutput) {
+        const data = JSON.parse(pythonOutput);
+        if (data.success && data.html) {
+          const readability = extractReadabilityMarkdown(data.html, cleanUrl);
+          const schemaValidation = validateMedicalSchemaJson(data.html);
+          const parsedClinical = parseClinicalHtmlAndSchemas(data.html);
+          return {
+            url: data.url || cleanUrl,
+            success: true,
+            html: data.html,
+            markdown: data.markdown || readability.markdown,
+            hasLlmsTxt,
+            llmsTxtStatus,
+            robotsTxtStatus,
+            blockedAiBots,
+            aiBotsAllowed,
+            detectedSchemas:
+              schemaValidation.detectedTypes.length > 0
+                ? schemaValidation.detectedTypes
+                : parsedClinical.detectedSchemas,
+            hasMedicalSchema: schemaValidation.hasMedicalType || parsedClinical.hasMedicalSchema,
+            hasRegistrationId: schemaValidation.hasRegistrationId,
+            pageTitle: readability.title || parsedClinical.pageTitle,
+            metaDescription: readability.excerpt || parsedClinical.metaDescription,
+            clinicalData: parsedClinical.clinicalData,
+            engineUsed: 'Crawl4AI + Mozilla Readability + Google Schema-DTS',
+          };
+        }
       }
+    } catch (err: any) {
+      console.warn('Crawl4AI execution note:', err?.message || err);
     }
-  } catch (err: any) {
-    console.warn('Crawl4AI execution note:', err?.message || err);
   }
 
   // 6. Graceful Fail-Safe Diagnostic Return
