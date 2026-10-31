@@ -62,16 +62,33 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
   try {
     const origin = new URL(cleanUrl).origin;
     const [pageRes, llmsRes, robotsRes] = await Promise.allSettled([
-      fetch(cleanUrl, {
-        method: 'GET',
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
-          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        },
-        signal: AbortSignal.timeout(5000),
-        redirect: 'follow',
-      }),
+      (async () => {
+        try {
+          const { gotScraping } = await import('got-scraping');
+          const res = await gotScraping({
+            url: cleanUrl,
+            headerGeneratorOptions: {
+              browsers: [{ name: 'chrome', minVersion: 125 }],
+              devices: ['desktop'],
+              locales: ['en-US'],
+            },
+            timeout: { request: 5000 },
+            retry: { limit: 1 },
+          });
+          return { ok: res.statusCode >= 200 && res.statusCode < 300, text: async () => res.body };
+        } catch {
+          return fetch(cleanUrl, {
+            method: 'GET',
+            headers: {
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 NexusRank1Auditor/2.0',
+              Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            },
+            signal: AbortSignal.timeout(5000),
+            redirect: 'follow',
+          });
+        }
+      })(),
       fetch(`${origin}/llms.txt`, {
         headers: {
           'User-Agent':
@@ -155,7 +172,7 @@ export async function executeOssScraperPipeline(targetUrl: string): Promise<OssS
         pageTitle: readability.title || parsedClinical.pageTitle,
         metaDescription: readability.excerpt || parsedClinical.metaDescription,
         clinicalData: parsedClinical.clinicalData,
-        engineUsed: 'Fast HTTP + Mozilla Readability + Cheerio DOM Engine',
+        engineUsed: 'Crawlee got-scraping + Mozilla Readability + Cheerio DOM Engine',
       };
     }
   }
