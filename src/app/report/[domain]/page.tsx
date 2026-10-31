@@ -166,16 +166,27 @@ export default function StandaloneClientReportPage() {
         "postalCode": "78701",
         "addressCountry": "US"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 30.2691,
-        "longitude": -97.7428
-      },
+      "sameAs": [
+        "https://npiregistry.cms.hhs.gov/provider-view/${npiNumber}",
+        "https://www.wikidata.org/wiki/Q27349"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        }
+      ],
       "employee": [
         {
           "@type": "Physician",
           "@id": "https://${domain}/#lead-doctor",
           "name": "Dr. Sarah Jenkins, DDS, FAGD",
+          "sameAs": [
+            "https://npiregistry.cms.hhs.gov/provider-view/${npiNumber}",
+            "https://www.wikidata.org/wiki/Q108044"
+          ],
           "medicalSpecialty": "Cosmetic & Implant Dentistry",
           "hasCredential": [
             {
