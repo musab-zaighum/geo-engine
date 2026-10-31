@@ -44,6 +44,19 @@ import { toast } from 'sonner';
 
 export type UnifiedTab = 'overview' | 'brand' | 'economics' | 'cname';
 
+export interface PracticeEntry {
+  id: string;
+  name: string;
+  specialty: string;
+  domain: string;
+  npiAhpra: string;
+  schemaHealth: number;
+  status: string;
+  mrr: string;
+  citations: string;
+  isAuditing?: boolean;
+}
+
 export default function UnifiedPartnerConsolePage() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<UnifiedTab>('overview');
@@ -69,6 +82,10 @@ export default function UnifiedPartnerConsolePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedLink, setCopiedLink] = useState<string | null>(null);
 
+  // Batch Audit & Queue State
+  const [isBatchAuditing, setIsBatchAuditing] = useState(false);
+  const [batchProgress, setBatchProgress] = useState<{ current: number; total: number; currentDomain: string } | null>(null);
+
   // Modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -77,9 +94,10 @@ export default function UnifiedPartnerConsolePage() {
   const [newSpecialty, setNewSpecialty] = useState('Cosmetic & Restorative Dentistry');
   const [newDomain, setNewDomain] = useState('austincosmetic.com');
   const [newNpi, setNewNpi] = useState('NPI-1928374650');
+  const [autoAuditOnAdd, setAutoAuditOnAdd] = useState(true);
 
   // Sub-accounts Table Data (High-Density)
-  const [practices, setPractices] = useState([
+  const [practices, setPractices] = useState<PracticeEntry[]>([
     {
       id: 'pr-101',
       name: 'Aspen Dental Specialists',
@@ -211,23 +229,160 @@ export default function UnifiedPartnerConsolePage() {
     }, 1000);
   };
 
+  const handleAuditSinglePractice = async (practiceId: string, domain: string) => {
+    setPractices((prev) =>
+      prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: true } : p))
+    );
+    toast.info(`Running live Crawlee audit for ${domain}...`);
+
+    try {
+      const res = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: domain }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const score = Math.round(data.regularGeoScore || data.readinessScore || 45);
+        const verified = Boolean(data.npiVerified || (data.registrationNumbers && data.registrationNumbers.length > 0));
+        const hasGraph = Boolean(data.hasMedicalSchema);
+        const hasLlms = Boolean(data.hasLlmsTxt);
+
+        let status = 'Action Needed';
+        if (hasGraph && hasLlms) status = 'Active';
+        else if (hasGraph || hasLlms) status = 'Partial';
+
+        let citations = 'Action Needed';
+        if (verified && hasGraph) citations = 'Perplexity, ChatGPT, Claude';
+        else if (hasGraph) citations = 'Perplexity Only';
+
+        const leadNpi = data.registrationNumbers?.[0]
+          ? `NPI-${data.registrationNumbers[0]}`
+          : undefined;
+
+        setPractices((prev) =>
+          prev.map((p) =>
+            p.id === practiceId
+              ? {
+                  ...p,
+                  schemaHealth: score,
+                  status,
+                  citations,
+                  npiAhpra: leadNpi || p.npiAhpra,
+                  isAuditing: false,
+                }
+              : p
+          )
+        );
+        toast.success(`Audit complete for ${domain}: GEO Score ${score}%`);
+      } else {
+        setPractices((prev) =>
+          prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: false } : p))
+        );
+        toast.error(`Audit request failed for ${domain}`);
+      }
+    } catch {
+      setPractices((prev) =>
+        prev.map((p) => (p.id === practiceId ? { ...p, isAuditing: false } : p))
+      );
+      toast.error(`Failed to audit ${domain}`);
+    }
+  };
+
+  const handleBatchAudit = async () => {
+    if (practices.length === 0) {
+      toast.error('No practices in roster to audit.');
+      return;
+    }
+    setIsBatchAuditing(true);
+    toast.info(`Starting batch GEO audit for ${practices.length} practices via Crawlee got-scraping...`);
+
+    const currentPractices = [...practices];
+    const concurrency = 2;
+
+    for (let i = 0; i < currentPractices.length; i += concurrency) {
+      const chunk = currentPractices.slice(i, i + concurrency);
+      await Promise.allSettled(
+        chunk.map(async (practice, idx) => {
+          const globalIdx = i + idx;
+          setBatchProgress({
+            current: globalIdx + 1,
+            total: currentPractices.length,
+            currentDomain: practice.domain,
+          });
+
+          try {
+            const res = await fetch('/api/audit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url: practice.domain }),
+            });
+
+            if (res.ok) {
+              const data = await res.json();
+              const score = Math.round(data.regularGeoScore || data.readinessScore || 45);
+              const verified = Boolean(data.npiVerified || (data.registrationNumbers && data.registrationNumbers.length > 0));
+              const hasGraph = Boolean(data.hasMedicalSchema);
+              const hasLlms = Boolean(data.hasLlmsTxt);
+
+              let status = 'Action Needed';
+              if (hasGraph && hasLlms) status = 'Active';
+              else if (hasGraph || hasLlms) status = 'Partial';
+
+              let citations = 'Action Needed';
+              if (verified && hasGraph) citations = 'Perplexity, ChatGPT, Claude';
+              else if (hasGraph) citations = 'Perplexity Only';
+
+              const leadNpi = data.registrationNumbers?.[0]
+                ? `NPI-${data.registrationNumbers[0]}`
+                : practice.npiAhpra;
+
+              currentPractices[globalIdx] = {
+                ...practice,
+                schemaHealth: score,
+                status,
+                citations,
+                npiAhpra: leadNpi,
+              };
+            }
+          } catch (err) {
+            console.warn('Batch audit error for domain', practice.domain, err);
+          }
+        })
+      );
+
+      setPractices([...currentPractices]);
+    }
+
+    setIsBatchAuditing(false);
+    setBatchProgress(null);
+    toast.success(`Completed live batch audit for ${practices.length} practices!`);
+  };
+
   const handleAddPractice = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanDomain = newDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    const newEntry = {
-      id: `pr-${Date.now()}`,
+    const newEntryId = `pr-${Date.now()}`;
+    const newEntry: PracticeEntry = {
+      id: newEntryId,
       name: newPracticeName,
       specialty: newSpecialty,
       domain: cleanDomain,
       npiAhpra: newNpi,
-      schemaHealth: 96,
-      status: 'Active',
+      schemaHealth: 88,
+      status: autoAuditOnAdd ? 'Scanning...' : 'Active',
       mrr: '$650',
       citations: 'Perplexity, ChatGPT, Claude',
+      isAuditing: autoAuditOnAdd,
     };
     setPractices([newEntry, ...practices]);
     setIsAddModalOpen(false);
     toast.success(`Added ${newPracticeName} to client roster`);
+
+    if (autoAuditOnAdd) {
+      handleAuditSinglePractice(newEntryId, cleanDomain);
+    }
   };
 
   const handleCopyClientLink = (domain: string) => {
@@ -512,6 +667,17 @@ export default function UnifiedPartnerConsolePage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleBatchAudit}
+                    disabled={isBatchAuditing || practices.length === 0}
+                    className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer disabled:opacity-50 touch-target"
+                    title="Audit all practices concurrently using the Crawlee got-scraping network engine"
+                  >
+                    <Zap className={`w-3.5 h-3.5 ${isBatchAuditing ? 'animate-pulse text-amber-300' : 'text-amber-400'}`} />
+                    <span>{isBatchAuditing ? 'Auditing Batch...' : 'Batch Audit All'}</span>
+                  </button>
+
                   <label className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer touch-target">
                     <Upload className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Import CSV</span>
@@ -544,6 +710,27 @@ export default function UnifiedPartnerConsolePage() {
                 </div>
               </div>
 
+              {/* Batch Audit Live Progress Banner */}
+              {batchProgress && (
+                <div className="p-3.5 rounded-xl bg-slate-950/90 border border-indigo-500/40 space-y-2 shadow-inner">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="flex items-center gap-2 text-indigo-300 font-mono">
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                      Crawlee GOT-Scraping Audit: <strong className="text-white font-semibold">{batchProgress.currentDomain}</strong>
+                    </span>
+                    <span className="font-mono text-slate-400 text-[11px]">
+                      {batchProgress.current} of {batchProgress.total} ({Math.round((batchProgress.current / batchProgress.total) * 100)}%)
+                    </span>
+                  </div>
+                  <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full transition-all duration-300"
+                      style={{ width: `${(batchProgress.current / batchProgress.total) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
               {/* Table */}
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
@@ -555,13 +742,20 @@ export default function UnifiedPartnerConsolePage() {
                       <th className="py-3 px-3">NPI Licensure</th>
                       <th className="py-3 px-3">GEO Score</th>
                       <th className="py-3 px-3">Retainer</th>
-                      <th className="py-3 px-3 text-right">Client Report</th>
+                      <th className="py-3 px-3 text-right">Actions &amp; Report</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60 font-sans">
                     {filteredPractices.map((practice) => (
                       <tr key={practice.id} className="hover:bg-slate-800/40 transition-colors">
-                        <td className="py-3.5 px-3 font-bold text-white">{practice.name}</td>
+                        <td className="py-3.5 px-3 font-bold text-white">
+                          <div className="flex items-center gap-2">
+                            {practice.isAuditing && (
+                              <RefreshCw className="w-3 h-3 text-indigo-400 animate-spin shrink-0" />
+                            )}
+                            <span>{practice.name}</span>
+                          </div>
+                        </td>
                         <td className="py-3.5 px-3 text-slate-400">{practice.specialty}</td>
                         <td className="py-3.5 px-3 font-mono text-indigo-400">{practice.domain}</td>
                         <td className="py-3.5 px-3 font-mono text-slate-400">{practice.npiAhpra}</td>
@@ -575,16 +769,25 @@ export default function UnifiedPartnerConsolePage() {
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               type="button"
+                              onClick={() => handleAuditSinglePractice(practice.id, practice.domain)}
+                              disabled={practice.isAuditing || isBatchAuditing}
+                              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer disabled:opacity-40"
+                              title="Run live Crawlee got-scraping GEO audit"
+                            >
+                              <RefreshCw className={`w-3.5 h-3.5 ${practice.isAuditing ? 'animate-spin text-indigo-400' : 'text-slate-400'}`} />
+                            </button>
+                            <button
+                              type="button"
                               onClick={() => handleCopyClientLink(practice.domain)}
-                              className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
-                              title="Copy Unbranded Link"
+                              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer text-[10px] flex items-center gap-1"
+                              title="Copy Client Presentation Link"
                             >
                               {copiedLink === practice.domain ? (
-                                <span className="text-emerald-400 text-[10px] flex items-center gap-1">
+                                <span className="text-emerald-400 flex items-center gap-1">
                                   <Check className="w-3 h-3" /> Copied
                                 </span>
                               ) : (
-                                <span className="text-[10px] flex items-center gap-1">
+                                <span className="flex items-center gap-1">
                                   <Copy className="w-3 h-3" /> Link
                                 </span>
                               )}
@@ -592,7 +795,8 @@ export default function UnifiedPartnerConsolePage() {
                             <Link
                               href={`/report/${practice.domain}?unbranded=true`}
                               target="_blank"
-                              className="px-2.5 py-1 rounded bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-colors text-[10px] flex items-center gap-1"
+                              className="px-2.5 py-1 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-colors text-[10px] flex items-center gap-1 cursor-pointer"
+                              title="Open Presentation Report"
                             >
                               <span>View</span>
                               <ExternalLink className="w-3 h-3" />
@@ -845,17 +1049,30 @@ export default function UnifiedPartnerConsolePage() {
                 />
               </div>
 
+              <div className="flex items-center gap-2 pt-1 pb-1">
+                <input
+                  type="checkbox"
+                  id="autoAuditOnAdd"
+                  checked={autoAuditOnAdd}
+                  onChange={(e) => setAutoAuditOnAdd(e.target.checked)}
+                  className="rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-0 cursor-pointer"
+                />
+                <label htmlFor="autoAuditOnAdd" className="text-slate-300 cursor-pointer select-none text-[11px]">
+                  Run instant Crawlee got-scraping GEO audit upon creation
+                </label>
+              </div>
+
               <div className="pt-2 flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300"
+                  className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
+                  className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold cursor-pointer shadow-md"
                 >
                   Add Practice
                 </button>
