@@ -6,6 +6,8 @@
 import { MedicalClinic, Physician, WithContext } from 'schema-dts';
 import { z } from 'zod';
 import { NpiProviderRecord } from './npi-registry';
+import { parseHTML } from 'linkedom';
+import { microdata } from '@cucumber/microdata';
 
 export interface SchemaValidationResult {
   isValidJson: boolean;
@@ -119,6 +121,33 @@ export function validateMedicalSchemaJson(jsonLdString: string): SchemaValidatio
       }
       if (parsedObjects.length > 0) {
         isValidJson = true;
+      }
+
+      // Also extract WHATWG Microdata if present in HTML
+      if (trimmed.includes('itemscope') || trimmed.includes('itemtype')) {
+        try {
+          const { document } = parseHTML(trimmed);
+          const microdataTypes = [
+            'http://schema.org/MedicalClinic',
+            'https://schema.org/MedicalClinic',
+            'http://schema.org/Dentist',
+            'https://schema.org/Dentist',
+            'http://schema.org/Physician',
+            'https://schema.org/Physician',
+            'http://schema.org/Hospital',
+            'https://schema.org/MedicalOrganization',
+            'http://schema.org/LocalBusiness',
+          ];
+          for (const mType of microdataTypes) {
+            const item = microdata<any>(mType, document as any);
+            if (item && typeof item === 'object') {
+              parsedObjects.push(item);
+              isValidJson = true;
+            }
+          }
+        } catch {
+          // ignore microdata extraction issues
+        }
       }
     } else {
       parsedObjects = [JSON.parse(trimmed)];
@@ -494,3 +523,24 @@ ${procedureOntologies.map((p) => `- ${p.name}: ${origin}/services (${p.descripti
     warnings,
   };
 }
+
+/**
+ * Canonicalizes and repairs broken or fragmented third-party JSON-LD schemas
+ * using official W3C jsonld.js expansion and compaction
+ */
+export async function canonicalizeAndRepairClinicSchema(rawJsonLd: Record<string, any>): Promise<string> {
+  try {
+    const jsonldModule: any = await import('jsonld');
+    const jsonld = jsonldModule.default || jsonldModule;
+    const expanded = await jsonld.expand(rawJsonLd);
+    const compacted = await jsonld.compact(expanded, 'https://schema.org' as any);
+    const unifiedGraph = {
+      '@context': 'https://schema.org',
+      '@graph': Array.isArray(compacted['@graph']) ? compacted['@graph'] : [compacted],
+    };
+    return JSON.stringify(unifiedGraph, null, 2);
+  } catch {
+    return JSON.stringify(rawJsonLd, null, 2);
+  }
+}
+
