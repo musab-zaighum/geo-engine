@@ -1,0 +1,432 @@
+[
+  {
+    "lead_id": "GOAT-001",
+    "practice_name": "Total Freedom Dental Implant Center",
+    "website_url": "https://totalfreedomdentalimplants.com/",
+    "solo_owner": {
+      "name": "Dr. Gerald L. Kaiser",
+      "credentials": "DDS",
+      "title": "Solo Founder, Principal Periodontist & Implant Surgeon",
+      "background": "Over 35 years of surgical implant placement experience (practicing since 1978); zero board complaints filed with the Arizona State Board of Dental Examiners; member of AAP, AAID, AzDA."
+    },
+    "location": {
+      "address": "9002 E Desert Cove Ave Ste. 103",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "zip_code": "85260",
+      "metro_affluence": "High-net-worth Scottsdale healthcare corridor"
+    },
+    "phone_number": "(480) 860-9002",
+    "google_maps": {
+      "query": "dental implants Scottsdale AZ",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 481
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Total Freedom Dental Implant Center",
+      "advertiser_id": "AR08965599240894021633",
+      "active_ad_count": "~13 active Google Ads (Search & Video PPC)",
+      "estimated_cpc": "$65 - $110/click on Phoenix/Scottsdale implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Dental Implant Institute",
+      "address": "8787 E Pinnacle Peak Rd, Scottsdale, AZ 85255",
+      "phone": "+1 623-688-9590",
+      "website": "https://dentalimplantinstitute.net/",
+      "rank": 1,
+      "rating": 5.0,
+      "review_count": 85
+    },
+    "custom_pitch_hook_1500": "Dr. Kaiser, you have 35+ years of flawless surgical experience and 481 5-star reviews, yet you're forced to run ~13 expensive Google Ads paying $75+ per click just to stay visible. Meanwhile, Dental Implant Institute sits at the #1 spot on Google Maps for free, capturing 40%+ of affluent North Scottsdale patients looking for full-arch reconstruction before they ever scroll to your #5 overflow ranking. NexusRank1's $1,500 Geo-Dominance system fixes your local proximity and entity signals along Desert Cove Ave, bumping you from #5 directly into the top 3 within 30 days so you reclaim 3 to 5 full-arch cases a month without bleeding ad spend."
+  },
+  {
+    "lead_id": "GOAT-002",
+    "practice_name": "Boca Isles Dental: All-On-4 Dental Implant Center",
+    "website_url": "https://www.bocaislesdental.com/",
+    "solo_owner": {
+      "name": "Dr. Jason Wilner",
+      "credentials": "DDS",
+      "title": "Solo Owner & Principal Dental Surgeon",
+      "background": "Dedicated implant surgeon specializing in All-On-4, full-arch reconstruction, zygomatic implants, and advanced IV sedation surgery."
+    },
+    "location": {
+      "address": "1905 Clint Moore Rd Suite 200",
+      "city": "Boca Raton",
+      "state": "FL",
+      "zip_code": "33496",
+      "metro_affluence": "Affluent Clint Moore Rd medical/gated community corridor in Boca Raton"
+    },
+    "phone_number": "(561) 372-9017",
+    "google_maps": {
+      "query": "dental implants Boca Raton FL",
+      "rank": 6,
+      "rating": 4.9,
+      "review_count": 74
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Jason Wilner",
+      "advertiser_id": "AR06052885762301493249",
+      "active_ad_count": "~10 active Google Ads (Search & Video PPC)",
+      "estimated_cpc": "$70 - $125/click on Palm Beach County full-arch keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "South Florida Center for Periodontics & Implant Dentistry",
+      "address": "3020 N Military Trl Ste 200, Boca Raton, FL 33431",
+      "phone": "+1 561-912-9993",
+      "website": "https://flperio.com/",
+      "rank": 1,
+      "rating": 5.0,
+      "review_count": 1709
+    },
+    "custom_pitch_hook_1500": "Dr. Wilner, you are currently funding ~10 active Google Ads campaigns under your name, paying upwards of $80 every time an affluent Palm Beach resident clicks on 'All-On-4 Boca Raton'. But because Boca Isles Dental sits at #6 on Google Maps, South Florida Center for Periodontics on Military Trail is siphoning off the highest-intent $25,000–$50,000 full-arch patients for free from their permanent #1 Map Pack placement. For a flat $1,500, NexusRank1 deploys our Geo-Grid prominence protocol to overcome their review moat and secure your Clint Moore Rd practice in the 3-Pack, turning your paid traffic budget into pure profit margin."
+  },
+  {
+    "lead_id": "GOAT-003",
+    "practice_name": "Millennium Smiles Implant and Cosmetic Dentistry",
+    "website_url": "https://millenniumsmiles.com/",
+    "solo_owner": {
+      "name": "Dr. Dunia Korous",
+      "credentials": "DDS, FICOI, MICOI",
+      "title": "Solo Founder & Clinical Director",
+      "background": "Fellow & Master of the International Congress of Oral Implantologists; 1,000+ hours of advanced postgraduate surgical implant, TMJ, and full-mouth rehabilitation training."
+    },
+    "location": {
+      "address": "5649 Lebanon Rd",
+      "city": "Frisco",
+      "state": "TX",
+      "zip_code": "75034",
+      "metro_affluence": "Affluent Frisco/North Plano corridor near The Star (Dallas Cowboys HQ)"
+    },
+    "phone_number": "(469) 200-8123",
+    "google_maps": {
+      "query": "dental implants Frisco TX",
+      "rank": 6,
+      "rating": 4.9,
+      "review_count": 718
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Millennium Smiles PLLC",
+      "advertiser_id": "AR15150107703365337089",
+      "active_ad_count": "~10 active Google Ads (Search & YouTube PPC)",
+      "estimated_cpc": "$60 - $95/click on Collin County implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Texas Center for Oral Surgery & Dental Implants",
+      "address": "6960 Parkwood Blvd #300, Frisco, TX 75034",
+      "phone": "+1 972-712-4000",
+      "website": "https://texasoralfacialsurgery.com/",
+      "rank": 1,
+      "rating": 5.0,
+      "review_count": 312
+    },
+    "custom_pitch_hook_1500": "Dr. Korous, you have built an extraordinary practice with 700+ glowing reviews and you're running 10 active PPC ads to buy search presence in North Texas. However, Texas Center for Oral Surgery sits untouched at #1 on Google Maps just 1.8 miles away on Parkwood Blvd, intercepting the wealthiest executive patients in Frisco and Plano before they ever discover Millennium Smiles at #6. NexusRank1's $1,500 Local Dominance sprint calibrates your multi-point geo-coordinates and centroid relevance around The Star, vaulting your listing straight into the top 3 and reclaiming those $30k+ full-arch procedures."
+  },
+  {
+    "lead_id": "GOAT-004",
+    "practice_name": "The Newport Beach Dentist - Omid Haroonian, DDS",
+    "website_url": "https://thenewportbeachdentist.com/",
+    "solo_owner": {
+      "name": "Dr. Omid Haroonian",
+      "credentials": "DDS",
+      "title": "Solo Principal & Founder (Omid Haroonian DDS Inc.)",
+      "background": "Leading Orange County implant and reconstructive specialist; advanced focus on surgical 3D-guided implant restorations, full-mouth rehabilitation, and bone augmentation."
+    },
+    "location": {
+      "address": "3920 Birch St Ste 101",
+      "city": "Newport Beach",
+      "state": "CA",
+      "zip_code": "92660",
+      "metro_affluence": "Newport Beach Birch Street medical hub (Zip code 92660)"
+    },
+    "phone_number": "(949) 989-2612",
+    "google_maps": {
+      "query": "dental implants Newport Beach CA",
+      "rank": 6,
+      "rating": 4.9,
+      "review_count": 241
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Omid Haroonian DDS Inc.",
+      "advertiser_id": "thenewportbeachdentist.com",
+      "active_ad_count": "Active Google Search PPC Ads targeting Orange County",
+      "estimated_cpc": "$85 - $130/click on Newport Beach implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "4M Dental Implant Center",
+      "address": "20331 Irvine Ave Ste E7, Newport Beach, CA 92660",
+      "phone": "+1 949-504-4444",
+      "website": "https://4mdentalimplants.com/",
+      "rank": 1,
+      "rating": 4.8,
+      "review_count": 385
+    },
+    "custom_pitch_hook_1500": "Dr. Haroonian, you are actively paying Google $90+ every time a local clicks on your Newport Beach implant ads, yet 4M Dental Implant Center is monopolizing the #1 Google Maps spot just 1.8 miles away on Irvine Ave, capturing over half of Orange County's high-ticket implant calls completely free. With 241 verified 4.9-star reviews, you already have the clinical reputation to be #1; your only hurdle is Google's localized proximity weighting. NexusRank1's $1,500 system deploys targeted geographic centroid clusters along Birch St and Jamboree to propel you into the Top 3 Map Pack, reclaiming high-ticket implant patients from 4M without increasing ad spend."
+  },
+  {
+    "lead_id": "GOAT-005",
+    "practice_name": "Delray Beach Laser Periodontics and Implants, P.A.",
+    "website_url": "https://delraybeachperio.com/",
+    "solo_owner": {
+      "name": "Dr. Marissa Matthews",
+      "credentials": "DDS, MS",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Board-certified in Periodontics and Dental Implant Surgery; advanced surgical expertise in full-arch implant placement, regenerative bone grafting (PRP/PRF), and minimally invasive laser surgery."
+    },
+    "location": {
+      "address": "505 SE 6th Ave Ste A",
+      "city": "Delray Beach",
+      "state": "FL",
+      "zip_code": "33483",
+      "metro_affluence": "Coastal South Palm Beach County (Zip code 33483, average HHI > $150k)"
+    },
+    "phone_number": "(561) 272-5858",
+    "google_maps": {
+      "query": "dental implants Delray Beach FL",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 82
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Delray Beach Laser Periodontics and Implants PA",
+      "advertiser_id": "delraybeachperio.com",
+      "active_ad_count": "3 active Google Ads (Search & Display PPC)",
+      "estimated_cpc": "$65 - $105/click on Delray/Boca implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Signature Dental Group Delray Beach",
+      "address": "160 SE 6th Ave B1, Delray Beach, FL 33483",
+      "phone": "+1 561-276-6684",
+      "website": "https://signaturedentalgroup.com/",
+      "rank": 3,
+      "rating": 4.9,
+      "review_count": 145
+    },
+    "custom_pitch_hook_1500": "Dr. Matthews, you are currently running verified Google Ads paying top dollar to bid against corporate competitors, but your Google Maps listing is trapped at #4—the very first spot hidden behind the 'More Places' fold. Signature Dental Group sits literally down the block on 6th Ave in the #3 spot of the Local Pack, catching 70% of phone calls from affluent Delray Beach patients seeking immediate dental implants. For a one-time $1,500 investment, NexusRank1 applies our proprietary localized prominence overhaul to close that single-spot gap and push you into the 3-Pack, capturing $30,000+ full-arch reconstructions organically."
+  },
+  {
+    "lead_id": "GOAT-006",
+    "practice_name": "Scottsdale Esthetic & Implant Dentistry",
+    "website_url": "https://www.scottsdale-smiles.com",
+    "solo_owner": {
+      "name": "Dr. Alice Hsieh",
+      "credentials": "DDS, FACP",
+      "title": "Solo Owner & Board-Certified Prosthodontist",
+      "background": "Diplomate of the American Board of Prosthodontics, Fellow of the American College of Prosthodontists."
+    },
+    "location": {
+      "address": "9097 E Desert Cove Ave, Suite 240",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "zip_code": "85260",
+      "metro_affluence": "Affluent Gainey Ranch / Central Scottsdale corridor"
+    },
+    "phone_number": "(480) 661-6541",
+    "google_maps": {
+      "query": "dental implants scottsdale az",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 98
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Scottsdale Esthetic & Implant Dentistry",
+      "advertiser_id": "scottsdale-smiles.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$65 - $95/click on implant prosthodontist queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Scottsdale Smile Center",
+      "address": "5410 N Scottsdale Rd #D-500, Paradise Valley / Scottsdale, AZ",
+      "phone": "+1 480-991-2180",
+      "website": "https://www.scottsdalesmile.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 712
+    },
+    "custom_pitch_hook_1500": "Dr. Hsieh, you are spending thousands per month on Google Ads for dental implants in Scottsdale, but Scottsdale Smile Center is capturing the #1 organic Map Pack and ChatGPT citation 4 miles away with 700+ reviews. Our $1,500 system deploys 3x3 Geo-Visibility grid defense and 0-error schema so your clinic captures high-ticket All-on-4 cases organically with 0 ongoing agency retainers."
+  },
+  {
+    "lead_id": "GOAT-007",
+    "practice_name": "Jeremy Heldt, DDS – Newport Beach Cosmetic & Implant Dentistry",
+    "website_url": "https://www.doctorheldt.com",
+    "solo_owner": {
+      "name": "Dr. Jeremy Heldt",
+      "credentials": "DDS",
+      "title": "Solo Owner Dentist & Implant Surgeon",
+      "background": "Specializing in All-on-4 / All-on-X, Teeth-in-a-Day, and full-mouth implant prosthetics."
+    },
+    "location": {
+      "address": "2001 Westcliff Dr, Suite 305",
+      "city": "Newport Beach",
+      "state": "CA",
+      "zip_code": "92660",
+      "metro_affluence": "Affluent Westcliff Dr corridor in Newport Beach"
+    },
+    "phone_number": "(949) 734-0126",
+    "google_maps": {
+      "query": "dental implants newport beach ca",
+      "rank": 5,
+      "rating": 5.0,
+      "review_count": 65
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Jeremy Heldt DDS",
+      "advertiser_id": "doctorheldt.com",
+      "active_ad_count": "Active PPC Ads on full-arch restorations",
+      "estimated_cpc": "$80 - $110/click on Orange County implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Newport Beach Oral & Maxillofacial Surgery",
+      "address": "355 Placentia Ave #201, Newport Beach, CA",
+      "phone": "+1 949-760-1661",
+      "website": "https://www.nboralsurgeryimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 460
+    },
+    "custom_pitch_hook_1500": "Dr. Heldt, you have a flawless 5.0-star reputation on Westcliff Dr, but patients searching for All-on-4 on Google and ChatGPT Search are routed directly to Dr. Nader Salib 2.8 miles away. At $5,000–$25,000 per full-arch case, losing just 2 patients a month costs your practice $200k/year. NexusRank1's $1,500 system installs review generation loops and AI /llms.txt manifests so your practice dominates Newport Beach."
+  },
+  {
+    "lead_id": "GOAT-008",
+    "practice_name": "Plano Smile Studio",
+    "website_url": "https://www.planosmilestudio.com",
+    "solo_owner": {
+      "name": "Dr. John M. (Tom) Hucklebridge",
+      "credentials": "DDS",
+      "title": "Solo Founder & Principal Dentist",
+      "background": "Decades of surgical experience placing computer-guided full-arch dental implants without palate coverage."
+    },
+    "location": {
+      "address": "6001 Windhaven Pkwy, Suite 200",
+      "city": "Plano",
+      "state": "TX",
+      "zip_code": "75093",
+      "metro_affluence": "Affluent West Plano corridor"
+    },
+    "phone_number": "(972) 398-2550",
+    "google_maps": {
+      "query": "dental implants plano tx",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 185
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Plano Smile Studio",
+      "advertiser_id": "planosmilestudio.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$55 - $85/click on DFW implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Texas Implant & Dental Specialists",
+      "address": "6300 Stonewood Dr #200, Plano, TX 75024",
+      "phone": "+1 972-596-7880",
+      "website": "https://www.texasipc.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 380
+    },
+    "custom_pitch_hook_1500": "Dr. Hucklebridge, you are bidding heavily on Google Ads in Plano, but Texas Implant & Dental Specialists is taking the #1 organic Map Pack spot on Stonewood Dr with 380+ reviews. A single All-on-4 case produces $20,000+ in production. Our 1-time $1,500 deployment closes the citation gap across 50+ medical directories and embeds ADA CDT implant ontologies."
+  },
+  {
+    "lead_id": "GOAT-009",
+    "practice_name": "Gerard Cuomo Microscope Enhanced Dentistry",
+    "website_url": "https://www.gcuomodds.com",
+    "solo_owner": {
+      "name": "Dr. Gerard Cuomo",
+      "credentials": "DDS",
+      "title": "Solo Owner & Microscopic Implant Specialist",
+      "background": "Pioneering microscope-enhanced restorative dentistry and All-on-4 hybrid dental restorations."
+    },
+    "location": {
+      "address": "900 NW 13th St #301",
+      "city": "Boca Raton",
+      "state": "FL",
+      "zip_code": "33486",
+      "metro_affluence": "Affluent Boca Raton medical district"
+    },
+    "phone_number": "(561) 391-6290",
+    "google_maps": {
+      "query": "dental implants boca raton fl",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 110
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Gerard Cuomo DDS",
+      "advertiser_id": "gcuomodds.com",
+      "active_ad_count": "Targeted PPC Campaigns",
+      "estimated_cpc": "$60 - $90/click on South Florida implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Boca Dental Group",
+      "address": "7301-A W Palmetto Park Rd #302C, Boca Raton, FL 33433",
+      "phone": "+1 561-391-6606",
+      "website": "https://www.bocadentalgroup.com",
+      "rank": 1,
+      "rating": 4.8,
+      "review_count": 540
+    },
+    "custom_pitch_hook_1500": "Dr. Cuomo, your microscope-guided surgical expertise is second to none in South Florida, but Boca Dental Group on Palmetto Park Rd is outranking you #1 on Google Maps. Because AI engines like ChatGPT cannot parse microscope certifications without MedicalClinic Schema ASTs, high-ticket patients are choosing your competitor. NexusRank1 deploys the entire 4-pillar defense for a flat $1,500."
+  },
+  {
+    "lead_id": "GOAT-010",
+    "practice_name": "Bellevue Dental Care & Implant Center",
+    "website_url": "https://www.bellevuedentalcare.com",
+    "solo_owner": {
+      "name": "Dr. John Minnoch",
+      "credentials": "DDS",
+      "title": "Solo Owner & Malo-Trained Implantologist",
+      "background": "Trained directly under Dr. Paulo Malo; 20+ years specializing in All-on-4 and surgical dental implants."
+    },
+    "location": {
+      "address": "900 108th Ave NE, Ste 102",
+      "city": "Bellevue",
+      "state": "WA",
+      "zip_code": "98004",
+      "metro_affluence": "Downtown Bellevue tech wealth corridor"
+    },
+    "phone_number": "(425) 709-7171",
+    "google_maps": {
+      "query": "dental implants bellevue wa",
+      "rank": 5,
+      "rating": 4.7,
+      "review_count": 178
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Bellevue Dental Care",
+      "advertiser_id": "bellevuedentalcare.com",
+      "active_ad_count": "Active Search Campaigns on All-on-4",
+      "estimated_cpc": "$75 - $120/click on Seattle Eastside implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Washington State Prosthodontics and Dental Implant Center",
+      "address": "1200 112th Ave NE #B200, Bellevue, WA 98004",
+      "phone": "+1 425-454-0701",
+      "website": "https://www.wspdic.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 360
+    },
+    "custom_pitch_hook_1500": "Dr. Minnoch, you trained directly with Dr. Paulo Malo, but Washington State Prosthodontics 0.8 miles away on 112th Ave NE is capturing the #1 spot on Google Maps and ChatGPT Search for All-on-4. In Bellevue's 98004 zip code, securing just 1 additional full-arch patient covers our $1,500 system 10x over. We deploy 0-error Schema.org graphs and reception review loops with a 90-day ROI guarantee."
+  }
+]
