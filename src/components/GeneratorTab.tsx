@@ -79,9 +79,35 @@ export function GeneratorTab({ initialUrl }: GeneratorTabProps) {
     }
   }, [initialUrl]);
 
-  const handleAutoFillDemo = (mode: PracticeType = practiceType) => {
+  const handleAutoFillDemo = (mode: 'us_dental' | 'clinic' | 'solo_practitioner' = 'us_dental') => {
     setError(null);
-    if (mode === 'clinic') {
+    if (mode === 'us_dental') {
+      setPracticeType('clinic');
+      setHasWebsite(true);
+      setEntityName('Austin Cosmetic Dentistry & Implant Specialists');
+      setWebsiteUrl('https://austincosmeticdental.com');
+      setStreetAddress('700 Congress Avenue, Suite 1400');
+      setCity('Austin');
+      setState('TX');
+      setPostalCode('78701');
+      setCountry('United States');
+      setPhone('+1-512-555-0199');
+      setServices([
+        'Dental Implants & Bone Grafting',
+        'Clear Aligner Orthodontics (Invisalign)',
+        'Porcelain Veneers & Smile Makeovers',
+        'Emergency Dental Triage & Care',
+        'Laser Periodontal Therapy',
+      ]);
+      setDoctors([
+        {
+          name: 'Dr. Sarah Jenkins',
+          title: 'DDS, FAGD Clinical Director',
+          registrationNumber: 'NPI-1928374650',
+          specialties: ['Dental Implants', 'Cosmetic Dentistry', 'Sedation'],
+        },
+      ]);
+    } else if (mode === 'clinic') {
       setPracticeType('clinic');
       setHasWebsite(true);
       setEntityName('Sydney Cosmetic & Plastic Surgery Centre');
@@ -271,19 +297,27 @@ export function GeneratorTab({ initialUrl }: GeneratorTabProps) {
           <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
               type="button"
+              onClick={() => handleAutoFillDemo('us_dental')}
+              className="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 rounded-2xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer shadow-sm"
+            >
+              <Sparkles className="w-4 h-4 text-indigo-600" />
+              1-Click US Dental (NPI)
+            </button>
+            <button
+              type="button"
               onClick={() => handleAutoFillDemo('clinic')}
-              className="px-4 py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all"
+              className="px-3.5 py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-2xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer"
             >
               <Building2 className="w-4 h-4 text-teal-600" />
-              1-Click Demo (Clinic)
+              Sydney Clinic (AHPRA)
             </button>
             <button
               type="button"
               onClick={() => handleAutoFillDemo('solo_practitioner')}
-              className="px-4 py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all"
+              className="px-3.5 py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 rounded-2xl text-xs font-bold flex items-center gap-1.5 transition-all touch-target cursor-pointer"
             >
               <UserCheck className="w-4 h-4 text-sky-600" />
-              1-Click Demo (Solo Dr)
+              Solo Dr (No Site)
             </button>
           </div>
         </div>

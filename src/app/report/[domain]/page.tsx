@@ -28,6 +28,10 @@ import {
   X,
   Radio,
   Network,
+  Calculator,
+  DollarSign,
+  TrendingUp,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from '@/components/EntityGraphVisualizer';
@@ -41,9 +45,14 @@ export default function StandaloneClientReportPage() {
   const [mounted, setMounted] = useState(false);
   const [loadingAudit, setLoadingAudit] = useState(true);
   const [liveData, setLiveData] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'graph' | 'simulator' | 'code'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'graph' | 'simulator' | 'code' | 'roi'>('overview');
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
+
+  // Practice ROI Modeler State
+  const [caseValue, setCaseValue] = useState(3500);
+  const [newPatients, setNewPatients] = useState(3);
+  const [retainerFee, setRetainerFee] = useState(997);
 
   // Lead / Implementation Modal State
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -221,6 +230,11 @@ export default function StandaloneClientReportPage() {
 
   const finalJsonLd = liveData?.suggestedSchemaJsonLd || defaultJsonLd;
   const finalLlmsTxt = liveData?.suggestedLlmsTxt || defaultLlmsTxt;
+
+  const monthlyRevenueLift = caseValue * newPatients;
+  const annualRevenueLift = monthlyRevenueLift * 12;
+  const netMonthlyProfit = Math.max(0, monthlyRevenueLift - retainerFee);
+  const practiceRoiPercent = retainerFee > 0 ? Math.round((netMonthlyProfit / retainerFee) * 100) : 0;
 
   const handleCopySchema = () => {
     navigator.clipboard.writeText(finalJsonLd);
@@ -489,6 +503,21 @@ export default function StandaloneClientReportPage() {
               <FileText className="w-3.5 h-3.5" />
               <span>0-Error Code Payload</span>
             </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('roi')}
+              className={`px-4 py-2.5 text-xs font-bold border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                activeTab === 'roi'
+                  ? 'border-emerald-500 text-emerald-300'
+                  : 'border-transparent text-slate-400 hover:text-white'
+              }`}
+            >
+              <Calculator className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Patient Value &amp; ROI</span>
+              <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                +{practiceRoiPercent}%
+              </span>
+            </button>
           </div>
 
           {/* TAB 1: Diagnostic Checklist */}
@@ -692,6 +721,174 @@ export default function StandaloneClientReportPage() {
                 <pre className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 max-h-60 overflow-y-auto leading-relaxed select-all">
                   {finalLlmsTxt}
                 </pre>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: Patient Value & Retainer ROI Modeler */}
+          {activeTab === 'roi' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-emerald-500/30 space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                      <Calculator className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-white">Practice Patient Value &amp; Retainer ROI Modeler</h3>
+                      <p className="text-xs text-slate-400">
+                        Interactive financial simulation: see how capturing AI search cases directly covers the GEO retainer.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold flex items-center gap-1.5 self-start sm:self-auto">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>+{practiceRoiPercent}% Projected Practice ROI</span>
+                  </div>
+                </div>
+
+                {/* 3 Levers */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Lever 1 */}
+                  <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">Avg Procedure Value</span>
+                      <span className="font-bold text-white">${caseValue.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[1500, 3500, 5000, 8000].map((val) => (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => setCaseValue(val)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            caseValue === val
+                              ? 'bg-indigo-600 text-white shadow-sm'
+                              : 'bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          ${val >= 1000 ? `${val / 1000}k` : val}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Lever 2 */}
+                  <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">New AI Patients/mo</span>
+                      <span className="font-bold text-emerald-400">+{newPatients} Cases</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[1, 2, 3, 5].map((count) => (
+                        <button
+                          key={count}
+                          type="button"
+                          onClick={() => setNewPatients(count)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            newPatients === count
+                              ? 'bg-emerald-600 text-white shadow-sm'
+                              : 'bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          +{count}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Lever 3 */}
+                  <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400">Proposed GEO Retainer</span>
+                      <span className="font-bold text-indigo-400">${retainerFee.toLocaleString()}/mo</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1">
+                      {[650, 997, 1250, 1500].map((fee) => (
+                        <button
+                          key={fee}
+                          type="button"
+                          onClick={() => setRetainerFee(fee)}
+                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                            retainerFee === fee
+                              ? 'bg-indigo-600 text-white shadow-sm'
+                              : 'bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
+                          }`}
+                        >
+                          ${fee}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4 Financial Metric Cards */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-1 text-center font-mono">
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Monthly Practice Lift</div>
+                    <div className="text-lg font-black text-white">+${monthlyRevenueLift.toLocaleString()}</div>
+                    <div className="text-[10px] text-emerald-400 font-mono">From {newPatients} AI patients</div>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Annual Production</div>
+                    <div className="text-lg font-black text-indigo-400">+${annualRevenueLift.toLocaleString()}</div>
+                    <div className="text-[10px] text-slate-500 font-mono">12-mo run rate</div>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Net Practice Profit</div>
+                    <div className="text-lg font-black text-emerald-400">+${netMonthlyProfit.toLocaleString()}/mo</div>
+                    <div className="text-[10px] text-emerald-400 font-mono">After retainer deduction</div>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Client Payback</div>
+                    <div className="text-lg font-black text-amber-300">&lt; 3 Days</div>
+                    <div className="text-[10px] text-amber-400/80 font-mono">1st patient pays retainer</div>
+                  </div>
+                </div>
+
+                {/* Strategic Comparison Matrix */}
+                <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-500/20 space-y-2.5">
+                    <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-wider">
+                      <XCircle className="w-4 h-4 shrink-0" />
+                      <span>Current Unoptimized State</span>
+                    </div>
+                    <ul className="text-xs text-slate-400 space-y-1.5 list-disc pl-4">
+                      <li>Perplexity and SearchGPT omit practice due to missing /llms.txt</li>
+                      <li>Incomplete schema causes AI answers to favor accredited competitors</li>
+                      <li>No procedural taxonomy (implants, Invisalign) grounded in vector models</li>
+                      <li>Estimated revenue leakage: <strong className="text-rose-300">${monthlyRevenueLift.toLocaleString()}/mo</strong></li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-2.5">
+                    <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" />
+                      <span>With NexusRank1 Clinical GEO</span>
+                    </div>
+                    <ul className="text-xs text-slate-400 space-y-1.5 list-disc pl-4">
+                      <li>0-Error W3C validated Schema.org @graph anchored in Google Knowledge Graph</li>
+                      <li>Official /llms.txt manifest establishes board licensure and insurance data</li>
+                      <li>Prime candidate status across Google AI Overviews, SearchGPT, and Perplexity</li>
+                      <li>Net monthly practice gain: <strong className="text-emerald-300 font-bold">+${netMonthlyProfit.toLocaleString()}/mo</strong></li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Instant Claim Button */}
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30">
+                  <div className="text-xs text-slate-300">
+                    Ready to claim these <strong className="text-white">+{newPatients} monthly cases</strong>? Lock in your practice GEO deployment slot today.
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleOpenLeadModal}
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/50 transition-all touch-target cursor-pointer shrink-0"
+                  >
+                    <Sparkles className="w-4 h-4 text-white" />
+                    <span>Claim 0-Error Deployment</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}

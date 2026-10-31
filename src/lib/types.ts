@@ -69,7 +69,7 @@ export interface AuthStatus {
   message?: string;
 }
 
-export interface WhiteLabelConfig {
+export interface PartnerBrandingConfig {
   agencyName: string;
   agencySlug: string; // e.g. audit.apexhealthmarketing.com
   agencyLogoUrl: string;
@@ -80,6 +80,8 @@ export interface WhiteLabelConfig {
   contactEmail: string;
   customReportFooter: string;
 }
+
+export type WhiteLabelConfig = PartnerBrandingConfig;
 
 export interface CmsGuide {
   id: string;

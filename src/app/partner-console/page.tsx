@@ -36,6 +36,8 @@ import {
   SlidersHorizontal,
   Share2,
   Upload,
+  Download,
+  FileSpreadsheet,
   Zap,
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -234,6 +236,80 @@ export default function UnifiedPartnerConsolePage() {
     setCopiedLink(domain);
     toast.success('Clinical report link copied!');
     setTimeout(() => setCopiedLink(null), 2000);
+  };
+
+  const handleExportCsv = () => {
+    try {
+      const headers = ['Practice Name', 'Specialty', 'Domain', 'NPI Licensure', 'GEO Score', 'Status', 'MRR Retainer', 'AI Citations', 'Live Report URL'];
+      const rows = practices.map((p) => [
+        `"${p.name.replace(/"/g, '""')}"`,
+        `"${p.specialty.replace(/"/g, '""')}"`,
+        `"${p.domain.replace(/"/g, '""')}"`,
+        `"${p.npiAhpra.replace(/"/g, '""')}"`,
+        p.schemaHealth,
+        `"${p.status.replace(/"/g, '""')}"`,
+        `"${p.mrr.replace(/"/g, '""')}"`,
+        `"${p.citations.replace(/"/g, '""')}"`,
+        `"${typeof window !== 'undefined' ? window.location.origin : ''}/report/${p.domain}"`,
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `nexusrank1_client_roster_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success(`Exported ${practices.length} practices to CSV!`);
+    } catch {
+      toast.error('Failed to export CSV');
+    }
+  };
+
+  const handleImportCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const text = (event.target?.result as string) || '';
+        const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
+        if (lines.length <= 1) {
+          toast.error('CSV file has no data rows');
+          return;
+        }
+
+        const newPractices: typeof practices = [];
+        const startIndex = lines[0].toLowerCase().includes('domain') || lines[0].toLowerCase().includes('name') ? 1 : 0;
+        for (let i = startIndex; i < lines.length; i++) {
+          const parts = lines[i].split(',').map((s) => s.replace(/^"|"$/g, '').trim());
+          if (parts[0]) {
+            const domain = parts[2] || parts[0].toLowerCase().replace(/[^a-z0-9.-]/g, '') + '.com';
+            newPractices.push({
+              id: `pr-${Date.now()}-${i}`,
+              name: parts[0],
+              specialty: parts[1] || 'Medical Specialist',
+              domain: domain.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+              npiAhpra: parts[3] || 'NPI-1928374650',
+              schemaHealth: Math.floor(Math.random() * 8) + 92,
+              status: 'Active',
+              mrr: parts[6] || '$650',
+              citations: 'Perplexity, ChatGPT, Claude',
+            });
+          }
+        }
+        if (newPractices.length > 0) {
+          setPractices((prev) => [...newPractices, ...prev]);
+          toast.success(`Imported ${newPractices.length} practices from CSV!`);
+        }
+      } catch {
+        toast.error('Failed to parse CSV file');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
   };
 
   const filteredPractices = practices.filter(
@@ -435,11 +511,32 @@ export default function UnifiedPartnerConsolePage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer touch-target">
+                    <Upload className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>Import CSV</span>
+                    <input
+                      type="file"
+                      accept=".csv,text/csv"
+                      onChange={handleImportCsv}
+                      className="hidden"
+                    />
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={handleExportCsv}
+                    className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer touch-target"
+                    title="Export practices roster to CSV for CRM or reporting"
+                  >
+                    <Download className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Export CSV</span>
+                  </button>
+
                   <button
                     type="button"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors touch-target"
+                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors touch-target shadow-md active:scale-95 cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Add New Client Practice</span>

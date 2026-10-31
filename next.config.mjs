@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  async redirects() {
+    return [
+      {
+        source: '/white-label',
+        destination: '/partner-console',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
