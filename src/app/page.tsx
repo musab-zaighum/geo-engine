@@ -9,7 +9,6 @@ import {
   ChevronDown,
   Check,
   ExternalLink,
-  Globe,
   Sparkles,
   Zap,
   Smartphone,
@@ -18,23 +17,18 @@ import {
   Activity,
   Award,
   Lock,
-  UserCheck,
   Search,
+  MapPin,
+  MessageSquare,
+  FileCode2,
 } from 'lucide-react';
 import { InstantAuditBar } from '@/components/InstantAuditBar';
 import { PatientRoiCalculator } from '@/components/PatientRoiCalculator';
 import { PricingSection } from '@/components/PricingSection';
-import { MobileCheckoutDrawer, PlanTier } from '@/components/MobileCheckoutDrawer';
+import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 
 export default function NexusRankLandingPage() {
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [checkoutTier, setCheckoutTier] = useState<PlanTier>('growth');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-
-  const handleOpenCheckout = (tier: PlanTier = 'growth') => {
-    setCheckoutTier(tier);
-    setCheckoutOpen(true);
-  };
 
   const clinicFaqs = [
     {
@@ -50,8 +44,8 @@ export default function NexusRankLandingPage() {
       a: 'Modern generative search engines recrawl healthcare websites every 24 to 72 hours. Once our 0-error Schema.org MedicalClinic graph and /llms.txt manifest are live, practice citations typically reflect in generative search within 3 to 7 days.',
     },
     {
-      q: 'What is a "Competitor Steal Alert" and how does it protect our clinic?',
-      a: 'Our autonomous probing engines continuously simulate local patient queries (e.g., "best dental implant surgeon in Dallas" or "top medspa for Morpheus8 in Miami"). If ChatGPT or Perplexity recommends a local competitor instead of your clinic, you receive an immediate alert detailing why they outranked you, with a 1-click countermeasure.',
+      q: 'What is Geo-Visibility Grid Tracking & Zip-Code Benchmarking?',
+      a: 'Our autonomous probing engines map a 3x3 mile coordinate grid across your clinic neighborhood and benchmark your visibility against the top rival practices in your exact zip code. If ChatGPT or Perplexity recommends a local competitor instead of your clinic, you receive an immediate alert detailing the exact citation gap.',
     },
     {
       q: 'Is this compliant with HIPAA and Medical Board advertising regulations?',
@@ -59,7 +53,7 @@ export default function NexusRankLandingPage() {
     },
     {
       q: 'What is the "1 High-Ticket Patient" ROI Guarantee?',
-      a: 'If your practice does not receive at least 1 verified patient consultation inquiry driven by AI search within your first 90 days, we will refund 100% of your subscription fees AND keep your platform active for free until you do.',
+      a: 'A single new patient case (dental implants, Invisalign, surgical consultation, medspa package) is worth $3,000 to $15,000+. Acquiring just 1 new patient through generative search completely pays for the entire $1,500 system immediately. If you do not acquire a verified patient consultation within 90 days, we issue a 100% full refund.',
     },
   ];
 
@@ -82,7 +76,7 @@ export default function NexusRankLandingPage() {
             {/* Top Pill / Trust Strip */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs text-slate-300 shadow-xl backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-semibold text-white">Direct Healthcare Practice GEO</span>
+              <span className="font-semibold text-white">Direct Healthcare Practice Growth</span>
               <span className="text-slate-500">•</span>
               <span className="text-emerald-400 font-mono">CMS NPPES &amp; Schema.org Verified</span>
             </div>
@@ -97,8 +91,29 @@ export default function NexusRankLandingPage() {
 
             {/* Subheading */}
             <p className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Over 42% of high-ticket dental, cosmetic, and surgical patients now consult AI search before scheduling consultations. NexusRank1 establishes verified clinical entity graphs, NPI credentials, and machine-readable manifests so ChatGPT, Perplexity, and Google AI Overviews recommend your practice first.
+              Over 42% of high-ticket dental, cosmetic, and surgical patients now consult AI search before scheduling consultations. NexusRank1 deploys verified clinical entity graphs, geo-visibility grids, and machine-readable manifests so ChatGPT, Perplexity, and Google AI Overviews recommend your practice first.
             </p>
+
+            {/* Direct Whop CTA & Free Scan Buttons in Hero */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:via-teal-400 hover:to-indigo-500 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-2xl shadow-emerald-950/80 hover:shadow-emerald-900/90 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer text-center group"
+              >
+                <Sparkles className="w-4 h-4 text-amber-300 group-hover:rotate-12 transition-transform" />
+                <span>{CLINIC_OFFER_CONFIG.ctaLabel}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+
+              <a
+                href="#audit-bar"
+                className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-sm font-semibold border border-slate-800 transition-colors text-center"
+              >
+                Run Free 5-Second Clinic Scan
+              </a>
+            </div>
 
             {/* Micro Trust Stats */}
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono text-slate-400">
@@ -117,8 +132,8 @@ export default function NexusRankLandingPage() {
             </div>
 
             {/* INSTANT PRACTICE AUDIT BAR */}
-            <div className="pt-6 max-w-3xl mx-auto">
-              <InstantAuditBar onOpenCheckout={handleOpenCheckout} />
+            <div id="audit-bar" className="pt-6 max-w-3xl mx-auto">
+              <InstantAuditBar />
             </div>
 
           </div>
@@ -211,77 +226,85 @@ export default function NexusRankLandingPage() {
           </div>
         </section>
 
-        {/* 4 PILLARS OF CLINICAL PRACTICE GEO DEFENSE */}
-        <section className="py-16 sm:py-20 border-b border-slate-800/80 bg-slate-950">
+        {/* 4 CORE PILLARS OF CLINICAL LOCAL GROWTH & AI DOMINANCE */}
+        <section id="features" className="py-16 sm:py-20 border-b border-slate-800/80 bg-slate-950">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             
             <div className="text-center max-w-2xl mx-auto space-y-3">
               <span className="text-xs font-mono font-bold tracking-wider text-emerald-400 uppercase">
-                Autonomous Defense Suite
+                The $1,500 Complete Clinic Blueprint
               </span>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                The 4 Pillars of Generative Engine Optimization
+                The 4 Pillars of Clinic Local Growth &amp; AI Dominance
               </h2>
               <p className="text-xs sm:text-sm text-slate-400">
-                Everything required to establish undeniable authority across ChatGPT, Perplexity, Claude, and Google AI.
+                Everything medical, dental, and aesthetic clinic owners need to dominate local zip code search and conversational AI citations.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               
-              {/* Pillar 1 */}
-              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
-                  01
+              {/* Pillar 1: Geo-Visibility Grid Tracking */}
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shadow-inner">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">Geo-Visibility Grid Tracking</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Maps hyper-local neighborhood grids (3x3 and 5x5 mile radius) and pulls top competing clinics in your exact zip code to pinpoint where your practice is displaced.
+                  </p>
                 </div>
-                <h3 className="text-base font-bold text-white">24/7 AI Citation Monitoring</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Continuous synthetic probing across ChatGPT Search, Perplexity Pro, Google AI Overviews, and Apple Intelligence tracks your practice&apos;s live share of voice.
-                </p>
-                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> Real-time visibility scores
-                </div>
-              </div>
-
-              {/* Pillar 2 */}
-              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
-                  02
-                </div>
-                <h3 className="text-base font-bold text-white">0-Error Medical Schema &amp; /llms.txt</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Generates W3C-compliant Schema.org MedicalClinic graphs and machine-readable /llms.txt manifests so AI crawlers parse your accepted insurances, hours, and treatments.
-                </p>
-                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> 100% Google Rich Results green
+                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1 pt-2 border-t border-slate-800/80">
+                  <Check className="w-3.5 h-3.5" /> Zip-Code Benchmarking
                 </div>
               </div>
 
-              {/* Pillar 3 */}
-              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
-                  03
+              {/* Pillar 2: Google Business Profile (GBP) & Citation Cleanup */}
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 flex items-center justify-center shadow-inner">
+                    <Search className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">GBP &amp; Citation Cleanup</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Audits primary and secondary medical categories, operating hours, and ensures strict Name-Address-Phone (NAP) consistency across 50+ health directories.
+                  </p>
                 </div>
-                <h3 className="text-base font-bold text-white">Competitor Steal Alerts™</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Instant SMS &amp; email alerts trigger whenever a local clinic out-cites you for high-ticket procedures, providing 1-click countermeasures to reclaim your patient recommendations.
-                </p>
-                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> Immediate loss prevention
+                <div className="text-[11px] font-mono text-teal-400 flex items-center gap-1 pt-2 border-t border-slate-800/80">
+                  <Check className="w-3.5 h-3.5" /> 50+ Directory NAP Sync
                 </div>
               </div>
 
-              {/* Pillar 4 */}
-              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-black text-lg shadow-inner">
-                  04
+              {/* Pillar 3: Automated Review Loops */}
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center shadow-inner">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">Automated Review Loops</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Front-desk automated text (SMS) and email review generation engine with reception QR codes and sentiment filtering that feeds fresh 5-star citations into AI engines.
+                  </p>
                 </div>
-                <h3 className="text-base font-bold text-white">Verified NPI &amp; Medical Board Shield</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Synchronizes your official CMS NPPES National Provider Identifier and State Medical Board license directly into search graphs to eliminate dangerous AI hallucinations.
-                </p>
-                <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                  <Check className="w-3.5 h-3.5" /> Official federal verification
+                <div className="text-[11px] font-mono text-indigo-400 flex items-center gap-1 pt-2 border-t border-slate-800/80">
+                  <Check className="w-3.5 h-3.5" /> Front-Desk SMS &amp; QR Engine
+                </div>
+              </div>
+
+              {/* Pillar 4: AI Model Readability */}
+              <div className="p-6 rounded-2xl nr-glass-card space-y-4 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 flex items-center justify-center shadow-inner">
+                    <FileCode2 className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">AI Model Readability</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Formats clinic data into clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI).
+                  </p>
+                </div>
+                <div className="text-[11px] font-mono text-violet-400 flex items-center gap-1 pt-2 border-t border-slate-800/80">
+                  <Check className="w-3.5 h-3.5" /> 0-Error AST &amp; /llms.txt
                 </div>
               </div>
 
@@ -293,12 +316,12 @@ export default function NexusRankLandingPage() {
         {/* HIGH-TICKET PATIENT ROI CALCULATOR */}
         <section className="py-16 sm:py-20 border-b border-slate-800/80 bg-slate-900/40">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <PatientRoiCalculator onOpenCheckout={handleOpenCheckout} />
+            <PatientRoiCalculator />
           </div>
         </section>
 
-        {/* PRICING SECTION: 3 DIRECT-TO-CLINIC TIERS */}
-        <PricingSection onOpenCheckout={handleOpenCheckout} />
+        {/* PRICING SECTION: THE $1,500 CLINIC SYSTEM */}
+        <PricingSection />
 
         {/* REAL CLINIC CASE STUDIES & SOCIAL PROOF */}
         <section className="py-16 sm:py-20 border-t border-slate-800/80 bg-slate-950">
@@ -399,36 +422,37 @@ export default function NexusRankLandingPage() {
         {/* BOTTOM HIGH-CONVERTING CTA BANNER */}
         <section className="py-16 sm:py-20 border-t border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-lg">
               <ShieldCheck className="w-7 h-7" />
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Ready to Secure Your Clinic&apos;s <span className="text-emerald-400">AI Search Defense</span>?
+              Ready to Secure Your Clinic&apos;s <span className="text-emerald-400">Local Growth &amp; AI Defense</span>?
             </h2>
 
             <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
-              Ensure ChatGPT, Perplexity, and Google AI Overviews cite your clinic first. Start with our 14-day zero-risk practice guarantee and protect high-ticket procedure bookings today.
+              Ensure ChatGPT, Perplexity, and Google AI Overviews cite your clinic first. Protect high-ticket procedure bookings with the 1-patient ROI guarantee.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
-              <button
-                type="button"
-                onClick={() => handleOpenCheckout('growth')}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-2xl shadow-emerald-950/80 active:scale-[0.98] touch-target cursor-pointer"
+              <a
+                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:via-teal-400 hover:to-indigo-500 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-2xl shadow-emerald-950/80 active:scale-[0.98] touch-target cursor-pointer group"
               >
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Protect Practice for $349/mo</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                <Sparkles className="w-4 h-4 text-amber-300 group-hover:rotate-12 transition-transform" />
+                <span>{CLINIC_OFFER_CONFIG.ctaLabel}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
 
             <div className="flex items-center justify-center gap-4 text-xs font-mono text-slate-500 pt-2">
               <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 14-Day Money Back Guarantee
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 1-Patient ROI Guarantee
               </span>
               <span>•</span>
-              <span>Apple Pay &amp; Google Pay Enabled</span>
+              <span>Whop Verified Checkout</span>
               <span>•</span>
               <span>Zero IT Overhead</span>
             </div>
@@ -446,19 +470,19 @@ export default function NexusRankLandingPage() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-slate-300">NexusRank1.com</span>
-              <span className="text-[10px] text-slate-500 font-mono">Autonomous Healthcare GEO Defense Platform</span>
+              <span className="text-[10px] text-slate-500 font-mono">Autonomous Healthcare Local Growth &amp; GEO Defense Platform</span>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-slate-400">
-            <Link href="/#audit-engine" className="hover:text-white transition-colors">
+            <Link href="/#audit-bar" className="hover:text-white transition-colors">
               Practice Audit
             </Link>
             <Link href="/#patient-roi-calculator" className="hover:text-white transition-colors">
               Patient ROI Modeler
             </Link>
             <Link href="/pricing" className="hover:text-white transition-colors">
-              Pricing Plans
+              $1,500 System
             </Link>
             <Link href="/partner-console" className="hover:text-white transition-colors">
               Clinic Command Center
@@ -479,13 +503,6 @@ export default function NexusRankLandingPage() {
           </div>
         </div>
       </footer>
-
-      {/* Modals */}
-      <MobileCheckoutDrawer
-        isOpen={checkoutOpen}
-        onClose={() => setCheckoutOpen(false)}
-        initialPlan={checkoutTier}
-      />
 
     </div>
   );

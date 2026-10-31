@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
       source: 'NexusRank1 Clinical Intelligence Audit Portal',
     };
 
-    // If agency configured a custom Webhook URL (Zapier, GoHighLevel, Slack, Make, HubSpot)
-    const targetWebhook = webhookUrl || process.env.AGENCY_WEBHOOK_URL;
+    // If practice configured a custom Webhook URL (Zapier, GoHighLevel, Slack, Make, HubSpot, EHR)
+    const targetWebhook = webhookUrl || process.env.PRACTICE_WEBHOOK_URL || process.env.CLINIC_WEBHOOK_URL;
     if (targetWebhook && typeof targetWebhook === 'string' && targetWebhook.startsWith('http')) {
       try {
         await fetch(targetWebhook, {
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
           signal: AbortSignal.timeout(6000),
         });
       } catch (err: any) {
-        console.warn('Agency webhook delivery note:', err?.message || err);
+        console.warn('Practice webhook delivery note:', err?.message || err);
       }
     }
 

@@ -29,8 +29,8 @@ I am your embedded AI strategist trained on the entire **NexusRank1 Knowledge Ba
 
 Ask me anything about:
 - **CMS Code Insertion:** Step-by-step for WordPress, Shopify, Webflow, Squarespace & Wix
-- **Agency Pricing & Margins:** $297/mo Growth License (93%+ net margin) for $750–$2,497/mo client retainers
-- **Cold Outreach Scripts:** High-converting email & pitch templates for surgeons and practice directors
+- **$1,500 Clinic System & ROI:** How 1 single patient pays for the entire $1,500 deployment
+- **The 4 Pillars of Local Dominance:** Geo Grid, GBP Cleanup, Review Loops, and AI Model Readability
 - **Technical GEO Standards:** Schema.org \`@graph\` markup, NPI credentials, and \`/llms.txt\` setup
 
 Click any quick topic below or type your question!`,
@@ -50,17 +50,17 @@ Click any quick topic below or type your question!`,
     },
     {
       label: '🛍️ Shopify /llms.txt Guide',
-      prompt: 'How do I upload llms.txt if the client is on Shopify?',
+      prompt: 'How do I upload llms.txt if our clinic site is on Shopify?',
       icon: Code,
     },
     {
-      label: '💰 Pricing & Profit Margins',
-      prompt: 'Explain the pricing and agency profit margins for 5 clinics.',
+      label: '💰 $1,500 System & 1-Patient ROI',
+      prompt: 'Explain the $1,500 Clinic Local Growth System and how 1 patient covers the entire investment.',
       icon: DollarSign,
     },
     {
-      label: '✉️ Pitch Solo Plastic Surgeon',
-      prompt: 'Write a pitch to a solo plastic surgeon explaining why they need this.',
+      label: '🏥 Geo-Grid & Zip Code Tracking',
+      prompt: 'How does the Geo-Visibility Grid and Zip-Code Benchmarking protect our clinic from competitors?',
       icon: Mail,
     },
   ];

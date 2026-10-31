@@ -36,10 +36,17 @@ import {
   TrendingUp,
   Calculator,
   SlidersHorizontal,
+  MapPin,
+  QrCode,
+  Clock,
+  ShieldAlert,
+  MessageSquare,
+  Smartphone,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import EntityGraphVisualizer from './EntityGraphVisualizer';
 import GeoCitationSimulator from './GeoCitationSimulator';
+import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 
 interface AuditItem {
   id: string;
@@ -145,24 +152,16 @@ function RadialScoreDial({ score, grade }: { score: number; grade: string }) {
   );
 }
 
-interface InstantAuditBarProps {
-  onOpenCheckout?: (tier?: 'starter' | 'growth' | 'scale') => void;
-}
-
-export function InstantAuditBar({
-  onOpenCheckout,
-}: InstantAuditBarProps) {
+export function InstantAuditBar() {
   const [domainInput, setDomainInput] = useState('dentalpractice.com');
   const [isScanning, setIsScanning] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [progressPercent, setProgressPercent] = useState(0);
   const [auditData, setAuditData] = useState<AuditData | null>(null);
-  const [activeAuditTab, setActiveAuditTab] = useState<'diagnostics' | 'graph' | 'simulator' | 'code' | 'pitch'>('diagnostics');
-  const [activeCodeTab, setActiveCodeTab] = useState<'schema' | 'llms'>('schema');
+  const [activeAuditTab, setActiveAuditTab] = useState<'geo-grid' | 'gbp-cleanup' | 'review-loops' | 'ai-readability' | 'graph' | 'diagnostics' | 'simulator'>('geo-grid');
+  const [activeCodeTab, setActiveCodeTab] = useState<'schema' | 'llms' | 'cpt'>('schema');
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
-  const [copiedPitch, setCopiedPitch] = useState(false);
-  const [copiedVideoScript, setCopiedVideoScript] = useState(false);
 
   // Lead capture & CRM Webhook state
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -174,17 +173,6 @@ export function InstantAuditBar({
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const [recentAudits, setRecentAudits] = useState<RecentAuditEntry[]>([]);
-  
-  // Practice ROI & Retainer Proposal state
-  const [pitchCaseValue, setPitchCaseValue] = useState(3500);
-  const [pitchNewPatients, setPitchNewPatients] = useState(3);
-  const [pitchRetainerFee, setPitchRetainerFee] = useState(997);
-
-  const monthlyRevenueLift = pitchCaseValue * pitchNewPatients;
-  const netMonthlyProfit = monthlyRevenueLift - pitchRetainerFee;
-  const practiceRoiPercent = Math.max(0, Math.round(((monthlyRevenueLift - pitchRetainerFee) / pitchRetainerFee) * 100));
-  const annualRevenueLift = monthlyRevenueLift * 12;
-
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Initialize with default scan on load and load recent audits from localStorage
@@ -631,72 +619,12 @@ export function InstantAuditBar({
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
-  const handleCopyColdPitch = () => {
-    if (!auditData) return;
-    const blockedNote = auditData.blockedAiBots && auditData.blockedAiBots.length > 0
-      ? `\n- robots.txt AI Bot Block: Disallows ${auditData.blockedAiBots.join(', ')} (Explicit Crawl Block)`
-      : '';
-
-    const coldPitchText = `Subject: Quick question about ${auditData.clinicName}'s ChatGPT & Google AI citations
-
-Hi ${auditData.clinicName} Team,
-
-I ran a quick 5-second technical diagnostic on ${auditData.cleanDomain} using our clinical GEO scanner.
-
-Your site currently scores ${auditData.overallScore}/100 on Generative Search Readiness:
-- Schema.org MedicalClinic Graph: ${auditData.schemaDepth}%
-- Physician NPI Licensure Verification: ${auditData.eeatScore}%
-- AI Search Engine Directives (/llms.txt): ${auditData.llmsScore}% (Missing 404)${blockedNote}
-
-Because ${auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.
-
-Financial Impact for ${auditData.clinicName}:
-Acquiring just ${pitchNewPatients} new high-ticket patient cases per month (e.g. implants, ortho, or specialized care at $${pitchCaseValue.toLocaleString()} each) represents $${monthlyRevenueLift.toLocaleString()}/mo ($${annualRevenueLift.toLocaleString()}/year) in new clinical production. Against our complete GEO retainer of $${pitchRetainerFee.toLocaleString()}/mo, this represents a ${practiceRoiPercent}% practice ROI.
-
-We generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?
-
-Best,
-[Your Name]`;
-    navigator.clipboard.writeText(coldPitchText);
-    setCopiedPitch(true);
-    toast.success('Copied cold email pitch to clipboard!');
-    setTimeout(() => setCopiedPitch(false), 2500);
-  };
-
-  const handleCopyVideoScript = () => {
-    if (!auditData) return;
-    const blockedVideoNote = auditData.blockedAiBots && auditData.blockedAiBots.length > 0
-      ? ` Furthermore, your robots.txt explicitly blocks ${auditData.blockedAiBots.join(', ')}, locking out conversational AI search indexing.`
-      : '';
-
-    const script = `60-SECOND LOOM / VIDEO AUDIT SCRIPT FOR ${auditData.clinicName.toUpperCase()}
-Target Domain: ${auditData.cleanDomain}
-
-[0:00 - 0:15] PATTERN INTERRUPT & CONTEXT:
-"Hey Dr. [Doctor Name] and ${auditData.clinicName} team, I was researching top clinical practices in your area, and I noticed your clinic has exceptional patient care, but when prospective patients search for high-value procedures on OpenAI ChatGPT Search or Google AI Overviews, your practice is completely omitted from the AI citation panel."
-
-[0:15 - 0:35] THE TECHNICAL EVIDENCE:
-"I ran a live diagnostic on ${auditData.cleanDomain} through our clinical GEO scanner. Right now your practice scores ${auditData.overallScore}/100.
-Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and your Schema.org structured data layer is missing verified Physician NPI licensure links.${blockedVideoNote} Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place."
-
-[0:35 - 0:50] THE FREE VALUE & 0-ERROR PAYLOAD:
-"Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google's Rich Results Test and it passes with 100% green checkmarks."
-
-[0:50 - 1:00] ZERO-FRICTION CLOSE & PRACTICE ROI:
-"To put this in perspective for ${auditData.clinicName}, capturing just ${pitchNewPatients} new patient cases a month at $${pitchCaseValue.toLocaleString()} produces $${monthlyRevenueLift.toLocaleString()} in new production against a $${pitchRetainerFee.toLocaleString()}/mo retainer — that's a ${practiceRoiPercent}% ROI. I have the code file ready for your webmaster to paste in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?"`;
-
-    navigator.clipboard.writeText(script);
-    setCopiedVideoScript(true);
-    toast.success('Copied 60-Second Loom Video Script to clipboard!');
-    setTimeout(() => setCopiedVideoScript(false), 2500);
-  };
-
   const handleOpenLeadModal = () => {
     if (!auditData) return;
     setLeadContactName(auditData.clinicName || 'Practice Director');
-    setLeadNotes(`Interested in $997/mo Clinical Schema & /llms.txt Retainer for ${auditData.cleanDomain}`);
+    setLeadNotes(`Interested in $1,500 Complete Clinic Local Growth & AI Audit System for ${auditData.cleanDomain}`);
     if (typeof window !== 'undefined') {
-      const savedWebhook = localStorage.getItem('nr1_agency_webhook') || '';
+      const savedWebhook = localStorage.getItem('nr1_practice_webhook') || '';
       setLeadWebhookUrl(savedWebhook);
     }
     setIsLeadModalOpen(true);
@@ -727,7 +655,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
         throw new Error(data.error || 'Failed to submit lead.');
       }
       if (typeof window !== 'undefined' && leadWebhookUrl) {
-        localStorage.setItem('nr1_agency_webhook', leadWebhookUrl);
+        localStorage.setItem('nr1_practice_webhook', leadWebhookUrl);
       }
       try {
         const confettiMod = await import('canvas-confetti');
@@ -927,68 +855,97 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
           <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto text-xs font-semibold shadow-inner">
             <button
               type="button"
-              onClick={() => setActiveAuditTab('diagnostics')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
-                activeAuditTab === 'diagnostics'
+              onClick={() => setActiveAuditTab('geo-grid')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+                activeAuditTab === 'geo-grid'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/60 font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <MapPin className="w-4 h-4 text-emerald-300" />
+              <span>Geo-Visibility Grid</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 font-mono font-bold">PILLAR 1</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveAuditTab('gbp-cleanup')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+                activeAuditTab === 'gbp-cleanup'
+                  ? 'bg-teal-600 text-white shadow-lg shadow-teal-950/60 font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <Search className="w-4 h-4 text-teal-300" />
+              <span>GBP &amp; Citation Cleanup</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-teal-400/20 text-teal-300 font-mono font-bold">PILLAR 2</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveAuditTab('review-loops')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+                activeAuditTab === 'review-loops'
                   ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
-              <Activity className="w-4 h-4" />
-              <span>Clinical Diagnostics</span>
+              <MessageSquare className="w-4 h-4 text-indigo-300" />
+              <span>Automated Review Loops</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-400/20 text-indigo-300 font-mono font-bold">PILLAR 3</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveAuditTab('ai-readability')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+                activeAuditTab === 'ai-readability'
+                  ? 'bg-violet-600 text-white shadow-lg shadow-violet-950/60 font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <FileCode2 className="w-4 h-4 text-violet-300" />
+              <span>AI Model Readability</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-400/20 text-violet-300 font-mono font-bold">PILLAR 4</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('graph')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
                 activeAuditTab === 'graph'
                   ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
-              <Network className="w-4 h-4" />
-              <span>Entity Knowledge Graph</span>
+              <Network className="w-4 h-4 text-indigo-300" />
+              <span>Entity Graph</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveAuditTab('diagnostics')}
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+                activeAuditTab === 'diagnostics'
+                  ? 'bg-slate-800 text-white shadow-lg font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              <span>Diagnostics</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('simulator')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
+              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
                 activeAuditTab === 'simulator'
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
+                  ? 'bg-slate-800 text-white shadow-lg font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <Radio className="w-4 h-4" />
               <span>AI Citation Simulator</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveAuditTab('code')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
-                activeAuditTab === 'code'
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
-              }`}
-            >
-              <FileCode2 className="w-4 h-4" />
-              <span>0-Error Code Studio</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveAuditTab('pitch')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 ${
-                activeAuditTab === 'pitch'
-                  ? 'bg-gradient-to-r from-amber-500 to-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
-                  : 'text-amber-300 hover:text-white hover:bg-slate-900 border border-amber-500/25'
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>Client Pitch &amp; Loom Script</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 font-mono font-bold">HOT</span>
             </button>
           </div>
 
@@ -1129,19 +1086,427 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
             </div>
           )}
 
-          {/* VIEW 4: 0-Error Code Studio Tab */}
-          {activeAuditTab === 'code' && (
-            <div className="rounded-3xl bg-slate-900 border border-indigo-500/30 p-5 sm:p-7 shadow-2xl space-y-5 animate-in fade-in-50 duration-200">
+          {/* PILLAR 1: Geo-Visibility Grid Tracking & Zip-Code Benchmarking */}
+          {activeAuditTab === 'geo-grid' && (
+            <div className="space-y-6 animate-in fade-in-50 duration-200">
+              {/* Header Banner */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-indigo-500/10 border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[11px] font-bold text-emerald-300 font-mono">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>HYPER-LOCAL ZIP-CODE BENCHMARKING</span>
+                  </div>
+                  <h4 className="text-lg font-black text-white tracking-tight">
+                    Neighborhood Geo-Visibility Grid: {auditData.city || 'Austin'}, {auditData.state || 'TX'} {auditData.postalCode || '78701'}
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
+                    Autonomous geocoded 3x3 mile coordinate grid mapping across {auditData.cleanDomain}&apos;s local market. Pinpoints where rival practices displace your clinic in ChatGPT, Perplexity, and Google AI Overviews.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+                    <div className="text-[10px] text-slate-400 font-mono uppercase">Local Share of Voice</div>
+                    <div className="text-sm font-black font-mono text-emerald-400">74% Dominance</div>
+                  </div>
+                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+                    <div className="text-[10px] text-slate-400 font-mono uppercase">Displacement Hotspots</div>
+                    <div className="text-sm font-black font-mono text-amber-300">2 Quadrants</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3x3 Geocoded Heat Grid & Local Radar */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* 3x3 Coordinate Matrix */}
+                <div className="lg:col-span-5 p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-slate-300 uppercase flex items-center gap-1.5">
+                      <Layers className="w-4 h-4 text-emerald-400" />
+                      3x3 Mile Coordinate Grid
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      Center: ({auditData.geoLat || 30.2691}, {auditData.geoLng || -97.7428})
+                    </span>
+                  </div>
+
+                  {/* The 9 Grid Cells */}
+                  <div className="grid grid-cols-3 gap-2.5 pt-1">
+                    {[
+                      { label: 'NW (-1.5mi)', rank: '#3', status: 'warn', competitor: 'Apex Dental' },
+                      { label: 'N (1.0mi)', rank: '#2', status: 'good', competitor: 'Downtown Smiles' },
+                      { label: 'NE (+1.5mi)', rank: '#4', status: 'fail', competitor: 'Lone Star Care' },
+                      { label: 'W (1.5mi)', rank: '#2', status: 'good', competitor: 'Westlake Ortho' },
+                      { label: 'CENTER (0.0mi)', rank: '#1', status: 'best', competitor: auditData.clinicName },
+                      { label: 'E (1.5mi)', rank: '#2', status: 'good', competitor: 'East Austin Dental' },
+                      { label: 'SW (-2.0mi)', rank: '#5', status: 'fail', competitor: 'Barton Dental' },
+                      { label: 'S (1.0mi)', rank: '#1', status: 'best', competitor: auditData.clinicName },
+                      { label: 'SE (+2.0mi)', rank: '#3', status: 'warn', competitor: 'Travis Cosmetic' },
+                    ].map((cell, idx) => (
+                      <div
+                        key={idx}
+                        className={`p-3 rounded-xl border text-center transition-all ${
+                          cell.status === 'best'
+                            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-md shadow-emerald-950/40'
+                            : cell.status === 'good'
+                            ? 'bg-slate-900/90 border-slate-700/80 text-slate-200'
+                            : cell.status === 'warn'
+                            ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                            : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                        }`}
+                      >
+                        <div className="text-[9px] font-mono text-slate-400 truncate">{cell.label}</div>
+                        <div className="text-xl font-black font-mono my-0.5">{cell.rank}</div>
+                        <div className="text-[9px] font-medium truncate opacity-80">{cell.competitor}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
+                    <strong className="text-emerald-400">Diagnosis:</strong> Your practice ranks <strong className="text-white">#1</strong> at your primary facility, but drops to <strong className="text-rose-400">#4 and #5</strong> in Northeast and Southwest coordinates where competitors have embedded localized neighborhood schema.
+                  </div>
+                </div>
+
+                {/* Top Zip Code Competitor Benchmarking Table */}
+                <div className="lg:col-span-7 p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-slate-300 uppercase flex items-center gap-1.5">
+                      <Radio className="w-4 h-4 text-teal-400" />
+                      Top Competing Clinics in Zip Code {auditData.postalCode || '78701'}
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                      Live AI Probing
+                    </span>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead>
+                        <tr className="border-b border-slate-800 text-slate-400 text-[10px] uppercase">
+                          <th className="pb-2">Clinic</th>
+                          <th className="pb-2">AI Citation</th>
+                          <th className="pb-2">Readiness</th>
+                          <th className="pb-2">GBP Category</th>
+                          <th className="pb-2">Reviews</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-800/60">
+                        <tr className="bg-emerald-950/20 text-white font-bold">
+                          <td className="py-2.5 pr-2">
+                            <div className="truncate max-w-[150px]">{auditData.clinicName} (You)</div>
+                          </td>
+                          <td className="py-2.5 text-emerald-400">#2 in Metro</td>
+                          <td className="py-2.5 font-mono text-emerald-400">{auditData.overallScore}%</td>
+                          <td className="py-2.5 text-slate-300">General Clinic</td>
+                          <td className="py-2.5 text-amber-300">4.8★ (64)</td>
+                        </tr>
+                        <tr className="text-slate-300">
+                          <td className="py-2.5 pr-2">
+                            <div className="truncate max-w-[150px]">Apex Cosmetic Specialists</div>
+                          </td>
+                          <td className="py-2.5 text-indigo-400">#1 in ChatGPT</td>
+                          <td className="py-2.5 font-mono text-indigo-300">94%</td>
+                          <td className="py-2.5 text-slate-300">Cosmetic Dentist</td>
+                          <td className="py-2.5 text-amber-300">4.9★ (312)</td>
+                        </tr>
+                        <tr className="text-slate-300">
+                          <td className="py-2.5 pr-2">
+                            <div className="truncate max-w-[150px]">Downtown Premier Dental</div>
+                          </td>
+                          <td className="py-2.5 text-slate-400">#3 in Perplexity</td>
+                          <td className="py-2.5 font-mono text-slate-400">62%</td>
+                          <td className="py-2.5 text-slate-400">Dentist</td>
+                          <td className="py-2.5 text-amber-300">4.7★ (118)</td>
+                        </tr>
+                        <tr className="text-slate-300">
+                          <td className="py-2.5 pr-2">
+                            <div className="truncate max-w-[150px]">Lone Star Healthcare Group</div>
+                          </td>
+                          <td className="py-2.5 text-rose-400">Omitted</td>
+                          <td className="py-2.5 font-mono text-rose-400">42%</td>
+                          <td className="py-2.5 text-slate-400">Medical Clinic</td>
+                          <td className="py-2.5 text-amber-300">4.3★ (48)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Countermeasure recommendation */}
+                  <div className="p-3.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div className="text-slate-300">
+                      <strong className="text-white">Why Apex Ranks #1:</strong> Apex published 38 procedure-level CDT/CPT schema nodes and verified in-network PPO status.
+                    </div>
+                    <a
+                      href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black text-xs shrink-0 transition-all shadow-md text-center"
+                    >
+                      Reclaim #1 Spot
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PILLAR 2: Google Business Profile (GBP) & Citation Cleanup */}
+          {activeAuditTab === 'gbp-cleanup' && (
+            <div className="space-y-6 animate-in fade-in-50 duration-200">
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-500/10 via-emerald-500/10 to-indigo-500/10 border border-teal-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-[11px] font-bold text-teal-300 font-mono">
+                    <Search className="w-3.5 h-3.5" />
+                    <span>GOOGLE BUSINESS PROFILE &amp; DIRECTORY AUTHORITY</span>
+                  </div>
+                  <h4 className="text-lg font-black text-white tracking-tight">
+                    Google Business Profile (GBP) &amp; 50+ Directory Citation Cleanup
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
+                    Comprehensive diagnostic of medical category mapping, operating &amp; emergency intake hours, Name-Address-Phone (NAP) consistency, and algorithmic keyword penalty checks.
+                  </p>
+                </div>
+                <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center shrink-0">
+                  <div className="text-[10px] text-slate-400 font-mono uppercase">Directory Consistency</div>
+                  <div className="text-sm font-black font-mono text-emerald-400">88% Verified</div>
+                </div>
+              </div>
+
+              {/* 4 Health Diagnostic Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Card 1: Category Accuracy */}
+                <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400">
+                        <Building2 className="w-4 h-4" />
+                      </div>
+                      <h5 className="text-sm font-bold text-white">Primary &amp; Secondary Medical Category</h5>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 font-bold">
+                      Needs Sub-Specialty
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 text-xs text-slate-300 font-mono">
+                    <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                      <span className="text-slate-400">Current Primary:</span>
+                      <span className="text-rose-400 font-bold">General Dentist (Too broad)</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                      <span className="text-slate-400">Recommended Primary:</span>
+                      <span className="text-emerald-400 font-bold">Cosmetic Dentist / Dental Implants</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-400">
+                    Secondary categories missing: <span className="text-white font-medium">Dental Implants Periodontist, Teeth Whitening Service, Emergency Dental Service</span>.
+                  </p>
+                </div>
+
+                {/* Card 2: Operating Hours & Emergency Intake */}
+                <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <h5 className="text-sm font-bold text-white">Operating Hours &amp; Emergency Intake</h5>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
+                      Verified Active
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 text-xs text-slate-300 font-mono">
+                    <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                      <span className="text-slate-400">Mon - Fri:</span>
+                      <span className="text-white">8:00 AM – 5:00 PM</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                      <span className="text-slate-400">Saturday Emergency Line:</span>
+                      <span className="text-emerald-400 font-bold">+1-800-555-0199</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-400">
+                    Holiday hours and acute pain triage protocols synchronized directly with schema.org specification.
+                  </p>
+                </div>
+
+                {/* Card 3: NAP Consistency Matrix */}
+                <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <h5 className="text-sm font-bold text-white">NAP Consistency Across 50+ Networks</h5>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
+                      88% Consistent
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 text-xs font-mono">
+                    <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <span>Google Business Profile &amp; Maps:</span>
+                      <span className="text-emerald-400">100% Match</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <span>WebMD &amp; Healthgrades:</span>
+                      <span className="text-emerald-400">100% Match</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <span>Vitals.com Directory:</span>
+                      <span className="text-amber-300">Ste 1400 vs Suite 1400 (Fixed)</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <span>Zocdoc &amp; RateMDs:</span>
+                      <span className="text-emerald-400">100% Match</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-400">
+                    NexusRank1 automatically homogenizes Name, Address, and Phone numbers into RFC 3966 format.
+                  </p>
+                </div>
+
+                {/* Card 4: Keyword Stuffing & Penalty Shield */}
+                <div className="p-5 rounded-2xl nr-glass-card border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
+                        <ShieldAlert className="w-4 h-4" />
+                      </div>
+                      <h5 className="text-sm font-bold text-white">Keyword Stuffing &amp; Penalty Shield</h5>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
+                      0% Risk Clean
+                    </span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 space-y-1">
+                    <div className="text-slate-400">Audited Business Title:</div>
+                    <div className="text-white font-bold">{auditData.clinicName}</div>
+                  </div>
+                  <p className="text-[11px] text-slate-400">
+                    No artificial keyword modifiers detected. Safe from Google Maps manual review suspensions and AI crawler de-indexing.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PILLAR 3: Automated Review Loops & Front-Desk Engine */}
+          {activeAuditTab === 'review-loops' && (
+            <div className="space-y-6 animate-in fade-in-50 duration-200">
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-violet-500/10 to-teal-500/10 border border-indigo-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-[11px] font-bold text-indigo-300 font-mono">
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>AUTOMATED PATIENT FLOW &amp; REVIEW ENGINE</span>
+                  </div>
+                  <h4 className="text-lg font-black text-white tracking-tight">
+                    Front-Desk Automated Review Loops &amp; Reception QR Engine
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
+                    Automated SMS &amp; email follow-ups triggered at front-desk checkout. Distills positive clinical patient sentiment to directly feed conversational AI knowledge graphs.
+                  </p>
+                </div>
+                <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center shrink-0">
+                  <div className="text-[10px] text-slate-400 font-mono uppercase">Review Velocity</div>
+                  <div className="text-sm font-black font-mono text-emerald-400">+14 Reviews / mo</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* SMS & Email Follow-up Simulator */}
+                <div className="lg:col-span-6 p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-slate-300 uppercase flex items-center gap-1.5">
+                      <Smartphone className="w-4 h-4 text-emerald-400" />
+                      Front-Desk 1-Click SMS Follow-Up
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-400">92% Open Rate</span>
+                  </div>
+
+                  {/* Smartphone SMS Bubble Simulator */}
+                  <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 font-sans">
+                    <div className="flex items-center gap-2 pb-2 border-b border-slate-800 text-xs font-mono text-slate-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span>To: Patient (Post-Treatment Checkout)</span>
+                    </div>
+                    <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm bg-indigo-600 text-white text-xs leading-relaxed space-y-1.5 shadow-md">
+                      <p>
+                        Hi Sarah, thank you for visiting {auditData.clinicName} today! Dr. {auditData.doctorName || 'Jenkins'} and the team loved seeing you.
+                      </p>
+                      <p className="text-indigo-100">
+                        Could you take 15 seconds to share your experience with other local patients? It means the world to our staff:
+                      </p>
+                      <div className="p-2 rounded-lg bg-indigo-700/80 text-[11px] font-mono underline truncate">
+                        https://g.page/r/{auditData.cleanDomain.replace(/[^a-z0-9]/g, '')}/review
+                      </div>
+                    </div>
+                    <div className="text-[10px] font-mono text-slate-500 text-right">Delivered 1 min post-appointment • HIPAA Safe</div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-1">
+                    <span>Automatic Reminders:</span>
+                    <span className="text-white">Day 1 &amp; Day 4 (If not reviewed)</span>
+                  </div>
+                </div>
+
+                {/* Reception Desk QR Code Sign Generator */}
+                <div className="lg:col-span-6 p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-slate-300 uppercase flex items-center gap-1.5">
+                        <QrCode className="w-4 h-4 text-indigo-400" />
+                        Reception Desk QR Counter Stand Card
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                        Print-Ready
+                      </span>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center gap-4">
+                      <div className="w-24 h-24 rounded-xl bg-white p-2 flex items-center justify-center shrink-0 shadow-lg">
+                        <QrCode className="w-20 h-20 text-slate-900" />
+                      </div>
+                      <div className="space-y-1 text-xs">
+                        <div className="font-bold text-white text-sm">{auditData.clinicName}</div>
+                        <div className="text-slate-400 text-[11px]">
+                          High-resolution counter stand QR code. Patients scan with iPhone or Android camera during checkout.
+                        </div>
+                        <div className="text-[10px] font-mono text-emerald-400 pt-1">
+                          Direct deep-link to Google 5-Star Review Form
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sentiment Distillation Callout */}
+                  <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs space-y-1">
+                    <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                      <span>AI Citation Sentiment Distillation:</span>
+                    </div>
+                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                      Reviews mentioning procedures (e.g. &ldquo;painless implants&rdquo;, &ldquo;best veneer doctor&rdquo;) are automatically harvested and injected into Schema.org review nodes so ChatGPT cites your practice for those treatments!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PILLAR 4: AI Model Readability & Crawler Directives */}
+          {activeAuditTab === 'ai-readability' && (
+            <div className="rounded-3xl bg-slate-900 border border-violet-500/30 p-5 sm:p-7 shadow-2xl space-y-5 animate-in fade-in-50 duration-200">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <FileCode2 className="w-4 h-4 text-violet-400" />
                     <h4 className="text-lg sm:text-xl font-black text-white">
-                      0-Error Remediation Payload Ready
+                      AI Model Readability &amp; Crawler Directives
                     </h4>
                   </div>
                   <p className="text-xs text-slate-400 mt-1">
-                    Inject this validated JSON-LD schema into your client site to achieve 100% Google Rich Results pass rate.
+                    Formats clinic data into clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI).
                   </p>
                 </div>
 
@@ -1159,12 +1524,12 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     {(activeCodeTab === 'schema' ? copiedSchema : copiedLlms) ? (
                       <>
                         <Check className="w-4 h-4 text-white stroke-[3]" />
-                        <span>Copied {activeCodeTab === 'schema' ? '0-Error Schema!' : '/llms.txt Manifest!'}</span>
+                        <span>Copied {activeCodeTab === 'schema' ? 'Schema AST!' : '/llms.txt!'}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-4 h-4" />
-                        <span>Copy {activeCodeTab === 'schema' ? '0-Error Schema' : '/llms.txt Manifest'}</span>
+                        <span>Copy Code</span>
                       </>
                     )}
                   </button>
@@ -1178,22 +1543,12 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     <span>Google Rich Results Test</span>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                   </a>
-
-                  <a
-                    href={`https://validator.schema.org/#url=${encodeURIComponent(auditData.url)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 flex items-center gap-1.5 transition-colors touch-target"
-                  >
-                    <span>Schema.org Validator</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                  </a>
                 </div>
               </div>
 
               {/* Code Tabs Switcher */}
               <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setActiveCodeTab('schema')}
@@ -1218,6 +1573,18 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                     <FileText className="w-3.5 h-3.5" />
                     <span>/llms.txt Machine-Readable Manifest</span>
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('cpt')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                      activeCodeTab === 'cpt'
+                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Activity className="w-3.5 h-3.5" />
+                    <span>ADA CDT &amp; AMA CPT Procedure Ontologies</span>
+                  </button>
                 </div>
 
                 <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400">
@@ -1226,378 +1593,53 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 </div>
               </div>
 
-              {/* Visual AST & Directives Inspector Badge */}
-              <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white font-mono uppercase tracking-wide">
-                      {activeCodeTab === 'schema'
-                        ? 'Schema.org MedicalClinic AST Structure'
-                        : 'RFC-Draft /llms.txt Machine Directives'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 font-mono text-[11px]">
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
-                      0 Syntax Errors
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                      {activeCodeTab === 'schema' ? 'Google Schema-DTS' : 'Multi-Bot Manifest'}
-                    </span>
-                  </div>
-                </div>
-
-                {activeCodeTab === 'schema' ? (
-                  <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                    <span className="text-slate-400 text-xs">AST Hierarchy:</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      @graph root
-                    </span>
-                    <span className="text-slate-600">&rarr;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      🏢 MedicalClinic
-                    </span>
-                    <span className="text-slate-600">&rarr;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      📍 PostalAddress
-                    </span>
-                    <span className="text-slate-600">&bull;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      🌐 GeoCoordinates
-                    </span>
-                    <span className="text-slate-600">&bull;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      👨‍⚕️ Physician
-                    </span>
-                    <span className="text-slate-600">&bull;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      🩺 4 MedicalProcedure Nodes
-                    </span>
-                    <span className="text-slate-600">&bull;</span>
-                    <span className="px-2 py-0.5 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                      🔑 NPI #{auditData.npiNumber || '1948203918'}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                    <span className="text-slate-400 text-xs">Target AI Crawlers:</span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
-                      GPTBot (SearchGPT)
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
-                      PerplexityBot
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
-                      ClaudeBot
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
-                      Applebot-Extended
-                    </span>
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
-                      Google-Extended
-                    </span>
-                  </div>
-                )}
-              </div>
-
               {/* Code Box Display */}
               <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 max-h-72 overflow-y-auto leading-relaxed select-all">
                 <pre>
-                  {activeCodeTab === 'schema' ? auditData.jsonLd : auditData.llmsTxt}
+                  {activeCodeTab === 'schema'
+                    ? auditData.jsonLd
+                    : activeCodeTab === 'llms'
+                    ? auditData.llmsTxt
+                    : `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${auditData.cleanDomain}/#procedure-d6010",
+      "name": "Surgical Placement of Dental Implant Body: Endosteal Implant",
+      "procedureType": "https://schema.org/SurgicalProcedure",
+      "bodyLocation": "Oral Cavity / Mandible / Maxilla",
+      "code": {
+        "@type": "MedicalCode",
+        "code": "D6010",
+        "codingSystem": "ADA CDT"
+      },
+      "recognizingAuthority": {
+        "@type": "Organization",
+        "name": "American Dental Association"
+      },
+      "status": "https://schema.org/ActiveActionStatus",
+      "description": "State-of-the-art endosteal titanium implant placement with bone integration for single and multi-tooth restorations."
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${auditData.cleanDomain}/#procedure-cpt15824",
+      "name": "Rhytidectomy (Deep Plane Facelift / Aesthetic Surgery)",
+      "procedureType": "https://schema.org/SurgicalProcedure",
+      "bodyLocation": "Face and Neck",
+      "code": {
+        "@type": "MedicalCode",
+        "code": "15824",
+        "codingSystem": "AMA CPT"
+      },
+      "recognizingAuthority": {
+        "@type": "Organization",
+        "name": "American Medical Association"
+      }
+    }
+  ]
+}`}
                 </pre>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 5: Agency Outreach & Loom Pitch Studio */}
-          {activeAuditTab === 'pitch' && (
-            <div className="space-y-6 animate-in fade-in-50 duration-200">
-              {/* Pitch Banner */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-violet-500/10 border border-amber-500/25 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[11px] font-bold text-amber-300 font-mono">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>BOUTIQUE AGENCY CONVERSION BLUEPRINT</span>
-                  </div>
-                  <h4 className="text-lg font-black text-white tracking-tight">
-                    Cold Outreach &amp; 60-Second Loom Video Script
-                  </h4>
-                  <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
-                    Personalized teardown and video pitch for <span className="text-white font-semibold">{auditData.clinicName}</span>. Use this exact script to convert local dental and medical clinics into $650–$1,500/mo retainers without technical pushback.
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
-                    <div className="text-[10px] text-slate-400 font-mono uppercase">Suggested Retainer</div>
-                    <div className="text-sm font-black font-mono text-emerald-400">$750–$1,250/mo</div>
-                  </div>
-                  <div className="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
-                    <div className="text-[10px] text-slate-400 font-mono uppercase">Delivery Effort</div>
-                    <div className="text-sm font-black font-mono text-indigo-400">5 Mins Flat</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Interactive Practice ROI & Retainer Proposal Modeler */}
-              <div className="p-5 sm:p-6 rounded-2xl nr-glass-card border border-indigo-500/30 space-y-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center">
-                      <Calculator className="w-4 h-4 text-indigo-400" />
-                    </div>
-                    <div>
-                      <h5 className="text-sm font-bold text-white flex items-center gap-2">
-                        <span>Practice Patient Value &amp; Retainer ROI Modeler</span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
-                          Live Pitch Variables
-                        </span>
-                      </h5>
-                      <p className="text-[11px] text-slate-400">
-                        Adjust these levers to personalize the financial ROI projections in your pitch email and Loom video.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-400 font-mono">Projected ROI:</span>
-                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono font-black text-sm">
-                      {practiceRoiPercent}% ROI
-                    </span>
-                  </div>
-                </div>
-
-                {/* 3 Modeler Sliders / Inputs */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {/* Control 1: Avg Case Value */}
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-400">Avg Procedure Value</span>
-                      <span className="font-bold text-white">${pitchCaseValue.toLocaleString()}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      {[1500, 3500, 5000, 8000].map((val) => (
-                        <button
-                          key={val}
-                          type="button"
-                          onClick={() => setPitchCaseValue(val)}
-                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                            pitchCaseValue === val
-                              ? 'bg-indigo-600 text-white shadow-sm'
-                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
-                          }`}
-                        >
-                          ${val >= 1000 ? `${val / 1000}k` : val}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Control 2: Monthly New AI Patients */}
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-400">New AI Search Patients/mo</span>
-                      <span className="font-bold text-emerald-400">+{pitchNewPatients} Patients</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      {[1, 2, 3, 5].map((count) => (
-                        <button
-                          key={count}
-                          type="button"
-                          onClick={() => setPitchNewPatients(count)}
-                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                            pitchNewPatients === count
-                              ? 'bg-emerald-600 text-white shadow-sm'
-                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
-                          }`}
-                        >
-                          +{count}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Control 3: Proposed Agency Retainer */}
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-400">Proposed GEO Retainer</span>
-                      <span className="font-bold text-indigo-400">${pitchRetainerFee.toLocaleString()}/mo</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      {[650, 997, 1250, 1500].map((fee) => (
-                        <button
-                          key={fee}
-                          type="button"
-                          onClick={() => setPitchRetainerFee(fee)}
-                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                            pitchRetainerFee === fee
-                              ? 'bg-indigo-600 text-white shadow-sm'
-                              : 'bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
-                          }`}
-                        >
-                          ${fee}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Live Financial Metrics Strip */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-1 text-center font-mono">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <div className="text-[10px] text-slate-400 uppercase">Monthly Practice Lift</div>
-                    <div className="text-base font-black text-white">+${monthlyRevenueLift.toLocaleString()}</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <div className="text-[10px] text-slate-400 uppercase">Annual Production</div>
-                    <div className="text-base font-black text-indigo-400">+${annualRevenueLift.toLocaleString()}</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <div className="text-[10px] text-slate-400 uppercase">Net Practice Profit</div>
-                    <div className="text-base font-black text-emerald-400">+${netMonthlyProfit.toLocaleString()}/mo</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <div className="text-[10px] text-slate-400 uppercase">Client Payback</div>
-                    <div className="text-base font-black text-amber-300">&lt; 3 Days</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Two-Column Outreach Studio */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                {/* Column 1: Cold Email Outreach Teardown */}
-                <div className="p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-indigo-400" />
-                        <h5 className="text-sm font-bold text-white">Cold Email Outreach Teardown</h5>
-                      </div>
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                        84% Open Rate
-                      </span>
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono space-y-1.5 text-slate-300">
-                      <div className="text-slate-400">
-                        <span className="text-slate-500 font-bold">Subject:</span> Quick question about {auditData.clinicName}&apos;s ChatGPT &amp; Google AI citations
-                      </div>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono text-slate-300 space-y-3 max-h-80 overflow-y-auto leading-relaxed select-all">
-                      <p>Hi {auditData.clinicName} Team,</p>
-                      <p>I ran a quick 5-second technical diagnostic on {auditData.cleanDomain} using our clinical GEO scanner.</p>
-                      <p>Your site currently scores <strong className="text-amber-400 font-bold">{auditData.overallScore}/100</strong> on Generative Search Readiness:</p>
-                      <ul className="list-disc pl-4 space-y-1 text-slate-400">
-                        <li>Schema.org MedicalClinic Graph: <span className="text-emerald-400">{auditData.schemaDepth}%</span></li>
-                        <li>Physician NPI Licensure Verification: <span className="text-indigo-400">{auditData.eeatScore}%</span></li>
-                        <li>AI Search Directives (/llms.txt): <span className="text-rose-400">{auditData.llmsScore}% (Missing 404)</span></li>
-                        {auditData.blockedAiBots && auditData.blockedAiBots.length > 0 && (
-                          <li>robots.txt AI Bot Block: <span className="text-rose-400">Disallows {auditData.blockedAiBots.join(', ')}</span></li>
-                        )}
-                      </ul>
-                      <p>Because {auditData.cleanDomain}/llms.txt is missing, generative search engines like Perplexity, ChatGPT Search, and Apple Intelligence cannot verify your board certifications and in-network insurance, directing high-value patients to local competitors.</p>
-                      <div className="p-2.5 rounded-lg bg-indigo-950/50 border border-indigo-500/30 text-indigo-200">
-                        <span className="font-bold text-white">Projected Practice Impact:</span>
-                        <p className="mt-1 text-slate-300">
-                          Capturing just <strong className="text-emerald-400 font-bold">{pitchNewPatients} new patient cases/mo</strong> (at ${pitchCaseValue.toLocaleString()} avg case value) produces <strong className="text-white font-bold">+${monthlyRevenueLift.toLocaleString()}/mo</strong> in new production. Against our ${pitchRetainerFee.toLocaleString()}/mo GEO retainer, this represents a <strong className="text-emerald-300 font-bold">{practiceRoiPercent}% practice ROI</strong>.
-                        </p>
-                      </div>
-                      <p>We generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your practice. Would you be open to a 3-minute video showing you how to install this?</p>
-                      <p>Best,<br />[Your Name]</p>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex flex-wrap items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={handleCopyColdPitch}
-                      className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer min-w-[180px] ${
-                        copiedPitch ? 'bg-emerald-600 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-950/60'
-                      }`}
-                    >
-                      {copiedPitch ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                      <span>{copiedPitch ? 'Copied Email to Clipboard!' : 'Copy Cold Pitch Email'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleOpenLeadModal}
-                      className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-950/40 transition-all touch-target cursor-pointer"
-                    >
-                      <Send className="w-4 h-4 text-white" />
-                      <span>Send Proposal / CRM</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleEmailWebmaster}
-                      className="px-3.5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium border border-slate-800 flex items-center gap-1.5 transition-colors touch-target"
-                    >
-                      <Mail className="w-4 h-4 text-slate-400" />
-                      <span>Mail App</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Column 2: 60-Second Loom Video Teleprompter */}
-                <div className="p-5 sm:p-6 rounded-2xl nr-glass-card space-y-4 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Video className="w-4 h-4 text-amber-400" />
-                        <h5 className="text-sm font-bold text-white">60-Second Loom / Video Audit Script</h5>
-                      </div>
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                        High Conversion Pitch
-                      </span>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono text-slate-300 space-y-3.5 max-h-80 overflow-y-auto leading-relaxed select-all">
-                      <div>
-                        <span className="text-amber-400 font-bold block mb-1">[0:00 - 0:15] Pattern Interrupt &amp; Hook:</span>
-                        <p className="text-slate-300">
-                          &ldquo;Hey Dr. [Doctor Name] and {auditData.clinicName} team, I was researching top clinical practices in your area, and I noticed your clinic has exceptional patient care, but when prospective patients search for high-value procedures on OpenAI ChatGPT Search or Google AI Overviews, your practice is completely omitted from the AI citation panel.&rdquo;
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-indigo-400 font-bold block mb-1">[0:15 - 0:35] The Technical Evidence:</span>
-                        <p className="text-slate-300">
-                          &ldquo;I ran a live diagnostic on {auditData.cleanDomain} through our clinical GEO scanner. Right now your practice scores {auditData.overallScore}/100. Specifically, your website has an HTTP 404 error on your &apos;/llms.txt&apos; file, and your Schema.org structured data layer is missing verified Physician NPI licensure links. Because AI engines use these semantic files to verify medical board credentials, ChatGPT and Perplexity are defaulting to competitor practices who have this in place.&rdquo;
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-emerald-400 font-bold block mb-1">[0:35 - 0:50] The Free Value &amp; 0-Error AST:</span>
-                        <p className="text-slate-300">
-                          &ldquo;Instead of just pointing this out, my team already compiled the 0-error Schema.org JSON-LD graph linking your CMS NPPES federal registry ID and the complete /llms.txt machine manifest. You can test it on Google&apos;s Rich Results Test and it passes with 100% green checkmarks.&rdquo;
-                        </p>
-                      </div>
-
-                      <div>
-                        <span className="text-violet-400 font-bold block mb-1">[0:50 - 1:00] Zero-Friction Close &amp; Practice ROI:</span>
-                        <p className="text-slate-300">
-                          &ldquo;To put this in perspective for {auditData.clinicName}, capturing just <strong className="text-emerald-400 font-bold">{pitchNewPatients} new patients/mo</strong> at ${pitchCaseValue.toLocaleString()} produces <strong className="text-white font-bold">+${monthlyRevenueLift.toLocaleString()}/mo</strong> in new clinical production against a ${pitchRetainerFee.toLocaleString()}/mo retainer — that&apos;s a <strong className="text-emerald-300 font-bold">{practiceRoiPercent}% ROI</strong>. I have the code file ready for your webmaster to paste in 5 minutes, or my team can deploy it for you. Would it make sense for me to email you the file?&rdquo;
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-2">
-                    <button
-                      type="button"
-                      onClick={handleCopyVideoScript}
-                      className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-target cursor-pointer ${
-                        copiedVideoScript ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white shadow-lg shadow-indigo-950/60'
-                      }`}
-                    >
-                      {copiedVideoScript ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                      <span>{copiedVideoScript ? 'Copied Loom Script to Clipboard!' : 'Copy 60-Second Loom Script'}</span>
-                    </button>
-                  </div>
-                </div>
-
               </div>
             </div>
           )}
@@ -1605,18 +1647,15 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
           {/* Unified Global Action & Export Toolbar */}
           <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={handleCopyColdPitch}
-                className={`px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target cursor-pointer ${
-                  copiedPitch
-                    ? 'bg-emerald-600 text-white border-emerald-500'
-                    : 'bg-indigo-950/60 hover:bg-indigo-900/60 border-indigo-500/40 text-indigo-300 hover:text-white'
-                }`}
+              <a
+                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-emerald-950/50 transition-all cursor-pointer"
               >
-                {copiedPitch ? <Check className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5 text-amber-300" />}
-                <span>{copiedPitch ? 'Copied Client Pitch!' : 'Copy Cold Pitch Email'}</span>
-              </button>
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>Claim $1,500 System</span>
+              </a>
 
               <a
                 href={`/report/${auditData.cleanDomain}?unbranded=true`}
@@ -1625,7 +1664,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
               >
                 <ExternalLink className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Live Client View</span>
+                <span>Live Public Report</span>
               </a>
 
               <a
@@ -1640,11 +1679,11 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
 
               <button
                 type="button"
-                onClick={handleDownloadFile.bind(null, activeCodeTab)}
-                className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target"
+                onClick={handleDownloadFile.bind(null, activeCodeTab === 'cpt' ? 'schema' : activeCodeTab)}
+                className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5 text-slate-400" />
-                <span>Download {activeCodeTab === 'schema' ? '.json' : '.txt'}</span>
+                <span>Download {activeCodeTab === 'schema' || activeCodeTab === 'cpt' ? '.json' : '.txt'}</span>
               </button>
 
               <button
@@ -1653,7 +1692,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 className="px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Send Proposal / CRM</span>
+                <span>Send Proposal / EHR</span>
               </button>
 
               <button
@@ -1671,20 +1710,28 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
             </div>
           </div>
 
-          {/* Bottom Conversion Bar */}
-          <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div className="text-slate-300 text-center sm:text-left">
-              Ready to automate 0-error Schema.org and /llms.txt across your practice roster? <strong className="text-white">Unlock Full Healthcare GEO Suite</strong>
+          {/* Bottom Conversion Bar with Whop CTA */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-950 to-indigo-950/40 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="text-slate-300 text-center sm:text-left space-y-1">
+              <div className="font-black text-white text-sm sm:text-base flex items-center gap-2 justify-center sm:justify-start">
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>The $1,500 Complete Clinic Local Growth &amp; AI Audit System</span>
+              </div>
+              <p className="text-slate-400 text-xs">
+                Deploy the 4 pillars permanently with the 1-patient ROI guarantee. No monthly software retainers.
+              </p>
             </div>
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <button
-                type="button"
-                onClick={() => onOpenCheckout && onOpenCheckout('growth')}
-                className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-extrabold transition-all touch-target cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-950/60"
+              <a
+                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white font-black text-xs sm:text-sm transition-all touch-target cursor-pointer flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/70 text-center group"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>Claim Growth License ($297/mo)</span>
-              </button>
+                <Sparkles className="w-4 h-4 text-amber-300 group-hover:rotate-12 transition-transform" />
+                <span>{CLINIC_OFFER_CONFIG.ctaLabel}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
 
@@ -1769,7 +1816,7 @@ Specifically, your website has an HTTP 404 error on your '/llms.txt' file, and y
                 <label className="text-slate-300 font-semibold flex items-center justify-between">
                   <span className="flex items-center gap-1">
                     <Network className="w-3.5 h-3.5 text-cyan-400" />
-                    Agency CRM Webhook URL (Zapier / GoHighLevel / Slack)
+                    Practice Webhook URL (Zapier / GoHighLevel / Dentrix / AthenaHealth)
                   </span>
                   <span className="text-[10px] text-slate-500">Auto-saved</span>
                 </label>

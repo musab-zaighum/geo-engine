@@ -1,30 +1,45 @@
 export const CITEMED_MASTER_KNOWLEDGE_BASE = `
-# NEXUSRANK1 MASTER KNOWLEDGE BASE & HEALTHCARE GEO GUIDE
+# NEXUSRANK1 MASTER KNOWLEDGE BASE & HEALTHCARE LOCAL GROWTH BLUEPRINT
 
-Welcome to NexusRank1, the premier Healthcare Generative Engine Optimization (GEO) Platform for marketing agencies and clinical practices.
+Welcome to NexusRank1, the premier Healthcare Generative Engine Optimization (GEO) & Local Practice Growth System engineered exclusively for dental, medical, and aesthetic clinic owners.
 
 ---
 
 ## 1. WHAT IS NEXUSRANK1 & HEALTHCARE GEO?
 - **Generative Engine Optimization (GEO)** is the practice of optimizing digital assets, structured clinical data, and entity knowledge graphs so that conversational AI Search Engines (Perplexity AI, ChatGPT Search, OpenAI SearchGPT, Claude, Apple Intelligence, and Google AI Overviews) index and directly cite a specific healthcare practice or physician when users query local medical recommendations.
 - **Why Traditional SEO is Obsolete for AI Search:** Traditional SEO optimizes for keyword density and backlink anchors to rank on Google Page 1. AI Search Engines do NOT read pages like legacy Google Bot; they parse knowledge nodes, Schema.org @graph arrays, medical credentials (NPI, Ahpra, GMC), and domain-level /llms.txt manifests.
-- **The 68% Shift:** Over 68% of medical procedure research (e.g., "Best rhinoplasty surgeon in Chicago", "Top pediatric dentist near me") now originates inside conversational AI engines.
+- **The 68% Shift:** Over 68% of medical procedure research (e.g., "Best dental implant specialist in Dallas", "Top medspa near me for CoolSculpting", "Plastic surgeon for facelift") now originates inside conversational AI engines.
 
 ---
 
-## 2. PRICING & AGENCY FINANCIAL TIERS
+## 2. THE $1,500 COMPLETE CLINIC LOCAL GROWTH & AI AUDIT SYSTEM
 
-### Tier A: Solo Specialist / Solo Doctor
-- **Suggested Retail Retainer:** **$750 - $1,497/mo** (or $1,497 one-off setup).
-- **Agency Cost via NexusRank1 Growth License:** **$297/mo unlimited audits & payloads**.
-- **Agency Net Margin:** **93%+ profit per practitioner**.
-- **Deliverables:** Single \`Physician\` Schema.org JSON-LD, validated NPI/licensure credentials, dedicated \`/llms.txt\` entry, Google Business Profile markdown entity bio.
+### Full System Investment: **$1,500 One-Time Setup & Deployment**
+Acquiring just **one single new patient** for high-ticket procedures (implant $4,500, Invisalign $5,000, facelift $11,500, medspa package $3,000) produces an immediate 200% to 700%+ ROI on the entire $1,500 deployment.
 
-### Tier B: Multi-Doctor Medical Clinic
-- **Suggested Retail Retainer:** **$1,250 - $2,497/mo** (or $2,497 one-off setup).
-- **Agency Cost via NexusRank1 Growth License:** Included in $297/mo plan.
-- **Agency Net Margin:** **95%+ profit per clinic**.
-- **Deliverables:** Complete \`MedicalClinic\` \`@graph\` ontology with multiple nested doctor nodes, location/operating hours, \`/llms.txt\` root discovery file, clinic triage profile.
+### The 4 Core Pillars of Practice Dominance:
+1. **Geo-Visibility Grid Tracking & Zip-Code Benchmarking:**
+   - 3x3 and 5x5 mile geocoded coordinate grid mapping.
+   - Neighborhood rival displacement analysis identifying the exact top competitors in your zip code.
+   - Real-time Local AI & Google Maps Share of Voice calculation.
+
+2. **Google Business Profile (GBP) & Citation Cleanup:**
+   - Primary & secondary medical category accuracy audit (Cosmetic vs General Dentist, Medical Spa vs Day Spa).
+   - Operating hours, weekend emergency intake, and holiday schedule synchronization.
+   - Strict Name-Address-Phone (NAP) consistency scoring across 50+ healthcare directories (Healthgrades, WebMD, Vitals, RateMDs, Zocdoc).
+   - Keyword stuffing penalty detection and algorithmic suspension shield.
+
+3. **Automated Review Loops & Front-Desk Engine:**
+   - Automated front-desk 1-click SMS & email review follow-up sequence.
+   - Custom reception check-out QR codes for immediate 5-star patient feedback.
+   - Sentiment distillation feeding fresh clinical citations into AI search knowledge graphs.
+   - HIPAA-compliant positive review booster with smart reminder cadences.
+
+4. **AI Model Readability & Crawler Directives:**
+   - Formatted in clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI Overviews).
+   - 0-Error Schema.org MedicalClinic & Physician AST graph compilation.
+   - Domain-level /llms.txt machine-readable manifest generation.
+   - Official ADA CDT & AMA CPT clinical procedure ontology code embedding.
 
 ---
 
@@ -57,14 +72,9 @@ Welcome to NexusRank1, the premier Healthcare Generative Engine Optimization (GE
 
 ---
 
-## 4. COLD OUTREACH SCRIPTS & PITCHES
-
-### Pitch A: To Solo Specialist (e.g. Plastic Surgeon, Orthopedic Doctor)
-"Hi Dr. [Name], when prospective patients query ChatGPT Search or Perplexity for top [Procedure] specialists in [City], AI engines bypass general directories and verify official NPI license IDs in structured data before making recommendations. We ran a quick GEO scan on your profile—your AI readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt file. Our monthly optimization installs this entire infrastructure. Would you like to review your 2-minute diagnostic report?"
-
-### Pitch B: To Medical Clinic Director (Multi-Doctor Practice)
-"Hi Dr. [Director Name], multi-doctor clinics are losing significant patient acquisition to single practitioners in AI Search because AI models struggle to associate multiple specialist doctors with a single clinic location without a Schema.org @graph ontology. Our Clinic GEO package deploys a full MedicalClinic @graph node linking all your practice staff, NPI registration IDs, and procedures to your domain /llms.txt file."
+## 4. CLINIC OWNER VALUE PROPOSITION
+- **The Fear of AI Displacement:** When patients query ChatGPT or Perplexity for the top doctor in town, clinics without GEO are completely omitted. High-ticket patients are directed to competing practices down the street.
+- **The 1-Patient ROI Guarantee:** Because high-value elective and surgical treatments average $3,000–$15,000, capturing just one patient covers the entire $1,500 system permanently.
 `;
 
 export const NEXUSRANK_MASTER_KNOWLEDGE_BASE = CITEMED_MASTER_KNOWLEDGE_BASE;
-

@@ -83,14 +83,14 @@ export interface AuthStatus {
   message?: string;
 }
 
-export interface PartnerBrandingConfig {
-  agencyName: string;
-  agencySlug: string; // e.g. audit.apexhealthmarketing.com
-  agencyLogoUrl: string;
+export interface PracticeProfileConfig {
+  practiceName: string;
+  practiceSlug: string; // e.g. downtown-dental
+  practiceLogoUrl: string;
   primaryColor: string; // e.g. 'teal' | 'blue' | 'indigo' | 'emerald'
   customHexColor: string; // e.g. '#0d9488'
-  supportUrl: string; // e.g. cal.com/apex-health
-  badgeTitle: 'Official Agency Partner' | 'Verified GEO Consultant' | 'Healthcare Growth Specialist';
+  bookingUrl: string; // e.g. booking link or website
+  badgeTitle: 'Verified Healthcare Provider' | 'Accredited Medical Clinic' | 'Board-Certified Specialist';
   contactEmail: string;
   customReportFooter: string;
 }

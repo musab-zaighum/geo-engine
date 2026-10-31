@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, KeyRound, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Zap } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, ShieldCheck, AlertCircle, RefreshCw, Zap, Sparkles } from 'lucide-react';
+import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function LoginPage() {
   const handleLogin = async (passcodeToSubmit?: string) => {
     const code = passcodeToSubmit || passcode;
     if (!code.trim()) {
-      setError('Please enter your agency access passcode.');
+      setError('Please enter your clinic access passcode or license key.');
       return;
     }
 
@@ -51,10 +52,10 @@ export default function LoginPage() {
 
           <div className="space-y-1">
             <h1 className="text-2xl font-black text-white tracking-tight">
-              NexusRank1 Partner Login
+              Clinic Command Center Login
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Enter your authorized agency passcode or license key to access your command center.
+              Enter your practice license key to access your local growth and AI defense dashboard.
             </p>
           </div>
         </div>
@@ -68,7 +69,7 @@ export default function LoginPage() {
         >
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-300 block">
-              Agency Access Passcode / Key
+              Clinic License Passcode / Key
             </label>
             <div className="relative">
               <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -76,7 +77,7 @@ export default function LoginPage() {
                 type="password"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
-                placeholder="Enter passcode (e.g. nexus2026 or NR1-GROWTH)"
+                placeholder="Enter passcode (e.g. nexus2026 or CLINIC-KEY)"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-indigo-500 transition-colors"
               />
             </div>
@@ -92,26 +93,42 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-950/80 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-[0.98] touch-target cursor-pointer"
+            className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-950/80 disabled:opacity-50 flex items-center justify-center gap-2 transition-all active:scale-[0.98] touch-target cursor-pointer"
           >
             {loading ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Authenticating Agency...</span>
+                <span>Authenticating Practice...</span>
               </>
             ) : (
               <>
-                <span>Unlock Partner Console</span>
+                <span>Unlock Clinic Console</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
+        {/* Whop direct access CTA */}
+        <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-center space-y-2">
+          <p className="text-xs text-slate-300">
+            Don&apos;t have your clinic license yet?
+          </p>
+          <a
+            href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span>{CLINIC_OFFER_CONFIG.ctaLabel}</span>
+          </a>
+        </div>
+
         <div className="pt-2 border-t border-slate-800 text-center">
           <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 font-mono">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>256-Bit SSL Encrypted Edge Storage</span>
+            <span>256-Bit SSL Encrypted Healthcare Security</span>
           </div>
         </div>
       </div>
