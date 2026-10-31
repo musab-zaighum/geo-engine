@@ -47,6 +47,16 @@ export async function GET(req: NextRequest) {
     const page = await browser.newPage();
     await page.setViewportSize({ width: 1200, height: 1600 });
 
+    // Abort external trackers and video/media to accelerate PDF vector rendering
+    await page.route('**/*', (route: any) => {
+      const r = route.request();
+      const type = r.resourceType();
+      if (['media', 'websocket'].includes(type) || /analytics|googletagmanager|segment|sentry/i.test(r.url())) {
+        return route.abort();
+      }
+      return route.continue();
+    });
+
     const host = req.headers.get('host') || 'localhost:3000';
     const protocol = host.includes('localhost') ? 'http' : 'https';
     const targetUrl = `${protocol}://${host}/report/${encodeURIComponent(cleanDomain)}?print=true`;
