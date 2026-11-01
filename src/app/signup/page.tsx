@@ -13,6 +13,7 @@ import {
   MapPin,
   Stethoscope,
   CheckCircle2,
+  UserCheck,
 } from 'lucide-react';
 import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 
@@ -24,6 +25,7 @@ function SignupFormContent() {
   const [phone, setPhone] = useState('(555) 234-5678');
   const [zipCode, setZipCode] = useState('75001');
   const [specialty, setSpecialty] = useState('Cosmetic Dentistry & Implants');
+  const [role, setRole] = useState<'doctor' | 'manager'>('doctor');
   const [loading, setLoading] = useState(false);
 
   const handleFillDemo = () => {
@@ -32,6 +34,7 @@ function SignupFormContent() {
     setPhone('(555) 234-5678');
     setZipCode('75001');
     setSpecialty('Cosmetic Dentistry & Implants');
+    setRole('doctor');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,9 +56,10 @@ function SignupFormContent() {
         customHexColor: '#10b981',
         bookingUrl: `https://${clinicName.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`,
         badgeTitle: 'Verified Healthcare Provider',
+        role: role === 'doctor' ? 'Solo Owner Doctor (DDS/DMD/MD)' : 'Practice Manager / Director',
         contactEmail: email,
         customReportFooter:
-          'This clinical intelligence and GEO defense report is generated exclusively for practice optimization. All CMS NPPES records and clinical Schema.org AST graphs are verified.',
+          'This clinical intelligence and GEO defense report is generated exclusively for practice optimization. All CMS NPPES records and clinical Doctor Authority Graphs are verified.',
       };
       localStorage.setItem('practiceConfig', JSON.stringify(practiceConfig));
       localStorage.setItem('authenticated', 'true');

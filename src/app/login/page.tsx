@@ -109,6 +109,14 @@ export default function LoginPage() {
           </button>
         </form>
 
+        {/* Navigation Link to Signup */}
+        <div className="text-center text-xs text-slate-400">
+          New clinic or practice?{' '}
+          <Link href="/signup" className="text-emerald-400 hover:text-emerald-300 hover:underline font-semibold">
+            Register Practice Command Center
+          </Link>
+        </div>
+
         {/* Whop direct access CTA */}
         <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-center space-y-2">
           <p className="text-xs text-slate-300">
