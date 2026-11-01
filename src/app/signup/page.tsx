@@ -134,6 +134,37 @@ function SignupFormContent() {
       {/* Signup Form Card */}
       <div className="nr-glass-card rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5">
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+              <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+              Your Practice Role
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setRole('doctor')}
+                className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
+                  role === 'doctor'
+                    ? 'bg-emerald-950/60 border-emerald-500 text-white shadow-sm ring-1 ring-emerald-500/50'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                }`}
+              >
+                Solo Owner Doctor (DDS/DMD)
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('manager')}
+                className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
+                  role === 'manager'
+                    ? 'bg-emerald-950/60 border-emerald-500 text-white shadow-sm ring-1 ring-emerald-500/50'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                }`}
+              >
+                Practice Manager
+              </button>
+            </div>
+          </div>
+
           <div className="space-y-1">
             <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
               <Building2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -222,6 +253,14 @@ function SignupFormContent() {
             )}
           </button>
         </form>
+
+        {/* Navigation Link to Login */}
+        <div className="text-center text-xs text-slate-400 pt-1">
+          Already registered your practice?{' '}
+          <Link href="/login" className="text-emerald-400 hover:text-emerald-300 hover:underline font-semibold">
+            Log in to Command Center
+          </Link>
+        </div>
 
         <div className="pt-2 border-t border-slate-800 text-center">
           <div className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 font-mono">
