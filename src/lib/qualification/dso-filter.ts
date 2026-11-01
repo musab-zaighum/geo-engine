@@ -479,9 +479,9 @@ export function checkDsoAffiliation(
 
   // Tier 1 & 2: Brand & Name Matching in Practice Name or Domain
   for (const entry of DSO_DIRECTORY) {
-    // Check practice name against keywords with word boundary matching
     for (const kw of entry.keywords) {
-      const kwRegex = new RegExp(`\\b${kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
+      const kwPattern = kw.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/(?:\\s|\\-|\s|-)+/g, '[\\s-]+');
+      const kwRegex = new RegExp(`\\b${kwPattern}\\b`, 'i');
       if (practiceName && kwRegex.test(practiceName)) {
         return {
           isDso: true,

@@ -289,7 +289,7 @@ export const AFFLUENT_ZIPS_CATALOG: Record<string, AffluentZipInfo> = {
     neighborhoods: ['Legacy West', 'Granite Park', 'West Plano'],
     medianHhi: 150000,
     dominantCaseType: 'Hybrid All-on-X, Sedation Implant Surgery',
-    coordinates: { latitude: 33.0768, longitude: -116.8242 },
+    coordinates: { latitude: 33.0768, longitude: -96.8242 },
   },
   '75025': {
     zipCode: '75025',
@@ -299,7 +299,7 @@ export const AFFLUENT_ZIPS_CATALOG: Record<string, AffluentZipInfo> = {
     neighborhoods: ['Russell Creek', 'North Plano'],
     medianHhi: 135000,
     dominantCaseType: 'All-on-4, Full Arch Restoration, Bone Grafting',
-    coordinates: { latitude: 33.0924, longitude: -116.7461 },
+    coordinates: { latitude: 33.0924, longitude: -96.7461 },
   },
   '75034': {
     zipCode: '75034',

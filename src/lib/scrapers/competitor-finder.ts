@@ -241,7 +241,21 @@ export const METRO_RANK1_COMPETITORS: CompetitorResult[] = [
     latitude: 37.3852,
     longitude: -122.1141,
   },
-  // Jupiter, FL (R1 Corridor 3)
+  // Jupiter & Delray Beach, FL (R1 Corridor 3)
+  {
+    name: 'Signature Dental Group Delray Beach',
+    address: '160 SE 6th Ave B1, Delray Beach, FL 33483',
+    phone: '+1 561-276-6684',
+    website: 'https://signaturedentalgroup.com/',
+    domain: 'signaturedentalgroup.com',
+    rank: 1,
+    rating: 4.9,
+    reviewCount: 145,
+    distanceMiles: 0.42,
+    withinLimit: true,
+    latitude: 26.4580,
+    longitude: -80.0650,
+  },
   {
     name: 'Jupiter Periodontics & Dental Implants',
     address: '1004 S Old Dixie Hwy, Jupiter, FL 33458',
@@ -441,8 +455,8 @@ export async function findTopCompetitor5Mi(
   if (nearest) {
     return {
       ...nearest,
-      distanceMiles: Math.min(nearestDist, 4.9), // Keep within the 5.0mi constraint
-      withinLimit: true,
+      distanceMiles: Number(nearestDist.toFixed(2)),
+      withinLimit: nearestDist <= MAX_COMPETITOR_DISTANCE_MILES,
     };
   }
 

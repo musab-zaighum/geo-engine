@@ -179,7 +179,7 @@ export function isNegatedMedicaidMention(text: string, matchIndex: number, match
 
   // Following negation patterns: "is not accepted", "does not cover", "not taken"
   const followingNegation =
-    /^\s*(?:is|are|was|were|does|do)?\s*(?:not|never)?\s*(?:accepted|taken|participated|honored|covered|cover|pay|reimburse)/i;
+    /^\s*(?:(?:is|are|was|were|does|do)\s+)?(?:not|never|neither|no\s+longer|unaccepted)\s+(?:accepted|taken|participated|honored|covered|cover|pay|reimburse)/i;
 
   // Explicit unaccepted header: "Not accepted: Medicaid"
   const notAcceptedBefore = /\b(?:not\s+accepted|unaccepted)\s*[:\-]?\s*[^.!?\n]{0,30}$/i;
@@ -221,7 +221,7 @@ export function isNegatedPediatricMention(text: string, matchIndex: number, matc
 
   // Following negation / restriction: "is not offered", "not treated", "adults only", "adult patients only"
   const followingNegation =
-    /^\s*(?:is|are|was|were)?\s*(?:not|never)?\s*(?:offered|provided|treated|seen|accepted|practiced)/i;
+    /^\s*(?:(?:is|are|was|were)\s+)?(?:not|never|neither|no\s+longer)\s+(?:offered|provided|treated|seen|accepted|practiced)/i;
 
   // Adult-only or dedicated adult context in sentence
   const fullSentence = `${clauseBefore} ${text.slice(matchIndex, matchIndex + matchLength)} ${clauseAfter}`;

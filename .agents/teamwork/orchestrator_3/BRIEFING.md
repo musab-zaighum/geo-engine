@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-01T04:22:30Z
+# BRIEFING — 2026-11-01T06:21:00Z
 
 ## Mission
 Lead a large multi-agent team to build and execute an active, continuous multi-agent deep research and scraping pipeline to discover, qualify, and compile "Goated" high-ticket dental implant clinic leads and their #1 local competitors across 7 affluent US metro corridors, verifying all 7 qualification gates and passing all 125 E2E tests.
@@ -26,8 +26,8 @@ Lead a large multi-agent team to build and execute an active, continuous multi-a
   4. Milestone 2: Live Discovery Pipeline Runner (`run-pipeline.ts`) [done]
   5. Milestone 3: Active Corridor Expansion & Lead Generation [done]
   6. Milestone 4: E2E Verification & Forensic Integrity Audit [in-progress]
-- **Current phase**: 2B (Iteration Loop - Milestone 4 Final Verification Gate)
-- **Current focus**: Milestone 4: 2 Reviewers, 2 Challengers, and 1 Forensic Auditor actively conducting independent reviews, adversarial stress tests, and forensic integrity audits
+- **Current phase**: 2B (Iteration Loop - Milestone 4 Remediation)
+- **Current focus**: worker_remediation fixing Challenger 1 & 2 findings: Haversine distance pairing, Plano coordinates, clinical filter negation regex, DSO hyphen matching, pitch-generator template, and corrupted pricing strings in leads.
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
@@ -43,14 +43,9 @@ Lead a large multi-agent team to build and execute an active, continuous multi-a
 - Updated: not yet
 
 ## Key Decisions Made
-- Decomposed project into 4 milestones.
 - Milestone 1, 2, 3 completed cleanly. All 7 corridors scouted and populated (52 Goated leads).
-- Dispatched 5 independent verification agents for Milestone 4 final gate:
-  - Reviewer 1 (cb4cd1ee)
-  - Reviewer 2 (5a279d23)
-  - Challenger 1 (105fe4f1)
-  - Challenger 2 (bcd977d5)
-  - Forensic Auditor (a7c71912)
+- Milestone 4 Gate evaluated: Reviewers approved, Forensic Auditor reported CLEAN (0 integrity violations, 100% genuine NPIs), Challengers 1 & 2 requested changes on specific edge-cases (Haversine distance <= 5.0mi on 5 leads, Plano coordinates, clinical filter regex, pitch-generator template, pricing tokens).
+- Dispatched worker_remediation to address Challenger findings.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
@@ -61,16 +56,17 @@ Lead a large multi-agent team to build and execute an active, continuous multi-a
 | worker_m1_3 | teamwork_preview_worker | Milestone 1: Scraper Catalogs & Test Oracle Sync | completed | f90d35a5-1f54-4964-b191-3e045b515394 |
 | worker_m2_3 | teamwork_preview_worker | Milestone 2: Live Discovery Pipeline Runner | completed | 2fcf4f47-f59a-406a-ab99-796976f31be7 |
 | worker_m3_3 | teamwork_preview_worker | Milestone 3: Active Corridor Expansion & Lead Generation | completed | aaa634c4-c065-46c5-ae30-e08afffdd53d |
-| reviewer_m4_1 | teamwork_preview_reviewer | M4: Code Architecture & E2E Review | in-progress | cb4cd1ee-5281-4d6e-8ade-ed71c5dbaf1a |
-| reviewer_m4_2 | teamwork_preview_reviewer | M4: Corridor & Gate Requirements Review | in-progress | 5a279d23-902d-4512-bf30-b3076bc6cfb8 |
-| challenger_m4_1 | teamwork_preview_challenger | M4: DAG & Haversine Adversarial Stress | in-progress | 105fe4f1-b2ea-4cc4-8d14-e222ab335d2e |
-| challenger_m4_2 | teamwork_preview_challenger | M4: Schema RFC 4180 & Pitch Hook Stress | in-progress | bcd977d5-8e83-4e08-acf6-c735a8588900 |
-| auditor_m4_1 | teamwork_preview_auditor | M4: Forensic Integrity Audit | in-progress | a7c71912-5885-402b-a0ad-177a85300d82 |
+| reviewer_m4_1 | teamwork_preview_reviewer | M4: Code Architecture & E2E Review | completed (APPROVE) | cb4cd1ee-5281-4d6e-8ade-ed71c5dbaf1a |
+| reviewer_m4_2 | teamwork_preview_reviewer | M4: Corridor & Gate Requirements Review | completed (APPROVE) | 5a279d23-902d-4512-bf30-b3076bc6cfb8 |
+| challenger_m4_1 | teamwork_preview_challenger | M4: DAG & Haversine Adversarial Stress | completed (REQUEST_CHANGES) | 105fe4f1-b2ea-4cc4-8d14-e222ab335d2e |
+| challenger_m4_2 | teamwork_preview_challenger | M4: Schema RFC 4180 & Pitch Hook Stress | completed (REQUEST_CHANGES) | bcd977d5-8e83-4e08-acf6-c735a8588900 |
+| auditor_m4_1 | teamwork_preview_auditor | M4: Forensic Integrity Audit | completed (CLEAN) | a7c71912-5885-402b-a0ad-177a85300d82 |
+| worker_remediation | teamwork_preview_worker | Remediation of Challenger 1 & 2 Findings | in-progress | 640a0a37-5aec-4d54-8418-b4d6bd901a89 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 11 / 16
-- Pending subagents: cb4cd1ee-5281-4d6e-8ade-ed71c5dbaf1a, 5a279d23-902d-4512-bf30-b3076bc6cfb8, 105fe4f1-b2ea-4cc4-8d14-e222ab335d2e, bcd977d5-8e83-4e08-acf6-c735a8588900, a7c71912-5885-402b-a0ad-177a85300d82
+- Spawn count: 12 / 16
+- Pending subagents: 640a0a37-5aec-4d54-8418-b4d6bd901a89
 - Predecessor: orchestrator_1 / orchestrator_2
 - Successor: not yet spawned
 

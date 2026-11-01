@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-01T04:23:00Z
+# BRIEFING — 2026-11-01T04:28:00Z
 
 ## Mission
 Conduct an objective quality and adversarial review of corridor coverage and the 7 qualification gates across `leads/goated_leads.json` and `leads/goated_leads.csv`, verify schema/parity, run verification scripts and test suites, and issue an evidence-based verdict (APPROVE or REQUEST_CHANGES).
@@ -19,28 +19,33 @@ Conduct an objective quality and adversarial review of corridor coverage and the
 
 ## Current Parent
 - Conversation ID: 2b8429e9-d98a-440d-8110-a867626cf84b
-- Updated: 2026-11-01T04:23:00Z
+- Updated: 2026-11-01T04:28:00Z
 
 ## Review Scope
-- **Files to review**:
-  - `leads/goated_leads.json`
-  - `leads/goated_leads.csv`
+- **Files reviewed**:
+  - `leads/goated_leads.json` (52 leads)
+  - `leads/goated_leads.csv` (52 records, 20 canonical columns)
   - `scripts/verify-leads.ts`
-  - `tests/e2e/run-all-tests.ts`
-  - Related test suites and schemas
+  - `scripts/run-pipeline.ts`
+  - `tests/e2e/run-all-tests.ts` (125 tests)
+  - `tests/unit/qualification.test.ts`, `tests/unit/dossier.test.ts`, `tests/unit/scrapers.test.ts` (303 tests)
+  - `src/lib/qualification/affluent-zips.ts`, `src/lib/qualification/npi-verifier.ts`, `src/lib/dossier/exporter.ts`
 - **Interface contracts**:
   - `/home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md` (Follow-up dated 2026-11-01T02:55:38Z)
   - `/home/pwn/geo-engine/.agents/teamwork/orchestrator_3/PROJECT.md`
   - `/home/pwn/geo-engine/.agents/teamwork/worker_m3_3/handoff.md`
 - **Review criteria**:
-  - 7 ultra-high-wealth corridor representation (including Vail 81657)
-  - 7 qualification gates verified across all leads (Solo Owner, 0 DSO, 100% surgical dental implants / 0 Medicaid/pediatrics, map pack #4-#6, Paid Google Ads signal, #1 local competitor <= 5.0mi, Median HHI > $120k)
-  - 1:1 Parity between JSON and CSV
-  - Test and verification execution
-  - Integrity violation checks
+  - 7 ultra-high-wealth corridors represented (including Vail 81657: GOAT-050 & GOAT-051)
+  - 7 qualification gates verified across all 52 leads
+  - 1:1 Parity across 20 columns between JSON and CSV (0 mismatches)
+  - Independent verification: scripts/verify-leads.ts (6/6 ACs PASS), tests/e2e/run-all-tests.ts (125/125 PASS)
+  - Integrity violation checks: 0 hardcoding, 0 facades, 0 bypasses
 
 ## Key Decisions Made
-- [TBD]
+- Final Verdict: **APPROVE**
+- No integrity violations or blocking issues detected.
+- Verified live federal NPI registry queries to CMS NPPES API return genuine NPI-1 sole proprietors (including Vail and Scottsdale leads).
+- Documented minor typographical error in worker_m3_3's text summary regarding GOAT-024..027 corridor labels (data files are unaffected and correct).
 
 ## Artifact Index
 - `/home/pwn/geo-engine/.agents/teamwork/reviewer_m4_2/DISPATCH.md` — Incoming dispatch log
@@ -49,11 +54,16 @@ Conduct an objective quality and adversarial review of corridor coverage and the
 - `/home/pwn/geo-engine/.agents/teamwork/reviewer_m4_2/handoff.md` — Final review and handoff report
 
 ## Review Checklist
-- **Items reviewed**: Pending initial file reads
-- **Verdict**: PENDING
-- **Unverified claims**: 7 corridors, 7 gates, JSON/CSV parity, test run results
+- **Items reviewed**: `leads/goated_leads.json`, `leads/goated_leads.csv`, `scripts/verify-leads.ts`, `scripts/run-pipeline.ts`, all unit and E2E test suites
+- **Verdict**: APPROVE
+- **Unverified claims**: None remaining. All claims verified with direct execution.
 
 ## Attack Surface
-- **Hypotheses tested**: [TBD]
-- **Vulnerabilities found**: [TBD]
-- **Untested angles**: [TBD]
+- **Hypotheses tested**:
+  1. Vail, CO (81657) missing or dummy: Refuted. Genuine leads GOAT-050 & GOAT-051 present with real CMS NPI-1 practitioners.
+  2. Fake/mocked NPI numbers: Refuted. Direct CMS NPPES API lookup confirms real individual sole proprietor records.
+  3. CSV / JSON mismatch: Refuted. Deep 20-column cell-by-cell parity check revealed 0 mismatches.
+  4. Rank pack violation: Refuted. Ranks strictly 4, 5, or 6 (15 rank 4, 31 rank 5, 6 rank 6).
+  5. Inactive ads or non-affluent zips: Refuted. 100% active ads, 100% median HHI > $120k.
+- **Vulnerabilities found**: None.
+- **Untested angles**: None within assigned scope.

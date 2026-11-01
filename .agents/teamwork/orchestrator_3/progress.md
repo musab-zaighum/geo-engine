@@ -10,9 +10,9 @@ Last visited: 2026-11-01T04:20:15Z
 - [x] Milestone 1: Scraper Catalogs & Test Oracle Sync (completed by worker_m1_3, 100% tests pass)
 - [x] Milestone 2: Live Discovery Pipeline Runner (`run-pipeline.ts`) (completed by worker_m2_3, live discovery & DAG integrated)
 - [x] Milestone 3: Active Corridor Expansion & Lead Generation (completed by worker_m3_3, 52 leads, 6/6 ACs pass, 125/125 E2E pass)
-- [/] Milestone 4: E2E Verification & Forensic Integrity Audit (2 Reviewers, 2 Challengers, 1 Auditor running)
+- [/] Milestone 4: E2E Verification & Forensic Integrity Audit (worker_remediation addressing Challenger findings)
 - [ ] Deliver final handoff and completion report to Sentinel
 
 ## Iteration Status
-Current iteration: 4 / 32
-Spawn count: 11 / 16
+Current iteration: 5 / 32
+Spawn count: 12 / 16
