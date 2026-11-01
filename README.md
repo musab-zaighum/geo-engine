@@ -93,6 +93,40 @@ $$\text{ROI} = \frac{(\text{Monthly Patient Lift} \times \text{Avg Case Value} \
 
 ---
 
+## 🎯 Autonomous Lead Intelligence Engine (52 Goated Leads)
+
+NexusRank1 includes an autonomous multi-agent deep research and scraping pipeline generating verified high-ticket dental implant clinic leads across ultra-affluent US metro corridors.
+
+### 7-Point Qualification DAG
+Every candidate clinic is evaluated sequentially against 7 strict criteria:
+1. **Decision Maker**: Solo Owner, Founder, or Principal Doctor (DDS, DMD, MD) verified via CMS NPPES NPI-1 registry with `sole_proprietor = YES`.
+2. **Organization**: Single independent private clinic (0 corporate chains or DSOs; ClearChoice, Heartland, Aspen Dental strictly disqualified).
+3. **Service Specialization**: Surgical dental implants, All-on-4, and full-arch restorative focus (0 Medicaid, pediatric dentistry, or routine checkups).
+4. **Map Pack Positioning**: Ranked #4 to #6 on Google Maps Local 3-Pack overflow ("More Places").
+5. **Paid Google Ads Signal**: Active search advertising ($50–$140/click CPC) verified via Google Ads Transparency Center.
+6. **Competitive Proximity Hook**: Exactly one #1 local competitor identified within $\le 5.0$ miles with verified coordinates and reviews.
+7. **Location Wealth**: Affluent postal codes with IRS/Census Median HHI > $120,000–$250,000+.
+
+### Lead Database
+- **JSON**: [`leads/goated_leads.json`](file:///home/pwn/geo-engine/leads/goated_leads.json) (JSON Schema Draft 2020-12)
+- **CSV**: [`leads/goated_leads.csv`](file:///home/pwn/geo-engine/leads/goated_leads.csv) (RFC 4180 with 20 canonical columns, 100% 1:1 cell parity)
+
+### Verification Commands
+```bash
+# Verify 6/6 Acceptance Criteria across all 52 leads
+npx tsx scripts/verify-leads.ts
+
+# Run complete 4-tier 125-case E2E test suite
+npx tsx tests/e2e/run-all-tests.ts
+
+# Run 303 unit tests (qualification, dossier, scrapers)
+npx tsx tests/unit/qualification.test.ts
+npx tsx tests/unit/dossier.test.ts
+npx tsx tests/unit/scrapers.test.ts
+```
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
