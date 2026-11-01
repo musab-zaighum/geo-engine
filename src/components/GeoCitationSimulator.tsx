@@ -39,6 +39,7 @@ export default function GeoCitationSimulator({
   const [selectedEngine, setSelectedEngine] = useState<'google' | 'openai' | 'perplexity' | 'apple'>('google');
 
   const cleanDomain = domain
+    .trim()
     .replace(/^https?:\/\//i, '')
     .replace(/^www\./i, '')
     .replace(/\/.*$/, '')
