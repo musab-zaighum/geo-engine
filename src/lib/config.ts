@@ -5,7 +5,7 @@ export const CLINIC_OFFER_CONFIG = {
   ctaLabel: 'Claim Your Clinic Local Growth & AI Audit System — $1,500',
   whopCheckoutUrl:
     process.env.NEXT_PUBLIC_WHOP_CHECKOUT_URL ||
-    'https://whop.com/checkout/nexusrank1-clinic-growth',
+    'https://whop.com/checkout/plan_e37e96b86e088/',
   pillars: [
     {
       id: 'geo-grid',
@@ -48,21 +48,21 @@ export const CLINIC_OFFER_CONFIG = {
     },
     {
       id: 'ai-readability',
-      title: 'AI Model Readability & Crawler Directives',
-      badge: 'ChatGPT & Perplexity Ready',
+      title: 'Clinical AI Knowledge Graph & Factsheet Directory',
+      badge: 'ChatGPT & Perplexity Verified',
       description:
-        'Formats clinic data into clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI).',
+        'Synthesizes your clinical credentials, accepted insurances, and surgical procedures into verified knowledge graphs structured specifically so AI search engines recommend your clinic.',
       features: [
-        '0-Error Schema.org MedicalClinic & Physician AST graph compilation',
-        'Domain-level /llms.txt machine-readable manifest generation',
+        '0-Error Schema.org Medical Clinic & Doctor Authority Graph compilation',
+        'Domain-level AI Clinical Factsheet & Practice Directory (/llms.txt)',
         'ADA CDT & AMA CPT clinical procedure ontology code embedding',
-        'RFC 9309 crawler permissions ensuring complete AI search model indexing',
+        'AI search engine access authorization ensuring complete clinic indexing on ChatGPT & Perplexity',
       ],
     },
   ],
   guarantee: {
     title: 'The 1-Patient ROI Guarantee',
     description:
-      'For any dental, medical, or aesthetic clinic, a single new patient case (dental implants, Invisalign, surgical consultation, or medspa package) is worth $3,000 to $15,000+. Acquiring just 1 new patient through generative search pays for the entire $1,500 system immediately.',
+      'For any dental, medical, or aesthetic clinic, a single new patient case (dental implants, All-on-4, surgical consultation, or aesthetic package) is worth $5,000 to $40,000+. Acquiring just 1 new patient through generative search pays for the entire $1,500 system immediately.',
   },
 };

@@ -1,0 +1,336 @@
+{
+  "timestamp": "2026-11-01T14:18:42.692Z",
+  "testsPassed": 39,
+  "testsFailed": 1,
+  "failures": [
+    {
+      "id": "EXPORT-01",
+      "title": "Whop checkout buttons point exactly to plan_e37e96b86e088",
+      "details": {
+        "toolbarHref": "https://whop.com/checkout/velogeo-agency",
+        "totalWhopLinksFound": 2
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "consoleWarnings": [],
+  "networkErrors": [],
+  "steps": [
+    {
+      "id": "INIT-01",
+      "title": "Homepage loaded with HTTP 200",
+      "passed": true,
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "id": "HERO-01",
+      "title": "Page title is correct",
+      "passed": true,
+      "details": {
+        "title": "NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform"
+      }
+    },
+    {
+      "id": "HERO-02",
+      "title": "#audit-bar element exists",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "INPUT-01",
+      "title": "Initial domain input defaults to dentalpractice.com",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "DIAL-01",
+      "title": "Radial score gauge rendered on initial load",
+      "passed": true,
+      "details": {
+        "initialScoreText": "84/100"
+      }
+    },
+    {
+      "id": "PRESET-01",
+      "title": "Preset mayoclinic.org updates results with valid clinic profile and score",
+      "passed": true,
+      "details": {
+        "clinicName": "Mayo Clinic",
+        "score": "45/100",
+        "grade": "C"
+      }
+    },
+    {
+      "id": "PRESET-02",
+      "title": "Preset clevelandclinic.org updates results with valid clinic profile and score",
+      "passed": true,
+      "details": {
+        "clinicName": "Cleveland Clinic",
+        "score": "90/100",
+        "grade": "A+"
+      }
+    },
+    {
+      "id": "PRESET-03",
+      "title": "Preset austincosmeticdental.com updates results accurately",
+      "passed": true,
+      "details": {
+        "clinicName": "Austincosmeticdental Clinic",
+        "score": "18/100"
+      }
+    },
+    {
+      "id": "PRESET-04",
+      "title": "Preset dentalpractice.com updates results accurately",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "ANIM-01",
+      "title": "Live audit progress bar & animated step indicators appear during scanning",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "CUSTOM-01",
+      "title": "Custom domain beverlyhillsdentalimplants.com scans and displays correctly",
+      "passed": true,
+      "details": {
+        "clinicName": "Beverlyhillsdentalimplants Clinic",
+        "score": "18/100"
+      }
+    },
+    {
+      "id": "GAUGE-01",
+      "title": "Radial score gauge calculates stroke-dashoffset dynamically",
+      "passed": true,
+      "details": {
+        "strokeDashoffset": "164.87078246039235"
+      }
+    },
+    {
+      "id": "EDGE-01",
+      "title": "Empty domain input triggers validation toast without crashing",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "EDGE-02",
+      "title": "URL with protocol and path is sanitized to clean domain",
+      "passed": true,
+      "details": {
+        "sanitizedUrl": "https://sub.practice-implants.clinic"
+      }
+    },
+    {
+      "id": "TAB-01",
+      "title": "Tab 1 (Competitor Grid) renders 3x3 coordinate matrix and benchmarking table",
+      "passed": true,
+      "details": {
+        "cellCount": 9
+      }
+    },
+    {
+      "id": "TAB-02",
+      "title": "Tab 2 (Profile & Directories) renders 4 diagnostic cards",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "TAB-03",
+      "title": "Tab 3 (Review Loops & QR) renders SMS simulator and Reception QR generator",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "TAB-04",
+      "title": "Tab 4 (AI Factsheet) renders executive clinical factsheet cards",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "TAB-05",
+      "title": "Tab 5 (Live AI Simulator) mounts GeoCitationSimulator without crashing",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "TAB-06",
+      "title": "Tab 6 (Doctor Licensure Graph) renders EntityGraphVisualizer SVG graph",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "TAB-07",
+      "title": "Tab 7 (Clinical Checklist) renders 4 metric meters and diagnostic checklist items",
+      "passed": true,
+      "details": {
+        "checklistCount": 8
+      }
+    },
+    {
+      "id": "CODE-01",
+      "title": "Webmaster Code toggle switches from Doctor View to Raw Code View",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "CODE-02",
+      "title": "Schema.org JSON-LD code contains valid @context and schema types",
+      "passed": true,
+      "details": {
+        "snippet": "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"MedicalClinic\",\n      \"@id"
+      }
+    },
+    {
+      "id": "CODE-03",
+      "title": "/llms.txt code view contains practice factsheet headers",
+      "passed": true,
+      "details": {
+        "snippet": "# Sub Clinic - Machine-Readable Clinical Knowledge Graph\n> Verified Clinical Entity Manifest optimiz"
+      }
+    },
+    {
+      "id": "CODE-04",
+      "title": "Procedure codes view displays CDT D6010 & CPT 15824 nodes",
+      "passed": true,
+      "details": {
+        "snippet": "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"MedicalProcedure\",\n      \""
+      }
+    },
+    {
+      "id": "CODE-05",
+      "title": "Copy Code button updates label to Copied! and copies payload",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "CODE-06",
+      "title": "Google Rich Results link has valid target=\"_blank\" and Google search URL",
+      "passed": true,
+      "details": {
+        "href": "https://search.google.com/test/rich-results?url=https%3A%2F%2Fsub.practice-implants.clinic"
+      }
+    },
+    {
+      "id": "CODE-07",
+      "title": "Toggle cleanly switches back to Executive Doctor Summary view",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "EXPORT-01",
+      "title": "Whop checkout buttons point exactly to plan_e37e96b86e088",
+      "passed": false,
+      "details": {
+        "toolbarHref": "https://whop.com/checkout/velogeo-agency",
+        "totalWhopLinksFound": 2
+      }
+    },
+    {
+      "id": "EXPORT-02",
+      "title": "Live Public Report link targets /report/[domain]",
+      "passed": true,
+      "details": {
+        "href": "/report/sub.practice-implants.clinic?unbranded=true"
+      }
+    },
+    {
+      "id": "EXPORT-03",
+      "title": "Public report route loads with HTTP 200 without console errors",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "title": "NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform"
+      }
+    },
+    {
+      "id": "EXPORT-04",
+      "title": "Vector PDF export link targets /api/report/pdf?domain=[domain]",
+      "passed": true,
+      "details": {
+        "href": "/api/report/pdf?domain=sub.practice-implants.clinic"
+      }
+    },
+    {
+      "id": "EXPORT-05",
+      "title": "/api/report/pdf endpoint responds with HTTP 200 and application/pdf",
+      "passed": true,
+      "details": {
+        "ok": true,
+        "status": 200,
+        "contentType": "application/pdf"
+      }
+    },
+    {
+      "id": "EXPORT-06",
+      "title": "Export Practice AI Passport downloads json schema file",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "MODAL-01",
+      "title": "Practice Manager Dispatch modal opens with backdrop blur",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "MODAL-02",
+      "title": "Form validation prevents empty email submission and keeps modal open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "MODAL-03",
+      "title": "Submitting modal dispatches payload to /api/lead with HTTP 200",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "response": {
+          "success": true,
+          "message": "Practice consultation request registered successfully.",
+          "lead": {
+            "event": "lead_captured",
+            "timestamp": "2026-11-01T14:19:21.898Z",
+            "domain": "sub.practice-implants.clinic",
+            "contactName": "Dr. Robert Vance, DDS",
+            "email": "dr.vance@beverlyhillsimplants.com",
+            "phone": "+1 (310) 555-0199",
+            "notes": "Urgent full-arch dental implant clinical authority setup required.",
+            "source": "NexusRank1 Clinical Intelligence Audit Portal"
+          }
+        },
+        "payload": {
+          "domain": "sub.practice-implants.clinic",
+          "name": "Dr. Robert Vance, DDS",
+          "email": "dr.vance@beverlyhillsimplants.com",
+          "phone": "+1 (310) 555-0199",
+          "notes": "Urgent full-arch dental implant clinical authority setup required.",
+          "webhookUrl": "https://httpbin.org/post"
+        }
+      }
+    },
+    {
+      "id": "MODAL-04",
+      "title": "Success notification displayed and modal closes upon dispatch",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "id": "MODAL-05",
+      "title": "Practice webhook URL is persisted to localStorage (nr1_practice_webhook)",
+      "passed": true,
+      "details": {
+        "savedWebhook": "https://httpbin.org/post"
+      }
+    },
+    {
+      "id": "MODAL-06",
+      "title": "Modal close (X) button closes modal cleanly",
+      "passed": true,
+      "details": {}
+    }
+  ]
+}

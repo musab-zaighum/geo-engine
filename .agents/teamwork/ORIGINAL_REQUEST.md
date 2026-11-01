@@ -92,3 +92,55 @@ Export all qualified leads into structured JSON (leads/goated_leads.json) and CS
 - [ ] Every lead has exactly one #1 local competitor identified in their immediate 5-mile radius.
 - [ ] Output files exist at /home/pwn/geo-engine/leads/goated_leads.json and /home/pwn/geo-engine/leads/goated_leads.csv with valid schema.
 - [ ] All 125 E2E tests and independent acceptance verification pass 100%.
+
+## Follow-up — 2026-11-01T14:06:57Z
+
+Use a very large team of agents. Execute an exhaustive, live browser-based functional, visual, and clinician UX test suite across the entire NexusRank1 platform on http://localhost:3000 using browser agents. Test every button, form, tab, modal, calculator slider, and export flow to guarantee 100% reliability, zero runtime crashes, and a flawless clinician user experience.
+
+Working directory: /home/pwn/geo-engine
+Integrity mode: development
+
+## Requirements
+
+### R1. Comprehensive Interactive UI & Flow Testing
+Browser agents must systematically test every interactive UI element across all pages:
+1. **Homepage (`/`) & Instant Audit Bar (`#audit-bar`):**
+   - Test preset domain buttons (`dentalpractice.com`, `mayoclinic.org`, `clevelandclinic.org`, `austincosmeticdental.com`) and custom input.
+   - Verify live audit progress animation and radial score gauge rendering.
+   - Test all 7 tab navigations: Competitor Grid, Profile & Directories, Review Loops & QR, AI Factsheet, Live AI Simulator, Doctor Licensure Graph, and Clinical Checklist.
+   - Test Webmaster Code toggle (`showRawCode`) and Copy Code / Rich Results test links.
+   - Test Global Export Toolbar buttons: Whop checkout link, Live Public Report (`/report/[domain]`), Vector PDF export (`/api/report/pdf`), JSON download, and Practice Manager Dispatch modal.
+2. **Patient Acquisition & Revenue Modeler (ROI Calculator):**
+   - Test specialty selector buttons (Cosmetic Dentistry, Plastic Surgery, Orthopedics, Medspa).
+   - Test Case Value and Expected Patient sliders; verify dynamic formula calculations.
+3. **Corner Chat Widget:**
+   - Test opening, sending questions, receiving streaming/fallback responses, and closing.
+4. **Clinic Command Center (`/partner-console`):**
+   - Test all 4 tabs: Overview, Competitor Radar, Clinical Schema, and Settings.
+   - Test saving settings and verifying toast notifications.
+5. **Pricing (`/pricing`), Public Report (`/report/[domain]`), Login (`/login`), and Signup (`/signup`):**
+   - Verify page rendering, links, and responsive layouts.
+
+### R2. Clinician Persona & Conversion Evaluation
+Subagents must evaluate the user experience from the perspective of private practice owners (surgeons, cosmetic dentists, medspa medical directors):
+- Identify any residual developer jargon, confusing labels, or cognitive friction.
+- Verify that every claim and diagnostic translates into clear clinical and financial value.
+- Formulate concrete code enhancements to resolve any identified defects or friction.
+
+### R3. Automated Code Remediation & Verification
+For any defect, visual glitch, broken link, or friction identified during browser testing:
+- Implement immediate code fixes across relevant components and pages.
+- Re-test using the browser agent to confirm resolution.
+- Verify 0 TypeScript errors and clean production build.
+
+## Acceptance Criteria
+
+### Browser Functional Integrity
+- [ ] 100% of routes (`/`, `/pricing`, `/partner-console`, `/report/dentalpractice.com`, `/login`, `/signup`) load with HTTP 200 and zero console errors.
+- [ ] All 7 tabs in the Instant Audit Bar render distinct, accurate data and interactive widgets without crashing.
+- [ ] The Webmaster Code toggle cleanly switches between the Executive Factsheet and the raw schema/llms.txt code view.
+- [ ] The Practice Manager Modal opens, validates inputs, and triggers successful dispatch notifications.
+- [ ] ROI Calculator sliders dynamically update monthly revenue and net ROI calculations without lag.
+- [ ] The Corner Chat Widget successfully answers clinician inquiries with $1,500 one-time deployment terms.
+- [ ] All external checkout links correctly point to `https://whop.com/checkout/plan_e37e96b86e088/`.
+- [ ] Zero TypeScript errors (`npx tsc --noEmit`) and 15/15 routes pass production compilation (`npm run build`).

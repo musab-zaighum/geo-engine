@@ -1,0 +1,41 @@
+[2026-11-01T14:18:36.885Z] Starting Auth Flow (Login & Signup) Test Suite
+[2026-11-01T14:18:37.172Z] --- Testing /login ---
+[2026-11-01T14:18:37.875Z] /login HTTP Status: 200
+[2026-11-01T14:18:37.992Z] Login H1: "Clinic Command Center Login"
+[2026-11-01T14:18:37.995Z] Passcode input visible: true
+[2026-11-01T14:18:37.997Z] Submit button visible: true
+[2026-11-01T14:18:37.999Z] Submit button text: "Unlock Clinic Console"
+[2026-11-01T14:18:37.999Z] Test Case 1.1: Empty passcode submission
+[2026-11-01T14:18:38.347Z] Error on empty input: "Please enter your clinic access passcode or license key."
+[2026-11-01T14:18:38.430Z] Test Case 1.2: Invalid passcode submission ("invalidpass999")
+[2026-11-01T14:18:38.490Z] BROWSER CONSOLE ERROR: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[2026-11-01T14:18:39.084Z] Error on invalid input: "Incorrect passcode. Access denied."
+[2026-11-01T14:18:39.157Z] Found 2 Whop links on /login
+[2026-11-01T14:18:39.160Z] Whop link #1 href: "https://whop.com/checkout/velogeo-agency"
+[2026-11-01T14:18:39.161Z] Whop link #2 href: "https://whop.com/checkout/velogeo-agency"
+[2026-11-01T14:18:39.163Z] Links to /signup on /login page: 0
+[2026-11-01T14:18:39.163Z] DEFECT DETECTED: No navigation link to /signup found on /login page.
+[2026-11-01T14:18:39.163Z] Test Case 1.5: Valid passcode submission ("nexus2026")
+[2026-11-01T14:18:39.270Z] Successfully redirected after valid login to: http://localhost:3000/partner-console
+[2026-11-01T14:18:39.531Z] --- Testing /signup ---
+[2026-11-01T14:18:40.176Z] /signup HTTP Status: 200
+[2026-11-01T14:18:40.273Z] Signup H1: "Register Your Healthcare Practice"
+[2026-11-01T14:18:40.280Z] Form Fields visible: ClinicName=true, Specialty=true, Zip=true, Phone=true, Email=true
+[2026-11-01T14:18:40.283Z] Role selector elements found: 0
+[2026-11-01T14:18:40.283Z] DEFECT / OBSERVATION: No explicit role selection element (e.g., Solo Owner/Doctor vs Practice Manager vs Marketer) on /signup page.
+[2026-11-01T14:18:40.284Z] Links to /login on /signup page: 1
+[2026-11-01T14:18:40.284Z] Testing "Quick Demo Practice Auto-Fill" button...
+[2026-11-01T14:18:40.510Z] Preset Loaded Values: clinicName="Apex Dental & Aesthetics", email="dr.smith@apexdental.com", phone="(555) 234-5678", zip="75001", specialty="Cosmetic Dentistry & Implants"
+[2026-11-01T14:18:40.582Z] Testing empty required field validation...
+[2026-11-01T14:18:40.925Z] URL after clicking submit with empty clinicName: http://localhost:3000/signup (should still be /signup)
+[2026-11-01T14:18:40.925Z] Filling custom practice registration data and submitting...
+[2026-11-01T14:18:41.036Z] BROWSER CONSOLE ERROR: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[2026-11-01T14:18:41.134Z] Submit loading state visible: false
+[2026-11-01T14:18:41.570Z] Signup redirected successfully to: http://localhost:3000/partner-console
+[2026-11-01T14:18:41.800Z] Stored localStorage practiceConfig: {"practiceName":"Newport Beach Implant Institute","practiceSlug":"newport-beach-implant-institute","practiceLogoUrl":"/logo.png","primaryColor":"emerald","customHexColor":"#10b981","bookingUrl":"https://newportbeachimplantinstitute.com","badgeTitle":"Verified Healthcare Provider","contactEmail":"dr.vance@newportimplant.com","customReportFooter":"This clinical intelligence and GEO defense report is generated exclusively for practice optimization. All CMS NPPES records and clinical Schema.org AST graphs are verified."}
+[2026-11-01T14:18:41.800Z] Stored localStorage authenticated: true
+[2026-11-01T14:18:41.915Z] Found 2 Whop links on /signup
+[2026-11-01T14:18:41.917Z] Signup Whop link #1 href: "https://whop.com/checkout/velogeo-agency"
+[2026-11-01T14:18:41.920Z] Signup Whop link #2 href: "https://whop.com/checkout/velogeo-agency"
+[2026-11-01T14:18:41.920Z] === Auth Flow Test Completed Successfully ===
+[2026-11-01T14:18:41.920Z] Summary: 2 console errors, 0 unexpected network errors.

@@ -1,0 +1,492 @@
+{
+  "timestamp": "2026-11-01T14:19:46.398Z",
+  "specialtyTests": [
+    {
+      "specialty": "Cosmetic & Restorative Dentistry",
+      "expected": {
+        "ticket": 4500,
+        "monthly": 13500,
+        "annual": 162000,
+        "net": 160500,
+        "roiPercent": 10700,
+        "timesCovered": "3.0"
+      },
+      "actual": {
+        "ticketText": "$4,500",
+        "patientText": "+3 / mo",
+        "monthlyText": "+$13,500 / mo",
+        "annualText": "+$162,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$160,500",
+        "roiText": "10,700% ROI",
+        "coveredText": "3.0x System Cost in 1 Patient",
+        "avgTicket": 4500,
+        "patientsPerMonth": 3,
+        "monthlyGross": 13500,
+        "annualGross": 162000,
+        "systemCost": 1500,
+        "netProfit": 160500,
+        "roiPercent": 10700,
+        "timesCoveredByOnePatient": "3.0",
+        "sliderTicketVal": 4500,
+        "sliderPatientVal": 3
+      },
+      "passed": true
+    },
+    {
+      "specialty": "MedSpa & Facial Aesthetics",
+      "expected": {
+        "ticket": 2800,
+        "monthly": 8400,
+        "annual": 100800,
+        "net": 99300,
+        "roiPercent": 6620,
+        "timesCovered": "1.9"
+      },
+      "actual": {
+        "ticketText": "$2,800",
+        "patientText": "+3 / mo",
+        "monthlyText": "+$8,400 / mo",
+        "annualText": "+$100,800 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$99,300",
+        "roiText": "6,620% ROI",
+        "coveredText": "1.9x System Cost in 1 Patient",
+        "avgTicket": 2800,
+        "patientsPerMonth": 3,
+        "monthlyGross": 8400,
+        "annualGross": 100800,
+        "systemCost": 1500,
+        "netProfit": 99300,
+        "roiPercent": 6620,
+        "timesCoveredByOnePatient": "1.9",
+        "sliderTicketVal": 2750,
+        "sliderPatientVal": 3
+      },
+      "passed": false
+    },
+    {
+      "specialty": "Plastic & Cosmetic Surgery",
+      "expected": {
+        "ticket": 11500,
+        "monthly": 34500,
+        "annual": 414000,
+        "net": 412500,
+        "roiPercent": 27500,
+        "timesCovered": "7.7"
+      },
+      "actual": {
+        "ticketText": "$11,500",
+        "patientText": "+3 / mo",
+        "monthlyText": "+$34,500 / mo",
+        "annualText": "+$414,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$412,500",
+        "roiText": "27,500% ROI",
+        "coveredText": "7.7x System Cost in 1 Patient",
+        "avgTicket": 11500,
+        "patientsPerMonth": 3,
+        "monthlyGross": 34500,
+        "annualGross": 414000,
+        "systemCost": 1500,
+        "netProfit": 412500,
+        "roiPercent": 27500,
+        "timesCoveredByOnePatient": "7.7",
+        "sliderTicketVal": 11500,
+        "sliderPatientVal": 3
+      },
+      "passed": true
+    },
+    {
+      "specialty": "Orthopedics & Spine Medicine",
+      "expected": {
+        "ticket": 8500,
+        "monthly": 25500,
+        "annual": 306000,
+        "net": 304500,
+        "roiPercent": 20300,
+        "timesCovered": "5.7"
+      },
+      "actual": {
+        "ticketText": "$8,500",
+        "patientText": "+3 / mo",
+        "monthlyText": "+$25,500 / mo",
+        "annualText": "+$306,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$304,500",
+        "roiText": "20,300% ROI",
+        "coveredText": "5.7x System Cost in 1 Patient",
+        "avgTicket": 8500,
+        "patientsPerMonth": 3,
+        "monthlyGross": 25500,
+        "annualGross": 306000,
+        "systemCost": 1500,
+        "netProfit": 304500,
+        "roiPercent": 20300,
+        "timesCoveredByOnePatient": "5.7",
+        "sliderTicketVal": 8500,
+        "sliderPatientVal": 3
+      },
+      "passed": true
+    },
+    {
+      "specialty": "Dermatology & Skin Surgery",
+      "expected": {
+        "ticket": 3200,
+        "monthly": 9600,
+        "annual": 115200,
+        "net": 113700,
+        "roiPercent": 7580,
+        "timesCovered": "2.1"
+      },
+      "actual": {
+        "ticketText": "$3,200",
+        "patientText": "+3 / mo",
+        "monthlyText": "+$9,600 / mo",
+        "annualText": "+$115,200 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$113,700",
+        "roiText": "7,580% ROI",
+        "coveredText": "2.1x System Cost in 1 Patient",
+        "avgTicket": 3200,
+        "patientsPerMonth": 3,
+        "monthlyGross": 9600,
+        "annualGross": 115200,
+        "systemCost": 1500,
+        "netProfit": 113700,
+        "roiPercent": 7580,
+        "timesCoveredByOnePatient": "2.1",
+        "sliderTicketVal": 3250,
+        "sliderPatientVal": 3
+      },
+      "passed": false
+    }
+  ],
+  "sliderMatrixTests": [
+    {
+      "label": "Min Boundary: $1,000 ticket, 1 patient",
+      "inputs": {
+        "ticket": 1000,
+        "patients": 1
+      },
+      "expected": {
+        "monthly": 1000,
+        "annual": 12000,
+        "net": 10500,
+        "roiPercent": 700,
+        "timesCovered": "0.7"
+      },
+      "actual": {
+        "ticketText": "$1,000",
+        "patientText": "+1 / mo",
+        "monthlyText": "+$1,000 / mo",
+        "annualText": "+$12,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$10,500",
+        "roiText": "700% ROI",
+        "coveredText": "0.7x System Cost in 1 Patient",
+        "avgTicket": 1000,
+        "patientsPerMonth": 1,
+        "monthlyGross": 1000,
+        "annualGross": 12000,
+        "systemCost": 1500,
+        "netProfit": 10500,
+        "roiPercent": 700,
+        "timesCoveredByOnePatient": "0.7",
+        "sliderTicketVal": 1000,
+        "sliderPatientVal": 1
+      },
+      "passed": true
+    },
+    {
+      "label": "Min Ticket $1,000, Max Patients 15",
+      "inputs": {
+        "ticket": 1000,
+        "patients": 15
+      },
+      "expected": {
+        "monthly": 15000,
+        "annual": 180000,
+        "net": 178500,
+        "roiPercent": 11900,
+        "timesCovered": "0.7"
+      },
+      "actual": {
+        "ticketText": "$1,000",
+        "patientText": "+15 / mo",
+        "monthlyText": "+$15,000 / mo",
+        "annualText": "+$180,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$178,500",
+        "roiText": "11,900% ROI",
+        "coveredText": "0.7x System Cost in 1 Patient",
+        "avgTicket": 1000,
+        "patientsPerMonth": 15,
+        "monthlyGross": 15000,
+        "annualGross": 180000,
+        "systemCost": 1500,
+        "netProfit": 178500,
+        "roiPercent": 11900,
+        "timesCoveredByOnePatient": "0.7",
+        "sliderTicketVal": 1000,
+        "sliderPatientVal": 15
+      },
+      "passed": true
+    },
+    {
+      "label": "Mid Boundary: $7,500 ticket, 8 patients",
+      "inputs": {
+        "ticket": 7500,
+        "patients": 8
+      },
+      "expected": {
+        "monthly": 60000,
+        "annual": 720000,
+        "net": 718500,
+        "roiPercent": 47900,
+        "timesCovered": "5.0"
+      },
+      "actual": {
+        "ticketText": "$7,500",
+        "patientText": "+8 / mo",
+        "monthlyText": "+$60,000 / mo",
+        "annualText": "+$720,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$718,500",
+        "roiText": "47,900% ROI",
+        "coveredText": "5.0x System Cost in 1 Patient",
+        "avgTicket": 7500,
+        "patientsPerMonth": 8,
+        "monthlyGross": 60000,
+        "annualGross": 720000,
+        "systemCost": 1500,
+        "netProfit": 718500,
+        "roiPercent": 47900,
+        "timesCoveredByOnePatient": "5.0",
+        "sliderTicketVal": 7500,
+        "sliderPatientVal": 8
+      },
+      "passed": true
+    },
+    {
+      "label": "Max Ticket $15,000, Min Patient 1",
+      "inputs": {
+        "ticket": 15000,
+        "patients": 1
+      },
+      "expected": {
+        "monthly": 15000,
+        "annual": 180000,
+        "net": 178500,
+        "roiPercent": 11900,
+        "timesCovered": "10.0"
+      },
+      "actual": {
+        "ticketText": "$15,000",
+        "patientText": "+1 / mo",
+        "monthlyText": "+$15,000 / mo",
+        "annualText": "+$180,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$178,500",
+        "roiText": "11,900% ROI",
+        "coveredText": "10.0x System Cost in 1 Patient",
+        "avgTicket": 15000,
+        "patientsPerMonth": 1,
+        "monthlyGross": 15000,
+        "annualGross": 180000,
+        "systemCost": 1500,
+        "netProfit": 178500,
+        "roiPercent": 11900,
+        "timesCoveredByOnePatient": "10.0",
+        "sliderTicketVal": 15000,
+        "sliderPatientVal": 1
+      },
+      "passed": true
+    },
+    {
+      "label": "Max Boundary: $15,000 ticket, 15 patients",
+      "inputs": {
+        "ticket": 15000,
+        "patients": 15
+      },
+      "expected": {
+        "monthly": 225000,
+        "annual": 2700000,
+        "net": 2698500,
+        "roiPercent": 179900,
+        "timesCovered": "10.0"
+      },
+      "actual": {
+        "ticketText": "$15,000",
+        "patientText": "+15 / mo",
+        "monthlyText": "+$225,000 / mo",
+        "annualText": "+$2,700,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$2,698,500",
+        "roiText": "179,900% ROI",
+        "coveredText": "10.0x System Cost in 1 Patient",
+        "avgTicket": 15000,
+        "patientsPerMonth": 15,
+        "monthlyGross": 225000,
+        "annualGross": 2700000,
+        "systemCost": 1500,
+        "netProfit": 2698500,
+        "roiPercent": 179900,
+        "timesCoveredByOnePatient": "10.0",
+        "sliderTicketVal": 15000,
+        "sliderPatientVal": 15
+      },
+      "passed": true
+    },
+    {
+      "label": "Low MedSpa ($2,500), 2 patients",
+      "inputs": {
+        "ticket": 2500,
+        "patients": 2
+      },
+      "expected": {
+        "monthly": 5000,
+        "annual": 60000,
+        "net": 58500,
+        "roiPercent": 3900,
+        "timesCovered": "1.7"
+      },
+      "actual": {
+        "ticketText": "$2,500",
+        "patientText": "+2 / mo",
+        "monthlyText": "+$5,000 / mo",
+        "annualText": "+$60,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$58,500",
+        "roiText": "3,900% ROI",
+        "coveredText": "1.7x System Cost in 1 Patient",
+        "avgTicket": 2500,
+        "patientsPerMonth": 2,
+        "monthlyGross": 5000,
+        "annualGross": 60000,
+        "systemCost": 1500,
+        "netProfit": 58500,
+        "roiPercent": 3900,
+        "timesCoveredByOnePatient": "1.7",
+        "sliderTicketVal": 2500,
+        "sliderPatientVal": 2
+      },
+      "passed": true
+    },
+    {
+      "label": "Standard Implant ($4,500), 4 patients",
+      "inputs": {
+        "ticket": 4500,
+        "patients": 4
+      },
+      "expected": {
+        "monthly": 18000,
+        "annual": 216000,
+        "net": 214500,
+        "roiPercent": 14300,
+        "timesCovered": "3.0"
+      },
+      "actual": {
+        "ticketText": "$4,500",
+        "patientText": "+4 / mo",
+        "monthlyText": "+$18,000 / mo",
+        "annualText": "+$216,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$214,500",
+        "roiText": "14,300% ROI",
+        "coveredText": "3.0x System Cost in 1 Patient",
+        "avgTicket": 4500,
+        "patientsPerMonth": 4,
+        "monthlyGross": 18000,
+        "annualGross": 216000,
+        "systemCost": 1500,
+        "netProfit": 214500,
+        "roiPercent": 14300,
+        "timesCoveredByOnePatient": "3.0",
+        "sliderTicketVal": 4500,
+        "sliderPatientVal": 4
+      },
+      "passed": true
+    },
+    {
+      "label": "Veneers / Facelift ($9,000), 6 patients",
+      "inputs": {
+        "ticket": 9000,
+        "patients": 6
+      },
+      "expected": {
+        "monthly": 54000,
+        "annual": 648000,
+        "net": 646500,
+        "roiPercent": 43100,
+        "timesCovered": "6.0"
+      },
+      "actual": {
+        "ticketText": "$9,000",
+        "patientText": "+6 / mo",
+        "monthlyText": "+$54,000 / mo",
+        "annualText": "+$648,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$646,500",
+        "roiText": "43,100% ROI",
+        "coveredText": "6.0x System Cost in 1 Patient",
+        "avgTicket": 9000,
+        "patientsPerMonth": 6,
+        "monthlyGross": 54000,
+        "annualGross": 648000,
+        "systemCost": 1500,
+        "netProfit": 646500,
+        "roiPercent": 43100,
+        "timesCoveredByOnePatient": "6.0",
+        "sliderTicketVal": 9000,
+        "sliderPatientVal": 6
+      },
+      "passed": true
+    },
+    {
+      "label": "Full Arch / Complex Ortho ($12,000), 10 patients",
+      "inputs": {
+        "ticket": 12000,
+        "patients": 10
+      },
+      "expected": {
+        "monthly": 120000,
+        "annual": 1440000,
+        "net": 1438500,
+        "roiPercent": 95900,
+        "timesCovered": "8.0"
+      },
+      "actual": {
+        "ticketText": "$12,000",
+        "patientText": "+10 / mo",
+        "monthlyText": "+$120,000 / mo",
+        "annualText": "+$1,440,000 / yr",
+        "investText": "-$1,500",
+        "netProfitText": "$1,438,500",
+        "roiText": "95,900% ROI",
+        "coveredText": "8.0x System Cost in 1 Patient",
+        "avgTicket": 12000,
+        "patientsPerMonth": 10,
+        "monthlyGross": 120000,
+        "annualGross": 1440000,
+        "systemCost": 1500,
+        "netProfit": 1438500,
+        "roiPercent": 95900,
+        "timesCoveredByOnePatient": "8.0",
+        "sliderTicketVal": 12000,
+        "sliderPatientVal": 10
+      },
+      "passed": true
+    }
+  ],
+  "ctaTest": {
+    "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
+    "href": "https://whop.com/checkout/velogeo-agency",
+    "target": "_blank",
+    "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+    "matchesExpectedWhop": false,
+    "hasGuaranteeCallout": true,
+    "hasBottomBadges": true
+  },
+  "consoleErrors": []
+}

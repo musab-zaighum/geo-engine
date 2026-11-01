@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
+import { CornerChatWidget } from '@/components/CornerChatWidget';
 import { Toaster } from 'sonner';
 
 export const viewport: Viewport = {
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-indigo-200">
         <Navbar />
         <main className="flex-1">{children}</main>
+        <CornerChatWidget />
         <Toaster 
           theme="dark" 
           position="top-right" 

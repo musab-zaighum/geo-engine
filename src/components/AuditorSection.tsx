@@ -56,11 +56,11 @@ export function AuditorSection({ onFixWithGenerator, initialQuery }: AuditorSect
 
     try {
       setTimeout(() => {
-        setStatusStep('Launching Playwright Headless Chromium Engine...');
+        setStatusStep('Initiating Clinical AI Search Diagnostic Engine...');
       }, 1200);
 
       setTimeout(() => {
-        setStatusStep('Parsing DOM, Schema.org @graph & /llms.txt endpoints...');
+        setStatusStep('Analyzing practice architecture, clinical schema & /llms.txt directory...');
       }, 2500);
 
       const res = await fetch('/api/audit', {
@@ -100,19 +100,19 @@ export function AuditorSection({ onFixWithGenerator, initialQuery }: AuditorSect
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-semibold">
               <Bot className="w-3.5 h-3.5 text-blue-600" />
-              Agentic Search & Playwright Browser Engine
+              Autonomous Clinical AI Intelligence &amp; Verification Engine
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Audit Practice AI Search Visibility
             </h2>
             <p className="text-slate-600 text-sm max-w-2xl leading-relaxed">
-              Enter a clinic domain URL or practice name. Our crawler launches headless Chromium, inspects JavaScript-rendered DOM, checks Schema.org JSON-LD headers, and verifies /llms.txt.
+              Enter your practice website domain or clinic name. Our diagnostic engine evaluates your clinical search authority, verifies how ChatGPT and Perplexity cite your doctor credentials, and identifies where local competitors are intercepting your surgical patients.
             </p>
           </div>
 
           <div className="hidden lg:flex items-center gap-2 px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 font-medium">
             <Zap className="w-4 h-4 text-blue-600 shrink-0" />
-            <span>Dual-Engine Crawler Active</span>
+            <span>Live Clinical AI Diagnostic Active</span>
           </div>
         </div>
 
@@ -130,7 +130,7 @@ export function AuditorSection({ onFixWithGenerator, initialQuery }: AuditorSect
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
-              placeholder="Enter URL (e.g. drjane.com) or Clinic Name (e.g. 'Sydney Eye Surgery Clinic')"
+              placeholder="Enter Practice URL (e.g. austincosmetic.com) or Clinic Name (e.g. 'Apex Dental Specialists')"
               className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
             />
           </div>
@@ -207,7 +207,7 @@ export function AuditorSection({ onFixWithGenerator, initialQuery }: AuditorSect
             <div className="flex items-center gap-2">
               {auditResult.isPlaywrightRendered ? (
                 <span className="px-2.5 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full font-mono text-[11px]">
-                  Playwright Headless Chromium Rendered
+                  Clinical AI Engine Verified
                 </span>
               ) : (
                 <span className="px-2.5 py-0.5 bg-slate-700 text-slate-300 border border-slate-600 rounded-full font-mono text-[11px]">

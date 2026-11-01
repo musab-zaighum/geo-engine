@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-11-01T14:20:28.212Z",
+  "floatingButtonTest": {
+    "visible": true,
+    "text": "3. Review Loops & QR\nPILLAR 3"
+  },
+  "welcomeMessageTest": {},
+  "presetButtonTests": [],
+  "clinicianInquiries": [],
+  "closeReopenTest": {},
+  "consoleErrors": [],
+  "error": "locator.innerText: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('div.whitespace-pre-wrap').first()\n"
+}

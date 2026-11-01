@@ -105,11 +105,11 @@ const PRESET_DOMAINS = [
 ];
 
 const SCAN_STEPS = [
-  'Resolving DNS & querying CMS NPPES Federal Registry v2.1...',
-  'Fetching robots.txt & testing /llms.txt crawler directives...',
-  'Validating Schema.org MedicalClinic & Physician AST graph...',
-  'Simulating SearchGPT, Perplexity & Google AI Overviews ranking...',
-  'Compiling 0-error JSON-LD & clinical authority manifest...',
+  'Resolving domain & querying CMS NPPES Federal Provider Registry v2.1...',
+  'Verifying AI search accessibility & clinical directory directives...',
+  'Validating Clinical AI Knowledge Graph & Doctor Licensure Graph...',
+  'Simulating SearchGPT, Perplexity & Google AI Overviews patient recommendations...',
+  'Synthesizing Verified Practice Architecture & Clinical Authority Profile...',
 ];
 
 function RadialScoreDial({ score, grade }: { score: number; grade: string }) {
@@ -436,15 +436,15 @@ export function InstantAuditBar() {
       {
         id: 'chk-7',
         category: 'crawler',
-        title: 'AI Web-Crawler Accessibility (GPTBot, Perplexity, Applebot)',
+        title: 'AI Search Engine Recommendation Access (ChatGPT, Perplexity, Apple Intelligence)',
         status: blockedAiBots.length > 0 ? 'Fail' : 'Pass',
         diagnostic: blockedAiBots.length > 0
-          ? `Website crawler rules block generative AI bots: ${blockedAiBots.join(', ')}. This completely prevents ChatGPT from indexing your clinic.`
-          : 'Website permits all major AI search indexers (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot).',
-        specification: 'AI Web Crawler Access Protocol',
+          ? `Website settings block conversational AI assistants from discovering your practice: ${blockedAiBots.join(', ')}. This causes ChatGPT and Perplexity to omit your clinic when local patients ask for doctor recommendations.`
+          : 'Website authorizes all major clinical AI search assistants (ChatGPT, Perplexity, Google AI Overviews, Apple Intelligence).',
+        specification: 'AI Recommendation Access Standard',
         remediation: blockedAiBots.length > 0
-          ? `Update your website settings to allow AI crawlers to read your public practice information.`
-          : 'AI search bot accessibility verified with 0 crawl blocks.',
+          ? `Authorize AI search engines to read your public practice factsheet and physician credentials.`
+          : 'Clinical AI search accessibility verified with 0 access restrictions.',
       },
     ];
 
@@ -615,7 +615,7 @@ export function InstantAuditBar() {
     if (!auditData) return;
     const subject = encodeURIComponent(`URGENT: Schema & /llms.txt Updates for ${auditData.clinicName}`);
     const body = encodeURIComponent(
-      `Hello Webmaster,\n\nWe recently completed a Generative Engine Optimization (GEO) audit for ${auditData.clinicName} (${auditData.url}).\n\nOur audit detected missing /llms.txt crawler directives and incomplete Schema.org MedicalClinic graphs required for Google AI Overviews and ChatGPT Search.\n\nWe have generated 0-error Schema.org JSON-LD and a compliant /llms.txt manifest ready for installation.\n\nPlease let us know when we can forward the code payload for deployment.\n\nBest regards,\nClinical SEO & Practice Growth Team`
+      `Hello Webmaster,\n\nWe recently completed a Clinical AI Search & Local Growth audit for ${auditData.clinicName} (${auditData.url}).\n\nOur audit detected missing AI directory factsheets (/llms.txt) and incomplete Medical Clinic Knowledge Graphs required for Google AI Overviews and ChatGPT Search recommendations.\n\nWe have generated 100% verified Clinical Knowledge Architecture and an AI practice directory ready for deployment.\n\nPlease let us know when we can coordinate deployment for the practice.\n\nBest regards,\nPractice Clinical AI & Local Growth Team`
     );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
@@ -690,7 +690,7 @@ export function InstantAuditBar() {
             </span>
           </div>
           <div className="flex items-center gap-3 text-xs text-slate-400 font-mono">
-            <span>Powered by CMS NPPES Registry &bull; 0-Error AST</span>
+            <span>Powered by CMS NPPES Registry &bull; 0-Error Verified Graph</span>
           </div>
         </div>
 

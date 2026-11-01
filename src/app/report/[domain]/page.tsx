@@ -36,6 +36,7 @@ import {
 import { toast } from 'sonner';
 import EntityGraphVisualizer from '@/components/EntityGraphVisualizer';
 import GeoCitationSimulator from '@/components/GeoCitationSimulator';
+import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 
 export default function StandaloneClientReportPage() {
   const routeParams = useParams();
@@ -50,9 +51,8 @@ export default function StandaloneClientReportPage() {
   const [copiedLlms, setCopiedLlms] = useState(false);
 
   // Practice ROI Modeler State
-  const [caseValue, setCaseValue] = useState(3500);
+  const [caseValue, setCaseValue] = useState(4500);
   const [newPatients, setNewPatients] = useState(3);
-  const [retainerFee, setRetainerFee] = useState(997);
 
   // Lead / Implementation Modal State
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -242,10 +242,13 @@ export default function StandaloneClientReportPage() {
   const finalJsonLd = liveData?.suggestedSchemaJsonLd || defaultJsonLd;
   const finalLlmsTxt = liveData?.suggestedLlmsTxt || defaultLlmsTxt;
 
+  const systemCost = CLINIC_OFFER_CONFIG.price; // $1,500
   const monthlyRevenueLift = caseValue * newPatients;
   const annualRevenueLift = monthlyRevenueLift * 12;
-  const netMonthlyProfit = Math.max(0, monthlyRevenueLift - retainerFee);
-  const practiceRoiPercent = retainerFee > 0 ? Math.round((netMonthlyProfit / retainerFee) * 100) : 0;
+  const netAnnualProfit = Math.max(0, annualRevenueLift - systemCost);
+  const roiMultiplier = ((annualRevenueLift - systemCost) / systemCost).toFixed(1);
+  const practiceRoiPercent = systemCost > 0 ? Math.round(((annualRevenueLift - systemCost) / systemCost) * 100) : 0;
+  const timesCoveredByOnePatient = (caseValue / systemCost).toFixed(1);
 
   const handleCopySchema = () => {
     navigator.clipboard.writeText(finalJsonLd);
@@ -773,15 +776,15 @@ export default function StandaloneClientReportPage() {
                       <Calculator className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-bold text-white">Practice Patient Value &amp; Retainer ROI Modeler</h3>
+                      <h3 className="text-base font-bold text-white">Practice Patient Value &amp; ROI Modeler ($1,500 One-Time)</h3>
                       <p className="text-xs text-slate-400">
-                        Interactive financial simulation: see how capturing AI search cases directly covers the GEO retainer.
+                        Interactive financial simulation: capturing just 1 elective procedure completely pays for the entire $1,500 deployment.
                       </p>
                     </div>
                   </div>
                   <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold flex items-center gap-1.5 self-start sm:self-auto">
-                    <TrendingUp className="w-3.5 h-3.5" />
-                    <span>+{practiceRoiPercent}% Projected Practice ROI</span>
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>90-Day 1-Patient ROI Guarantee</span>
                   </div>
                 </div>
 
@@ -794,7 +797,7 @@ export default function StandaloneClientReportPage() {
                       <span className="font-bold text-white">${caseValue.toLocaleString()}</span>
                     </div>
                     <div className="flex items-center gap-1.5 pt-1">
-                      {[1500, 3500, 5000, 8000].map((val) => (
+                      {[1500, 4500, 8000, 15000].map((val) => (
                         <button
                           key={val}
                           type="button"
@@ -838,24 +841,12 @@ export default function StandaloneClientReportPage() {
                   {/* Lever 3 */}
                   <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-400">Proposed GEO Retainer</span>
-                      <span className="font-bold text-indigo-400">${retainerFee.toLocaleString()}/mo</span>
+                      <span className="text-slate-400">System Investment</span>
+                      <span className="font-bold text-emerald-400">$1,500 One-Time</span>
                     </div>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      {[650, 997, 1250, 1500].map((fee) => (
-                        <button
-                          key={fee}
-                          type="button"
-                          onClick={() => setRetainerFee(fee)}
-                          className={`flex-1 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                            retainerFee === fee
-                              ? 'bg-indigo-600 text-white shadow-sm'
-                              : 'bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800'
-                          }`}
-                        >
-                          ${fee}
-                        </button>
-                      ))}
+                    <div className="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span>0 ongoing monthly retainers</span>
                     </div>
                   </div>
                 </div>
@@ -865,7 +856,7 @@ export default function StandaloneClientReportPage() {
                   <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
                     <div className="text-[10px] text-slate-400 uppercase tracking-wider">Monthly Practice Lift</div>
                     <div className="text-lg font-black text-white">+${monthlyRevenueLift.toLocaleString()}</div>
-                    <div className="text-[10px] text-emerald-400 font-mono">From {newPatients} AI patients</div>
+                    <div className="text-[10px] text-emerald-400 font-mono">From {newPatients} AI patients/mo</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
                     <div className="text-[10px] text-slate-400 uppercase tracking-wider">Annual Production</div>
@@ -873,14 +864,14 @@ export default function StandaloneClientReportPage() {
                     <div className="text-[10px] text-slate-500 font-mono">12-mo run rate</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Net Practice Profit</div>
-                    <div className="text-lg font-black text-emerald-400">+${netMonthlyProfit.toLocaleString()}/mo</div>
-                    <div className="text-[10px] text-emerald-400 font-mono">After retainer deduction</div>
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">1-Patient Reality</div>
+                    <div className="text-lg font-black text-emerald-400">{timesCoveredByOnePatient}x Covered</div>
+                    <div className="text-[10px] text-emerald-400 font-mono">In 1 single patient</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Client Payback</div>
-                    <div className="text-lg font-black text-amber-300">&lt; 3 Days</div>
-                    <div className="text-[10px] text-amber-400/80 font-mono">1st patient pays retainer</div>
+                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Net System ROI Multiple</div>
+                    <div className="text-lg font-black text-amber-300">{roiMultiplier}x Net ROI</div>
+                    <div className="text-[10px] text-amber-400/80 font-mono">Above $1,500 investment</div>
                   </div>
                 </div>
 
@@ -905,10 +896,10 @@ export default function StandaloneClientReportPage() {
                       <span>With NexusRank1 Clinical GEO</span>
                     </div>
                     <ul className="text-xs text-slate-400 space-y-1.5 list-disc pl-4">
-                      <li>0-Error W3C validated Schema.org @graph anchored in Google Knowledge Graph</li>
+                      <li>Verified Clinical Practice Graph anchored in Google &amp; ChatGPT Knowledge Graph</li>
                       <li>Official /llms.txt manifest establishes board licensure and insurance data</li>
                       <li>Prime candidate status across Google AI Overviews, SearchGPT, and Perplexity</li>
-                      <li>Net monthly practice gain: <strong className="text-emerald-300 font-bold">+${netMonthlyProfit.toLocaleString()}/mo</strong></li>
+                      <li>Net annual practice gain: <strong className="text-emerald-300 font-bold">+${netAnnualProfit.toLocaleString()}/yr</strong></li>
                     </ul>
                   </div>
                 </div>
@@ -916,16 +907,15 @@ export default function StandaloneClientReportPage() {
                 {/* Instant Claim Button */}
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30">
                   <div className="text-xs text-slate-300">
-                    Ready to claim these <strong className="text-white">+{newPatients} monthly cases</strong>? Lock in your practice GEO deployment slot today.
+                    Ready to claim these <strong className="text-white">+{newPatients} monthly cases</strong>? Lock in your practice GEO deployment slot today backed by our 90-Day 1-Patient ROI Guarantee.
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleOpenLeadModal}
+                  <a
+                    href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
                     className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/50 transition-all touch-target cursor-pointer shrink-0"
                   >
                     <Sparkles className="w-4 h-4 text-white" />
-                    <span>Claim 0-Error Deployment</span>
-                  </button>
+                    <span>Claim $1,500 System</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -936,16 +926,25 @@ export default function StandaloneClientReportPage() {
             <div className="space-y-1">
               <h4 className="text-base font-bold text-white">Need 0-error schema &amp; /llms.txt deployed for {practiceTitle}?</h4>
               <p className="text-xs text-slate-400 max-w-xl">
-                Our clinical engineers provide white-glove header integration, W3C validation, and Google AI Overviews grounding within 24 hours.
+                100% Done-For-You: our clinical engineering team handles complete technical installation with your webmaster in under 24 hours. Zero coding required. Backed by the 90-Day 1-Patient ROI Guarantee.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={handleOpenLeadModal}
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black tracking-wide shadow-lg shadow-emerald-950/50 transition-all touch-target cursor-pointer shrink-0"
-            >
-              Book 15-Min Walkthrough
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+              <a
+                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black tracking-wide shadow-lg shadow-emerald-950/50 transition-all touch-target cursor-pointer flex items-center gap-2"
+              >
+                <span>Claim $1,500 System</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <button
+                type="button"
+                onClick={handleOpenLeadModal}
+                className="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-all touch-target cursor-pointer"
+              >
+                Email Report to Practice Manager
+              </button>
+            </div>
           </div>
         </div>
 

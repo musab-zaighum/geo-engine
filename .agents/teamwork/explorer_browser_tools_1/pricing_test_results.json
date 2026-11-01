@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-11-01T14:23:38.344Z",
+  "route": "/pricing",
+  "httpStatus": 200,
+  "viewports": {
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "hasHorizontalOverflow": false,
+      "screenshot": "/home/pwn/geo-engine/.agents/teamwork/explorer_browser_tools_1/screenshots/pricing_desktop.png"
+    },
+    "tablet": {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "hasHorizontalOverflow": false,
+      "screenshot": "/home/pwn/geo-engine/.agents/teamwork/explorer_browser_tools_1/screenshots/pricing_tablet.png"
+    },
+    "mobile": {
+      "width": 375,
+      "height": 667,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "hasHorizontalOverflow": false,
+      "screenshot": "/home/pwn/geo-engine/.agents/teamwork/explorer_browser_tools_1/screenshots/pricing_mobile.png"
+    }
+  },
+  "masterOfferCard": {
+    "heroTitle": "Ensure AI Search Recommends Your Clinic Over Local Competitors",
+    "price": "$1,500",
+    "billingPeriod": "ONE-TIME INVESTMENT",
+    "guaranteeTitle": "The 1-Patient ROI Guarantee",
+    "passed": false
+  },
+  "pillarsTest": [
+    {
+      "title": "Geo-Visibility Grid Tracking & Zip-Code Benchmarking",
+      "exists": true
+    },
+    {
+      "title": "Google Business Profile (GBP) & Citation Cleanup",
+      "exists": true
+    },
+    {
+      "title": "Automated Review Loops & Front-Desk Engine",
+      "exists": true
+    },
+    {
+      "title": "AI Model Readability & Crawler Directives",
+      "exists": true
+    }
+  ],
+  "valueMatrixTest": [
+    {
+      "specialty": "Dental Implants",
+      "exists": true
+    },
+    {
+      "specialty": "Invisalign / Ortho",
+      "exists": true
+    },
+    {
+      "specialty": "Plastic Surgery",
+      "exists": true
+    },
+    {
+      "specialty": "MedSpa Packages",
+      "exists": true
+    },
+    {
+      "specialty": "Orthopedic Consult",
+      "exists": true
+    }
+  ],
+  "faqTest": [
+    {
+      "index": 1,
+      "question": "Why a flat $1,500 fee instead of an ongoing monthly agency retainer?",
+      "answerSnippet": "Traditional marketing agencies charge $1,500 to $3,500 EVERY month to manually fiddle with blog post..."
+    },
+    {
+      "index": 2,
+      "question": "Will this interfere with our existing website or web developer?",
+      "answerSnippet": "Not at all. NexusRank1 deploys clean, non-visual JSON-LD metadata, Google Business Profile correctio..."
+    },
+    {
+      "index": 3,
+      "question": "How fast do AI search engines (ChatGPT, Perplexity, Google) recognize the updates?",
+      "answerSnippet": "Most modern generative search engines recrawl healthcare websites every 24 to 72 hours. Once our 0-e..."
+    },
+    {
+      "index": 4,
+      "question": "Is this compliant with HIPAA and Medical Board advertising rules?",
+      "answerSnippet": "100% compliant. We only syndicate public clinical credentials, NPI registrations, state medical boar..."
+    },
+    {
+      "index": 5,
+      "question": "What is the 1-Patient ROI Guarantee?",
+      "answerSnippet": "Elective treatments (dental implants, Invisalign, surgical consultations, medspa treatments) average..."
+    },
+    {
+      "index": 6,
+      "question": "How do we access the system after purchasing?",
+      "answerSnippet": "Immediately after completing your Whop checkout, you will receive your practice license key and inst..."
+    }
+  ],
+  "checkoutLinks": [
+    {
+      "index": 1,
+      "text": "Get System",
+      "href": "https://whop.com/checkout/velogeo-agency",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+      "isTargetPlan": false
+    },
+    {
+      "index": 2,
+      "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
+      "href": "https://whop.com/checkout/velogeo-agency",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+      "isTargetPlan": false
+    },
+    {
+      "index": 3,
+      "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
+      "href": "https://whop.com/checkout/velogeo-agency",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+      "isTargetPlan": false
+    },
+    {
+      "index": 4,
+      "text": "Secure Your Clinic's Exclusive Zip Code Allocation",
+      "href": "https://whop.com/checkout/velogeo-agency",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+      "isTargetPlan": false
+    },
+    {
+      "index": 5,
+      "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
+      "href": "https://whop.com/checkout/velogeo-agency",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+      "isTargetPlan": false
+    }
+  ],
+  "consoleMessages": [],
+  "consoleErrors": []
+}

@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-11-01T14:24:17.163Z",
+  "endpoint": "http://localhost:3000/api/chat",
+  "tests": [
+    {
+      "id": "welcome_check",
+      "label": "Welcome Message & Guarantee Reference",
+      "query": "What are the direct practice pricing tiers and 1-patient ROI guarantee?",
+      "status": 200,
+      "elapsedMs": 1510,
+      "replyLength": 1407,
+      "fullReply": "### 💰 NexusRank1 Direct Clinic Pricing & ROI Structure\n\n#### The Complete Clinic Local Growth & AI Audit System ($1,500 One-Time Investment)\n- **Permanent Infrastructure:** 0 ongoing monthly software fees or agency retainers.\n- **Pillar 1: Geo-Visibility Grid Tracking:** Maps 3x3 mile neighborhood grids and benchmarks visibility against top rival clinics in your exact zip code.\n- **Pillar 2: Google Profile & Citation Cleanup:** Resolves category mismatches and syncs phone/address consistency across 50+ medical directories.\n- **Pillar 3: Front-Desk Automated Review Loops:** Reception desk QR counter card and post-appointment SMS loop to distill 5-star clinical sentiment.\n- **Pillar 4: AI Model Readability & Search Defense:** 100% verified clinical schema and ChatGPT /llms.txt practice factsheet linking CMS NPPES NPI-1 credentials and surgical billing codes (CDT/CPT).\n- **Zero-Work Concierge Setup:** Our team installs and configures 100% of the code directly on your WordPress, Webflow, Squarespace, or custom site within 24 hours.\n\n#### 🎯 The \"1 High-Ticket Patient\" ROI Guarantee:\nElective treatments (dental implants, Invisalign, full-arch cases, facial aesthetics) average $4,500 to $25,000+. Acquiring just 1 new patient through AI search covers the entire $1,500 investment 3x to 16x over! If you don't acquire a verified patient consultation within 90 days, we issue a 100% full refund.",
+      "expectedMatches": [
+        "$1,500",
+        "0 ongoing monthly",
+        "Pillar 1: Geo-Visibility",
+        "1 High-Ticket Patient",
+        "90 days"
+      ],
+      "matchedPhrases": [
+        "$1,500",
+        "0 ongoing monthly",
+        "Pillar 1: Geo-Visibility",
+        "1 High-Ticket Patient",
+        "90 days"
+      ],
+      "passed": true
+    },
+    {
+      "id": "pricing_terms",
+      "label": "Clinician Pricing & Deployment Terms",
+      "query": "Can you explain your pricing and the $1,500 one-time deployment terms?",
+      "status": 200,
+      "elapsedMs": 211,
+      "replyLength": 1407,
+      "fullReply": "### 💰 NexusRank1 Direct Clinic Pricing & ROI Structure\n\n#### The Complete Clinic Local Growth & AI Audit System ($1,500 One-Time Investment)\n- **Permanent Infrastructure:** 0 ongoing monthly software fees or agency retainers.\n- **Pillar 1: Geo-Visibility Grid Tracking:** Maps 3x3 mile neighborhood grids and benchmarks visibility against top rival clinics in your exact zip code.\n- **Pillar 2: Google Profile & Citation Cleanup:** Resolves category mismatches and syncs phone/address consistency across 50+ medical directories.\n- **Pillar 3: Front-Desk Automated Review Loops:** Reception desk QR counter card and post-appointment SMS loop to distill 5-star clinical sentiment.\n- **Pillar 4: AI Model Readability & Search Defense:** 100% verified clinical schema and ChatGPT /llms.txt practice factsheet linking CMS NPPES NPI-1 credentials and surgical billing codes (CDT/CPT).\n- **Zero-Work Concierge Setup:** Our team installs and configures 100% of the code directly on your WordPress, Webflow, Squarespace, or custom site within 24 hours.\n\n#### 🎯 The \"1 High-Ticket Patient\" ROI Guarantee:\nElective treatments (dental implants, Invisalign, full-arch cases, facial aesthetics) average $4,500 to $25,000+. Acquiring just 1 new patient through AI search covers the entire $1,500 investment 3x to 16x over! If you don't acquire a verified patient consultation within 90 days, we issue a 100% full refund.",
+      "expectedMatches": [
+        "$1,500",
+        "One-Time",
+        "0 ongoing monthly software fees",
+        "Concierge Setup"
+      ],
+      "matchedPhrases": [
+        "$1,500",
+        "One-Time",
+        "0 ongoing monthly software fees",
+        "Concierge Setup"
+      ],
+      "passed": true
+    },
+    {
+      "id": "timeline_concierge",
+      "label": "Implementation Timeline & Concierge Installation",
+      "query": "What is the implementation timeline and how do we paste code on WordPress, Webflow, or Squarespace?",
+      "status": 200,
+      "elapsedMs": 227,
+      "replyLength": 1317,
+      "fullReply": "### 📋 Step-by-Step CMS Code Insertion Guide\n\n#### 1. WordPress / WooCommerce\n- **Method 1 (Recommended Plugin):** Install **WPCode – Insert Headers and Footers** -> Go to **Code Snippets -> Header & Footer** -> Paste your `<script type=\"application/ld+json\">...script>` code into the **Header** box -> Save Changes.\n- **Method 2 (Theme File Editor):** Go to **Appearance -> Theme File Editor -> header.php** -> Paste code directly BEFORE the closing `</head>` tag.\n- **Hosting /llms.txt:** Upload your `llms.txt` file to your site root directory (`public_html/llms.txt`) via cPanel or SFTP.\n\n#### 2. Shopify Store\n- Go to **Online Store -> Themes -> Edit Code -> Layout -> theme.liquid**.\n- Paste your JSON-LD script block directly ABOVE the closing `</head>` tag. Click **Save**.\n- **Hosting /llms.txt:** Upload `llms.txt` under **Settings -> Files**. Copy CDN link. Create URL Redirect under **Online Store -> Navigation -> View URL Redirects** from `/llms.txt` to your CDN file link.\n\n#### 3. Webflow\n- Go to **Project Settings -> Custom Code -> Head Code**.\n- Paste JSON-LD script and save changes. Publish site to domain.\n\n#### 4. Squarespace & Wix\n- **Squarespace:** **Settings -> Developer Tools -> Code Injection -> Header**.\n- **Wix:** **Settings -> Custom Code -> Add Custom Code -> Set to Head -> Apply**.",
+      "expectedMatches": [
+        "WordPress",
+        "Webflow",
+        "Squarespace",
+        "24 hours",
+        "WPCode"
+      ],
+      "matchedPhrases": [
+        "WordPress",
+        "Webflow",
+        "Squarespace",
+        "WPCode"
+      ],
+      "passed": true
+    },
+    {
+      "id": "competitor_displacement",
+      "label": "Google Ads Competitor Displacement & Geo-Grid",
+      "query": "How does your Geo-Grid Radar displace competitors who spend $100/click on Google Ads?",
+      "status": 200,
+      "elapsedMs": 277,
+      "replyLength": 713,
+      "fullReply": "### 🤖 Master NexusRank1 Practice AI Advisor\n\nI am fully initialized with the official **NexusRank1 Clinical Practice GEO Knowledge Base**.\n\nYou can ask me about:\n1. **CMS Code Insertion Guides:** Step-by-step instructions for WordPress, Shopify, Webflow, Squarespace & Wix\n2. **Direct Clinic Pricing & Patient ROI:** The complete $1,500 one-time deployment with 0 monthly retainers and the 90-Day 1-Patient ROI Guarantee\n3. **Competitor Steal Radar:** How to reclaim patients when ChatGPT or Perplexity recommends a local rival\n4. **Schema.org @graph & /llms.txt Standards:** Federal NPI registry, state licensure, and accredited procedure ontologies\n\nHow can I assist your practice with AI search defense today?",
+      "expectedMatches": [
+        "Competitor",
+        "Geo-Visibility",
+        "ChatGPT",
+        "Perplexity",
+        "Schema"
+      ],
+      "matchedPhrases": [
+        "Competitor",
+        "ChatGPT",
+        "Perplexity",
+        "Schema"
+      ],
+      "passed": true
+    },
+    {
+      "id": "surgeon_pitch",
+      "label": "Surgeon Clinical Inquiry Pitch Script",
+      "query": "Give me a clinical outreach pitch script for a Specialist Plastic Surgeon",
+      "status": 200,
+      "elapsedMs": 225,
+      "replyLength": 921,
+      "fullReply": "### ✉️ Clinical Inquiry Script for Practice Owners & Medical Directors\n\n**Subject:** Missing /llms.txt file on [Clinic Name] (AI Search Blindspot)\n\n> Hi Dr. [Last Name],\n>\n> When prospective patients query ChatGPT Search or Perplexity for top [Procedure, e.g. Dental Implants or Rhinoplasty] specialists in [City], AI engines bypass traditional websites and verify official NPI licensure in structured data before making recommendations.\n>\n> We ran a quick GEO scan on your practice domain—your AI search readiness score is currently 35/100 because your site is missing a Physician @graph schema and a domain /llms.txt manifest.\n>\n> We have generated the complete 0-error Schema.org JSON-LD and /llms.txt manifest for your clinic. Would you be open to a 2-minute diagnostic showing how this prevents local competitors from winning your patient recommendations?\n>\n> Best regards,  \n> Clinical GEO Defense Team | NexusRank1",
+      "expectedMatches": [
+        "Subject:",
+        "Dr. [Last Name]",
+        "NPI licensure",
+        "Schema.org JSON-LD",
+        "/llms.txt"
+      ],
+      "matchedPhrases": [
+        "Subject:",
+        "Dr. [Last Name]",
+        "NPI licensure",
+        "Schema.org JSON-LD",
+        "/llms.txt"
+      ],
+      "passed": true
+    }
+  ]
+}

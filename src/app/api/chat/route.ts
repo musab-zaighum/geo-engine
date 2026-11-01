@@ -106,11 +106,18 @@ export async function POST(req: NextRequest) {
       body = {};
     }
 
-    const messages: ChatMessage[] = Array.isArray(body.messages) ? body.messages : [];
+    let messages: ChatMessage[] = [];
+    if (Array.isArray(body.messages) && body.messages.length > 0) {
+      messages = body.messages;
+    } else if (typeof body.message === 'string' && body.message.trim().length > 0) {
+      messages = [{ id: '1', role: 'user', content: body.message.trim(), timestamp: new Date().toISOString() }];
+    } else if (typeof body.query === 'string' && body.query.trim().length > 0) {
+      messages = [{ id: '1', role: 'user', content: body.query.trim(), timestamp: new Date().toISOString() }];
+    }
 
     if (!messages || messages.length === 0) {
       return NextResponse.json(
-        { error: 'Messages array is required.' },
+        { error: 'A message or messages array is required.' },
         { status: 400 }
       );
     }
@@ -132,6 +139,7 @@ Instructions:
       const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || '';
       const fallbackReply = buildFallbackChatResponse(lastUserMsg);
       return NextResponse.json({
+        reply: fallbackReply,
         message: {
           role: 'assistant',
           content: fallbackReply,
@@ -184,6 +192,7 @@ Instructions:
           const replyContent = resData.choices?.[0]?.message?.content;
           if (replyContent) {
             return NextResponse.json({
+              reply: replyContent,
               message: {
                 role: 'assistant',
                 content: replyContent,
@@ -194,10 +203,12 @@ Instructions:
         }
 
         const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || '';
+        const fallback = buildFallbackChatResponse(lastUserMsg);
         return NextResponse.json({
+          reply: fallback,
           message: {
             role: 'assistant',
-            content: buildFallbackChatResponse(lastUserMsg),
+            content: fallback,
             timestamp: new Date().toISOString(),
           },
         });
@@ -208,16 +219,19 @@ Instructions:
 
       if (!replyContent) {
         const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || '';
+        const fallback = buildFallbackChatResponse(lastUserMsg);
         return NextResponse.json({
+          reply: fallback,
           message: {
             role: 'assistant',
-            content: buildFallbackChatResponse(lastUserMsg),
+            content: fallback,
             timestamp: new Date().toISOString(),
           },
         });
       }
 
       return NextResponse.json({
+        reply: replyContent,
         message: {
           role: 'assistant',
           content: replyContent,
@@ -226,10 +240,12 @@ Instructions:
       });
     } catch {
       const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || '';
+      const fallback = buildFallbackChatResponse(lastUserMsg);
       return NextResponse.json({
+        reply: fallback,
         message: {
           role: 'assistant',
-          content: buildFallbackChatResponse(lastUserMsg),
+          content: fallback,
           timestamp: new Date().toISOString(),
         },
       });
