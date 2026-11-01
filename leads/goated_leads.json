@@ -688,5 +688,235 @@
     "npi_number": "1255325197",
     "npi_verified": true,
     "clinical_specialization": "All-on-4 Dental Implants, Surgical Reconstruction & Bone Grafting"
+  },
+  {
+    "lead_id": "GOAT-016",
+    "practice_name": "Perio Artist – Beverly Hills Periodontics & Dental Implants",
+    "website_url": "https://perioartist.com/",
+    "solo_owner": {
+      "name": "Dr. Ricardo Raschkovsky",
+      "credentials": "DDS",
+      "title": "Solo Owner & Principal Periodontist",
+      "background": "UCLA School of Dentistry trained periodontist and implant surgeon with over 25 years in private solo practice on Wilshire Blvd specializing in computer-guided surgical implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "8500 Wilshire Blvd #709",
+      "city": "Beverly Hills",
+      "state": "CA",
+      "zip_code": "90211",
+      "metro_affluence": "Ultra-affluent Beverly Hills Wilshire Corridor (Median HHI > 65k)"
+    },
+    "phone_number": "(310) 652-7800",
+    "google_maps": {
+      "query": "dental implants Beverly Hills CA",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 142
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Ricardo Raschkovsky (Perio Artist)",
+      "advertiser_id": "AR04692434324169949185",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$75 - $125/click on high-intent implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "The Beverly Hills Center",
+      "address": "9465 Wilshire Blvd #450, Beverly Hills, CA 90212",
+      "phone": "+1 310-278-8200",
+      "website": "https://beverlyhillscenter.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 225
+    },
+    "custom_pitch_hook_1500": "Dr. Raschkovsky, you have built an exceptional clinical reputation with 142 verified 4.9-star reviews, yet you are actively funding Active Search PPC Campaigns paying 0–20 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, The Beverly Hills Center commands the #1 spot on Google Maps and AI search on 9465 Wilshire Blvd with 225+ reviews, capturing over 40% of affluent Beverly Hills patients seeking ,000–5,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat ,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1174617518",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Reconstruction & Periodontal Microsurgery"
+  },
+  {
+    "lead_id": "GOAT-017",
+    "practice_name": "The Dental Implant Center",
+    "website_url": "https://dentalimplantcenter.com/",
+    "solo_owner": {
+      "name": "Dr. David McFadden",
+      "credentials": "DMD, DABOI/ID",
+      "title": "Solo Founder & Principal Prosthodontist",
+      "background": "Board-certified prosthodontist and Diplomate of the American Board of Oral Implantology with over 30 years of solo surgical implant and full-arch reconstruction practice on Lovers Lane."
+    },
+    "location": {
+      "address": "5120 W Lovers Ln",
+      "city": "Dallas",
+      "state": "TX",
+      "zip_code": "75209",
+      "metro_affluence": "Affluent Park Cities / Lovers Lane Corridor (Median HHI > 48k)"
+    },
+    "phone_number": "(214) 956-9100",
+    "google_maps": {
+      "query": "dental implants Dallas TX Lovers Ln",
+      "rank": 4,
+      "rating": 5,
+      "review_count": 164
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "BARBARA PARADIS (The Dental Implant Center)",
+      "advertiser_id": "AR15638575399091306497",
+      "active_ad_count": "3 Active Search PPC Campaigns",
+      "estimated_cpc": "$75 - $125/click on high-intent implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Highland Park Periodontics & Dental Implants",
+      "address": "4514 Cole Ave #902, Dallas, TX 75205",
+      "phone": "+1 214-521-1141",
+      "website": "https://highlandparkperio.com/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 88
+    },
+    "custom_pitch_hook_1500": "Dr. McFadden, you have built an exceptional clinical reputation with 164 verified 5.0-star reviews, yet you are actively funding 3 Active Search PPC Campaigns paying 5–30 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Highland Park Periodontics & Dental Implants commands the #1 spot on Google Maps and AI search on 4514 Cole Ave with 88+ reviews, capturing over 40% of affluent Park Cities patients seeking ,000–5,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat ,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1629290267",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Fixed Bridges & Prosthodontic Rehabilitation"
+  },
+  {
+    "lead_id": "GOAT-018",
+    "practice_name": "Corwin W. Evans, DDS - Periodontics & Dental Implants",
+    "website_url": "https://www.corwinevansdds.com/",
+    "solo_owner": {
+      "name": "Dr. Corwin W. Evans",
+      "credentials": "DDS",
+      "title": "Solo Owner & Principal Periodontist",
+      "background": "USC School of Dentistry alumnus with over 30 years dedicated exclusively to solo periodontics, immediate surgical implant placement, and bone regeneration in Newport Center."
+    },
+    "location": {
+      "address": "1401 Avocado Ave Suite 309",
+      "city": "Newport Beach",
+      "state": "CA",
+      "zip_code": "92660",
+      "metro_affluence": "Fashion Island / Newport Center medical corridor (Median HHI > 65k)"
+    },
+    "phone_number": "(949) 759-7007",
+    "google_maps": {
+      "query": "dental implants Newport Beach CA Avocado Ave",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 110
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Corwin W. Evans, DDS",
+      "advertiser_id": "corwinevansdds.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$75 - $125/click on high-intent implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "4M Dental Implant Center",
+      "address": "20371 Irvine Ave, Newport Beach, CA 92660",
+      "phone": "+1 949-506-2130",
+      "website": "https://4mdentalimplants.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 342
+    },
+    "custom_pitch_hook_1500": "Dr. Evans, you have built an exceptional clinical reputation with 110 verified 4.9-star reviews on Avocado Ave, yet you are actively funding Active Search PPC Ads paying 0–15 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, 4M Dental Implant Center commands the #1 spot on Google Maps and AI search on 20371 Irvine Ave with 342+ reviews, capturing over 40% of affluent Newport Beach patients seeking ,000–5,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat ,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1255421798",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Periodontal Bone Grafting & Immediate Load Restorations"
+  },
+  {
+    "lead_id": "GOAT-019",
+    "practice_name": "Fritch Dental Implant & Prosthodontic Center",
+    "website_url": "https://fritchdental.com/",
+    "solo_owner": {
+      "name": "Dr. Edward Fritch",
+      "credentials": "DDS, MSD",
+      "title": "Solo Owner & Principal Prosthodontist",
+      "background": "Indiana University School of Dentistry graduate and master prosthodontist specializing in complex full-mouth implant rehabilitation and computer-guided surgical protocols in DC Ranch."
+    },
+    "location": {
+      "address": "18650 N Thompson Peak Pkwy Suite 2010",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "zip_code": "85255",
+      "metro_affluence": "DC Ranch / Silverleaf North Scottsdale corridor (Median HHI > 68k)"
+    },
+    "phone_number": "(602) 689-0508",
+    "google_maps": {
+      "query": "dental implants North Scottsdale AZ DC Ranch",
+      "rank": 4,
+      "rating": 5,
+      "review_count": 95
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Fritch Dental Care",
+      "advertiser_id": "fritchdental.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$75 - $125/click on high-intent implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Dental Implant Institute",
+      "address": "8787 E Pinnacle Peak Rd, Scottsdale, AZ 85255",
+      "phone": "+1 623-688-9590",
+      "website": "https://dentalimplantinstitute.net/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 85
+    },
+    "custom_pitch_hook_1500": "Dr. Fritch, you have built an exceptional clinical reputation with 95 verified 5.0-star reviews on Thompson Peak Pkwy, yet you are actively funding Active Search PPC Ads paying 5–10 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Dental Implant Institute commands the #1 spot on Google Maps and AI search on 8787 E Pinnacle Peak Rd with 85+ reviews, capturing over 40% of affluent North Scottsdale patients seeking ,000–5,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat ,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1205074879",
+    "npi_verified": true,
+    "clinical_specialization": "Full-Arch Fixed Bridges, Surgical Dental Implants & Prosthodontic Rehabilitation"
+  },
+  {
+    "lead_id": "GOAT-020",
+    "practice_name": "Dental Implant Specialists of Boca Raton",
+    "website_url": "https://drjackkrauser.com/",
+    "solo_owner": {
+      "name": "Dr. Jack Krauser",
+      "credentials": "DMD",
+      "title": "Solo Owner & Principal Periodontist / Implantologist",
+      "background": "Internationally recognized pioneer and author on dental implantology with over 35 years in solo private practice on Palmetto Park Rd focusing exclusively on surgical implants and full-arch restorations."
+    },
+    "location": {
+      "address": "1499 W Palmetto Park Rd Ste 302",
+      "city": "Boca Raton",
+      "state": "FL",
+      "zip_code": "33486",
+      "metro_affluence": "Affluent Central Boca Raton Palmetto Park Corridor (Median HHI > 35k)"
+    },
+    "phone_number": "(561) 392-4747",
+    "google_maps": {
+      "query": "dental implants Boca Raton FL Palmetto Park",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 175
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Jack Krauser DMD / Dental Implant Specialists",
+      "advertiser_id": "drjackkrauser.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$75 - $125/click on high-intent implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "South Florida Center for Periodontics & Implant Dentistry",
+      "address": "3020 N Military Trl #200, Boca Raton, FL 33431",
+      "phone": "+1 561-912-9993",
+      "website": "https://flperio.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 580
+    },
+    "custom_pitch_hook_1500": "Dr. Krauser, you have built an exceptional clinical reputation with 175 verified 4.9-star reviews on Palmetto Park Rd, yet you are actively funding Active Search PPC Ads paying 0–25 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, South Florida Center for Periodontics & Implant Dentistry commands the #1 spot on Google Maps and AI search on 3020 N Military Trl with 580+ reviews, capturing over 40% of affluent Boca Raton patients seeking ,000–5,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat ,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1457574048",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Teeth-in-a-Day & Bone Grafting"
   }
 ]

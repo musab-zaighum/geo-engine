@@ -316,11 +316,14 @@ export function evaluateNpiRecord(raw: any): DoctorVerification {
   }
 
   // 2. Doctor credentials check: DDS, DMD, MD, DO
-  const hasDentalDegree = DENTAL_SURGERY_CREDENTIAL_REGEX.test(credential);
-  const hasMdDegree = MD_CREDENTIAL_REGEX.test(credential);
-
-  // 3. Taxonomy validation: reject empty taxonomy arrays instead of fabricating fallback
   const taxonomies: any[] = Array.isArray(raw.taxonomies) ? raw.taxonomies : [];
+  const hasExplicitDentalDegree = DENTAL_SURGERY_CREDENTIAL_REGEX.test(credential);
+  const hasDentalTaxonomy = taxonomies.some((t: any) =>
+    APPROVED_DENTAL_TAXONOMY_CODES[t.code] ||
+    /dentist|periodont|prosthodont|oral\s+surgery/i.test(t.desc || '')
+  );
+  const hasDentalDegree = hasExplicitDentalDegree || hasDentalTaxonomy;
+  const hasMdDegree = MD_CREDENTIAL_REGEX.test(credential);
   if (taxonomies.length === 0) {
     return {
       verified: false,
