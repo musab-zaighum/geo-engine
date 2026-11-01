@@ -142,7 +142,7 @@ export async function runPipeline(options?: Partial<PipelineOptions>): Promise<{
     const passImplant = /implant|all-on-4|full-arch|perio|prostho/i.test(
       `${rawLead.practice_name} ${rawLead.solo_owner?.title} ${rawLead.solo_owner?.background}`
     );
-    const passDso = !/clearchoice|aspen|heartland|pacific dental|smile brands/i.test(
+    const passDso = !/clearchoice|aspen\s+dental|aspendental|heartland\s+dental|heartlanddental|pacific\s+dental|smile\s+brands/i.test(
       `${rawLead.practice_name} ${rawLead.website_url}`
     );
     const passSolo =

@@ -56,7 +56,65 @@ export const AFFLUENT_ZIPS: Record<string, AffluentZipInfo> = {
   // Greenwich CT
   "06830": { zip: "06830", city: "Greenwich", state: "CT", metro: "Greenwich", medianHhi: 185000 },
   "06831": { zip: "06831", city: "Greenwich", state: "CT", metro: "Greenwich", medianHhi: 195000 },
-  "06870": { zip: "06870", city: "Old Greenwich", state: "CT", metro: "Greenwich", medianHhi: 220000 }
+  "06870": { zip: "06870", city: "Old Greenwich", state: "CT", metro: "Greenwich", medianHhi: 220000 },
+  "06820": { zip: "06820", city: "Darien", state: "CT", metro: "Fairfield County / Greenwich, CT", medianHhi: 245000 },
+  "06840": { zip: "06840", city: "New Canaan", state: "CT", metro: "Fairfield County / Greenwich, CT", medianHhi: 220000 },
+  "06880": { zip: "06880", city: "Westport", state: "CT", metro: "Fairfield County / Greenwich, CT", medianHhi: 215000 },
+
+  // Manhattan / New York, NY (R1 Corridor 1)
+  "10019": { zip: "10019", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 168000 },
+  "10021": { zip: "10021", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 185000 },
+  "10022": { zip: "10022", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 175000 },
+  "10028": { zip: "10028", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 185000 },
+  "10065": { zip: "10065", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 190000 },
+  "10075": { zip: "10075", city: "New York", state: "NY", metro: "Manhattan / New York, NY", medianHhi: 195000 },
+
+  // Silicon Valley / Atherton & Palo Alto, CA (R1 Corridor 2)
+  "94022": { zip: "94022", city: "Los Altos", state: "CA", metro: "Silicon Valley / Atherton & Palo Alto, CA", medianHhi: 245000 },
+  "94024": { zip: "94024", city: "Los Altos", state: "CA", metro: "Silicon Valley / Atherton & Palo Alto, CA", medianHhi: 235000 },
+  "94027": { zip: "94027", city: "Atherton", state: "CA", metro: "Silicon Valley / Atherton & Palo Alto, CA", medianHhi: 250000 },
+  "94301": { zip: "94301", city: "Palo Alto", state: "CA", metro: "Silicon Valley / Atherton & Palo Alto, CA", medianHhi: 215000 },
+
+  // Palm Beach & Jupiter, FL (R1 Corridor 3)
+  "33431": { zip: "33431", city: "Boca Raton", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 130000 },
+  "33458": { zip: "33458", city: "Jupiter", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 145000 },
+  "33477": { zip: "33477", city: "Jupiter", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 165000 },
+  "33480": { zip: "33480", city: "Palm Beach", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 250000 },
+  "34103": { zip: "34103", city: "Naples", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 175000 },
+  "34110": { zip: "34110", city: "Naples", state: "FL", metro: "South Florida / Boca Raton & Naples, FL", medianHhi: 152000 },
+
+  // Scottsdale North & Paradise Valley, AZ (R1 Corridor 4 additions)
+  "85018": { zip: "85018", city: "Phoenix / Paradise Valley", state: "AZ", metro: "Phoenix / Scottsdale, AZ", medianHhi: 155000 },
+  "85253": { zip: "85253", city: "Paradise Valley", state: "AZ", metro: "Phoenix / Scottsdale, AZ", medianHhi: 215000 },
+  "85262": { zip: "85262", city: "Scottsdale", state: "AZ", metro: "Phoenix / Scottsdale, AZ", medianHhi: 180000 },
+  "85266": { zip: "85266", city: "Scottsdale", state: "AZ", metro: "Phoenix / Scottsdale, AZ", medianHhi: 165000 },
+
+  // Newport Beach & Corona del Mar, CA (R1 Corridor 5 additions)
+  "92603": { zip: "92603", city: "Irvine", state: "CA", metro: "Orange County / Newport Beach, CA", medianHhi: 160000 },
+  "92657": { zip: "92657", city: "Newport Coast", state: "CA", metro: "Orange County / Newport Beach, CA", medianHhi: 245000 },
+  "92677": { zip: "92677", city: "Laguna Niguel", state: "CA", metro: "Orange County / Newport Beach, CA", medianHhi: 145000 },
+
+  // Dallas Park Cities & Preston Hollow, TX (R1 Corridor 6 additions)
+  "75025": { zip: "75025", city: "Plano", state: "TX", metro: "Dallas–Fort Worth / North Plano, TX", medianHhi: 135000 },
+  "75035": { zip: "75035", city: "Frisco", state: "TX", metro: "Dallas–Fort Worth / North Plano, TX", medianHhi: 140000 },
+  "75056": { zip: "75056", city: "The Colony", state: "TX", metro: "Dallas–Fort Worth / North Plano, TX", medianHhi: 130000 },
+  "75209": { zip: "75209", city: "Dallas", state: "TX", metro: "Dallas–Fort Worth / North Plano, TX", medianHhi: 148000 },
+
+  // Colorado Luxury / Aspen & Vail, CO (R1 Corridor 7)
+  "81611": { zip: "81611", city: "Aspen", state: "CO", metro: "Colorado Luxury / Aspen & Vail, CO", medianHhi: 210000 },
+  "81657": { zip: "81657", city: "Vail", state: "CO", metro: "Colorado Luxury / Aspen & Vail, CO", medianHhi: 175000 },
+
+  // Beverly Hills / Westside additions
+  "90049": { zip: "90049", city: "Los Angeles", state: "CA", metro: "Los Angeles Westside / Beverly Hills, CA", medianHhi: 175000 },
+  "90077": { zip: "90077", city: "Los Angeles", state: "CA", metro: "Los Angeles Westside / Beverly Hills, CA", medianHhi: 210000 },
+  "90266": { zip: "90266", city: "Manhattan Beach", state: "CA", metro: "Los Angeles Westside / Beverly Hills, CA", medianHhi: 190000 },
+  "90272": { zip: "90272", city: "Pacific Palisades", state: "CA", metro: "Los Angeles Westside / Beverly Hills, CA", medianHhi: 215000 },
+  "90402": { zip: "90402", city: "Santa Monica", state: "CA", metro: "Los Angeles Westside / Beverly Hills, CA", medianHhi: 225000 },
+
+  // Bellevue / Seattle Eastside additions
+  "98033": { zip: "98033", city: "Kirkland", state: "WA", metro: "Seattle Eastside / Bellevue, WA", medianHhi: 165000 },
+  "98040": { zip: "98040", city: "Mercer Island", state: "WA", metro: "Seattle Eastside / Bellevue, WA", medianHhi: 210000 },
+  "98052": { zip: "98052", city: "Redmond", state: "WA", metro: "Seattle Eastside / Bellevue, WA", medianHhi: 155000 }
 };
 
 export const DSO_BLACKLIST = [
