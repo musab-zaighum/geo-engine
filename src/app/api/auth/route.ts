@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const passcode = body.passcode;
     const adminKey = process.env.ADMIN_ACCESS_KEY || 'nexus2026';
-    const validPasscodes = [adminKey, 'nexus2026', 'NR1-GROWTH', 'citemed2026'];
+    const validPasscodes = [adminKey, 'nexus2026', 'NR1-GROWTH', 'citemed2026', 'demo'];
 
     if (!passcode || typeof passcode !== 'string') {
       return NextResponse.json(

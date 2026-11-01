@@ -84,6 +84,31 @@ Elective treatments (dental implants, Invisalign, full-arch cases, facial aesthe
 > Clinical GEO Defense Team | NexusRank1`;
   }
 
+  if (
+    queryLower.includes('competitor') ||
+    queryLower.includes('rival') ||
+    queryLower.includes('steal') ||
+    queryLower.includes('displace') ||
+    queryLower.includes('outrank') ||
+    queryLower.includes('implant')
+  ) {
+    return `### 🛡️ Local Competitor Displacement & Patient Defense Strategy
+
+#### Why Local Competitors Are Winning Your High-Ticket Patients:
+When prospective patients query ChatGPT Search, Perplexity, or Google AI Overviews for high-ticket procedures (e.g. *"Best All-on-4 dental implants in Austin"* or *"Top cosmetic surgeon for deep plane facelifts"*), AI answer engines do not display Google Maps 3-packs. Instead, they recommend whichever local practice has published **0-error Clinical Knowledge Graphs (Schema.org)** and a verified **domain /llms.txt factsheet**.
+
+If your site lacks these, AI engines automatically redirect those $5,000–$40,000 consultations to your #1 local competitor.
+
+#### The NexusRank1 Countermeasure ($1,500 One-Time Investment):
+1. **Pillar 1: Local Geo-Grid Tracking:** Pinpoints coordinate-by-coordinate where rival practices displace you within your 5-mile radius.
+2. **Pillar 2: Directory & NAP Authority:** Aligns your primary medical sub-specialty across Google Business Profile and 50+ healthcare directories.
+3. **Pillar 3: Automated Review Loops:** Deploys front-desk QR stands and SMS sequences to distill procedure-specific patient sentiment.
+4. **Pillar 4: Verified Clinical Knowledge Architecture:** Directly links your CMS NPPES NPI-1 license and ADA CDT/CPT procedural codes.
+
+#### 🎯 90-Day 1-Patient ROI Guarantee:
+A single implant or surgical case pays for the entire $1,500 deployment 3x to 16x over. If you don't receive a verified consultation within 90 days, we issue a 100% full refund.`;
+  }
+
   return `### 🤖 Master NexusRank1 Practice AI Advisor
 
 I am fully initialized with the official **NexusRank1 Clinical Practice GEO Knowledge Base**.
