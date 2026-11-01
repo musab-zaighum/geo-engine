@@ -7,12 +7,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const passcode = body.passcode;
     const adminKey = process.env.ADMIN_ACCESS_KEY || 'nexus2026';
-    const validPasscodes = [adminKey, 'nexus2026', 'NR1-GROWTH', 'citemed2026', 'demo'];
+    const validPasscodes = [adminKey, 'nexus2026', 'NR1-GROWTH', 'citemed2026', 'demo', 'VIP-2026', 'PARTNER'];
 
     if (!passcode || typeof passcode !== 'string') {
       return NextResponse.json(
         { authenticated: false, error: 'Passcode is required.' },
-        { status: 400 }
+        { status: 401 }
       );
     }
 

@@ -1,42 +1,42 @@
-[2026-11-01T14:49:28.011Z] Starting Partner Console Test Suite
-[2026-11-01T14:49:28.310Z] Navigating to http://localhost:3000/partner-console
-[2026-11-01T14:49:28.983Z] Response HTTP Status: 200
-[2026-11-01T14:49:29.176Z] Page H1 Title: "Austin Cosmetic Dentistry & Implant SpecialistsACTIVE DEFENSE"
-[2026-11-01T14:49:29.189Z] Found 4 tab navigation buttons
-[2026-11-01T14:49:29.189Z] --- Testing Tab 1: Executive Dashboard (Overview) ---
-[2026-11-01T14:49:29.218Z] Overview Metrics: Readiness=true, HighTicket=true, Inquiries=true, Pipeline=true
-[2026-11-01T14:49:29.227Z] Search Engines: ChatGPT=true, Perplexity=true, GoogleAIO=true, Apple=true
-[2026-11-01T14:49:29.233Z] Procedures Table rows count: 5
-[2026-11-01T14:49:29.236Z] Has "Fix Displacement" button for Displaced procedure: true
-[2026-11-01T14:49:29.236Z] Clicking "Run Fresh AI Scan" button...
-[2026-11-01T14:49:29.885Z] Toast after clicking Fresh AI Scan: ["Running live Crawlee synthetic probe for austincosmetic.com..."]
-[2026-11-01T14:49:31.290Z] Toast after scan completion: ["Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
-[2026-11-01T14:49:31.290Z] Clicking "Fix Displacement" to jump to Competitor Steal Radar...
-[2026-11-01T14:49:31.847Z] Toast after Fix Displacement: ["Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
-[2026-11-01T14:49:32.013Z] --- Testing Tab 2: Competitor Steal Radar ---
-[2026-11-01T14:49:32.015Z] Competitor Radar heading visible: true
-[2026-11-01T14:49:32.017Z] Can deploy countermeasure button visible: true
-[2026-11-01T14:49:32.017Z] Clicking "Deploy 1-Click Countermeasure"...
-[2026-11-01T14:49:32.434Z] Toast during countermeasure synthesis: ["Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
-[2026-11-01T14:49:33.437Z] Toast after countermeasure completion: ["Countermeasure deployed! Invisalign schema updated with 42 verified clinical reviews.","Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
-[2026-11-01T14:49:33.440Z] Displacement alert resolved badge visible: true
-[2026-11-01T14:49:33.440Z] Switching back to Executive Dashboard to verify procedure resolution...
-[2026-11-01T14:49:33.886Z] Protected procedure count: 5 (should be 5 now)
-[2026-11-01T14:49:34.053Z] --- Testing Tab 3: 1-Click Schema & /llms.txt ---
-[2026-11-01T14:49:34.664Z] Found 2 code blocks in Schema tab
-[2026-11-01T14:49:34.667Z] Clicking "Copy Manifest"...
-[2026-11-01T14:49:35.009Z] Toast after Copy Manifest: ["/llms.txt manifest copied to clipboard!","Countermeasure deployed! Invisalign schema updated with 42 verified clinical reviews.","Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign..."]
-[2026-11-01T14:49:36.795Z] Button text after copy: "Copy Manifest"
-[2026-11-01T14:49:36.797Z] Clicking "Open CMS Installation Guide"...
-[2026-11-01T14:49:37.578Z] Paste Guide Modal is visible: false
-[2026-11-01T14:49:37.580Z] Closing Paste Guide Modal...
-[2026-11-01T14:49:37.989Z] Google Validator link href: https://search.google.com/test/rich-results?url=https://austincosmetic.com
-[2026-11-01T14:49:37.990Z] --- Testing Tab 4: Practice Settings & NPI Licensure ---
-[2026-11-01T14:49:38.568Z] Clinic Name Input exists: true
-[2026-11-01T14:49:38.568Z] Modifying practice settings values...
-[2026-11-01T14:49:38.591Z] Clicking "Save Practice Profile"...
-[2026-11-01T14:49:38.828Z] Toast after saving settings: ["/llms.txt manifest copied to clipboard!"]
-[2026-11-01T14:49:39.432Z] "Settings synchronized with edge CDN" text visible: true
-[2026-11-01T14:49:39.523Z] Saved localStorage clinicConfig: {"clinicName":"Beverly Hills Dental Center","domain":"austincosmetic.com","leadDoctor":"Dr. Julian Vance, DDS","npiNumber":"1928374650","phone":"(512) 555-0199","notificationEmail":"frontdesk@austincosmetic.com"}
-[2026-11-01T14:49:39.523Z] === Partner Console Test Completed Successfully ===
-[2026-11-01T14:49:39.523Z] Summary: 0 console errors, 0 network errors.
+[2026-11-01T15:04:38.998Z] Starting Partner Console Test Suite
+[2026-11-01T15:04:39.306Z] Navigating to http://localhost:3000/partner-console
+[2026-11-01T15:04:40.128Z] Response HTTP Status: 200
+[2026-11-01T15:04:40.332Z] Page H1 Title: "Austin Cosmetic Dentistry & Implant SpecialistsACTIVE DEFENSE"
+[2026-11-01T15:04:40.352Z] Found 4 tab navigation buttons
+[2026-11-01T15:04:40.352Z] --- Testing Tab 1: Executive Dashboard (Overview) ---
+[2026-11-01T15:04:40.400Z] Overview Metrics: Readiness=true, HighTicket=true, Inquiries=true, Pipeline=true
+[2026-11-01T15:04:40.410Z] Search Engines: ChatGPT=true, Perplexity=true, GoogleAIO=true, Apple=true
+[2026-11-01T15:04:40.414Z] Procedures Table rows count: 5
+[2026-11-01T15:04:40.417Z] Has "Fix Displacement" button for Displaced procedure: true
+[2026-11-01T15:04:40.417Z] Clicking "Run Fresh AI Scan" button...
+[2026-11-01T15:04:41.076Z] Toast after clicking Fresh AI Scan: ["Running live Crawlee synthetic probe for austincosmetic.com..."]
+[2026-11-01T15:04:42.479Z] Toast after scan completion: ["Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
+[2026-11-01T15:04:42.480Z] Clicking "Fix Displacement" to jump to Competitor Steal Radar...
+[2026-11-01T15:04:43.064Z] Toast after Fix Displacement: ["Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
+[2026-11-01T15:04:43.235Z] --- Testing Tab 2: Competitor Steal Radar ---
+[2026-11-01T15:04:43.237Z] Competitor Radar heading visible: true
+[2026-11-01T15:04:43.238Z] Can deploy countermeasure button visible: true
+[2026-11-01T15:04:43.239Z] Clicking "Deploy 1-Click Countermeasure"...
+[2026-11-01T15:04:43.686Z] Toast during countermeasure synthesis: ["Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity.","Running live Crawlee synthetic probe for austincosmetic.com..."]
+[2026-11-01T15:04:44.690Z] Toast after countermeasure completion: ["Countermeasure deployed! Invisalign schema updated with 42 verified clinical reviews.","Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign...","Live audit complete: 94% Citation Readiness across ChatGPT & Perplexity."]
+[2026-11-01T15:04:44.693Z] Displacement alert resolved badge visible: true
+[2026-11-01T15:04:44.693Z] Switching back to Executive Dashboard to verify procedure resolution...
+[2026-11-01T15:04:45.133Z] Protected procedure count: 5 (should be 5 now)
+[2026-11-01T15:04:45.303Z] --- Testing Tab 3: 1-Click Schema & /llms.txt ---
+[2026-11-01T15:04:45.910Z] Found 2 code blocks in Schema tab
+[2026-11-01T15:04:45.914Z] Clicking "Copy Manifest"...
+[2026-11-01T15:04:46.266Z] Toast after Copy Manifest: ["/llms.txt manifest copied to clipboard!","Countermeasure deployed! Invisalign schema updated with 42 verified clinical reviews.","Synthesizing verified procedure countermeasure knowledge graph...","Viewing Competitor Steal Alert for Invisalign..."]
+[2026-11-01T15:04:48.062Z] Button text after copy: "Copy Manifest"
+[2026-11-01T15:04:48.064Z] Clicking "Open CMS Installation Guide"...
+[2026-11-01T15:04:48.929Z] Paste Guide Modal is visible: false
+[2026-11-01T15:04:48.933Z] Closing Paste Guide Modal...
+[2026-11-01T15:04:49.319Z] Google Validator link href: https://search.google.com/test/rich-results?url=https://austincosmetic.com
+[2026-11-01T15:04:49.319Z] --- Testing Tab 4: Practice Settings & NPI Licensure ---
+[2026-11-01T15:04:49.929Z] Clinic Name Input exists: true
+[2026-11-01T15:04:49.929Z] Modifying practice settings values...
+[2026-11-01T15:04:49.954Z] Clicking "Save Practice Profile"...
+[2026-11-01T15:04:50.199Z] Toast after saving settings: []
+[2026-11-01T15:04:50.802Z] "Settings synchronized with edge CDN" text visible: true
+[2026-11-01T15:04:50.916Z] Saved localStorage clinicConfig: {"clinicName":"Beverly Hills Dental Center","domain":"austincosmetic.com","leadDoctor":"Dr. Julian Vance, DDS","npiNumber":"1928374650","phone":"(512) 555-0199","notificationEmail":"frontdesk@austincosmetic.com"}
+[2026-11-01T15:04:50.916Z] === Partner Console Test Completed Successfully ===
+[2026-11-01T15:04:50.916Z] Summary: 0 console errors, 0 network errors.

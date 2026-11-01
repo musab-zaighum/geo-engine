@@ -595,6 +595,116 @@ export function InstantAuditBar() {
     }
   };
 
+  const handleCopyCode = () => {
+    if (!auditData) return;
+    let content = auditData.jsonLd;
+    let label = '0-Error Schema';
+    if (activeCodeTab === 'llms') {
+      content = auditData.llmsTxt;
+      label = '/llms.txt manifest';
+    } else if (activeCodeTab === 'cpt') {
+      content = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${auditData.cleanDomain}/#procedure-d6010",
+      "name": "Surgical Placement of Dental Implant Body: Endosteal Implant",
+      "procedureType": "https://schema.org/SurgicalProcedure",
+      "bodyLocation": "Oral Cavity / Mandible / Maxilla",
+      "code": {
+        "@type": "MedicalCode",
+        "code": "D6010",
+        "codingSystem": "ADA CDT Dental Procedure Codes"
+      }
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${auditData.cleanDomain}/#procedure-d6056",
+      "name": "Prefabricated Abutment - Includes Placement",
+      "code": {
+        "@type": "MedicalCode",
+        "code": "D6056",
+        "codingSystem": "ADA CDT"
+      }
+    },
+    {
+      "@type": "MedicalProcedure",
+      "@id": "https://${auditData.cleanDomain}/#procedure-d6058",
+      "name": "Abutment Supported Porcelain/Ceramic Crown",
+      "code": {
+        "@type": "MedicalCode",
+        "code": "D6058",
+        "codingSystem": "ADA CDT"
+      }
+    }
+  ]
+}`;
+      label = 'ADA CDT & AMA CPT Procedure Schema';
+    }
+
+    try {
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(content);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = content;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopiedSchema(true);
+      toast.success(`${label} copied to clipboard!`);
+      setTimeout(() => setCopiedSchema(false), 2200);
+    } catch {
+      toast.error('Failed to copy to clipboard');
+    }
+  };
+
+  const handleDownloadPassport = () => {
+    if (!auditData) return;
+    let schemaObj = {};
+    try {
+      schemaObj = JSON.parse(auditData.jsonLd || '{}');
+    } catch {
+      schemaObj = { raw: auditData.jsonLd };
+    }
+    const passportData = {
+      practiceName: auditData.clinicName,
+      domain: auditData.cleanDomain,
+      readinessScore: auditData.overallScore,
+      grade: auditData.grade,
+      leadDoctor: auditData.doctorName,
+      npiNumber: auditData.npiNumber,
+      primarySpecialty: auditData.specialties?.[0] || 'Cosmetic & Restorative Dentistry',
+      geoCoordinates: {
+        lat: auditData.geoLat,
+        lng: auditData.geoLng,
+      },
+      verifiedSchema: schemaObj,
+      llmsFactsheetUrl: `https://${auditData.cleanDomain}/llms.txt`,
+      verifiedCredentials: [
+        'CMS NPPES NPI-1 Registry Verified',
+        'State Licensing Board Active',
+        'ADA CDT & AMA CPT Procedure Codes Ingested',
+      ],
+      generatedAt: new Date().toISOString(),
+    };
+    const content = JSON.stringify(passportData, null, 2);
+    const filename = `${auditData.cleanDomain}-ai-passport.json`;
+    const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success(`Downloaded ${filename}`);
+  };
+
   const handleDownloadFile = (type: 'schema' | 'llms') => {
     if (!auditData) return;
     const content = type === 'schema' ? auditData.jsonLd : auditData.llmsTxt;
@@ -1006,7 +1116,9 @@ export function InstantAuditBar() {
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
                     Clinical Entity Verification Breakdown
                   </span>
-                  <span className="text-xs text-indigo-400 font-mono">3 Checks Run</span>
+                  <span className="text-xs text-indigo-400 font-mono">
+                    {auditData.items?.length || 7} Checks Run
+                  </span>
                 </div>
 
                 <div className="space-y-2.5">
@@ -1432,9 +1544,10 @@ export function InstantAuditBar() {
                       <span>To: Patient (Post-Treatment Checkout)</span>
                     </div>
                     <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm bg-indigo-600 text-white text-xs leading-relaxed space-y-1.5 shadow-md">
-                      <p>
-                        Hi Sarah, thank you for visiting {auditData.clinicName} today! Dr. {auditData.doctorName || 'Jenkins'} and the team loved seeing you.
-                      </p>
+                        Hi Sarah, thank you for visiting {auditData.clinicName} today!{' '}
+                        {(auditData.doctorName || 'Dr. Jenkins').startsWith('Dr.')
+                          ? auditData.doctorName || 'Dr. Jenkins'
+                          : `Dr. ${auditData.doctorName}`} and the team loved seeing you.
                       <p className="text-indigo-100">
                         Could you take 15 seconds to share your experience with other local patients? It means the world to our staff:
                       </p>
@@ -1525,14 +1638,14 @@ export function InstantAuditBar() {
                   {showRawCode && (
                     <button
                       type="button"
-                      onClick={activeCodeTab === 'schema' ? handleCopySchema : handleCopyLlms}
+                      onClick={handleCopyCode}
                       className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-md touch-target cursor-pointer ${
-                        (activeCodeTab === 'schema' ? copiedSchema : copiedLlms)
+                        copiedSchema || copiedLlms
                           ? 'bg-emerald-600 text-white'
                           : 'bg-indigo-600 hover:bg-indigo-500 text-white'
                       }`}
                     >
-                      {(activeCodeTab === 'schema' ? copiedSchema : copiedLlms) ? (
+                      {copiedSchema || copiedLlms ? (
                         <>
                           <Check className="w-4 h-4 text-white stroke-[3]" />
                           <span>Copied!</span>
@@ -1770,7 +1883,7 @@ export function InstantAuditBar() {
 
               <button
                 type="button"
-                onClick={handleDownloadFile.bind(null, activeCodeTab === 'cpt' ? 'schema' : activeCodeTab)}
+                onClick={handleDownloadPassport}
                 className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5 text-slate-400" />

@@ -55,11 +55,16 @@ Execute exhaustive live browser-based functional, visual, and clinician UX test 
 | explorer_browser_console_auth_1 | teamwork_preview_explorer | Partner Console & Auth flows testing | completed | 57beef37-c991-424f-841a-719cfccadf52 |
 | spec_miner_clinician_ux_1 | teamwork_preview_spec_miner | Clinician persona & jargon evaluation | completed | f552b8e9-9809-40da-bfc6-484c1451addf |
 | worker_remediation_1 | teamwork_preview_worker | Automated code remediation & build verification | completed | 4beb01a3-458b-41c0-9e40-7ba631e51139 |
+| reviewer_v4_1 | teamwork_preview_reviewer | Code & build verification | completed | a5d91701-4f67-4b6b-938e-e20a8ce442ca |
+| reviewer_v4_2 | teamwork_preview_reviewer | Browser runtime & UI verification | in-progress | 628c39df-257f-432f-a718-5744bd20ca8b |
+| challenger_v4_1 | teamwork_preview_challenger | Adversarial UI & slider stress testing | completed | 8779e873-e682-4c6b-b8d1-7d8484338630 |
+| challenger_v4_2 | teamwork_preview_challenger | API, Chat & auth security stress testing | completed | 41eced22-f2d3-4aef-b37d-d24cae04d7fd |
+| auditor_v4_1 | teamwork_preview_auditor | Forensic integrity verification | completed | bf597c17-ba5a-4eaa-92e9-6a2eb9d7d255 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 6 / 16
-- Pending subagents: none
+- Spawn count: 11 / 16
+- Pending subagents: 628c39df-257f-432f-a718-5744bd20ca8b
 - Predecessor: orchestrator_3
 - Successor: not yet spawned
 

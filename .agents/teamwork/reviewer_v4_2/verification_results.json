@@ -1,0 +1,142 @@
+{
+  "timestamp": "2026-11-01T15:08:01.819Z",
+  "routes": {
+    "/": {
+      "name": "Homepage",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "/pricing": {
+      "name": "Pricing Page",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "/partner-console": {
+      "name": "Partner Console",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "/report/dentalpractice.com": {
+      "name": "Public Report",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "/login": {
+      "name": "Login Page",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "/signup": {
+      "name": "Signup Page",
+      "httpStatus": 200,
+      "consoleErrors": [],
+      "pass": true
+    }
+  },
+  "widgets": {
+    "auditBar": {
+      "visible": true,
+      "presetResults": [
+        {
+          "preset": "dentalpractice.com",
+          "clinicHeading": "Kalyani Dental Lounge",
+          "score": "90/100",
+          "pass": true
+        },
+        {
+          "preset": "mayoclinic.org",
+          "clinicHeading": "Mayo Clinic",
+          "score": "45/100",
+          "pass": true
+        },
+        {
+          "preset": "clevelandclinic.org",
+          "clinicHeading": "Cleveland Clinic",
+          "score": "90/100",
+          "pass": true
+        },
+        {
+          "preset": "austincosmeticdental.com",
+          "clinicHeading": "Austincosmeticdental Clinic",
+          "score": "18/100",
+          "pass": true
+        }
+      ],
+      "radialGaugePass": true,
+      "tabResults": [
+        {
+          "id": "geo-grid",
+          "label": "1. Competitor Grid",
+          "pass": true
+        },
+        {
+          "id": "gbp-cleanup",
+          "label": "2. Profile & Directories",
+          "pass": true
+        },
+        {
+          "id": "review-loops",
+          "label": "3. Review Loops & QR",
+          "pass": true
+        },
+        {
+          "id": "ai-readability",
+          "label": "4. AI Factsheet",
+          "pass": true
+        },
+        {
+          "id": "simulator",
+          "label": "Live AI Simulator",
+          "pass": true
+        },
+        {
+          "id": "graph",
+          "label": "Doctor Licensure Graph",
+          "pass": true
+        },
+        {
+          "id": "diagnostics",
+          "label": "Clinical Checklist",
+          "pass": true
+        }
+      ],
+      "allTabsDistinct": true,
+      "pass": true
+    },
+    "codeToggle": {
+      "toggleVisible": true,
+      "switchedToRaw": true,
+      "hasSchemaJsonLd": true,
+      "copyCodeVisible": true,
+      "richResultsVisible": true,
+      "switchedBack": true,
+      "pass": true
+    },
+    "cornerChat": {
+      "mounted": true,
+      "welcomeTerms": true,
+      "replyTerms": true,
+      "closedCleanly": true,
+      "pass": true
+    },
+    "practiceManagerModal": {
+      "modalOpened": true,
+      "validationHeld": true,
+      "dispatchStatus": 200,
+      "dispatchSuccess": true,
+      "modalClosedAfterSubmit": true,
+      "pass": true
+    }
+  },
+  "checkoutLinks": {},
+  "adversarialStress": {},
+  "consoleErrors": [],
+  "pageErrors": [],
+  "overallVerdict": "REQUEST_CHANGES",
+  "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('button:has-text(\"Plastic Surgery\")').first()\n"
+}
