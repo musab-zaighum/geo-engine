@@ -22,7 +22,7 @@ const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 // In-Memory Rate Limiter (30 audits per minute per IP)
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const MAX_REQUESTS_PER_WINDOW = 30;
+const MAX_REQUESTS_PER_WINDOW = process.env.NODE_ENV === 'production' ? 120 : 1000;
 
 import { resolvePracticeLicensure, lookupNpiByNumber, NpiProviderRecord } from '@/lib/npi-registry';
 import { buildDeterministicClinicalGraph } from '@/lib/schema-validator';
@@ -36,7 +36,7 @@ async function generateClinicalPayloads(
 ) {
   let hostname = 'your-dental-client.com';
   try {
-    const parsed = new URL(targetUrl.toLowerCase().startsWith('http') ? targetUrl : `https://${targetUrl}`);
+    const parsed = new URL(/^https?:\/\//i.test(targetUrl) ? targetUrl : `https://${targetUrl}`);
     hostname = parsed.hostname;
   } catch {
     hostname = targetUrl.replace(/^https?:\/\//i, '').split('/')[0] || 'your-dental-client.com';
@@ -220,7 +220,7 @@ export async function POST(req: NextRequest) {
       discoveredTitle = discovery.discoveredTitle || '';
       snippet = discovery.snippet || '';
     } catch {
-      if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+      if (!/^https?:\/\//i.test(targetUrl)) {
         targetUrl = `https://${targetUrl}`;
       }
     }

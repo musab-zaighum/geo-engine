@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      status: 'success',
       message: 'Practice consultation request registered successfully.',
       lead: leadPayload,
     });

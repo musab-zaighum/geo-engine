@@ -60,12 +60,16 @@ Execute exhaustive live browser-based functional, visual, and clinician UX test 
 | challenger_v4_1 | teamwork_preview_challenger | Adversarial UI & slider stress testing | completed | 8779e873-e682-4c6b-b8d1-7d8484338630 |
 | challenger_v4_2 | teamwork_preview_challenger | API, Chat & auth security stress testing | completed | 41eced22-f2d3-4aef-b37d-d24cae04d7fd |
 | auditor_v4_1 | teamwork_preview_auditor | Forensic integrity verification | completed | bf597c17-ba5a-4eaa-92e9-6a2eb9d7d255 |
-| worker_regex_fix_1 | teamwork_preview_worker | Uppercase protocol regex /i fix | in-progress | 0f614945-e6cf-4a32-8fc0-6ba9d0efd6e2 |
+| worker_regex_fix_1 | teamwork_preview_worker | Uppercase protocol regex /i fix | completed | 0f614945-e6cf-4a32-8fc0-6ba9d0efd6e2 |
+| challenger_v4_3 | teamwork_preview_challenger | Re-verification of uppercase regex sanitization | completed | 163d4320-a828-4734-a588-33a7d412240b |
+| reviewer_v4_3 | teamwork_preview_reviewer | Code & build review of regex fix | completed | c017edd0-f257-4424-ad1b-de60c79613a7 |
+| worker_backend_scheme_fix_1 | teamwork_preview_worker | Backend scraper scheme regex fix | completed | bf01538d-bf48-42db-8cb7-cf3ae9b94cd2 |
+| reviewer_final_gate_1 | teamwork_preview_reviewer | Final gate review across all criteria | completed | 1aeb16a7-8eda-43bd-af55-52727092e691 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 12 / 16
-- Pending subagents: 0f614945-e6cf-4a32-8fc0-6ba9d0efd6e2
+- Spawn count: 16 / 16
+- Pending subagents: none
 - Predecessor: orchestrator_3
 - Successor: not yet spawned
 

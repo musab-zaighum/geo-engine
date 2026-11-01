@@ -19,6 +19,7 @@ interface SpecialtyPreset {
   icon: string;
   defaultTicket: number;
   sampleProcedures: string;
+  sliderMilestones: [string, string, string];
 }
 
 const SPECIALTIES: SpecialtyPreset[] = [
@@ -28,6 +29,7 @@ const SPECIALTIES: SpecialtyPreset[] = [
     icon: '🦷',
     defaultTicket: 6500,
     sampleProcedures: 'Single Implant ($4,500), All-on-4 Full Arch ($24,000), Full-Mouth Restoration ($38,000)',
+    sliderMilestones: ['$1,000 (Routine)', '$15,000 (Single Arch)', '$40,000 (Full-Mouth Surgical)'],
   },
   {
     id: 'aesthetics',
@@ -35,6 +37,7 @@ const SPECIALTIES: SpecialtyPreset[] = [
     icon: '✨',
     defaultTicket: 3500,
     sampleProcedures: 'Neuromodulators & Fillers ($2,200), Laser Resurfacing ($3,800), Body Contouring ($6,500)',
+    sliderMilestones: ['$500 (Skin Rejuvenation)', '$3,500 (Full-Face Liquid Lift)', '$10,000 (Annual Wellness Package)'],
   },
   {
     id: 'plastic',
@@ -42,6 +45,7 @@ const SPECIALTIES: SpecialtyPreset[] = [
     icon: '🩺',
     defaultTicket: 14500,
     sampleProcedures: 'Rhinoplasty ($9,500), Deep Plane Facelift ($18,000), Mommy Makeover ($25,000)',
+    sliderMilestones: ['$1,000 (Minor Injectable)', '$15,000 (Facelift / Rhinoplasty)', '$40,000 (Mommy Makeover / Reconstruction)'],
   },
   {
     id: 'ortho',
@@ -49,6 +53,7 @@ const SPECIALTIES: SpecialtyPreset[] = [
     icon: '🦴',
     defaultTicket: 8500,
     sampleProcedures: 'Total Joint Replacement ($18,000), Minimally Invasive Spine ($12,000), Sports Rehab ($3,500)',
+    sliderMilestones: ['$1,000 (Diagnostic Injection)', '$15,000 (Arthroscopy)', '$40,000 (Total Joint Reconstruction)'],
   },
   {
     id: 'derm',
@@ -56,6 +61,7 @@ const SPECIALTIES: SpecialtyPreset[] = [
     icon: '🔬',
     defaultTicket: 3500,
     sampleProcedures: 'Mohs Micrographic Surgery ($3,800), Complex Excision ($2,400), Cosmetic Laser ($3,500)',
+    sliderMilestones: ['$500 (Biopsy / Routine)', '$3,500 (Mohs Surgery)', '$12,000 (Complex Reconstruction)'],
   },
 ];
 
@@ -178,9 +184,9 @@ export function PatientRoiCalculator() {
               />
               
               <div className="flex justify-between text-[11px] font-mono text-slate-500">
-                <span>$1,000 (Routine)</span>
-                <span>$15,000 (Single Arch)</span>
-                <span>$40,000 (Full-Mouth Surgical)</span>
+                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[0] || '$1,000 (Routine)'}</span>
+                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[1] || '$15,000 (Single Arch)'}</span>
+                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[2] || '$40,000 (Full-Mouth Surgical)'}</span>
               </div>
             </div>
 

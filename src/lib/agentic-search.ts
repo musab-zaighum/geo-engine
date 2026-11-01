@@ -29,7 +29,7 @@ export function isUrlCandidate(str: string): boolean {
 
 export function normalizeUrl(rawUrl: string): string {
   let urlStr = rawUrl.trim();
-  if (!urlStr.startsWith('http://') && !urlStr.startsWith('https://')) {
+  if (!/^https?:\/\//i.test(urlStr)) {
     urlStr = 'https://' + urlStr;
   }
   return urlStr;

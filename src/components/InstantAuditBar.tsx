@@ -99,9 +99,10 @@ interface RecentAuditEntry {
 
 const PRESET_DOMAINS = [
   { label: 'dentalpractice.com', url: 'https://dentalpractice.com' },
+  { label: 'beverlyhillsplasticsurgery.com', url: 'https://beverlyhillsplasticsurgery.com' },
+  { label: 'austincosmeticdental.com', url: 'https://austincosmeticdental.com' },
   { label: 'mayoclinic.org', url: 'https://mayoclinic.org' },
   { label: 'clevelandclinic.org', url: 'https://clevelandclinic.org' },
-  { label: 'austincosmeticdental.com', url: 'https://austincosmeticdental.com' },
 ];
 
 const SCAN_STEPS = [
@@ -211,10 +212,16 @@ export function InstantAuditBar() {
         ? 'Mayo Clinic'
         : isCleveland
         ? 'Cleveland Clinic'
-        : clean
-            .split('.')[0]
-            .replace(/[-_]/g, ' ')
-            .replace(/\b\w/g, (c) => c.toUpperCase()) + ' Dental Care'
+        : (() => {
+            const base = clean
+              .split('.')[0]
+              .replace(/[-_]/g, ' ')
+              .replace(/\b\w/g, (c) => c.toUpperCase());
+            if (/dental|surgery|clinic|center|medicine|care|spa|institute|plastics|ortho/i.test(base)) {
+              return base;
+            }
+            return `${base} Practice`;
+          })()
     );
 
     const npiNumber = liveData?.registrationNumbers?.[0] || '1948203918';
@@ -926,7 +933,7 @@ export function InstantAuditBar() {
           <div className="rounded-3xl nr-glass-card p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 font-mono">Target Practice Profile</span>
+                <span className="text-[10px] font-bold tracking-wider text-slate-400 font-mono">Target: <span className="text-indigo-300 font-mono normal-case lowercase">{auditData.cleanDomain}</span></span>
                 <span className="nr-pulse-pill">
                   <span className="nr-pulse-dot">
                     <span className="nr-pulse-dot-ring" />
@@ -1477,7 +1484,7 @@ export function InstantAuditBar() {
                     </div>
                   </div>
                   <p className="text-[11px] text-slate-400">
-                    NexusRank1 automatically homogenizes Name, Address, and Phone numbers into RFC 3966 format.
+                    NexusRank1 automatically standardizes Name, Address, and Phone numbers across all 50+ medical directories for search consistency.
                   </p>
                 </div>
 

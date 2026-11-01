@@ -95,7 +95,7 @@ async function fetchWithGotScraping(
 export async function executeOssScraperPipeline(targetUrl: string): Promise<OssScraperResult> {
   // Normalize target URL with defensive scheme
   let cleanUrl = (targetUrl || '').trim();
-  if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+  if (!/^https?:\/\//i.test(cleanUrl)) {
     cleanUrl = `https://${cleanUrl}`;
   }
 

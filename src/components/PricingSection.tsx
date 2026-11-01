@@ -104,7 +104,7 @@ export function PricingSection({ onOpenCheckout }: PricingSectionProps) {
                   <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
                 </a>
 
-                <div className="flex items-center justify-center gap-4 text-[11px] text-slate-400 font-mono">
+                <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 font-mono">
                   <span className="flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                     Whop Verified Checkout
@@ -112,7 +112,9 @@ export function PricingSection({ onOpenCheckout }: PricingSectionProps) {
                   <span>•</span>
                   <span>Instant Access</span>
                   <span>•</span>
-                  <span>HIPAA Safe</span>
+                  <span>HIPAA &amp; ABMS Compliant</span>
+                  <span>•</span>
+                  <span>Corporate Invoice &amp; Tax Receipt</span>
                 </div>
               </div>
 

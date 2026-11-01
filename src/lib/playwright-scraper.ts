@@ -134,7 +134,7 @@ function getChromeExecutablePath(): string | undefined {
 
 export async function scrapeWithPlaywright(targetUrl: string): Promise<PlaywrightScrapeResult> {
   let browser: Browser | null = null;
-  const cleanUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+  const cleanUrl = /^https?:\/\//i.test(targetUrl) ? targetUrl : `https://${targetUrl}`;
 
   // 1. Concurrently check /llms.txt and /robots.txt at origin domain
   let hasLlmsTxt = false;

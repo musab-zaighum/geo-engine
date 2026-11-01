@@ -24,7 +24,7 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Browser Functional Testing | Interactive test across all 8 feature areas on localhost:3000 | Dev server running | IN_PROGRESS |
-| M2 | Clinician Persona & UX Evaluation | Language audit, value proposition, conversion friction analysis | M1 | PLANNED |
-| M3 | Code Remediation & Build Verification | Bug fixing, TypeScript zero-errors, production build pass | M1, M2 | PLANNED |
-| M4 | Independent Review & Forensic Audit | Reviewers, Challengers, Forensic Auditor gate pass | M3 | PLANNED |
+| M1 | Browser Functional Testing | Interactive test across all 8 feature areas on localhost:3000 | Dev server running | DONE |
+| M2 | Clinician Persona & UX Evaluation | Language audit, value proposition, conversion friction analysis | M1 | DONE |
+| M3 | Code Remediation & Build Verification | Bug fixing, TypeScript zero-errors, production build pass | M1, M2 | DONE |
+| M4 | Independent Review & Forensic Audit | Reviewers, Challengers, Forensic Auditor gate pass | M3 | DONE |

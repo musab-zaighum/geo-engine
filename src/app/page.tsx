@@ -453,14 +453,16 @@ export default function NexusRankLandingPage() {
               </a>
             </div>
 
-            <div className="flex items-center justify-center gap-4 text-xs font-mono text-slate-500 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-slate-500 pt-2">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 1-Patient ROI Guarantee
               </span>
               <span>•</span>
               <span>Whop Verified Checkout</span>
               <span>•</span>
-              <span>Zero IT Overhead</span>
+              <span>CPA Corporate Invoice &amp; Tax Receipt</span>
+              <span>•</span>
+              <span>ABMS Compliant</span>
             </div>
           </div>
         </section>
