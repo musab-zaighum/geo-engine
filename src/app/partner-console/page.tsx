@@ -202,7 +202,7 @@ export default function ClinicCommandCenterPage() {
   };
 
   const handleDeployCountermeasure = (alertId: string) => {
-    toast.info('Synthesizing 0-error procedure countermeasure AST...');
+    toast.info('Synthesizing verified procedure countermeasure knowledge graph...');
     setTimeout(() => {
       setStealAlerts((prev) =>
         prev.map((a) => (a.id === alertId ? { ...a, resolved: true } : a))
@@ -653,7 +653,7 @@ export default function ClinicCommandCenterPage() {
                 </div>
                 <h3 className="text-xl font-bold text-white">0-Error Clinical Knowledge Graph Code</h3>
                 <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
-                  Non-visual metadata that communicates your accepted insurances, verified NPI license, and core procedures directly to AI crawlers (GPTBot, ClaudeBot, PerplexityBot).
+                  Non-visual clinical metadata communicating your accepted insurances, verified NPI license, and core procedures directly to AI search engines (ChatGPT Search, Perplexity, Google AI Overviews).
                 </p>
               </div>
 
@@ -687,7 +687,7 @@ export default function ClinicCommandCenterPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
                       <Code className="w-4 h-4 text-emerald-400" />
-                      <span>Schema.org MedicalClinic &amp; Physician AST</span>
+                      <span>Schema.org Medical Clinic &amp; Physician Knowledge Graph</span>
                     </span>
                     <button
                       type="button"
@@ -700,7 +700,7 @@ export default function ClinicCommandCenterPage() {
                       className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       {copiedSchema ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                      <span>{copiedSchema ? 'Copied' : 'Copy JSON-LD'}</span>
+                      <span>{copiedSchema ? 'Copied' : 'Copy Knowledge Graph'}</span>
                     </button>
                   </div>
                   <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-300 overflow-x-auto max-h-96 leading-relaxed">

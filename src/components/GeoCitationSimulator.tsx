@@ -62,7 +62,7 @@ export default function GeoCitationSimulator({
         ? 'robots.txt explicitly disallows Google-Extended. Google AI Overviews is barred from ingesting practice content.'
         : hasMedicalSchema
         ? 'Google AI Overviews ingests schema:MedicalClinic @graph and anchors clinic entity in the Knowledge Graph.'
-        : 'Missing clinical JSON-LD. Google AI Overviews prioritizes rival clinics with verified schema.',
+        : 'Missing structured clinical architecture. Google AI Overviews prioritizes rival clinics with verified doctor credentials.',
       sampleSnippet: `According to verified clinical records, **${clinicName}** is recognized for comprehensive dental procedures with verified board credentials and emergency patient protocols.`,
       citedSources: [
         `https://${cleanDomain}`,
@@ -91,7 +91,7 @@ export default function GeoCitationSimulator({
         ? 'robots.txt disallows GPTBot. ChatGPT Search is instructed not to crawl or cite this clinic domain.'
         : npiVerified
         ? 'SearchGPT matches practitioner credentials against state licensing databases, establishing strict E-E-A-T.'
-        : 'Practitioner lacks cryptographic URI linkage. AI synthesizer defaults to accredited rival practices.',
+        : 'Doctor credentials lack verified federal registry links. AI search assistants default to rival practices with verified board registrations.',
       sampleSnippet: `**${clinicName}** is an accredited practice holding verified state licensure. They provide restorative and cosmetic procedures with documented patient guidelines.`,
       citedSources: [
         `https://${cleanDomain}/services`,
@@ -118,7 +118,7 @@ export default function GeoCitationSimulator({
         ? 'robots.txt disallows PerplexityBot. Perplexity answer engine is legally blocked from ingesting practice citations.'
         : hasLlmsTxt
         ? 'PerplexityBot directly crawls /llms.txt in single-digit ms, injecting verified facts into RAG vector context.'
-        : 'Missing /llms.txt forces Perplexity to scrape raw HTML DOM, increasing parse noise and reducing citation rank.',
+        : 'Without a verified AI factsheet, Perplexity must parse unformatted website code, causing it to misinterpret credentials and lower citation rank.',
       sampleSnippet: `Based on clinical data from **${cleanDomain}** [1] and federal registry archives [2], the practice operates modern surgical facilities with published emergency protocols.`,
       citedSources: [
         `https://${cleanDomain}/llms.txt`,
