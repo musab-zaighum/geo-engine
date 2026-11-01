@@ -102,6 +102,16 @@ export const AFFLUENT_ZIPS_CATALOG: Record<string, AffluentZipInfo> = {
     dominantCaseType: 'All-on-X, Teeth-in-a-Day, Geriatric Restorations',
     coordinates: { latitude: 33.7852, longitude: -111.9056 },
   },
+  '85018': {
+    zipCode: '85018',
+    metro: 'Phoenix / Scottsdale, AZ',
+    city: 'Phoenix / Paradise Valley',
+    state: 'AZ',
+    neighborhoods: ['Arcadia', 'Camelback Mountain Corridor', 'Paradise Valley Border'],
+    medianHhi: 155000,
+    dominantCaseType: 'All-on-4, Surgical Restorative Implants, Teeth-in-a-Day',
+    coordinates: { latitude: 33.4988, longitude: -111.9612 },
+  },
 
   // 2. Orange County / Newport Beach, CA
   '92660': {
@@ -328,6 +338,16 @@ export const AFFLUENT_ZIPS_CATALOG: Record<string, AffluentZipInfo> = {
     dominantCaseType: 'Full-Arch Restoration, Guided Surgical Implants',
     coordinates: { latitude: 32.8681, longitude: -96.7925 },
   },
+  '75209': {
+    zipCode: '75209',
+    metro: 'Dallas–Fort Worth / North Plano, TX',
+    city: 'Dallas',
+    state: 'TX',
+    neighborhoods: ['Inwood Village', 'Bluffview', 'Lovers Lane Corridor'],
+    medianHhi: 148000,
+    dominantCaseType: 'Surgical Dental Implants, Full-Arch Restoration',
+    coordinates: { latitude: 32.8510, longitude: -96.8227 },
+  },
   '75035': {
     zipCode: '75035',
     metro: 'Dallas–Fort Worth / North Plano, TX',
@@ -439,6 +459,16 @@ export const AFFLUENT_ZIPS_CATALOG: Record<string, AffluentZipInfo> = {
     medianHhi: 165000,
     dominantCaseType: 'Full-Arch Zirconia Reconstruction, Titanium Implants',
     coordinates: { latitude: 26.2625, longitude: -81.8078 },
+  },
+  '34110': {
+    zipCode: '34110',
+    metro: 'South Florida / Boca Raton & Naples, FL',
+    city: 'Naples',
+    state: 'FL',
+    neighborhoods: ['North Naples', 'Pelican Marsh', 'Audubon', 'Vanderbilt'],
+    medianHhi: 152000,
+    dominantCaseType: 'All-on-4 Teeth-in-a-Day, Surgical Dental Implants, Bone Augmentation',
+    coordinates: { latitude: 26.2844, longitude: -81.7963 },
   },
 
   // 6. Seattle Eastside / Bellevue, WA

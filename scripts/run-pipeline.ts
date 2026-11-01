@@ -63,13 +63,13 @@ function parseCliArgs(): PipelineOptions {
  * 7 Target Metropolitan Corridors (Requirement R1)
  */
 export const TARGET_METRO_CORRIDORS = [
-  { name: 'Scottsdale / Paradise Valley, AZ', zips: ['85260', '85255', '85258'] },
-  { name: 'Newport Beach / Corona del Mar, CA', zips: ['92660', '92625', '92663'] },
-  { name: 'Boca Raton / Delray Beach, FL', zips: ['33496', '33483', '33486'] },
-  { name: 'Dallas / Plano / Frisco, TX', zips: ['75034', '75093', '75024'] },
-  { name: 'Bellevue / Kirkland, WA', zips: ['98004', '98039', '98005'] },
-  { name: 'Beverly Hills, CA', zips: ['90210', '90211', '90212'] },
-  { name: 'Greenwich / Old Greenwich, CT', zips: ['06830', '06831', '06870'] },
+  { name: 'Scottsdale / Paradise Valley, AZ', zips: ['85260', '85255', '85258', '85253', '85018'] },
+  { name: 'Newport Beach / Corona del Mar, CA', zips: ['92660', '92625', '92663', '92657'] },
+  { name: 'Boca Raton / Delray Beach / Naples, FL', zips: ['33496', '33483', '33486', '34102', '34108', '34110'] },
+  { name: 'Dallas / Highland Park / Plano / Frisco, TX', zips: ['75034', '75093', '75024', '75205', '75209', '75225'] },
+  { name: 'Bellevue / Kirkland, WA', zips: ['98004', '98039', '98005', '98033'] },
+  { name: 'Beverly Hills, CA', zips: ['90210', '90211', '90212', '90402'] },
+  { name: 'Greenwich / Old Greenwich, CT', zips: ['06830', '06831', '06870', '06820'] },
 ];
 
 export async function runPipeline(options?: Partial<PipelineOptions>): Promise<{
