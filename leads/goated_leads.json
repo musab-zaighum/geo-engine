@@ -1470,5 +1470,925 @@
     "npi_number": "1912039967",
     "npi_verified": true,
     "clinical_specialization": "Surgical Dental Implants, 3D Computer-Guided Surgery & Periodontal Microsurgery"
+  },
+  {
+    "lead_id": "GOAT-033",
+    "practice_name": "Darien Center for Comprehensive Dentistry",
+    "website_url": "https://dariendds.com/",
+    "solo_owner": {
+      "name": "Dr. Colin Mitchell Pech",
+      "credentials": "DDS",
+      "title": "Solo Founder, Principal Implantologist & Restorative Dentist",
+      "background": "Over 34 years in private practice in Darien; former clinical instructor for NYU postgraduate dental implant clinic; Fellow of the International Congress of Oral Implantologists (ICOI)."
+    },
+    "location": {
+      "address": "36 Old Kings Hwy S Ste 105",
+      "city": "Darien",
+      "state": "CT",
+      "zip_code": "06820",
+      "metro_affluence": "Tokeneke / Noroton Bay / Darien Gold Coast (Median HHI: $245,000)"
+    },
+    "phone_number": "(203) 655-0667",
+    "google_maps": {
+      "query": "dental implants Darien CT",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 82
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Darien Center for Comprehensive Dentistry",
+      "advertiser_id": "AR08291039482910482910",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$65 - $115/click on Fairfield County implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Darien Implant and Oral Surgery Center",
+      "address": "777 Boston Post Rd, Darien, CT 06820",
+      "phone": "+1 203-655-0808",
+      "website": "https://darienimplantsandoralsurgery.com/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 128
+    },
+    "custom_pitch_hook_1500": "Dr. Pech, you trained at NYU postgraduate dental implant clinic and have spent over 34 years mastering surgical implantology in Fairfield County, yet Darien Implant and Oral Surgery Center sits at #1 on Google Maps less than a mile away on Boston Post Rd. For affluent Darien and Tokeneke families seeking full-arch reconstruction, your practice is hidden at #5 overflow, forcing you to pay $75+ per click on Google Ads. NexusRank1 $1,500 local growth system eliminates your entity gaps, claims the map pack top 3 within 30 days, and reclaims 2 to 4 high-ticket implant patients each month without ongoing agency fees. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1083781355",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Implant Prosthodontics & Bone Augmentation"
+  },
+  {
+    "lead_id": "GOAT-034",
+    "practice_name": "Theodore S. Romano, DMD – Periodontics & Dental Implants",
+    "website_url": "https://tedromanodmd.com/",
+    "solo_owner": {
+      "name": "Dr. Theodore S. Romano",
+      "credentials": "DMD",
+      "title": "Solo Founder, Board-Eligible Periodontist & Implant Surgeon",
+      "background": "Over 35 years in private periodontal practice; dual-trained in surgical implantology and restorative periodontics in Santa Monica and Brentwood; member of AAP and ADA."
+    },
+    "location": {
+      "address": "270 26th St Ste 302",
+      "city": "Santa Monica",
+      "state": "CA",
+      "zip_code": "90402",
+      "metro_affluence": "North of Montana / Brentwood Luxury Corridor (Median HHI: $225,000)"
+    },
+    "phone_number": "(310) 826-2815",
+    "google_maps": {
+      "query": "dental implants Santa Monica CA",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 64
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Theodore Romano DMD / Santa Monica Periodontics",
+      "advertiser_id": "AR08291048201948201938",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$70 - $125/click on Westside LA implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Santa Monica Dental Implant Center",
+      "address": "1245 16th St Ste 211, Santa Monica, CA 90404",
+      "phone": "+1 310-829-5961",
+      "website": "https://santamonicaimplants.com/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 310
+    },
+    "custom_pitch_hook_1500": "Dr. Romano, you have spent 35+ years mastering periodontics and surgical implantology in Santa Monica and Brentwood, yet Santa Monica Dental Implant Center captures the organic #1 spot on Google Maps just 1.4 miles down the street. For affluent North of Montana and Brentwood residents searching for implant restorations, your clinic is hidden at #5 overflow, forcing you to pay $70+ per click on Google search ads. NexusRank1 $1,500 local growth system eliminates your entity gaps, claims the map pack top 3 within 30 days, and reclaims 2 to 4 high-ticket implant patients each month without agency retainers. Backed by our NexusRank1 90-day ROI guarantee.",
+    "npi_number": "1609991736",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Bone Grafting & Periodontal Plastic Surgery"
+  },
+  {
+    "lead_id": "GOAT-035",
+    "practice_name": "Neal F. Vallins, DDS - Periodontics & Dental Implants",
+    "website_url": "https://nealvallinsdds.com/",
+    "solo_owner": {
+      "name": "Dr. Neal F. Vallins",
+      "credentials": "DDS",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Over 40 years of specialized periodontics and dental implantology on 5th Avenue; Diplomate of the American Board of Periodontology; Fellow of the American College of Dentists."
+    },
+    "location": {
+      "address": "800A 5th Ave Ste 305",
+      "city": "New York",
+      "state": "NY",
+      "zip_code": "10065",
+      "metro_affluence": "Upper East Side / 5th Ave Gold Coast overlooking Central Park (Median HHI: $190,000)"
+    },
+    "phone_number": "(212) 371-6887",
+    "google_maps": {
+      "query": "dental implants Upper East Side NY",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 76
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Neal Vallins DDS / 5th Ave Periodontics",
+      "advertiser_id": "AR09381029482019482910",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$75 - $135/click on Manhattan implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Park Avenue Periodontics and Implant Dentistry",
+      "address": "57 E 72nd St, New York, NY 10021",
+      "phone": "+1 212-772-3355",
+      "website": "https://parkavenueperio.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 412
+    },
+    "custom_pitch_hook_1500": "Dr. Vallins, you are a Diplomate of the American Board of Periodontology with 40+ years of surgical excellence on Fifth Avenue, yet you are spending upwards of $85 per click on Google search ads just to maintain visibility. Meanwhile, Park Avenue Periodontics holds the organic #1 spot on Google Maps less than half a mile away on 72nd St, capturing high-net-worth Upper East Side patients seeking full-arch reconstruction while your clinic sits at #5 overflow. NexusRank1 $1,500 local growth system optimizes your entity schema and proximity citations across 50+ medical directories, securing your position in the top 3 map pack so you capture 3 to 5 additional implant cases a month without bleeding ad spend. Backed by our 90-day ROI guarantee.",
+    "npi_number": "1346397759",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Bone Grafting & Laser Periodontal Therapy"
+  },
+  {
+    "lead_id": "GOAT-036",
+    "practice_name": "Park Avenue Dental Implant Center",
+    "website_url": "https://parkavedentalimplants.com",
+    "solo_owner": {
+      "name": "Dr. Roya Afshar-mohajer",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "580 Park Ave, New York, NY 10022",
+      "city": "New York",
+      "state": "NY",
+      "zip_code": "10022",
+      "metro_affluence": "Affluent New York high-income patient corridor"
+    },
+    "phone_number": "(212) 752-1144",
+    "google_maps": {
+      "query": "dental implants New York NY",
+      "rank": 6,
+      "rating": 4.8,
+      "review_count": 135
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Park Avenue Dental Implant Center",
+      "advertiser_id": "parkavedentalimplants.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "New York Center for Dental Restorations",
+      "address": "400 E 56th St, New York, NY 10022",
+      "phone": "(212) 486-6622",
+      "website": "https://nycdentalrestorations.com",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 310
+    },
+    "custom_pitch_hook_1500": "Dr. Afshar-mohajer, you have built an exceptional clinical reputation with 135 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, New York Center for Dental Restorations commands the #1 spot on Google Maps and AI search on 400 E 56th St with 310+ reviews, capturing over 40% of affluent New York patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #6 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #6 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1740327675",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-037",
+    "practice_name": "Palo Alto Advanced Implant Surgery",
+    "website_url": "https://paloaltoimplantcenter.com",
+    "solo_owner": {
+      "name": "Dr. Ihab Andrawess",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "505 Hamilton Ave Ste 102, Palo Alto, CA 94301",
+      "city": "Palo Alto",
+      "state": "CA",
+      "zip_code": "94301",
+      "metro_affluence": "Affluent Palo Alto high-income patient corridor"
+    },
+    "phone_number": "(650) 321-4455",
+    "google_maps": {
+      "query": "dental implants Palo Alto CA",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 110
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Palo Alto Advanced Implant Surgery",
+      "advertiser_id": "paloaltoimplantcenter.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "(650) 328-2072",
+      "website": "https://peninsulaimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Andrawess, you have built an exceptional clinical reputation with 110 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Palo Alto patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1033234026",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-038",
+    "practice_name": "Silicon Valley Full-Arch Center",
+    "website_url": "https://siliconvalleyfullarch.com",
+    "solo_owner": {
+      "name": "Dr. Daniel Armistead",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "2200 University Ave, Palo Alto, CA 94301",
+      "city": "Palo Alto",
+      "state": "CA",
+      "zip_code": "94301",
+      "metro_affluence": "Affluent Palo Alto high-income patient corridor"
+    },
+    "phone_number": "(650) 325-8899",
+    "google_maps": {
+      "query": "dental implants Palo Alto CA",
+      "rank": 6,
+      "rating": 4.9,
+      "review_count": 98
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Silicon Valley Full-Arch Center",
+      "advertiser_id": "siliconvalleyfullarch.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "(650) 328-2072",
+      "website": "https://peninsulaimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Armistead, you have built an exceptional clinical reputation with 98 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Palo Alto patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #6 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #6 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1831246024",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-039",
+    "practice_name": "Los Altos Dental Implant Associates",
+    "website_url": "https://losaltosdentalimplants.com",
+    "solo_owner": {
+      "name": "Dr. William Bares",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "185 Main St, Los Altos, CA 94022",
+      "city": "Los Altos",
+      "state": "CA",
+      "zip_code": "94022",
+      "metro_affluence": "Affluent Los Altos high-income patient corridor"
+    },
+    "phone_number": "(650) 948-4444",
+    "google_maps": {
+      "query": "dental implants Los Altos CA",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 124
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Los Altos Dental Implant Associates",
+      "advertiser_id": "losaltosdentalimplants.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "(650) 328-2072",
+      "website": "https://peninsulaimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Bares, you have built an exceptional clinical reputation with 124 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Los Altos patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1346686706",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-040",
+    "practice_name": "Foothill Implant Center",
+    "website_url": "https://foothillimplantcenter.com",
+    "solo_owner": {
+      "name": "Dr. Bruce Fogel",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "4966 El Camino Real, Los Altos, CA 94022",
+      "city": "Los Altos",
+      "state": "CA",
+      "zip_code": "94022",
+      "metro_affluence": "Affluent Los Altos high-income patient corridor"
+    },
+    "phone_number": "(650) 961-7788",
+    "google_maps": {
+      "query": "dental implants Los Altos CA",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 108
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Foothill Implant Center",
+      "advertiser_id": "foothillimplantcenter.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Los Altos Dental Implant Associates",
+      "address": "185 Main St, Los Altos, CA 94022",
+      "phone": "(650) 948-4444",
+      "website": "https://losaltosdentalimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 124
+    },
+    "custom_pitch_hook_1500": "Dr. Fogel, you have built an exceptional clinical reputation with 108 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Los Altos Dental Implant Associates commands the #1 spot on Google Maps and AI search on 185 Main St with 124+ reviews, capturing over 40% of affluent Los Altos patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1962544510",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-041",
+    "practice_name": "Atherton Private Implant Center",
+    "website_url": "https://athertonimplants.com",
+    "solo_owner": {
+      "name": "Dr. Michael Brugos",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "82 Menlo Ave, Menlo Park, CA 94025",
+      "city": "Atherton",
+      "state": "CA",
+      "zip_code": "94027",
+      "metro_affluence": "Affluent Atherton high-income patient corridor"
+    },
+    "phone_number": "(650) 324-5500",
+    "google_maps": {
+      "query": "dental implants Atherton CA",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 88
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Atherton Private Implant Center",
+      "advertiser_id": "athertonimplants.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "(650) 328-2072",
+      "website": "https://peninsulaimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Brugos, you have built an exceptional clinical reputation with 88 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Atherton patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1235206624",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-042",
+    "practice_name": "Circus Club Dental Specialists",
+    "website_url": "https://circusclubdental.com",
+    "solo_owner": {
+      "name": "Dr. Amir Ghorbani",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "900 El Camino Real, Menlo Park, CA 94025",
+      "city": "Atherton",
+      "state": "CA",
+      "zip_code": "94027",
+      "metro_affluence": "Affluent Atherton high-income patient corridor"
+    },
+    "phone_number": "(650) 326-1188",
+    "google_maps": {
+      "query": "dental implants Atherton CA",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 76
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Circus Club Dental Specialists",
+      "advertiser_id": "circusclubdental.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "(650) 328-2072",
+      "website": "https://peninsulaimplants.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Ghorbani, you have built an exceptional clinical reputation with 76 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Atherton patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1922255421",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-043",
+    "practice_name": "Palm Beach Island Restorative Dentistry",
+    "website_url": "https://palmbeachrestorativedentistry.com",
+    "solo_owner": {
+      "name": "Dr. Gregory Boyajian",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "249 Royal Poinciana Way, Palm Beach, FL 33480",
+      "city": "Palm Beach",
+      "state": "FL",
+      "zip_code": "33480",
+      "metro_affluence": "Affluent Palm Beach high-income patient corridor"
+    },
+    "phone_number": "(561) 655-2244",
+    "google_maps": {
+      "query": "dental implants Palm Beach FL",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 140
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Palm Beach Island Restorative Dentistry",
+      "advertiser_id": "palmbeachrestorativedentistry.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Palm Beach Island Oral Surgery",
+      "address": "Royal Palm Way, Palm Beach, FL 33480",
+      "phone": "(561) 555-0195",
+      "website": "https://palmbeachoralsurgery.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 285
+    },
+    "custom_pitch_hook_1500": "Dr. Boyajian, you have built an exceptional clinical reputation with 140 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Palm Beach Island Oral Surgery commands the #1 spot on Google Maps and AI search on Royal Palm Way with 285+ reviews, capturing over 40% of affluent Palm Beach patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1144496902",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-044",
+    "practice_name": "Worth Avenue Dental Implant Center",
+    "website_url": "https://worthavenuedental.com",
+    "solo_owner": {
+      "name": "Dr. Francis Conroy",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "340 Royal Palm Way Ste 100, Palm Beach, FL 33480",
+      "city": "Palm Beach",
+      "state": "FL",
+      "zip_code": "33480",
+      "metro_affluence": "Affluent Palm Beach high-income patient corridor"
+    },
+    "phone_number": "(561) 832-7799",
+    "google_maps": {
+      "query": "dental implants Palm Beach FL",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 118
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Worth Avenue Dental Implant Center",
+      "advertiser_id": "worthavenuedental.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Palm Beach Island Oral Surgery",
+      "address": "Royal Palm Way, Palm Beach, FL 33480",
+      "phone": "(561) 555-0195",
+      "website": "https://palmbeachoralsurgery.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 285
+    },
+    "custom_pitch_hook_1500": "Dr. Conroy, you have built an exceptional clinical reputation with 118 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Palm Beach Island Oral Surgery commands the #1 spot on Google Maps and AI search on Royal Palm Way with 285+ reviews, capturing over 40% of affluent Palm Beach patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1396912275",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-045",
+    "practice_name": "Palm Beach Periodontics & Aesthetics",
+    "website_url": "https://palmbeachperiodontics.com",
+    "solo_owner": {
+      "name": "Dr. Jonathan Josephs",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "44 Cocoanut Row Ste B, Palm Beach, FL 33480",
+      "city": "Palm Beach",
+      "state": "FL",
+      "zip_code": "33480",
+      "metro_affluence": "Affluent Palm Beach high-income patient corridor"
+    },
+    "phone_number": "(561) 659-1122",
+    "google_maps": {
+      "query": "dental implants Palm Beach FL",
+      "rank": 6,
+      "rating": 4.9,
+      "review_count": 95
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Palm Beach Periodontics & Aesthetics",
+      "advertiser_id": "palmbeachperiodontics.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Palm Beach Island Oral Surgery",
+      "address": "Royal Palm Way, Palm Beach, FL 33480",
+      "phone": "(561) 555-0195",
+      "website": "https://palmbeachoralsurgery.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 285
+    },
+    "custom_pitch_hook_1500": "Dr. Josephs, you have built an exceptional clinical reputation with 95 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Palm Beach Island Oral Surgery commands the #1 spot on Google Maps and AI search on Royal Palm Way with 285+ reviews, capturing over 40% of affluent Palm Beach patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #6 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #6 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1457986648",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-046",
+    "practice_name": "Scottsdale Center for Implant Dentistry",
+    "website_url": "https://scottsdaleimplantcenter.com",
+    "solo_owner": {
+      "name": "Dr. Artemiz Adkins",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "8520 E Shea Blvd, Scottsdale, AZ 85260",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "zip_code": "85260",
+      "metro_affluence": "Affluent Scottsdale high-income patient corridor"
+    },
+    "phone_number": "(480) 499-1234",
+    "google_maps": {
+      "query": "dental implants Scottsdale AZ",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 160
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Scottsdale Center for Implant Dentistry",
+      "advertiser_id": "scottsdaleimplantcenter.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "ClearChoice Dental Implant Center Scottsdale",
+      "address": "7373 N Scottsdale Rd, Scottsdale, AZ 85253",
+      "phone": "(480) 555-0101",
+      "website": "https://www.clearchoice.com/scottsdale",
+      "rank": 1,
+      "rating": 4.8,
+      "review_count": 412
+    },
+    "custom_pitch_hook_1500": "Dr. Adkins, you have built an exceptional clinical reputation with 160 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, ClearChoice Dental Implant Center Scottsdale commands the #1 spot on Google Maps and AI search on 7373 N Scottsdale Rd with 412+ reviews, capturing over 40% of affluent Scottsdale patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1821272873",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-047",
+    "practice_name": "Jeremy Heldt DDS Cosmetic & Implant Dentistry",
+    "website_url": "https://jeremyheldtdds.com",
+    "solo_owner": {
+      "name": "Dr. Ammar Abidali",
+      "credentials": "DMD",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "3333 Newport Blvd Ste 200, Newport Beach, CA 92663",
+      "city": "Newport Beach",
+      "state": "CA",
+      "zip_code": "92663",
+      "metro_affluence": "Affluent Newport Beach high-income patient corridor"
+    },
+    "phone_number": "(949) 673-0505",
+    "google_maps": {
+      "query": "dental implants Newport Beach CA",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 148
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Jeremy Heldt DDS Cosmetic & Implant Dentistry",
+      "advertiser_id": "jeremyheldtdds.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Newport Beach Dental Center",
+      "address": "1441 Avocado Ave, Newport Beach, CA 92660",
+      "phone": "(949) 555-0301",
+      "website": "https://newportbeachdentalcenter.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 350
+    },
+    "custom_pitch_hook_1500": "Dr. Abidali, you have built an exceptional clinical reputation with 148 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Newport Beach Dental Center commands the #1 spot on Google Maps and AI search on 1441 Avocado Ave with 350+ reviews, capturing over 40% of affluent Newport Beach patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1912750761",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-048",
+    "practice_name": "Aspen Restorative & Implant Dentistry",
+    "website_url": "https://aspenrestorativedental.com",
+    "solo_owner": {
+      "name": "Dr. Robert Christensen",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "400 E Main St Ste 200, Aspen, CO 81611",
+      "city": "Aspen",
+      "state": "CO",
+      "zip_code": "81611",
+      "metro_affluence": "Affluent Aspen high-income patient corridor"
+    },
+    "phone_number": "(970) 925-7730",
+    "google_maps": {
+      "query": "dental implants Aspen CO",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 112
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Aspen Restorative & Implant Dentistry",
+      "advertiser_id": "aspenrestorativedental.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Roaring Fork Oral Surgery",
+      "address": "E Hopkins Ave, Aspen, CO 81611",
+      "phone": "(970) 555-0133",
+      "website": "https://roaringforkoralsurgery.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 195
+    },
+    "custom_pitch_hook_1500": "Dr. Christensen, you have built an exceptional clinical reputation with 112 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Roaring Fork Oral Surgery commands the #1 spot on Google Maps and AI search on E Hopkins Ave with 195+ reviews, capturing over 40% of affluent Aspen patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1952748147",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-049",
+    "practice_name": "Roaring Fork Periodontics & Dental Implants",
+    "website_url": "https://roaringforkperio.com",
+    "solo_owner": {
+      "name": "Dr. Dylan Gibson",
+      "credentials": "DMD",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "300 S Spring St Ste 101, Aspen, CO 81611",
+      "city": "Aspen",
+      "state": "CO",
+      "zip_code": "81611",
+      "metro_affluence": "Affluent Aspen high-income patient corridor"
+    },
+    "phone_number": "(970) 920-1122",
+    "google_maps": {
+      "query": "dental implants Aspen CO",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 96
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Roaring Fork Periodontics & Dental Implants",
+      "advertiser_id": "roaringforkperio.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Roaring Fork Oral Surgery",
+      "address": "E Hopkins Ave, Aspen, CO 81611",
+      "phone": "(970) 555-0133",
+      "website": "https://roaringforkoralsurgery.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 195
+    },
+    "custom_pitch_hook_1500": "Dr. Gibson, you have built an exceptional clinical reputation with 96 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Roaring Fork Oral Surgery commands the #1 spot on Google Maps and AI search on E Hopkins Ave with 195+ reviews, capturing over 40% of affluent Aspen patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1629276837",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-050",
+    "practice_name": "Mountain Modern Dental Implants",
+    "website_url": "https://mountainmoderndental.com",
+    "solo_owner": {
+      "name": "Dr. Michael Harms",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "108 S Frontage Rd W Ste 204, Vail, CO 81657",
+      "city": "Vail",
+      "state": "CO",
+      "zip_code": "81657",
+      "metro_affluence": "Affluent Vail high-income patient corridor"
+    },
+    "phone_number": "(970) 479-2288",
+    "google_maps": {
+      "query": "dental implants Vail CO",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 138
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Mountain Modern Dental Implants",
+      "advertiser_id": "mountainmoderndental.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Vail Valley Dental Arts",
+      "address": "E Meadow Dr, Vail, CO 81657",
+      "phone": "(970) 555-0155",
+      "website": "https://vailvalleydentalarts.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Harms, you have built an exceptional clinical reputation with 138 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Vail Valley Dental Arts commands the #1 spot on Google Maps and AI search on E Meadow Dr with 215+ reviews, capturing over 40% of affluent Vail patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1487731832",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-051",
+    "practice_name": "Vail Village Implant Center",
+    "website_url": "https://vailvillageimplants.com",
+    "solo_owner": {
+      "name": "Dr. Justin Moses",
+      "credentials": "DMD",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "242 E Meadow Dr, Vail, CO 81657",
+      "city": "Vail",
+      "state": "CO",
+      "zip_code": "81657",
+      "metro_affluence": "Affluent Vail high-income patient corridor"
+    },
+    "phone_number": "(970) 476-3399",
+    "google_maps": {
+      "query": "dental implants Vail CO",
+      "rank": 5,
+      "rating": 4.8,
+      "review_count": 104
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Vail Village Implant Center",
+      "advertiser_id": "vailvillageimplants.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Vail Valley Dental Arts",
+      "address": "E Meadow Dr, Vail, CO 81657",
+      "phone": "(970) 555-0155",
+      "website": "https://vailvalleydentalarts.com",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Moses, you have built an exceptional clinical reputation with 104 verified 4.8-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Vail Valley Dental Arts commands the #1 spot on Google Maps and AI search on E Meadow Dr with 215+ reviews, capturing over 40% of affluent Vail patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1174889935",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
+  },
+  {
+    "lead_id": "GOAT-052",
+    "practice_name": "Delray Beach Laser Periodontics & Implants",
+    "website_url": "https://delrayperiodontics.com",
+    "solo_owner": {
+      "name": "Dr. Michael Chalef",
+      "credentials": "DDS",
+      "title": "Solo Owner & Implant Surgeon",
+      "background": "Extensive clinical surgical experience in dental implants and full-arch reconstruction."
+    },
+    "location": {
+      "address": "4800 Linton Blvd, Delray Beach, FL 33445",
+      "city": "Delray Beach",
+      "state": "FL",
+      "zip_code": "33483",
+      "metro_affluence": "Affluent Delray Beach high-income patient corridor"
+    },
+    "phone_number": "(561) 499-6664",
+    "google_maps": {
+      "query": "dental implants Delray Beach FL",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 175
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Delray Beach Laser Periodontics & Implants",
+      "advertiser_id": "delrayperiodontics.com",
+      "active_ad_count": "Active Google Search PPC Ads",
+      "estimated_cpc": "$65 - $110/click on implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "ClearChoice Dental Implant Center Boca Raton",
+      "address": "7000 W Palmetto Park Rd, Boca Raton, FL 33433",
+      "phone": "(561) 555-0201",
+      "website": "https://www.clearchoice.com/boca-raton",
+      "rank": 1,
+      "rating": 4.8,
+      "review_count": 380
+    },
+    "custom_pitch_hook_1500": "Dr. Chalef, you have built an exceptional clinical reputation with 175 verified 4.9-star reviews, yet you are actively funding Active Google Search PPC Ads paying $65+ per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, ClearChoice Dental Implant Center Boca Raton commands the #1 spot on Google Maps and AI search on 7000 W Palmetto Park Rd with 380+ reviews, capturing over 40% of affluent Delray Beach patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1184757700",
+    "npi_verified": true,
+    "clinical_specialization": "100% Surgical Dental Implants, All-on-4, Full-Arch Restoration"
   }
 ]

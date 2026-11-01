@@ -40,8 +40,8 @@
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
 | M1 | Scraper Catalogs & Test Oracle Sync | Expand `METRO_MAPS_CATALOG`, `METRO_RANK1_COMPETITORS`, `VERIFIED_ADS_CATALOG` for all 7 corridors; sync `qualification-oracle.ts` with all 23 corridor zips; fix unit tests | none | DONE |
-| M2 | Live Discovery Pipeline Runner | Implement `discoverLiveCandidates()` in `scripts/run-pipeline.ts`, integrate 7-point `qualifyPractice()`, and deduplicated lead merging preserving GOAT-001..GOAT-010 | M1 | PLANNED |
-| M3 | Active Corridor Expansion & Dossier Generation | Execute `run-pipeline.ts` across all 7 corridors (including Aspen/Vail, Palm Beach, Silicon Valley), verify JSON/CSV datasets via `verify-leads.ts` | M2 | PLANNED |
+| M2 | Live Discovery Pipeline Runner | Implement `discoverLiveCandidates()` in `scripts/run-pipeline.ts`, integrate 7-point `qualifyPractice()`, and deduplicated lead merging preserving GOAT-001..GOAT-010 | M1 | DONE |
+| M3 | Active Corridor Expansion & Dossier Generation | Execute `run-pipeline.ts` across all 7 corridors (including Aspen/Vail, Palm Beach, Silicon Valley), verify JSON/CSV datasets via `verify-leads.ts` | M2 | IN_PROGRESS |
 | M4 | E2E Testing, Adversarial Verification & Integrity Audit | Run full 125 E2E suite (`run-all-tests.ts`), execute Reviewer, Challenger, and Forensic Auditor verification | M3 | PLANNED |
 
 ## Interface Contracts
