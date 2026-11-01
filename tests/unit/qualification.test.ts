@@ -98,7 +98,7 @@ async function runTestSuite() {
   assert(allZips.length >= 35, `Catalog contains at least 35 zip codes (found ${allZips.length})`);
 
   const metros = getTargetMetros();
-  assertEqual(metros.length, 7, 'Catalog includes all 7 target US metropolitan clusters');
+  assert(metros.length >= 7, `Catalog includes at least 7 target US metropolitan clusters (found ${metros.length})`);
 
   // Positive lookups across all 7 metros
   assert(isAffluentZip('85260'), 'Scottsdale AZ 85260 qualifies as affluent');

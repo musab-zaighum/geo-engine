@@ -918,5 +918,235 @@
     "npi_number": "1457574048",
     "npi_verified": true,
     "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Teeth-in-a-Day & Bone Grafting"
+  },
+  {
+    "lead_id": "GOAT-021",
+    "practice_name": "Manhattan Periodontics and Implant Dentistry",
+    "website_url": "https://www.periony.com/",
+    "solo_owner": {
+      "name": "Dr. Navid Rahmani",
+      "credentials": "DDS",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Columbia University and New York Hospital trained periodontist with over 15 years in solo surgical practice specializing in computer-guided full-arch dental implants and laser periodontal surgery on Central Park South."
+    },
+    "location": {
+      "address": "30 Central Park S #4D",
+      "city": "New York",
+      "state": "NY",
+      "zip_code": "10019",
+      "metro_affluence": "Midtown Manhattan / Billionaires Row (Median HHI > $168k)"
+    },
+    "phone_number": "(212) 644-4477",
+    "google_maps": {
+      "query": "dental implants Manhattan NY Central Park South",
+      "rank": 4,
+      "rating": 4.8,
+      "review_count": 226
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Netembark LLC (Dr. Navid Rahmani)",
+      "advertiser_id": "AR08185806378791600129",
+      "active_ad_count": "3 Active Search PPC Campaigns",
+      "estimated_cpc": "$85 - $135/click on Manhattan dental implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Manhattan Dental Arts",
+      "address": "495 Central Park West, New York, NY 10025",
+      "phone": "+1 212-247-2330",
+      "website": "https://manhattandentalarts.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 420
+    },
+    "custom_pitch_hook_1500": "Dr. Rahmani, you have built an exceptional clinical reputation with 226 verified 4.8-star reviews on Central Park South, yet you are actively funding 3 Active Search PPC Campaigns paying $85–$135 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Manhattan Dental Arts commands the #1 spot on Google Maps and AI search on 495 Central Park West with 420+ reviews, capturing over 40% of affluent Manhattan patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1053574764",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Restoration & Laser Periodontics"
+  },
+  {
+    "lead_id": "GOAT-022",
+    "practice_name": "Frank Celenza, DDS - Orthodontics, Periodontics & Dental Implants",
+    "website_url": "https://frankcelenzadds.com/",
+    "solo_owner": {
+      "name": "Dr. Frank Celenza",
+      "credentials": "DDS",
+      "title": "Solo Owner & Dual Board-Certified Specialist",
+      "background": "World-renowned dual-specialist in periodontics and orthodontics with over 30 years in private practice on 5th Avenue specializing in combined surgical implantology and aesthetic restorative rehabilitation."
+    },
+    "location": {
+      "address": "880 5th Ave",
+      "city": "New York",
+      "state": "NY",
+      "zip_code": "10021",
+      "metro_affluence": "Upper East Side / Park Ave Corridor (Median HHI > $185k)"
+    },
+    "phone_number": "(212) 838-3008",
+    "google_maps": {
+      "query": "dental implants Upper East Side NYC 5th Ave",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 148
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Frank Celenza DDS",
+      "advertiser_id": "frankcelenzadds.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$80 - $130/click on 5th Avenue implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "New York Center for Dental Restorations",
+      "address": "400 E 56th St, New York, NY 10022",
+      "phone": "+1 212-486-6622",
+      "website": "https://nycdentalrestorations.com/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 310
+    },
+    "custom_pitch_hook_1500": "Dr. Celenza, you have built an exceptional clinical reputation with 148 verified 4.9-star reviews on 5th Avenue, yet you are actively funding Active Search PPC Campaigns paying $80–$130 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, New York Center for Dental Restorations commands the #1 spot on Google Maps and AI search on 400 E 56th St with 310+ reviews, capturing over 40% of affluent Upper East Side patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1487864120",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Computer-Guided All-on-X & Periodontal Microsurgery"
+  },
+  {
+    "lead_id": "GOAT-023",
+    "practice_name": "Palo Alto Periodontics & Dental Implants",
+    "website_url": "https://paloaltoperio.com/",
+    "solo_owner": {
+      "name": "Dr. David Lipson",
+      "credentials": "DDS, MS",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Diplomate of the American Board of Periodontology specializing in surgical dental implants, bone augmentation, and full-mouth rehabilitation in downtown Palo Alto on University Ave."
+    },
+    "location": {
+      "address": "680 University Ave",
+      "city": "Palo Alto",
+      "state": "CA",
+      "zip_code": "94301",
+      "metro_affluence": "Silicon Valley / University Ave (Median HHI > $215k)"
+    },
+    "phone_number": "(650) 328-2322",
+    "google_maps": {
+      "query": "dental implants Palo Alto CA University Ave",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 132
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "David Lipson DDS MS",
+      "advertiser_id": "paloaltoperio.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$75 - $120/click on Palo Alto implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Peninsula Center for Implantology",
+      "address": "2290 Birch St, Palo Alto, CA 94306",
+      "phone": "+1 650-328-2072",
+      "website": "https://peninsulaimplantology.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 215
+    },
+    "custom_pitch_hook_1500": "Dr. Lipson, you have built an exceptional clinical reputation with 132 verified 4.9-star reviews on University Ave, yet you are actively funding Active Search PPC Campaigns paying $75–$120 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Peninsula Center for Implantology commands the #1 spot on Google Maps and AI search on 2290 Birch St with 215+ reviews, capturing over 40% of affluent Silicon Valley patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1639208275",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, Immediate Load Teeth-in-a-Day & Periodontal Bone Grafting"
+  },
+  {
+    "lead_id": "GOAT-024",
+    "practice_name": "Precision Periodontics & Dental Implants",
+    "website_url": "https://precisionperio.com/",
+    "solo_owner": {
+      "name": "Dr. Daniel S. Lauer",
+      "credentials": "DMD",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Diplomate of the American Board of Periodontology and Fellow of the ITI with 20+ years dedicated exclusively to dental implants, bone regeneration, and full-arch restorative surgery in Jupiter."
+    },
+    "location": {
+      "address": "3535 Military Trl Ste 207",
+      "city": "Jupiter",
+      "state": "FL",
+      "zip_code": "33458",
+      "metro_affluence": "Jupiter Luxury Corridor / Admirals Cove (Median HHI > $145k)"
+    },
+    "phone_number": "(561) 775-0331",
+    "google_maps": {
+      "query": "dental implants Jupiter FL Military Trl",
+      "rank": 4,
+      "rating": 4.9,
+      "review_count": 160
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Daniel S. Lauer DMD",
+      "advertiser_id": "precisionperio.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$70 - $115/click on Jupiter implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Jupiter Periodontics & Dental Implants",
+      "address": "1004 S Old Dixie Hwy, Jupiter, FL 33458",
+      "phone": "+1 561-747-7170",
+      "website": "https://jupiterperio.com/",
+      "rank": 1,
+      "rating": 5,
+      "review_count": 245
+    },
+    "custom_pitch_hook_1500": "Dr. Lauer, you have built an exceptional clinical reputation with 160 verified 4.9-star reviews on Military Trl, yet you are actively funding Active Search PPC Campaigns paying $70–$115 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Jupiter Periodontics & Dental Implants commands the #1 spot on Google Maps and AI search on 1004 S Old Dixie Hwy with 245+ reviews, capturing over 40% of affluent Palm Beach County patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #4 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #4 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1568541290",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4 Teeth-in-a-Day & Advanced Bone Regeneration"
+  },
+  {
+    "lead_id": "GOAT-025",
+    "practice_name": "Connolly Periodontics & Dental Implants",
+    "website_url": "https://connollyperio.com/",
+    "solo_owner": {
+      "name": "Dr. Thomas Connolly",
+      "credentials": "DDS",
+      "title": "Solo Owner & Principal Periodontist",
+      "background": "Columbia University College of Dental Medicine trained periodontist with over 25 years of solo private surgical practice on Madison Ave focusing on dental implants, sinus grafting, and full-arch restoration."
+    },
+    "location": {
+      "address": "654 Madison Ave",
+      "city": "New York",
+      "state": "NY",
+      "zip_code": "10065",
+      "metro_affluence": "Upper East Side / Madison Ave Corridor (Median HHI > $190k)"
+    },
+    "phone_number": "(212) 832-6800",
+    "google_maps": {
+      "query": "dental implants Madison Ave Upper East Side NY",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 115
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Thomas Connolly DDS",
+      "advertiser_id": "connollyperio.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$80 - $130/click on Madison Ave implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Manhattan Oasis Dentistry",
+      "address": "525 Park Ave, New York, NY 10065",
+      "phone": "+1 212-759-3350",
+      "website": "https://manhattanoasisdentistry.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 390
+    },
+    "custom_pitch_hook_1500": "Dr. Connolly, you have built an exceptional clinical reputation with 115 verified 4.9-star reviews on Madison Ave, yet you are actively funding Active Search PPC Campaigns paying $80–$130 per click on high-intent implant keywords just to maintain patient visibility. Meanwhile, Manhattan Oasis Dentistry commands the #1 spot on Google Maps and AI search on 525 Park Ave with 390+ reviews, capturing over 40% of affluent Manhattan patients seeking $5,000–$25,000 full-arch restorations before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 3x to 10x over without increasing your ad spend.",
+    "npi_number": "1508905779",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Sinus Augmentation & Periodontal Surgery"
   }
 ]

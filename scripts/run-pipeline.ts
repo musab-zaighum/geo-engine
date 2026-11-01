@@ -70,6 +70,10 @@ export const TARGET_METRO_CORRIDORS = [
   { name: 'Bellevue / Kirkland, WA', zips: ['98004', '98039', '98005', '98033'] },
   { name: 'Beverly Hills, CA', zips: ['90210', '90211', '90212', '90402'] },
   { name: 'Greenwich / Old Greenwich, CT', zips: ['06830', '06831', '06870', '06820'] },
+  { name: 'Manhattan / Upper East Side & Midtown, NY', zips: ['10019', '10021', '10065', '10075', '10022', '10028'] },
+  { name: 'Silicon Valley / Atherton & Palo Alto, CA', zips: ['94027', '94301', '94022', '94024'] },
+  { name: 'Palm Beach & Jupiter Luxury Corridors, FL', zips: ['33480', '33458', '33477'] },
+  { name: 'Colorado Luxury / Aspen & Vail, CO', zips: ['81611', '81657'] },
 ];
 
 export async function runPipeline(options?: Partial<PipelineOptions>): Promise<{

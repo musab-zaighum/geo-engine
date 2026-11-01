@@ -18,7 +18,10 @@ export type TargetMetro =
   | 'Dallas–Fort Worth / North Plano, TX'
   | 'South Florida / Boca Raton & Naples, FL'
   | 'Seattle Eastside / Bellevue, WA'
-  | 'Fairfield County / Greenwich, CT';
+  | 'Fairfield County / Greenwich, CT'
+  | 'Manhattan / New York, NY'
+  | 'Silicon Valley / Atherton & Palo Alto, CA'
+  | 'Colorado Luxury / Aspen & Vail, CO';
 
 export interface AffluentZipInfo {
   zipCode: string;
