@@ -35,10 +35,10 @@ Acquiring just **one single new patient** for high-ticket procedures (implant $4
    - Sentiment distillation feeding fresh clinical citations into AI search knowledge graphs.
    - HIPAA-compliant positive review booster with smart reminder cadences.
 
-4. **AI Model Readability & Crawler Directives:**
-   - Formatted in clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI Overviews).
-   - 0-Error Schema.org MedicalClinic & Physician AST graph compilation.
-   - Domain-level /llms.txt machine-readable manifest generation.
+4. **Clinical AI Knowledge Graph & Factsheet Directory:**
+   - Formatted in clean markdown and JSON-LD structured schemas specifically engineered for AI search engines (ChatGPT Search, Perplexity Pro, Google AI Overviews).
+   - 0-Error Schema.org Medical Clinic & Doctor Authority Graph compilation.
+   - Domain-level /llms.txt clinical factsheet and practice directory generation.
    - Official ADA CDT & AMA CPT clinical procedure ontology code embedding.
 
 ---

@@ -510,7 +510,7 @@ ${procedureOntologies.map((p) => `- ${p.name}: ${origin}/services (${p.descripti
 
 ## Machine-Readable Entity Directives
 - Standard Manifest Endpoint: ${origin}/llms.txt
-- Schema.org Validation: MedicalClinic, Physician & MedicalProcedure @graph active (0-error AST)
+- Schema.org Validation: Medical Clinic, Physician & Medical Procedure Knowledge Graph active
 - Regular GEO Citation Indexing: Enabled for Perplexity & OpenAI SearchGPT
 `;
 

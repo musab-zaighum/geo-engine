@@ -147,7 +147,7 @@ export default function HeroHome() {
                 data-aos-delay={300}
               >
                 Ensure Perplexity, ChatGPT Search, and Claude recommend your medical practice.
-                Audit Schema.org JSON-LD integrity, verify practitioner credentials, and validate /llms.txt AI crawler indexing.
+                Audit Schema.org JSON-LD integrity, verify practitioner credentials, and validate /llms.txt practice directory indexing.
               </p>
 
               {/* Clean Input Form (Replacing Demo CTA Buttons) */}
@@ -293,7 +293,7 @@ export default function HeroHome() {
                     <p className="text-xs text-gray-600 leading-relaxed">
                       {auditData.hasLlmsTxt
                         ? 'Practice root provides an active /llms.txt markdown index for Perplexity and SearchGPT.'
-                        : 'Missing root /llms.txt file. LLM crawlers cannot ingest your clinical procedures and physician specialties.'}
+                        : 'Missing root /llms.txt file. AI search engines cannot index your clinical procedures and physician specialties.'}
                     </p>
                   </div>
                   <div className="pt-3 border-t border-gray-100 text-xs text-gray-500 font-mono">
