@@ -235,7 +235,7 @@ export default function StandaloneClientReportPage() {
 
 ## Machine-Readable Entity Directives
 - Standard Manifest Endpoint: https://${domain}/llms.txt
-- Schema.org Validation: MedicalClinic, Physician & MedicalProcedure @graph active (0-error AST)
+- Schema.org Validation: Medical Clinic, Physician & Medical Procedure Knowledge Graph active
 - Regular GEO Citation Indexing: Enabled for Perplexity & OpenAI SearchGPT
 `;
 
@@ -702,7 +702,7 @@ export default function StandaloneClientReportPage() {
                       <h3 className="text-base font-bold text-white">0-Error Schema.org Multi-Entity JSON-LD</h3>
                     </div>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      Includes MedicalClinic, Physician, and MedicalProcedure AST nodes.
+                      Includes MedicalClinic, Physician, and MedicalProcedure clinical authority nodes.
                     </p>
                   </div>
 
@@ -766,7 +766,7 @@ export default function StandaloneClientReportPage() {
             </div>
           )}
 
-          {/* TAB 5: Patient Value & Retainer ROI Modeler */}
+          {/* TAB 5: Patient Value & System ROI Modeler */}
           {activeTab === 'roi' && (
             <div className="space-y-6 animate-in fade-in duration-200">
               <div className="p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-emerald-500/30 space-y-5">

@@ -830,7 +830,7 @@ export function InstantAuditBar() {
                 ) : (
                   <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span>AI Crawlers Permitted</span>
+                    <span>AI Search Access Permitted</span>
                   </span>
                 )}
               </div>
@@ -963,7 +963,7 @@ export function InstantAuditBar() {
                   <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
                     <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${auditData.schemaDepth}%` }} />
                   </div>
-                  <div className="text-[11px] text-slate-400">Valid MedicalClinic AST</div>
+                  <div className="text-[11px] text-slate-400">Verified Practice Architecture</div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
@@ -985,7 +985,7 @@ export function InstantAuditBar() {
                   <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
                     <div className="h-full bg-rose-400 rounded-full" style={{ width: `${auditData.llmsScore}%` }} />
                   </div>
-                  <div className="text-[11px] text-rose-300 font-medium">HTTP 404 (Action Needed)</div>
+                  <div className="text-[11px] text-rose-300 font-medium">Missing Directory (Action Needed)</div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
@@ -1607,7 +1607,7 @@ export function InstantAuditBar() {
                         <span>AI Search Accessibility</span>
                       </div>
                       <div className="text-white font-mono text-sm font-bold">
-                        100% Crawlers Permitted
+                        100% AI Search Access Authorized
                       </div>
                       <div className="text-[11px] text-slate-400 font-mono">
                         GPTBot, Perplexity &amp; Applebot
@@ -1649,7 +1649,7 @@ export function InstantAuditBar() {
                         }`}
                       >
                         <FileCode2 className="w-3.5 h-3.5" />
-                        <span>Schema.org JSON-LD (MedicalClinic AST)</span>
+                        <span>Verified Practice Schema (Schema.org)</span>
                       </button>
                       <button
                         type="button"

@@ -26,22 +26,22 @@ const SPECIALTIES: SpecialtyPreset[] = [
     id: 'dental',
     name: 'Cosmetic & Restorative Dentistry',
     icon: '🦷',
-    defaultTicket: 4500,
-    sampleProcedures: 'Dental Implants ($4,500), Invisalign ($5,200), Porcelain Veneers ($9,000)',
+    defaultTicket: 6500,
+    sampleProcedures: 'Single Implant ($4,500), All-on-4 Full Arch ($24,000), Full-Mouth Restoration ($38,000)',
   },
   {
     id: 'aesthetics',
     name: 'MedSpa & Facial Aesthetics',
     icon: '✨',
-    defaultTicket: 2800,
-    sampleProcedures: 'Full-Face Neuromodulators ($1,800), Laser Resurfacing ($3,200), Body Contouring ($4,500)',
+    defaultTicket: 3500,
+    sampleProcedures: 'Neuromodulators & Fillers ($2,200), Laser Resurfacing ($3,800), Body Contouring ($6,500)',
   },
   {
     id: 'plastic',
     name: 'Plastic & Cosmetic Surgery',
     icon: '🩺',
-    defaultTicket: 11500,
-    sampleProcedures: 'Deep Plane Facelifts ($14,000), Rhinoplasty ($9,500), Mommy Makeovers ($16,000)',
+    defaultTicket: 14500,
+    sampleProcedures: 'Rhinoplasty ($9,500), Deep Plane Facelift ($18,000), Mommy Makeover ($25,000)',
   },
   {
     id: 'ortho',
@@ -54,14 +54,14 @@ const SPECIALTIES: SpecialtyPreset[] = [
     id: 'derm',
     name: 'Dermatology & Skin Surgery',
     icon: '🔬',
-    defaultTicket: 3200,
+    defaultTicket: 3500,
     sampleProcedures: 'Mohs Micrographic Surgery ($3,800), Complex Excision ($2,400), Cosmetic Laser ($3,500)',
   },
 ];
 
 export function PatientRoiCalculator() {
   const [selectedSpecialty, setSelectedSpecialty] = useState('dental');
-  const [avgTicket, setAvgTicket] = useState(4500);
+  const [avgTicket, setAvgTicket] = useState(6500);
   const [newPatientsPerMonth, setNewPatientsPerMonth] = useState(3);
 
   const handleSpecialtyChange = (specId: string) => {
@@ -170,8 +170,8 @@ export function PatientRoiCalculator() {
               <input
                 type="range"
                 min="1000"
-                max="15000"
-                step="250"
+                max="40000"
+                step="500"
                 value={avgTicket}
                 onChange={(e) => setAvgTicket(Number(e.target.value))}
                 className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
@@ -179,8 +179,8 @@ export function PatientRoiCalculator() {
               
               <div className="flex justify-between text-[11px] font-mono text-slate-500">
                 <span>$1,000 (Routine)</span>
-                <span>$7,500</span>
-                <span>$15,000 (Surgical / Full Arch)</span>
+                <span>$15,000 (Single Arch)</span>
+                <span>$40,000 (Full-Mouth Surgical)</span>
               </div>
             </div>
 
