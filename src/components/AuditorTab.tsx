@@ -210,7 +210,7 @@ export function AuditorTab({ onFixWithGenerator }: AuditorTabProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-slate-300 font-semibold text-sm">
                     <FileText className="w-4 h-4 text-cyan-400" />
-                    /llms.txt Crawler File
+                    /llms.txt AI Factsheet Directory
                   </div>
                   {auditResult.hasLlmsTxt ? (
                     <span className="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs rounded-full font-semibold flex items-center gap-1">
@@ -226,7 +226,7 @@ export function AuditorTab({ onFixWithGenerator }: AuditorTabProps) {
                 </div>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   {auditResult.hasLlmsTxt
-                    ? 'Your domain provides an official llms.txt file to guide Perplexity, SearchGPT, and Claude crawlers.'
+                    ? 'Your domain provides an official llms.txt practice factsheet to guide Perplexity, SearchGPT, and ChatGPT.'
                     : 'AI engines searching for your practice cannot find a standardized /llms.txt document at your domain root.'}
                 </p>
               </div>
