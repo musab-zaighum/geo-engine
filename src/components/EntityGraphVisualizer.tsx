@@ -107,7 +107,7 @@ export default function EntityGraphVisualizer({
               <span>Clinical Entity Knowledge Graph</span>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                0-Error AST
+                0-Error Verified Graph
               </span>
             </h3>
           </div>
@@ -140,7 +140,7 @@ export default function EntityGraphVisualizer({
             }`}
           >
             <Share2 className="w-3.5 h-3.5" />
-            <span>RDF Triplets ({triplets.length})</span>
+            <span>Authority Connections ({triplets.length})</span>
           </button>
         </div>
       </div>
@@ -284,7 +284,7 @@ export default function EntityGraphVisualizer({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
                   <FileCode2 className="w-4 h-4 text-amber-400" />
-                  <span>AI Crawler Root Manifest</span>
+                  <span>AI Practice Factsheet Directory</span>
                 </div>
                 <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                   /llms.txt Endpoint
@@ -295,7 +295,7 @@ export default function EntityGraphVisualizer({
                 <span className="text-emerald-400 font-bold shrink-0 ml-2">200 OK Active</span>
               </div>
               <p className="text-[11px] text-slate-400">
-                Directly crawled by <strong className="text-white">GPTBot</strong>, <strong className="text-white">PerplexityBot</strong>, and <strong className="text-white">ClaudeBot</strong> to synthesize authoritative answers.
+                Directly referenced by <strong className="text-white">ChatGPT Search</strong>, <strong className="text-white">Perplexity</strong>, and <strong className="text-white">Google AI Overviews</strong> to synthesize authoritative answers.
               </p>
             </div>
 
@@ -307,7 +307,7 @@ export default function EntityGraphVisualizer({
       {activeTab === 'triplets' && (
         <div className="space-y-3">
           <div className="text-xs text-slate-400">
-            Semantic triplets forming the Knowledge Graph ingested by Retrieval-Augmented Generation (RAG) synthesizers:
+            Clinical authority relationships recognized by ChatGPT, Perplexity, and Google AI Overviews to verify physician credentials:
           </div>
           <div className="divide-y divide-slate-800/60 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden font-mono text-xs">
             {triplets.map((t, idx) => (
