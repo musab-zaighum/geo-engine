@@ -47,31 +47,18 @@ function buildFallbackChatResponse(userQuery: string): string {
     queryLower.includes('plan') ||
     queryLower.includes('price')
   ) {
-    return `### 💰 NexusRank1 Direct Practice Pricing & ROI Structure
+    return `### 💰 NexusRank1 Direct Clinic Pricing & ROI Structure
 
-#### 1. Solo Practice ($199/mo or $159/mo billed annually)
-- **Facility:** 1 Clinical Location & 1 Lead Physician
-- **Monitoring:** 24/7 AI Citation Monitoring across ChatGPT, Perplexity, Google AI Overviews & Apple Intelligence
-- **Structured Data:** 0-Error Schema.org MedicalClinic & Physician JSON-LD AST + Machine-Readable /llms.txt Manifest
-- **Alerts:** Weekly Local Competitor Displacement & Steal Alerts
-
-#### 2. Growth Clinic ($349/mo or $279/mo billed annually) — *Most Popular*
-- **Facility:** Up to 3 Physicians & 1 Clinical Facility
-- **Everything in Solo Practice plus:**
-- **Real-Time Competitor Steal Radar™:** Instant alerts when a local competitor is cited for high-ticket procedures (Implants, Veneers, Facelifts, etc.)
-- **Automated 1-Click CMS Injection Guide:** Seamless setup for WordPress, Webflow, Squarespace, and Shopify
-- **Patient Lead Attribution:** Tracking of consult requests originating from generative search
-- **RFC 9309 Crawler Defense:** Guaranteed crawler access for GPTBot, PerplexityBot, and ClaudeBot
-
-#### 3. Surgical Group ($699/mo or $559/mo billed annually)
-- **Facility:** Up to 5 Practice Locations & 10 Physicians
-- **Everything in Growth Clinic plus:**
-- **Multi-Location Cross-Linked Entity Graph:** Unified knowledge graph across all regional facilities
-- **Custom Clinical Ontologies:** Custom procedure mapping for complex surgical specialties
-- **HIPAA CRM Webhooks:** Direct lead dispatch to Dentrix, ModMed, AthenaHealth, or Kareo
+#### The Complete Clinic Local Growth & AI Audit System ($1,500 One-Time Investment)
+- **Permanent Infrastructure:** 0 ongoing monthly software fees or agency retainers.
+- **Pillar 1: Geo-Visibility Grid Tracking:** Maps 3x3 mile neighborhood grids and benchmarks visibility against top rival clinics in your exact zip code.
+- **Pillar 2: Google Profile & Citation Cleanup:** Resolves category mismatches and syncs phone/address consistency across 50+ medical directories.
+- **Pillar 3: Front-Desk Automated Review Loops:** Reception desk QR counter card and post-appointment SMS loop to distill 5-star clinical sentiment.
+- **Pillar 4: AI Model Readability & Search Defense:** 100% verified clinical schema and ChatGPT /llms.txt practice factsheet linking CMS NPPES NPI-1 credentials and surgical billing codes (CDT/CPT).
+- **Zero-Work Concierge Setup:** Our team installs and configures 100% of the code directly on your WordPress, Webflow, Squarespace, or custom site within 24 hours.
 
 #### 🎯 The "1 High-Ticket Patient" ROI Guarantee:
-Capturing just 1 dental implant ($4,500), Invisalign case ($5,200), or surgical procedure ($12,000+) covers your entire annual subscription multiple times over—generating **500% to 3,000%+ Net Practice ROI**!`;
+Elective treatments (dental implants, Invisalign, full-arch cases, facial aesthetics) average $4,500 to $25,000+. Acquiring just 1 new patient through AI search covers the entire $1,500 investment 3x to 16x over! If you don't acquire a verified patient consultation within 90 days, we issue a 100% full refund.`;
   }
 
   if (
@@ -103,7 +90,7 @@ I am fully initialized with the official **NexusRank1 Clinical Practice GEO Know
 
 You can ask me about:
 1. **CMS Code Insertion Guides:** Step-by-step instructions for WordPress, Shopify, Webflow, Squarespace & Wix
-2. **Direct Practice Pricing & Patient ROI:** Solo ($199/mo), Growth ($349/mo), and Surgical Group ($699/mo)
+2. **Direct Clinic Pricing & Patient ROI:** The complete $1,500 one-time deployment with 0 monthly retainers and the 90-Day 1-Patient ROI Guarantee
 3. **Competitor Steal Radar:** How to reclaim patients when ChatGPT or Perplexity recommends a local rival
 4. **Schema.org @graph & /llms.txt Standards:** Federal NPI registry, state licensure, and accredited procedure ontologies
 
@@ -138,7 +125,7 @@ ${CITEMED_MASTER_KNOWLEDGE_BASE}
 
 Instructions:
 - Provide structured, actionable, and formatted Markdown responses.
-- Emphasize NPI/Ahpra/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), and direct clinic pricing tiers (Solo Practice $199/mo, Growth Clinic $349/mo, Surgical Group $699/mo) with the 1 High-Ticket Patient ROI Guarantee.
+- Emphasize NPI/Ahpra/GMC credentials, Schema @graph structure, /llms.txt deployment, step-by-step CMS code pasting (WordPress, Shopify, Webflow, Squarespace), zero-work concierge installation, and direct clinic pricing: $1,500 flat one-time deployment (0 monthly retainers) backed by the 90-Day 1-Patient ROI Guarantee.
 - If asked for practice emails, objection handling, or technical schemas, output full ready-to-use templates.`;
 
     if (!apiKey || apiKey.trim() === '' || apiKey.includes('your_openrouter_api_key')) {

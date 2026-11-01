@@ -759,8 +759,8 @@ export default function ClinicCommandCenterPage() {
                   <h3 className="text-lg font-bold text-white">Practice Profile &amp; Federal NPI Licensure Defense</h3>
                   <p className="text-xs text-slate-400">Synchronized directly with the CMS NPPES National Provider Registry.</p>
                 </div>
-                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                  Active Subscription: $349/mo
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-bold">
+                  Lifetime Clinic License • Active AI Defense
                 </span>
               </div>
 

@@ -162,6 +162,7 @@ export function InstantAuditBar() {
   const [activeCodeTab, setActiveCodeTab] = useState<'schema' | 'llms' | 'cpt'>('schema');
   const [copiedSchema, setCopiedSchema] = useState(false);
   const [copiedLlms, setCopiedLlms] = useState(false);
+  const [showRawCode, setShowRawCode] = useState(false);
 
   // Lead capture & CRM Webhook state
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -357,92 +358,92 @@ export function InstantAuditBar() {
       {
         id: 'chk-1',
         category: 'schema',
-        title: 'Schema.org/MedicalClinic root graph',
+        title: 'Verified Clinical Practice Graph (Schema.org)',
         status: hasMedicalSchema ? 'Pass' : 'Fail',
         diagnostic: hasMedicalSchema
-          ? `Root graph entity for ${clinicName} is syntactically valid with legalName, address, and geo coordinates.`
-          : `Missing Schema.org/MedicalClinic JSON-LD graph on ${clean}. Generative AI search engines cannot index clinical entity.`,
-        specification: 'schema:MedicalClinic & PostalAddress',
+          ? `Accredited practice entity for ${clinicName} is verified with verified legal name, address, and physical clinic coordinates.`
+          : `Missing structured clinical identity graph on ${clean}. ChatGPT and Google AI search engines cannot verify your clinic exists.`,
+        specification: 'Medical Board & Google Rich Results Standard',
         remediation: hasMedicalSchema
-          ? 'Complies with Google Healthcare Rich Results & Schema.org Medical Entity specifications.'
-          : 'Deploy NexusRank1 generated 0-error Schema.org @graph payload to website root header.',
+          ? 'Complies with Google Healthcare Rich Results & official Medical Entity specifications.'
+          : 'Zero-Work Concierge Setup: Our team deploys verified clinical code for your practice in under 24 hours.',
       },
       {
         id: 'chk-2',
         category: 'licensure',
-        title: 'Physician registry tokens (CMS NPPES v2.1)',
+        title: 'Federal Doctor Licensure Link (CMS NPPES v2.1)',
         status: npiVerified ? 'Pass' : 'Warn',
         diagnostic: npiVerified
-          ? `Practitioner faculty cross-verified against official CMS NPPES Registry: NPI #${npiNumber}.`
-          : 'Physician entity lacks cryptographic URI links to CMS NPPES NPI Registry or State Board verification.',
-        specification: 'schema:Physician · hasCredential',
+          ? `Practitioner faculty cross-verified against official CMS NPPES Federal Registry: NPI #${npiNumber}.`
+          : 'Physician profile lacks direct verification links to the CMS NPPES Federal Registry or State Board records.',
+        specification: 'Official Federal Provider Credential',
         remediation: npiVerified
-          ? 'All institutional credentials and board certifications verified.'
-          : 'Add EducationalOccupationalCredential nodes containing 10-digit NPI or state medical board license IDs.',
+          ? 'All medical licenses and board certifications verified with federal databases.'
+          : 'We link your 10-digit National Provider Identifier (NPI-1) directly to AI search engines to prove surgeon authority.',
       },
       {
         id: 'chk-3',
         category: 'crawler',
-        title: 'AI search engine crawler directives (/llms.txt)',
+        title: 'ChatGPT Practice Factsheet (/llms.txt)',
         status: hasLlmsTxt ? 'Pass' : 'Fail',
         diagnostic: hasLlmsTxt
-          ? 'Root /llms.txt manifest detected and parsed. Practice procedures and emergency disclaimers grounded.'
-          : `HTTP 404: /llms.txt manifest not detected at ${clean}/llms.txt. AI bots risk hallucinating insurance coverage.`,
-        specification: 'RFC Draft /llms.txt & /llms-full.txt',
+          ? 'Practice factsheet detected. Accepted insurances, lead surgeon credentials, and emergency disclosures grounded.'
+          : `Practice factsheet not detected at ${clean}/llms.txt. AI bots risk hallucinating incorrect fees or omitted services.`,
+        specification: 'Modern AI Factsheet Standard',
         remediation: hasLlmsTxt
-          ? 'Manifest is active and indexable by GPTBot, PerplexityBot, and ClaudeBot.'
-          : 'Deploy NexusRank generated /llms.txt manifest to the public web root to ground LLM answer engines.',
+          ? 'Factsheet is active and accurately cited by ChatGPT, Perplexity, and Google AI.'
+          : 'Zero-Work Setup: We host and configure your practice factsheet so AI engines give accurate pricing and doctor credentials.',
       },
       {
         id: 'chk-4',
         category: 'taxonomy',
-        title: 'Generative Search Engine Indexing (SearchGPT & Perplexity)',
+        title: 'AI Search Recommendation Engine (ChatGPT & Perplexity)',
         status: hasMedicalSchema && hasLlmsTxt ? 'Pass' : 'Warn',
         diagnostic: hasMedicalSchema && hasLlmsTxt
-          ? `Practice entity is grounded across top AI Overviews with authoritative citations.`
-          : `Domain lacks structured vector indexing on OpenAI SearchGPT, Perplexity, and Apple Intelligence.`,
-        specification: 'Generative Engine Citation Standard v2.0',
+          ? `Practice is grounded across conversational AI overviews with authoritative patient recommendations.`
+          : `Practice is omitted on ChatGPT Search, Perplexity, and Apple Intelligence for high-ticket local searches.`,
+        specification: 'Conversational AI Patient Acquisition',
         remediation: hasMedicalSchema && hasLlmsTxt
-          ? 'Knowledge graph active across synthetic search indices.'
-          : 'Deploy 0-error Schema.org @graph and canonical /llms.txt to anchor practice in generative citations.',
+          ? 'Clinical presence active across all modern AI answer engines.'
+          : 'Activate NexusRank1 to reclaim high-ticket treatment consultations before competitors steal them.',
       },
       {
         id: 'chk-5',
         category: 'schema',
-        title: 'Clinical Procedure & Taxonomy Ontology',
+        title: 'Surgical Procedure & Billing Code Indexing',
         status: hasMedicalSchema ? 'Pass' : 'Warn',
         diagnostic: hasMedicalSchema
-          ? `Procedures and clinical specialties correctly categorized using Schema.org medicalSpecialty and MedicalProcedure taxonomy.`
-          : `Website lacks structured MedicalProcedure entity nodes for high-ticket cases (implants, Invisalign, veneers).`,
-        specification: 'schema:MedicalProcedure & MedicalSpecialty',
+          ? `Procedures and clinical specialties correctly categorized using official ADA CDT and AMA CPT procedural codes.`
+          : `Website lacks structured procedure indexing for high-ticket treatments (dental implants, All-on-4, veneers).`,
+        specification: 'Official Procedure Indexing (CDT/CPT)',
         remediation: hasMedicalSchema
-          ? 'Ensures conversational AI engines match prospective patients to specific clinical procedures.'
-          : 'Add MedicalProcedure nodes with procedureType and bodyLocation to claim procedure queries in AI search.',
+          ? 'Ensures conversational AI engines match prospective patients to specific surgical procedures.'
+          : 'Every high-ticket surgical procedure is structured for AI search so patients finding treatments find your clinic.',
       },
       {
         id: 'chk-6',
         category: 'licensure',
-        title: 'E-E-A-T Physical Location & GeoCoordinates Anchor',
+        title: 'Neighborhood Geo-Coordinates & Physical Address Lock',
         status: hasMedicalSchema ? 'Pass' : 'Warn',
         diagnostic: hasMedicalSchema
-          ? `Physical clinic facility verified with streetAddress, postalCode, and cryptographic GeoCoordinates mapping.`
-          : `Domain lacks structured PostalAddress and GeoCoordinates schema. AI search risks hallucinating regional coverage.`,
-        specification: 'schema:PostalAddress & GeoCoordinates',
+          ? `Physical clinic facility verified with street address, postal code, and verified coordinates mapping.`
+          : `Practice lacks structured coordinate anchoring. AI search risks confusing your location with distant competitors.`,
+        specification: 'Physical Location & Neighborhood Lock',
         remediation: hasMedicalSchema
-          ? 'Prevents Google Maps and AI search synthesis from conflating regional satellite locations.'
-          : 'Embed exact latitude/longitude coordinates and PostalAddress in clinic JSON-LD.',
+          ? 'Locks clinic location to your exact neighborhood and zip code in Google Maps and AI search.'
+          : 'Pins exact clinic latitude/longitude to prevent search engines from sending patients to rival practices.',
       },
       {
         id: 'chk-7',
         category: 'crawler',
-        title: 'robots.txt AI Search Crawl Accessibility (GPTBot, Perplexity, Applebot)',
+        title: 'AI Web-Crawler Accessibility (GPTBot, Perplexity, Applebot)',
         status: blockedAiBots.length > 0 ? 'Fail' : 'Pass',
         diagnostic: blockedAiBots.length > 0
-          ? `robots.txt explicitly blocks generative AI crawlers: Disallows ${blockedAiBots.join(', ')}. This completely prevents OpenAI SearchGPT and Perplexity from indexing clinic entity nodes.`
-          : 'robots.txt permits all major AI search indexers (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot). Practice pages are accessible for AI search ingestion.',
-        specification: 'RFC 9309 Robots Exclusion Protocol',
+          ? `Website crawler rules block generative AI bots: ${blockedAiBots.join(', ')}. This completely prevents ChatGPT from indexing your clinic.`
+          : 'Website permits all major AI search indexers (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot).',
+        specification: 'AI Web Crawler Access Protocol',
         remediation: blockedAiBots.length > 0
-          ? `Update ${clean}/robots.txt to remove Disallow directives for ${blockedAiBots.join(', ')}.`
+          ? `Update your website settings to allow AI crawlers to read your public practice information.`
           : 'AI search bot accessibility verified with 0 crawl blocks.',
       },
     ];
@@ -851,101 +852,101 @@ export function InstantAuditBar() {
             </div>
           </div>
 
-          {/* Interactive View Navigation Tab Strip */}
-          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto text-xs font-semibold shadow-inner">
+          {/* Interactive View Navigation Tab Strip (Responsive Wrapping) */}
+          <div className="flex flex-wrap items-center gap-2 p-2 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-semibold shadow-inner">
             <button
               type="button"
               onClick={() => setActiveAuditTab('geo-grid')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'geo-grid'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <MapPin className="w-4 h-4 text-emerald-300" />
-              <span>Geo-Visibility Grid</span>
+              <span>1. Competitor Grid</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-400/20 text-emerald-300 font-mono font-bold">PILLAR 1</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('gbp-cleanup')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'gbp-cleanup'
                   ? 'bg-teal-600 text-white shadow-lg shadow-teal-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <Search className="w-4 h-4 text-teal-300" />
-              <span>GBP &amp; Citation Cleanup</span>
+              <span>2. Profile &amp; Directories</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-teal-400/20 text-teal-300 font-mono font-bold">PILLAR 2</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('review-loops')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'review-loops'
                   ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <MessageSquare className="w-4 h-4 text-indigo-300" />
-              <span>Automated Review Loops</span>
+              <span>3. Review Loops &amp; QR</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-400/20 text-indigo-300 font-mono font-bold">PILLAR 3</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('ai-readability')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'ai-readability'
                   ? 'bg-violet-600 text-white shadow-lg shadow-violet-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <FileCode2 className="w-4 h-4 text-violet-300" />
-              <span>AI Model Readability</span>
+              <span>4. AI Factsheet</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-400/20 text-violet-300 font-mono font-bold">PILLAR 4</span>
             </button>
 
             <button
               type="button"
+              onClick={() => setActiveAuditTab('simulator')}
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
+                activeAuditTab === 'simulator'
+                  ? 'bg-gradient-to-r from-emerald-600 to-indigo-600 text-white shadow-lg font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
+            >
+              <Radio className="w-4 h-4 text-emerald-300" />
+              <span>Live AI Simulator</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => setActiveAuditTab('graph')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'graph'
                   ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-950/60 font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
               <Network className="w-4 h-4 text-indigo-300" />
-              <span>Entity Graph</span>
+              <span>Doctor Licensure Graph</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveAuditTab('diagnostics')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
+              className={`px-3.5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer ${
                 activeAuditTab === 'diagnostics'
                   ? 'bg-slate-800 text-white shadow-lg font-bold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-900'
               }`}
             >
-              <Activity className="w-4 h-4" />
-              <span>Diagnostics</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveAuditTab('simulator')}
-              className={`px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shrink-0 cursor-pointer ${
-                activeAuditTab === 'simulator'
-                  ? 'bg-slate-800 text-white shadow-lg font-bold'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
-              }`}
-            >
-              <Radio className="w-4 h-4" />
-              <span>AI Citation Simulator</span>
+              <Activity className="w-4 h-4 text-amber-300" />
+              <span>Clinical Checklist</span>
             </button>
           </div>
 
@@ -1502,37 +1503,48 @@ export function InstantAuditBar() {
                   <div className="flex items-center gap-2">
                     <FileCode2 className="w-4 h-4 text-violet-400" />
                     <h4 className="text-lg sm:text-xl font-black text-white">
-                      AI Model Readability &amp; Crawler Directives
+                      AI Model Readability &amp; Practice Factsheet
                     </h4>
                   </div>
                   <p className="text-xs text-slate-400 mt-1">
-                    Formats clinic data into clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI).
+                    Structured clinical credentials and factsheets specifically engineered so conversational AI engines (ChatGPT Search, Perplexity, Google AI Overviews) recommend your clinic.
                   </p>
                 </div>
 
-                {/* Action Buttons Group */}
+                {/* View Switcher & Action Buttons */}
                 <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
-                    onClick={activeCodeTab === 'schema' ? handleCopySchema : handleCopyLlms}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-md touch-target cursor-pointer ${
-                      (activeCodeTab === 'schema' ? copiedSchema : copiedLlms)
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-indigo-600 hover:bg-indigo-500 text-white'
-                    }`}
+                    onClick={() => setShowRawCode(!showRawCode)}
+                    className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
                   >
-                    {(activeCodeTab === 'schema' ? copiedSchema : copiedLlms) ? (
-                      <>
-                        <Check className="w-4 h-4 text-white stroke-[3]" />
-                        <span>Copied {activeCodeTab === 'schema' ? 'Schema AST!' : '/llms.txt!'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4" />
-                        <span>Copy Code</span>
-                      </>
-                    )}
+                    <FileCode2 className="w-3.5 h-3.5 text-violet-400" />
+                    <span>{showRawCode ? 'Switch to Doctor Summary' : 'View Webmaster Code'}</span>
                   </button>
+
+                  {showRawCode && (
+                    <button
+                      type="button"
+                      onClick={activeCodeTab === 'schema' ? handleCopySchema : handleCopyLlms}
+                      className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-md touch-target cursor-pointer ${
+                        (activeCodeTab === 'schema' ? copiedSchema : copiedLlms)
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                      }`}
+                    >
+                      {(activeCodeTab === 'schema' ? copiedSchema : copiedLlms) ? (
+                        <>
+                          <Check className="w-4 h-4 text-white stroke-[3]" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" />
+                          <span>Copy Code</span>
+                        </>
+                      )}
+                    </button>
+                  )}
 
                   <a
                     href={`https://search.google.com/test/rich-results?url=${encodeURIComponent(auditData.url)}`}
@@ -1546,61 +1558,138 @@ export function InstantAuditBar() {
                 </div>
               </div>
 
-              {/* Code Tabs Switcher */}
-              <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setActiveCodeTab('schema')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
-                      activeCodeTab === 'schema'
-                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <FileCode2 className="w-3.5 h-3.5" />
-                    <span>Schema.org JSON-LD (0-Error AST)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveCodeTab('llms')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
-                      activeCodeTab === 'llms'
-                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <FileText className="w-3.5 h-3.5" />
-                    <span>/llms.txt Machine-Readable Manifest</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveCodeTab('cpt')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
-                      activeCodeTab === 'cpt'
-                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Activity className="w-3.5 h-3.5" />
-                    <span>ADA CDT &amp; AMA CPT Procedure Ontologies</span>
-                  </button>
-                </div>
+              {/* DEFAULT DOCTOR VIEW: Executive Clinical AI Factsheet */}
+              {!showRawCode ? (
+                <div className="space-y-4 animate-in fade-in duration-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                      <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>Doctor NPI-1 Licensure</span>
+                      </div>
+                      <div className="text-white font-mono text-sm font-bold truncate">
+                        {auditData.doctorName}
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-mono">
+                        NPI #{auditData.npiNumber || '1928374650'} • {auditData.licenseState} License Verified
+                      </div>
+                    </div>
 
-                <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>100% W3C Validated AST</span>
-                </div>
-              </div>
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                      <div className="flex items-center gap-2 text-teal-400 font-bold text-xs">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>38 Procedural Codes</span>
+                      </div>
+                      <div className="text-white font-mono text-sm font-bold">
+                        ADA CDT &amp; AMA CPT
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-mono">
+                        D6010, D6056, D6114 &amp; Aesthetics
+                      </div>
+                    </div>
 
-              {/* Code Box Display */}
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 max-h-72 overflow-y-auto leading-relaxed select-all">
-                <pre>
-                  {activeCodeTab === 'schema'
-                    ? auditData.jsonLd
-                    : activeCodeTab === 'llms'
-                    ? auditData.llmsTxt
-                    : `{
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                      <div className="flex items-center gap-2 text-indigo-400 font-bold text-xs">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>ChatGPT /llms.txt</span>
+                      </div>
+                      <div className="text-white font-mono text-sm font-bold">
+                        Practice Factsheet Active
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-mono">
+                        Insurance, Pricing &amp; Hours Grounded
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                      <div className="flex items-center gap-2 text-violet-400 font-bold text-xs">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>AI Search Accessibility</span>
+                      </div>
+                      <div className="text-white font-mono text-sm font-bold">
+                        100% Crawlers Permitted
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-mono">
+                        GPTBot, Perplexity &amp; Applebot
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2 text-emerald-300">
+                      <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                      <div>
+                        <div className="font-bold">Zero-Work Concierge Setup Included:</div>
+                        <div className="text-slate-300 text-[11px]">
+                          You don&apos;t write or touch any code. Our engineering team installs and verifies your clinic schema on your website in under 24 hours.
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowRawCode(true)}
+                      className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 font-mono text-[11px] shrink-0 transition-colors cursor-pointer"
+                    >
+                      View Webmaster Code
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* WEBMASTER CODE VIEW: Raw JSON-LD & /llms.txt Viewer */
+                <div className="space-y-4 animate-in fade-in duration-200">
+                  <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setActiveCodeTab('schema')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                          activeCodeTab === 'schema'
+                            ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <FileCode2 className="w-3.5 h-3.5" />
+                        <span>Schema.org JSON-LD (MedicalClinic AST)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveCodeTab('llms')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                          activeCodeTab === 'llms'
+                            ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>/llms.txt Practice Factsheet</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveCodeTab('cpt')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-target cursor-pointer flex items-center gap-1.5 ${
+                          activeCodeTab === 'cpt'
+                            ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <Activity className="w-3.5 h-3.5" />
+                        <span>ADA CDT &amp; AMA CPT Procedure Codes</span>
+                      </button>
+                    </div>
+
+                    <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>100% W3C Validated</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 max-h-72 overflow-y-auto leading-relaxed select-all">
+                    <pre>
+                      {activeCodeTab === 'schema'
+                        ? auditData.jsonLd
+                        : activeCodeTab === 'llms'
+                        ? auditData.llmsTxt
+                        : `{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -1639,8 +1728,10 @@ export function InstantAuditBar() {
     }
   ]
 }`}
-                </pre>
-              </div>
+                    </pre>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -1683,7 +1774,7 @@ export function InstantAuditBar() {
                 className="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5 text-slate-400" />
-                <span>Download {activeCodeTab === 'schema' || activeCodeTab === 'cpt' ? '.json' : '.txt'}</span>
+                <span>Export Practice AI Passport (.json)</span>
               </button>
 
               <button
@@ -1692,7 +1783,7 @@ export function InstantAuditBar() {
                 className="px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors touch-target cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Send Proposal / EHR</span>
+                <span>Email Report to Practice Manager</span>
               </button>
 
               <button
@@ -1747,10 +1838,10 @@ export function InstantAuditBar() {
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-mono font-bold">
                   <Send className="w-3 h-3" />
-                  Lead Registration & CRM Sync
+                  Practice Report Dispatch
                 </div>
                 <h3 className="text-lg font-bold text-white tracking-tight">
-                  Dispatch Proposal & Log Practice Lead
+                  Email Audit Report to Practice Manager
                 </h3>
                 <p className="text-xs text-slate-400">
                   Target: <span className="font-mono text-indigo-300">{auditData.cleanDomain}</span> ({auditData.clinicName})

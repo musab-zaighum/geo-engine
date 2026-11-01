@@ -24,7 +24,7 @@ export function CornerChatWidget() {
 
 How can I help protect your clinic's search presence today?
 
-- **Practice Plans:** Solo ($199/mo), Growth ($349/mo), Surgical Group ($699/mo)
+- **Full Clinic Deployment:** $1,500 One-Time (0 Monthly Retainers • 90-Day 1-Patient ROI Guarantee)
 - **Competitor Steal Radar:** Alerts when ChatGPT recommends a rival clinic
 - **Clinical Schema & /llms.txt:** CMS guides for WordPress, Webflow & Squarespace`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),

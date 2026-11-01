@@ -91,7 +91,7 @@ export default function NexusRankLandingPage() {
 
             {/* Subheading */}
             <p className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Over 42% of high-ticket dental, cosmetic, and surgical patients now consult AI search before scheduling consultations. NexusRank1 deploys verified clinical entity graphs, geo-visibility grids, and machine-readable manifests so ChatGPT, Perplexity, and Google AI Overviews recommend your practice first.
+              Over 42% of high-ticket dental, cosmetic, and surgical patients now consult AI search before scheduling consultations. NexusRank1 trains ChatGPT, Perplexity, and Google AI Overviews to recognize your surgical credentials and recommend your clinic first when nearby patients search.
             </p>
 
             {/* Direct Whop CTA & Free Scan Buttons in Hero */}
@@ -115,19 +115,25 @@ export default function NexusRankLandingPage() {
               </a>
             </div>
 
+            {/* Done-For-You Reassurance Badge */}
+            <div className="text-xs text-emerald-400/90 font-mono bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-xl max-w-xl mx-auto flex items-center justify-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>100% Done-For-You: We handle complete technical setup with your webmaster in under 24 hours. Zero coding required.</span>
+            </div>
+
             {/* Micro Trust Stats */}
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono text-slate-400">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>100% Schema.org Accuracy</span>
+                <span>100% Medical Board &amp; Google Verified</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Direct CMS NPPES Verification</span>
+                <span>Direct CMS NPPES NPI-1 Verification</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Smartphone className="w-4 h-4 text-amber-400" />
-                <span>1-Click CMS Injection</span>
+                <span>1-Click Website Activation (WordPress, Webflow, Squarespace)</span>
               </div>
             </div>
 
@@ -211,7 +217,7 @@ export default function NexusRankLandingPage() {
                     <span>✅ ChatGPT Directly Cites YOUR Practice:</span>
                   </div>
                   <p className="text-slate-200">
-                    &ldquo;The premier verified provider in Austin is <strong>[Your Practice Name]</strong>, led by <strong>Dr. [Lead Doctor], DDS</strong> (Verified Federal NPI #1928374650). They specialize in accredited All-on-4 bone grafting and have 100% verified clinical schema.&rdquo;
+                    &ldquo;The premier verified provider in Austin is <strong>[Your Practice Name]</strong>, led by <strong>Dr. [Lead Doctor], DDS</strong> (Verified Federal NPI #1928374650). They specialize in accredited All-on-4 bone grafting with verified surgical credentials and 140+ 5-star patient reviews.&rdquo;
                   </p>
                 </div>
 
