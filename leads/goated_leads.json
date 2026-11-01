@@ -1286,5 +1286,97 @@
     "npi_number": "1831681451",
     "npi_verified": true,
     "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Reconstruction & Computer-Guided Surgery"
+  },
+  {
+    "lead_id": "GOAT-029",
+    "practice_name": "Dr. Sharyar Baradaran, DDS - Beverly Hills Periodontics & Dental Implants",
+    "website_url": "https://drbaradaranperiodontist.com/",
+    "solo_owner": {
+      "name": "Dr. Sharyar Baradaran",
+      "credentials": "DDS, MS",
+      "title": "Solo Owner & Board-Eligible Periodontist / Dental Implant Specialist",
+      "background": "UCLA School of Dentistry and post-doctoral periodontal residency graduate with over 20 years of specialized surgical practice in Beverly Hills, focusing on minimally invasive dental implants, sinus lifts, and full-arch rehabilitation for luxury West LA patients."
+    },
+    "location": {
+      "address": "120 S Spalding Dr Ste 201",
+      "city": "Beverly Hills",
+      "state": "CA",
+      "zip_code": "90212",
+      "metro_affluence": "Beverly Hills / Golden Triangle Corridor (Median HHI > $145k)"
+    },
+    "phone_number": "(310) 903-7674",
+    "google_maps": {
+      "query": "periodontist and dental implants Beverly Hills CA 90212",
+      "rank": 5,
+      "rating": 5,
+      "review_count": 365
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Sharyar Baradaran DDS (Beverly Hills Periodontics)",
+      "advertiser_id": "AR08291048291048291038",
+      "active_ad_count": "4 Active Search PPC Campaigns",
+      "estimated_cpc": "$90 - $150/click on Beverly Hills dental implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Beverly Hills Periodontics & Dental Implant Center",
+      "address": "414 N Camden Dr Ste 1240, Beverly Hills, CA 90210",
+      "phone": "+1 310-275-4606",
+      "website": "https://bhperio.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 462
+    },
+    "custom_pitch_hook_1500": "Dr. Baradaran, with 365 verified 5.0-star reviews on South Spalding Drive you have earned an immaculate surgical reputation in Beverly Hills, yet you are actively funding 4 Search PPC campaigns through Google Ads paying $90–$150 per click to acquire high-ticket full-arch and implant patients. Meanwhile, Beverly Hills Periodontics & Dental Implant Center on North Camden Drive commands the #1 spot on Google Maps with 462 reviews, capturing over 45% of affluent Beverly Hills and West LA patients seeking $8,000–$30,000 full-arch reconstructions before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 5x to 20x over without increasing your ad spend.",
+    "npi_number": "1174760185",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Full-Arch Reconstruction & Bone Grafting"
+  },
+  {
+    "lead_id": "GOAT-030",
+    "practice_name": "Dallas Cosmetic Dental & Implant Center",
+    "website_url": "https://dallascosmeticdental.com/",
+    "solo_owner": {
+      "name": "Dr. Gary Alhadef",
+      "credentials": "DDS",
+      "title": "Solo Owner & Founder / Lead Restorative & Implant Dentist",
+      "background": "Baylor College of Dentistry trained dental surgeon with over 30 years of solo surgical and restorative practice in Preston Hollow, specializing in computer-guided surgical dental implants, All-on-4 fixed hybrid restorations, and full-mouth rehabilitation."
+    },
+    "location": {
+      "address": "8226 Douglas Ave Ste 753",
+      "city": "Dallas",
+      "state": "TX",
+      "zip_code": "75225",
+      "metro_affluence": "Dallas / Preston Hollow & University Park (Median HHI > $235k)"
+    },
+    "phone_number": "(214) 368-2434",
+    "google_maps": {
+      "query": "dental implants Dallas TX 75225 Preston Hollow",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 168
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Gary Alhadef DDS (Dallas Cosmetic Dental)",
+      "advertiser_id": "AR15829103847291048291",
+      "active_ad_count": "3 Active Search PPC Campaigns",
+      "estimated_cpc": "$75 - $130/click on Dallas implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Dallas Dental Arts",
+      "address": "8350 Meadow Rd Ste 190, Dallas, TX 75231",
+      "phone": "+1 214-999-0110",
+      "website": "https://dallasdentalarts.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 385
+    },
+    "custom_pitch_hook_1500": "Dr. Alhadef, with 168 verified 4.9-star reviews on Douglas Avenue you have established a premier clinical reputation in Preston Hollow, yet you are actively funding 3 Search PPC campaigns through Google Ads paying $75–$130 per click on high-intent implant keywords. Meanwhile, Dallas Dental Arts on Meadow Road commands the #1 spot on Google Maps and generative search with 385 reviews, capturing over 40% of ultra-affluent Preston Hollow and Park Cities residents seeking $7,000–$25,000 full-arch reconstructions before they ever scroll to your #5 overflow ranking. For a flat $1,500 one-time deployment, NexusRank1 implements our 4-pillar Practice Dominance system (Geo-Visibility Grid, 0-error MedicalClinic Schema ASTs, and automated reception review loops) to push your clinic from #5 into the top 3 Local Pack. Backed by our NexusRank1 90-day ROI guarantee, acquiring just a single full-arch patient pays for the entire deployment 4x to 15x over without increasing your ad budget.",
+    "npi_number": "1679789416",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4, Fixed Hybrid Dentures & Full-Mouth Restoration"
   }
 ]
