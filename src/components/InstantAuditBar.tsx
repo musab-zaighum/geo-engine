@@ -1649,7 +1649,7 @@ export function InstantAuditBar() {
                         }`}
                       >
                         <FileCode2 className="w-3.5 h-3.5" />
-                        <span>Verified Practice Schema (Schema.org)</span>
+                        <span>Schema.org JSON-LD (Doctor Authority Graph)</span>
                       </button>
                       <button
                         type="button"

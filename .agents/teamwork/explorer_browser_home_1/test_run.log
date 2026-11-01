@@ -1,87 +1,87 @@
 === NexusRank1 Homepage & Audit Bar Test Suite ===
-[2026-11-01T14:18:42.986Z] --- Navigating to http://localhost:3000 ---
-[2026-11-01T14:18:43.747Z] ✅ PASS: [INIT-01] Homepage loaded with HTTP 200
-[2026-11-01T14:18:43.862Z] Page Title: NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform
-[2026-11-01T14:18:43.862Z] ✅ PASS: [HERO-01] Page title is correct
-[2026-11-01T14:18:43.889Z] ✅ PASS: [HERO-02] #audit-bar element exists
-[2026-11-01T14:18:43.890Z] --- Testing Preset Domain Buttons & Custom Inputs ---
-[2026-11-01T14:18:43.905Z] Initial input value: dentalpractice.com
-[2026-11-01T14:18:43.905Z] ✅ PASS: [INPUT-01] Initial domain input defaults to dentalpractice.com
-[2026-11-01T14:18:43.913Z] ✅ PASS: [DIAL-01] Radial score gauge rendered on initial load
-[2026-11-01T14:18:43.914Z] Clicking preset button: mayoclinic.org
-[2026-11-01T14:18:43.986Z] Scan animation detected for mayoclinic.org
-[2026-11-01T14:18:48.421Z] Mayo Clinic Name: Mayo Clinic, Score: 45/100, Grade: C
-[2026-11-01T14:18:48.421Z] ✅ PASS: [PRESET-01] Preset mayoclinic.org updates results with valid clinic profile and score
-[2026-11-01T14:18:48.421Z] Clicking preset button: clevelandclinic.org
-[2026-11-01T14:18:52.893Z] Cleveland Clinic Name: Cleveland Clinic, Score: 90/100, Grade: A+
-[2026-11-01T14:18:52.893Z] ✅ PASS: [PRESET-02] Preset clevelandclinic.org updates results with valid clinic profile and score
-[2026-11-01T14:18:52.893Z] Clicking preset button: austincosmeticdental.com
-[2026-11-01T14:18:57.354Z] Austin Clinic Name: Austincosmeticdental Clinic, Score: 18/100
-[2026-11-01T14:18:57.354Z] ✅ PASS: [PRESET-03] Preset austincosmeticdental.com updates results accurately
-[2026-11-01T14:18:57.354Z] Clicking preset button: dentalpractice.com
-[2026-11-01T14:19:02.302Z] Dental Practice Name: Kalyani Dental Lounge
-[2026-11-01T14:19:02.302Z] ✅ PASS: [PRESET-04] Preset dentalpractice.com updates results accurately
-[2026-11-01T14:19:02.302Z] Testing custom domain input: beverlyhillsdentalimplants.com
-[2026-11-01T14:19:02.431Z] ✅ PASS: [ANIM-01] Live audit progress bar & animated step indicators appear during scanning
-[2026-11-01T14:19:06.847Z] Custom Clinic Name: Beverlyhillsdentalimplants Clinic, Score: 18/100
-[2026-11-01T14:19:06.847Z] ✅ PASS: [CUSTOM-01] Custom domain beverlyhillsdentalimplants.com scans and displays correctly
-[2026-11-01T14:19:06.852Z] ✅ PASS: [GAUGE-01] Radial score gauge calculates stroke-dashoffset dynamically
-[2026-11-01T14:19:06.852Z] Testing edge case: empty domain input
-[2026-11-01T14:19:07.324Z] ✅ PASS: [EDGE-01] Empty domain input triggers validation toast without crashing
-[2026-11-01T14:19:07.324Z] Testing edge case: complex URL https://sub.practice-implants.clinic/about-us?loc=east
-[2026-11-01T14:19:12.294Z] Cleaned URL in output: https://sub.practice-implants.clinic
-[2026-11-01T14:19:12.294Z] ✅ PASS: [EDGE-02] URL with protocol and path is sanitized to clean domain
-[2026-11-01T14:19:12.414Z] --- Testing 7 Tab Navigations in Audit Results ---
-[2026-11-01T14:19:12.415Z] Testing Tab 1: Competitor Grid
-[2026-11-01T14:19:12.903Z] ✅ PASS: [TAB-01] Tab 1 (Competitor Grid) renders 3x3 coordinate matrix and benchmarking table
-[2026-11-01T14:19:12.903Z] Testing Tab 2: Profile & Directories
-[2026-11-01T14:19:13.384Z] ✅ PASS: [TAB-02] Tab 2 (Profile & Directories) renders 4 diagnostic cards
-[2026-11-01T14:19:13.384Z] Testing Tab 3: Review Loops & QR
-[2026-11-01T14:19:13.868Z] ✅ PASS: [TAB-03] Tab 3 (Review Loops & QR) renders SMS simulator and Reception QR generator
-[2026-11-01T14:19:13.868Z] Testing Tab 4: AI Factsheet
-[2026-11-01T14:19:14.373Z] ✅ PASS: [TAB-04] Tab 4 (AI Factsheet) renders executive clinical factsheet cards
-[2026-11-01T14:19:14.373Z] Testing Tab 5: Live AI Simulator
-[2026-11-01T14:19:15.048Z] ✅ PASS: [TAB-05] Tab 5 (Live AI Simulator) mounts GeoCitationSimulator without crashing
-[2026-11-01T14:19:15.048Z] Testing Tab 6: Doctor Licensure Graph
-[2026-11-01T14:19:15.706Z] ✅ PASS: [TAB-06] Tab 6 (Doctor Licensure Graph) renders EntityGraphVisualizer SVG graph
-[2026-11-01T14:19:15.706Z] Testing Tab 7: Clinical Checklist
-[2026-11-01T14:19:16.180Z] ✅ PASS: [TAB-07] Tab 7 (Clinical Checklist) renders 4 metric meters and diagnostic checklist items
-[2026-11-01T14:19:16.310Z] --- Testing Webmaster Code Toggle & Links ---
-[2026-11-01T14:19:17.208Z] ✅ PASS: [CODE-01] Webmaster Code toggle switches from Doctor View to Raw Code View
-[2026-11-01T14:19:17.212Z] ✅ PASS: [CODE-02] Schema.org JSON-LD code contains valid @context and schema types
-[2026-11-01T14:19:17.569Z] ✅ PASS: [CODE-03] /llms.txt code view contains practice factsheet headers
-[2026-11-01T14:19:17.914Z] ✅ PASS: [CODE-04] Procedure codes view displays CDT D6010 & CPT 15824 nodes
-[2026-11-01T14:19:17.914Z] Testing Copy Code button on active tab
-[2026-11-01T14:19:18.364Z] ✅ PASS: [CODE-05] Copy Code button updates label to Copied! and copies payload
-[2026-11-01T14:19:18.372Z] ✅ PASS: [CODE-06] Google Rich Results link has valid target="_blank" and Google search URL
-[2026-11-01T14:19:18.720Z] ✅ PASS: [CODE-07] Toggle cleanly switches back to Executive Doctor Summary view
-[2026-11-01T14:19:18.856Z] --- Testing Global Export Toolbar & Modals ---
-[2026-11-01T14:19:18.876Z] ❌ FAIL: [EXPORT-01] Whop checkout buttons point exactly to plan_e37e96b86e088 - Details: {"toolbarHref":"https://whop.com/checkout/velogeo-agency","totalWhopLinksFound":2}
-[2026-11-01T14:19:18.881Z] Live Public Report href: /report/sub.practice-implants.clinic?unbranded=true
-[2026-11-01T14:19:18.881Z] ✅ PASS: [EXPORT-02] Live Public Report link targets /report/[domain]
-[2026-11-01T14:19:18.881Z] Testing public report page navigation: http://localhost:3000/report/sub.practice-implants.clinic?unbranded=true
-[2026-11-01T14:19:19.087Z] Public report status: 200, Title: NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform
-[2026-11-01T14:19:19.087Z] ✅ PASS: [EXPORT-03] Public report route loads with HTTP 200 without console errors
-[2026-11-01T14:19:19.118Z] Vector PDF Export href: /api/report/pdf?domain=sub.practice-implants.clinic
-[2026-11-01T14:19:19.118Z] ✅ PASS: [EXPORT-04] Vector PDF export link targets /api/report/pdf?domain=[domain]
-[2026-11-01T14:19:19.118Z] Testing /api/report/pdf endpoint response
-[2026-11-01T14:19:20.764Z] PDF API Result: {"ok":true,"status":200,"contentType":"application/pdf"}
-[2026-11-01T14:19:20.764Z] ✅ PASS: [EXPORT-05] /api/report/pdf endpoint responds with HTTP 200 and application/pdf
-[2026-11-01T14:19:20.764Z] Testing JSON Download button
-[2026-11-01T14:19:20.809Z] ✅ PASS: [EXPORT-06] Export Practice AI Passport downloads json schema file
-[2026-11-01T14:19:20.809Z] --- Testing Practice Manager Dispatch Modal ---
-[2026-11-01T14:19:21.277Z] ✅ PASS: [MODAL-01] Practice Manager Dispatch modal opens with backdrop blur
-[2026-11-01T14:19:21.683Z] ✅ PASS: [MODAL-02] Form validation prevents empty email submission and keeps modal open
-[2026-11-01T14:19:22.667Z] Lead dispatched payload: {"domain":"sub.practice-implants.clinic","name":"Dr. Robert Vance, DDS","email":"dr.vance@beverlyhillsimplants.com","phone":"+1 (310) 555-0199","notes":"Urgent full-arch dental implant clinical authority setup required.","webhookUrl":"https://httpbin.org/post"}
-[2026-11-01T14:19:22.667Z] Lead dispatched response: {"success":true,"message":"Practice consultation request registered successfully.","lead":{"event":"lead_captured","timestamp":"2026-11-01T14:19:21.898Z","domain":"sub.practice-implants.clinic","contactName":"Dr. Robert Vance, DDS","email":"dr.vance@beverlyhillsimplants.com","phone":"+1 (310) 555-0199","notes":"Urgent full-arch dental implant clinical authority setup required.","source":"NexusRank1 Clinical Intelligence Audit Portal"}}
-[2026-11-01T14:19:22.667Z] ✅ PASS: [MODAL-03] Submitting modal dispatches payload to /api/lead with HTTP 200
-[2026-11-01T14:19:23.277Z] ✅ PASS: [MODAL-04] Success notification displayed and modal closes upon dispatch
-[2026-11-01T14:19:23.278Z] ✅ PASS: [MODAL-05] Practice webhook URL is persisted to localStorage (nr1_practice_webhook)
-[2026-11-01T14:19:24.060Z] ✅ PASS: [MODAL-06] Modal close (X) button closes modal cleanly
-[2026-11-01T14:19:24.237Z] 
+[2026-11-01T14:44:43.221Z] --- Navigating to http://localhost:3000 ---
+[2026-11-01T14:44:44.029Z] ✅ PASS: [INIT-01] Homepage loaded with HTTP 200
+[2026-11-01T14:44:44.142Z] Page Title: NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform
+[2026-11-01T14:44:44.142Z] ✅ PASS: [HERO-01] Page title is correct
+[2026-11-01T14:44:44.170Z] ✅ PASS: [HERO-02] #audit-bar element exists
+[2026-11-01T14:44:44.170Z] --- Testing Preset Domain Buttons & Custom Inputs ---
+[2026-11-01T14:44:44.183Z] Initial input value: dentalpractice.com
+[2026-11-01T14:44:44.183Z] ✅ PASS: [INPUT-01] Initial domain input defaults to dentalpractice.com
+[2026-11-01T14:44:44.192Z] ✅ PASS: [DIAL-01] Radial score gauge rendered on initial load
+[2026-11-01T14:44:44.192Z] Clicking preset button: mayoclinic.org
+[2026-11-01T14:44:44.259Z] Scan animation detected for mayoclinic.org
+[2026-11-01T14:44:48.679Z] Mayo Clinic Name: Mayo Clinic, Score: 45/100, Grade: C
+[2026-11-01T14:44:48.679Z] ✅ PASS: [PRESET-01] Preset mayoclinic.org updates results with valid clinic profile and score
+[2026-11-01T14:44:48.679Z] Clicking preset button: clevelandclinic.org
+[2026-11-01T14:44:53.152Z] Cleveland Clinic Name: Cleveland Clinic, Score: 90/100, Grade: A+
+[2026-11-01T14:44:53.152Z] ✅ PASS: [PRESET-02] Preset clevelandclinic.org updates results with valid clinic profile and score
+[2026-11-01T14:44:53.152Z] Clicking preset button: austincosmeticdental.com
+[2026-11-01T14:44:58.104Z] Austin Clinic Name: Austincosmeticdental Clinic, Score: 18/100
+[2026-11-01T14:44:58.105Z] ✅ PASS: [PRESET-03] Preset austincosmeticdental.com updates results accurately
+[2026-11-01T14:44:58.105Z] Clicking preset button: dentalpractice.com
+[2026-11-01T14:45:02.601Z] Dental Practice Name: Kalyani Dental Lounge
+[2026-11-01T14:45:02.601Z] ✅ PASS: [PRESET-04] Preset dentalpractice.com updates results accurately
+[2026-11-01T14:45:02.601Z] Testing custom domain input: beverlyhillsdentalimplants.com
+[2026-11-01T14:45:02.692Z] ✅ PASS: [ANIM-01] Live audit progress bar & animated step indicators appear during scanning
+[2026-11-01T14:45:07.112Z] Custom Clinic Name: Beverlyhillsdentalimplants Clinic, Score: 18/100
+[2026-11-01T14:45:07.112Z] ✅ PASS: [CUSTOM-01] Custom domain beverlyhillsdentalimplants.com scans and displays correctly
+[2026-11-01T14:45:07.123Z] ✅ PASS: [GAUGE-01] Radial score gauge calculates stroke-dashoffset dynamically
+[2026-11-01T14:45:07.123Z] Testing edge case: empty domain input
+[2026-11-01T14:45:07.610Z] ✅ PASS: [EDGE-01] Empty domain input triggers validation toast without crashing
+[2026-11-01T14:45:07.610Z] Testing edge case: complex URL https://sub.practice-implants.clinic/about-us?loc=east
+[2026-11-01T14:45:12.103Z] Cleaned URL in output: https://sub.practice-implants.clinic
+[2026-11-01T14:45:12.103Z] ✅ PASS: [EDGE-02] URL with protocol and path is sanitized to clean domain
+[2026-11-01T14:45:12.239Z] --- Testing 7 Tab Navigations in Audit Results ---
+[2026-11-01T14:45:12.239Z] Testing Tab 1: Competitor Grid
+[2026-11-01T14:45:12.694Z] ✅ PASS: [TAB-01] Tab 1 (Competitor Grid) renders 3x3 coordinate matrix and benchmarking table
+[2026-11-01T14:45:12.694Z] Testing Tab 2: Profile & Directories
+[2026-11-01T14:45:13.176Z] ✅ PASS: [TAB-02] Tab 2 (Profile & Directories) renders 4 diagnostic cards
+[2026-11-01T14:45:13.176Z] Testing Tab 3: Review Loops & QR
+[2026-11-01T14:45:13.647Z] ✅ PASS: [TAB-03] Tab 3 (Review Loops & QR) renders SMS simulator and Reception QR generator
+[2026-11-01T14:45:13.647Z] Testing Tab 4: AI Factsheet
+[2026-11-01T14:45:14.139Z] ✅ PASS: [TAB-04] Tab 4 (AI Factsheet) renders executive clinical factsheet cards
+[2026-11-01T14:45:14.139Z] Testing Tab 5: Live AI Simulator
+[2026-11-01T14:45:14.806Z] ✅ PASS: [TAB-05] Tab 5 (Live AI Simulator) mounts GeoCitationSimulator without crashing
+[2026-11-01T14:45:14.806Z] Testing Tab 6: Doctor Licensure Graph
+[2026-11-01T14:45:15.466Z] ✅ PASS: [TAB-06] Tab 6 (Doctor Licensure Graph) renders EntityGraphVisualizer SVG graph
+[2026-11-01T14:45:15.466Z] Testing Tab 7: Clinical Checklist
+[2026-11-01T14:45:15.946Z] ✅ PASS: [TAB-07] Tab 7 (Clinical Checklist) renders 4 metric meters and diagnostic checklist items
+[2026-11-01T14:45:16.079Z] --- Testing Webmaster Code Toggle & Links ---
+[2026-11-01T14:45:16.979Z] ✅ PASS: [CODE-01] Webmaster Code toggle switches from Doctor View to Raw Code View
+[2026-11-01T14:45:16.982Z] ✅ PASS: [CODE-02] Schema.org JSON-LD code contains valid @context and schema types
+[2026-11-01T14:45:17.318Z] ✅ PASS: [CODE-03] /llms.txt code view contains practice factsheet headers
+[2026-11-01T14:45:17.665Z] ✅ PASS: [CODE-04] Procedure codes view displays CDT D6010 & CPT 15824 nodes
+[2026-11-01T14:45:17.666Z] Testing Copy Code button on active tab
+[2026-11-01T14:45:18.150Z] ✅ PASS: [CODE-05] Copy Code button updates label to Copied! and copies payload
+[2026-11-01T14:45:18.159Z] ✅ PASS: [CODE-06] Google Rich Results link has valid target="_blank" and Google search URL
+[2026-11-01T14:45:18.506Z] ✅ PASS: [CODE-07] Toggle cleanly switches back to Executive Doctor Summary view
+[2026-11-01T14:45:18.635Z] --- Testing Global Export Toolbar & Modals ---
+[2026-11-01T14:45:18.647Z] ✅ PASS: [EXPORT-01] Whop checkout buttons point exactly to plan_e37e96b86e088
+[2026-11-01T14:45:18.652Z] Live Public Report href: /report/sub.practice-implants.clinic?unbranded=true
+[2026-11-01T14:45:18.652Z] ✅ PASS: [EXPORT-02] Live Public Report link targets /report/[domain]
+[2026-11-01T14:45:18.652Z] Testing public report page navigation: http://localhost:3000/report/sub.practice-implants.clinic?unbranded=true
+[2026-11-01T14:45:18.848Z] Public report status: 200, Title: NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform
+[2026-11-01T14:45:18.848Z] ✅ PASS: [EXPORT-03] Public report route loads with HTTP 200 without console errors
+[2026-11-01T14:45:18.936Z] Vector PDF Export href: /api/report/pdf?domain=sub.practice-implants.clinic
+[2026-11-01T14:45:18.936Z] ✅ PASS: [EXPORT-04] Vector PDF export link targets /api/report/pdf?domain=[domain]
+[2026-11-01T14:45:18.936Z] Testing /api/report/pdf endpoint response
+[2026-11-01T14:45:20.505Z] PDF API Result: {"ok":true,"status":200,"contentType":"application/pdf"}
+[2026-11-01T14:45:20.505Z] ✅ PASS: [EXPORT-05] /api/report/pdf endpoint responds with HTTP 200 and application/pdf
+[2026-11-01T14:45:20.505Z] Testing JSON Download button
+[2026-11-01T14:45:20.548Z] ✅ PASS: [EXPORT-06] Export Practice AI Passport downloads json schema file
+[2026-11-01T14:45:20.548Z] --- Testing Practice Manager Dispatch Modal ---
+[2026-11-01T14:45:21.017Z] ✅ PASS: [MODAL-01] Practice Manager Dispatch modal opens with backdrop blur
+[2026-11-01T14:45:21.444Z] ✅ PASS: [MODAL-02] Form validation prevents empty email submission and keeps modal open
+[2026-11-01T14:45:22.379Z] Lead dispatched payload: {"domain":"sub.practice-implants.clinic","name":"Dr. Robert Vance, DDS","email":"dr.vance@beverlyhillsimplants.com","phone":"+1 (310) 555-0199","notes":"Urgent full-arch dental implant clinical authority setup required.","webhookUrl":"https://httpbin.org/post"}
+[2026-11-01T14:45:22.379Z] Lead dispatched response: {"success":true,"message":"Practice consultation request registered successfully.","lead":{"event":"lead_captured","timestamp":"2026-11-01T14:45:21.621Z","domain":"sub.practice-implants.clinic","contactName":"Dr. Robert Vance, DDS","email":"dr.vance@beverlyhillsimplants.com","phone":"+1 (310) 555-0199","notes":"Urgent full-arch dental implant clinical authority setup required.","source":"NexusRank1 Clinical Intelligence Audit Portal"}}
+[2026-11-01T14:45:22.379Z] ✅ PASS: [MODAL-03] Submitting modal dispatches payload to /api/lead with HTTP 200
+[2026-11-01T14:45:22.992Z] ✅ PASS: [MODAL-04] Success notification displayed and modal closes upon dispatch
+[2026-11-01T14:45:22.993Z] ✅ PASS: [MODAL-05] Practice webhook URL is persisted to localStorage (nr1_practice_webhook)
+[2026-11-01T14:45:23.742Z] ✅ PASS: [MODAL-06] Modal close (X) button closes modal cleanly
+[2026-11-01T14:45:23.932Z] 
 ========================================
-[2026-11-01T14:19:24.237Z] Test Run Completed! Passed: 39, Failed: 1
-[2026-11-01T14:19:24.237Z] Console Errors: 0, Warnings: 0
-[2026-11-01T14:19:24.237Z] Results saved to /home/pwn/geo-engine/.agents/teamwork/explorer_browser_home_1/test_results.json
-[2026-11-01T14:19:24.237Z] ========================================
+[2026-11-01T14:45:23.932Z] Test Run Completed! Passed: 40, Failed: 0
+[2026-11-01T14:45:23.932Z] Console Errors: 0, Warnings: 0
+[2026-11-01T14:45:23.932Z] Results saved to /home/pwn/geo-engine/.agents/teamwork/explorer_browser_home_1/test_results.json
+[2026-11-01T14:45:23.932Z] ========================================
 

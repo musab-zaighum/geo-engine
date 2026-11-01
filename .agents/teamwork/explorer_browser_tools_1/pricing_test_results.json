@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-01T14:23:38.344Z",
+  "timestamp": "2026-11-01T14:46:06.337Z",
   "route": "/pricing",
   "httpStatus": 200,
   "viewports": {
@@ -50,7 +50,7 @@
     },
     {
       "title": "AI Model Readability & Crawler Directives",
-      "exists": true
+      "exists": false
     }
   ],
   "valueMatrixTest": [
@@ -111,47 +111,47 @@
     {
       "index": 1,
       "text": "Get System",
-      "href": "https://whop.com/checkout/velogeo-agency",
+      "href": "https://whop.com/checkout/plan_e37e96b86e088/",
       "target": "_blank",
       "rel": "noopener noreferrer",
       "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
-      "isTargetPlan": false
+      "isTargetPlan": true
     },
     {
       "index": 2,
       "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
-      "href": "https://whop.com/checkout/velogeo-agency",
+      "href": "https://whop.com/checkout/plan_e37e96b86e088/",
       "target": "_blank",
       "rel": "noopener noreferrer",
       "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
-      "isTargetPlan": false
+      "isTargetPlan": true
     },
     {
       "index": 3,
       "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
-      "href": "https://whop.com/checkout/velogeo-agency",
+      "href": "https://whop.com/checkout/plan_e37e96b86e088/",
       "target": "_blank",
       "rel": "noopener noreferrer",
       "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
-      "isTargetPlan": false
+      "isTargetPlan": true
     },
     {
       "index": 4,
       "text": "Secure Your Clinic's Exclusive Zip Code Allocation",
-      "href": "https://whop.com/checkout/velogeo-agency",
+      "href": "https://whop.com/checkout/plan_e37e96b86e088/",
       "target": "_blank",
       "rel": "noopener noreferrer",
       "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
-      "isTargetPlan": false
+      "isTargetPlan": true
     },
     {
       "index": 5,
       "text": "Claim Your Clinic Local Growth & AI Audit System — $1,500",
-      "href": "https://whop.com/checkout/velogeo-agency",
+      "href": "https://whop.com/checkout/plan_e37e96b86e088/",
       "target": "_blank",
       "rel": "noopener noreferrer",
       "expectedWhopUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
-      "isTargetPlan": false
+      "isTargetPlan": true
     }
   ],
   "consoleMessages": [],

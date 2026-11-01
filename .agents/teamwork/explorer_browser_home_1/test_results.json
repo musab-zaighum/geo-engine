@@ -1,17 +1,8 @@
 {
-  "timestamp": "2026-11-01T14:18:42.692Z",
-  "testsPassed": 39,
-  "testsFailed": 1,
-  "failures": [
-    {
-      "id": "EXPORT-01",
-      "title": "Whop checkout buttons point exactly to plan_e37e96b86e088",
-      "details": {
-        "toolbarHref": "https://whop.com/checkout/velogeo-agency",
-        "totalWhopLinksFound": 2
-      }
-    }
-  ],
+  "timestamp": "2026-11-01T14:44:42.923Z",
+  "testsPassed": 40,
+  "testsFailed": 0,
+  "failures": [],
   "consoleErrors": [],
   "consoleWarnings": [],
   "networkErrors": [],
@@ -223,9 +214,9 @@
     {
       "id": "EXPORT-01",
       "title": "Whop checkout buttons point exactly to plan_e37e96b86e088",
-      "passed": false,
+      "passed": true,
       "details": {
-        "toolbarHref": "https://whop.com/checkout/velogeo-agency",
+        "toolbarHref": "https://whop.com/checkout/plan_e37e96b86e088/",
         "totalWhopLinksFound": 2
       }
     },
@@ -293,7 +284,7 @@
           "message": "Practice consultation request registered successfully.",
           "lead": {
             "event": "lead_captured",
-            "timestamp": "2026-11-01T14:19:21.898Z",
+            "timestamp": "2026-11-01T14:45:21.621Z",
             "domain": "sub.practice-implants.clinic",
             "contactName": "Dr. Robert Vance, DDS",
             "email": "dr.vance@beverlyhillsimplants.com",
