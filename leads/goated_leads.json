@@ -458,5 +458,235 @@
     "npi_number": "1326083437",
     "npi_verified": true,
     "clinical_specialization": "Malo-Trained All-on-4 & Surgical Dental Implants"
+  },
+  {
+    "lead_id": "GOAT-011",
+    "practice_name": "Beverly Hills Implant Center",
+    "website_url": "https://beverlyhillsimplants.com/",
+    "solo_owner": {
+      "name": "Dr. Tamir Shams",
+      "credentials": "DMD",
+      "title": "Solo Founder & Principal Implant Surgeon",
+      "background": "Specializing in surgical dental implants, full-arch rehabilitation, and All-on-4 procedures in a boutique private practice environment on Wilshire Blvd."
+    },
+    "location": {
+      "address": "8383 Wilshire Blvd, Ste 358",
+      "city": "Beverly Hills",
+      "state": "CA",
+      "zip_code": "90211",
+      "metro_affluence": "High-net-worth Wilshire / Beverly Hills medical corridor"
+    },
+    "phone_number": "(310) 424-7072",
+    "google_maps": {
+      "query": "dental implants Beverly Hills CA",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 134
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Shams Surgeries Dental Practice / Tamir Shams",
+      "advertiser_id": "beverlyhillsimplants.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$85 - $140/click on Beverly Hills implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Beverly Hills Oral Surgery",
+      "address": "435 N Bedford Dr #311, Beverly Hills, CA 90210",
+      "phone": "+1 310-276-1155",
+      "website": "https://beverlyhillsoralsurgery.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 520
+    },
+    "custom_pitch_hook_1500": "Dr. Shams, you are running high-cost Google Ads on Wilshire Blvd paying $90+ per click, while Beverly Hills Oral Surgery commands the #1 organic spot on Bedford Dr for free. With 134 glowing reviews, your practice belongs in the 3-Pack. NexusRank1 deploys 3x3 Geo-Grid defense and 0-error Schema ASTs for a flat $1,500 so you capture luxury full-arch implant cases without bleeding ad spend. Backed by our 90-day ROI guarantee.",
+    "npi_number": "1942477930",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4 & Full-Arch Reconstruction"
+  },
+  {
+    "lead_id": "GOAT-012",
+    "practice_name": "Greenwich Cosmetic Dentistry",
+    "website_url": "https://greenwichctdentist.com/",
+    "solo_owner": {
+      "name": "Dr. Gerald L. Cohen",
+      "credentials": "DDS (Associate Fellow AAID)",
+      "title": "Solo Owner & Principal Implantologist",
+      "background": "Columbia University graduate; Associate Fellow of American Academy of Implant Dentistry; former Director of Dental Implantology at Lutheran Medical Center."
+    },
+    "location": {
+      "address": "40 W. Elm St, Suite 1E",
+      "city": "Greenwich",
+      "state": "CT",
+      "zip_code": "06830",
+      "metro_affluence": "Ultra-wealthy Fairfield County / Greenwich gold coast (Median HHI > $180k)"
+    },
+    "phone_number": "(203) 869-2659",
+    "google_maps": {
+      "query": "dental implants Greenwich CT",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 128
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Gerald Cohen DDS",
+      "advertiser_id": "greenwichctdentist.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$75 - $115/click on Greenwich implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Greenwich Oral Surgery",
+      "address": "23 Maple Ave, Greenwich, CT 06830",
+      "phone": "+1 203-661-5858",
+      "website": "https://greenwichoralsurgery.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 285
+    },
+    "custom_pitch_hook_1500": "Dr. Cohen, your AAID implant credentials and Columbia training are exceptional on W Elm St, but Greenwich Oral Surgery sits at #1 on Google Maps 0.6 miles away on Maple Ave. In Greenwich’s 06830 zip code, a single full-arch implant case is worth $35,000+. Our $1,500 system installs W3C MedicalClinic graphs and /llms.txt manifests so generative search engines recommend your clinic first.",
+    "npi_number": "1831287366",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4 & Advanced Restorative Surgery"
+  },
+  {
+    "lead_id": "GOAT-013",
+    "practice_name": "Specialists in Implant Dentistry",
+    "website_url": "https://specialistsinimplantdentistry.com/",
+    "solo_owner": {
+      "name": "Dr. Matthew J. Holtan",
+      "credentials": "DDS",
+      "title": "Solo Owner & Board-Certified Implant Specialist",
+      "background": "Diplomate of American Board of Oral Implantology; Fellow of AAID; 25+ years dedicated exclusively to surgical implant placement and Teeth-in-a-Day full-arch therapy."
+    },
+    "location": {
+      "address": "12052 Tamiami Trail N",
+      "city": "Naples",
+      "state": "FL",
+      "zip_code": "34110",
+      "metro_affluence": "High-net-worth North Naples / Pelican Bay corridor"
+    },
+    "phone_number": "(239) 593-4915",
+    "google_maps": {
+      "query": "dental implants Naples FL",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 395
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Matthew Holtan DDS / Specialists in Implant Dentistry",
+      "advertiser_id": "specialistsinimplantdentistry.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$70 - $110/click on Naples full-arch implant keywords",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Dental Designs of Naples",
+      "address": "7955 Airport-Pulling Rd #201, Naples, FL 34109",
+      "phone": "+1 239-628-1300",
+      "website": "https://topdentaldesigns.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 620
+    },
+    "custom_pitch_hook_1500": "Dr. Holtan, you are a Diplomate of the ABOI with nearly 400 5-star reviews on Tamiami Trail, yet Dental Designs holds #1 on Google Maps 2.7 miles away. For an affluent retiree seeking All-on-4 in Naples, you are hidden at #5. NexusRank1 closes the local citation gap across 50+ directories for a flat $1,500 so you capture 2-4 additional implant cases each month with 0 agency retainers.",
+    "npi_number": "1902117104",
+    "npi_verified": true,
+    "clinical_specialization": "All-on-4 Teeth-in-a-Day, Surgical Dental Implants & Bone Augmentation"
+  },
+  {
+    "lead_id": "GOAT-014",
+    "practice_name": "Highland Park Periodontics & Dental Implants",
+    "website_url": "https://highlandparkperio.com/",
+    "solo_owner": {
+      "name": "Dr. Aline G. Kaye",
+      "credentials": "DDS, MS",
+      "title": "Solo Owner & Board-Certified Periodontist",
+      "background": "Board-certified in Periodontics and Dental Implant Surgery; extensive clinical focus on surgical full-arch implant rehabilitation and regenerative bone grafting."
+    },
+    "location": {
+      "address": "4514 Cole Ave, Suite 902",
+      "city": "Dallas",
+      "state": "TX",
+      "zip_code": "75205",
+      "metro_affluence": "Highland Park / Knox-Henderson luxury Dallas corridor (Median HHI > $150k)"
+    },
+    "phone_number": "(214) 559-4670",
+    "google_maps": {
+      "query": "dental implants Highland Park TX",
+      "rank": 5,
+      "rating": 5,
+      "review_count": 684
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Highland Park Periodontics & Dental Implants",
+      "advertiser_id": "highlandparkperio.com",
+      "active_ad_count": "Active Search PPC Ads",
+      "estimated_cpc": "$75 - $120/click on Dallas / Park Cities implant terms",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Dallas Dental Arts",
+      "address": "2100 Ross Ave #940, Dallas, TX 75201",
+      "phone": "+1 214-999-0110",
+      "website": "https://dallasdentalarts.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 450
+    },
+    "custom_pitch_hook_1500": "Dr. Kaye, with 684 flawless 5.0-star reviews on Cole Ave, your surgical reputation in Highland Park is peerless. However, Dallas Dental Arts sits at #1 on Maps for Park Cities queries, capturing local high-net-worth implant consultations. Our $1,500 system deploys targeted centroid weighting and ADA CDT code ontologies to propel your listing into the Top 3 Map Pack without inflating your PPC budget.",
+    "npi_number": "1932445590",
+    "npi_verified": true,
+    "clinical_specialization": "Surgical Dental Implants, All-on-4 & Periodontal Reconstruction"
+  },
+  {
+    "lead_id": "GOAT-015",
+    "practice_name": "Dr. John Harman Dental Care",
+    "website_url": "https://drjohnharman.com/",
+    "solo_owner": {
+      "name": "Dr. John Harman",
+      "credentials": "DDS",
+      "title": "Solo Owner & Principal Restorative Dentist",
+      "background": "Over two decades of private practice experience specializing in All-on-4 dental implants, surgical reconstruction, and digital treatment planning."
+    },
+    "location": {
+      "address": "4730 E Indian School Rd, Suite 210",
+      "city": "Phoenix",
+      "state": "AZ",
+      "zip_code": "85018",
+      "metro_affluence": "Arcadia / Paradise Valley border (Serving Paradise Valley 85253)"
+    },
+    "phone_number": "(602) 840-5300",
+    "google_maps": {
+      "query": "dental implants Paradise Valley AZ",
+      "rank": 5,
+      "rating": 4.9,
+      "review_count": 210
+    },
+    "paid_ads_signal": {
+      "status": "Active Verified Advertiser",
+      "advertiser_name": "Dr. John Harman Dental Care",
+      "advertiser_id": "drjohnharman.com",
+      "active_ad_count": "Active Search PPC Campaigns",
+      "estimated_cpc": "$65 - $100/click on Paradise Valley / Arcadia implant queries",
+      "verification_source": "Google Ads Transparency Center"
+    },
+    "top_competitor_5mi": {
+      "practice_name": "Scottsdale Smile Center",
+      "address": "5410 N Scottsdale Rd #D-500, Paradise Valley / Scottsdale, AZ",
+      "phone": "+1 480-991-2180",
+      "website": "https://www.scottsdalesmile.com/",
+      "rank": 1,
+      "rating": 4.9,
+      "review_count": 712
+    },
+    "custom_pitch_hook_1500": "Dr. Harman, your practice name is on the door and you have 210 verified reviews on Indian School Rd, but Scottsdale Smile Center holds #1 on Maps for Paradise Valley implant searches. At $4,500–$25,000 per full-arch procedure, recapturing just 1 patient per month represents $50k-$200k in annual production against our flat $1,500 system. NexusRank1 installs 0-error Schema and front-desk review loops with our 90-day ROI guarantee.",
+    "npi_number": "1255325197",
+    "npi_verified": true,
+    "clinical_specialization": "All-on-4 Dental Implants, Surgical Reconstruction & Bone Grafting"
   }
 ]
