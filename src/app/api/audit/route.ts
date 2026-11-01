@@ -36,10 +36,10 @@ async function generateClinicalPayloads(
 ) {
   let hostname = 'your-dental-client.com';
   try {
-    const parsed = new URL(targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`);
+    const parsed = new URL(targetUrl.toLowerCase().startsWith('http') ? targetUrl : `https://${targetUrl}`);
     hostname = parsed.hostname;
   } catch {
-    hostname = targetUrl.replace(/https?:\/\//, '').split('/')[0] || 'your-dental-client.com';
+    hostname = targetUrl.replace(/^https?:\/\//i, '').split('/')[0] || 'your-dental-client.com';
   }
 
   const isErrorTitle = (t?: string) =>
@@ -196,7 +196,7 @@ export async function POST(req: NextRequest) {
     }
 
     // In-Memory Cache Lookup (1-hour TTL)
-    const normalizedCacheKey = rawInput.toLowerCase().trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const normalizedCacheKey = rawInput.toLowerCase().trim().replace(/^https?:\/\//i, '').replace(/\/$/, '');
     const cachedEntry = auditCache.get(normalizedCacheKey);
     if (cachedEntry && now - cachedEntry.timestamp < CACHE_TTL_MS) {
       return NextResponse.json(cachedEntry.data, {

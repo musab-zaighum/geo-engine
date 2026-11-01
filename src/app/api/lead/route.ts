@@ -23,7 +23,12 @@ export async function POST(req: NextRequest) {
     const leadPayload = {
       event: 'lead_captured',
       timestamp: new Date().toISOString(),
-      domain: domain.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+      domain: domain
+        .replace(/^https?:\/\//i, '')
+        .replace(/^www\./i, '')
+        .replace(/\/.*$/, '')
+        .trim()
+        .toLowerCase() || 'dentalpractice.com',
       contactName: name || 'Practice Director',
       email,
       phone: phone || '',

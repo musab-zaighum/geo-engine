@@ -27,7 +27,13 @@ function getChromeExecutablePath(): string | undefined {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const domainParam = searchParams.get('domain') || 'dentalpractice.com';
-  const cleanDomain = domainParam.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const cleanDomain = domainParam
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/\/.*$/, '')
+    .trim()
+    .toLowerCase() || 'dentalpractice.com';
 
   let browser: Browser | null = null;
 

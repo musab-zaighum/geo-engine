@@ -194,10 +194,12 @@ export function InstantAuditBar() {
 
   function generateAuditResult(rawInput: string, liveData?: any) {
     const clean = rawInput
-      .replace(/^https?:\/\//, '')
+      .trim()
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
       .replace(/\/.*$/, '')
-      .replace(/^www\./, '')
-      .trim() || 'dentalpractice.com';
+      .trim()
+      .toLowerCase() || 'dentalpractice.com';
 
     const isMayo = clean.toLowerCase().includes('mayo');
     const isCleveland = clean.toLowerCase().includes('cleveland');
@@ -521,7 +523,7 @@ export function InstantAuditBar() {
     }
 
     if (presetUrl) {
-      setDomainInput(presetUrl.replace(/^https?:\/\//, ''));
+      setDomainInput(presetUrl.replace(/^https?:\/\//i, ''));
     }
 
     setIsScanning(true);

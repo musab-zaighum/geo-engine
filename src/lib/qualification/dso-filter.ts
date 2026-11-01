@@ -361,7 +361,7 @@ const TIER_5_ATS_REGEX =
 export function normalizeDomain(rawDomain: string): string {
   if (!rawDomain) return '';
   let clean = rawDomain.trim().toLowerCase();
-  clean = clean.replace(/^https?:\/\//, '');
+  clean = clean.replace(/^https?:\/\//i, '');
   clean = clean.split('/')[0];
   clean = clean.split(/[?#]/)[0];
   // Strip userinfo (basic auth credentials e.g. user:pass@ or multiple user:pass@admin:123@)

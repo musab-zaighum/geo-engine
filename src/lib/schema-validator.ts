@@ -237,10 +237,10 @@ export function buildDeterministicClinicalGraph(input: ClinicalGraphInput): Clin
   const warnings: string[] = [];
   let origin = 'https://example.com';
   try {
-    const parsed = new URL(input.websiteUrl.startsWith('http') ? input.websiteUrl : `https://${input.websiteUrl}`);
+    const parsed = new URL(input.websiteUrl.toLowerCase().startsWith('http') ? input.websiteUrl : `https://${input.websiteUrl}`);
     origin = parsed.origin;
   } catch {
-    origin = `https://${input.websiteUrl.replace(/https?:\/\//, '').split('/')[0]}`;
+    origin = `https://${input.websiteUrl.replace(/^https?:\/\//i, '').split('/')[0]}`;
   }
 
   const clinicId = `${origin}/#clinic`;

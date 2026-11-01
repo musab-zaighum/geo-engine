@@ -38,7 +38,12 @@ export default function GeoCitationSimulator({
 }: GeoCitationSimulatorProps) {
   const [selectedEngine, setSelectedEngine] = useState<'google' | 'openai' | 'perplexity' | 'apple'>('google');
 
-  const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const cleanDomain = domain
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/\/.*$/, '')
+    .trim()
+    .toLowerCase() || 'dentalpractice.com';
 
   const isGoogleBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('google')));
   const isGptBlocked = Boolean(blockedAiBots?.some((b) => b.toLowerCase().includes('gpt')));

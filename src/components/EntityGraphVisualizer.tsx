@@ -62,7 +62,14 @@ export default function EntityGraphVisualizer({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<string>('clinic');
 
-  const origin = `https://${domain.replace(/^https?:\/\//, '').replace(/\/$/, '')}`;
+  const cleanDomain = domain
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/\/.*$/, '')
+    .trim()
+    .toLowerCase() || 'dentalpractice.com';
+  const origin = `https://${cleanDomain}`;
   const clinicId = `${origin}/#clinic`;
   const physicianId = `${origin}/#physician-${npiNumber}`;
   const addressId = `${origin}/#address`;

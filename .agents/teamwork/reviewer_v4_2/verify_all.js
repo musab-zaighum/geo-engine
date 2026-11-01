@@ -444,8 +444,8 @@ async function runComprehensiveVerification() {
 
     const initialRoiText = await roiSection.innerText();
 
-    // Test specialty selector button: Plastic Surgery ($14,500 preset)
-    const plasticBtn = page.locator('button:has-text("Plastic Surgery")').first();
+    // Test specialty selector button: Plastic & Cosmetic Surgery ($14,500 preset)
+    const plasticBtn = roiSection.locator('button:has-text("Plastic")').first();
     await plasticBtn.click();
     await page.waitForTimeout(300);
 

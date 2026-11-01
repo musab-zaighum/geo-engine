@@ -41,7 +41,13 @@ import { CLINIC_OFFER_CONFIG } from '@/lib/config';
 export default function StandaloneClientReportPage() {
   const routeParams = useParams();
   const rawDomain = (routeParams?.domain as string) || 'dentalpractice.com';
-  const domain = decodeURIComponent(rawDomain).replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const domain = decodeURIComponent(rawDomain)
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/\/.*$/, '')
+    .trim()
+    .toLowerCase() || 'dentalpractice.com';
 
   const [mounted, setMounted] = useState(false);
   const [loadingAudit, setLoadingAudit] = useState(true);

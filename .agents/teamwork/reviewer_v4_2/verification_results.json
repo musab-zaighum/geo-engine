@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-01T15:08:01.819Z",
+  "timestamp": "2026-11-01T15:13:18.944Z",
   "routes": {
     "/": {
       "name": "Homepage",
@@ -131,12 +131,72 @@
       "dispatchSuccess": true,
       "modalClosedAfterSubmit": true,
       "pass": true
+    },
+    "roiCalculator": {
+      "plasticPresetUpdated": true,
+      "dynamicMonthlyCalc": true,
+      "dynamicAnnualCalc": true,
+      "pass": true
     }
   },
-  "checkoutLinks": {},
+  "checkoutLinks": {
+    "expectedUrl": "https://whop.com/checkout/plan_e37e96b86e088/",
+    "audits": {
+      "/": {
+        "count": 9,
+        "allMatch": true,
+        "hrefs": [
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/"
+        ]
+      },
+      "/pricing": {
+        "count": 5,
+        "allMatch": true,
+        "hrefs": [
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/"
+        ]
+      },
+      "/report/dentalpractice.com": {
+        "count": 2,
+        "allMatch": true,
+        "hrefs": [
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/"
+        ]
+      },
+      "/login": {
+        "count": 2,
+        "allMatch": true,
+        "hrefs": [
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/"
+        ]
+      },
+      "/signup": {
+        "count": 2,
+        "allMatch": true,
+        "hrefs": [
+          "https://whop.com/checkout/plan_e37e96b86e088/",
+          "https://whop.com/checkout/plan_e37e96b86e088/"
+        ]
+      }
+    },
+    "pass": true
+  },
   "adversarialStress": {},
   "consoleErrors": [],
   "pageErrors": [],
-  "overallVerdict": "REQUEST_CHANGES",
-  "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('button:has-text(\"Plastic Surgery\")').first()\n"
+  "overallVerdict": "APPROVE"
 }
