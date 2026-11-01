@@ -36,7 +36,7 @@ async function testCornerChat() {
 
     // 1. Check Floating Button
     console.log('\n--- 1. Testing Floating Action Button ---');
-    const fabButton = page.locator('button:has(svg.lucide-message-square)');
+    const fabButton = page.locator('button.fixed:has(svg.lucide-message-square)');
     await fabButton.waitFor({ state: 'visible', timeout: 5000 });
 
     const fabVisible = await fabButton.isVisible();
@@ -138,7 +138,7 @@ async function testCornerChat() {
     ];
 
     const inputField = page.locator('input[placeholder*="Ask GEO"]');
-    const sendButton = page.locator('button[type="submit"]');
+    const sendButton = page.locator('form:has(input[placeholder*="Ask GEO"]) button[type="submit"]');
 
     for (const item of clinicianQuestions) {
       console.log(`\nSending inquiry: "${item.question}"`);
@@ -181,13 +181,13 @@ async function testCornerChat() {
     await page.waitForTimeout(300);
 
     const drawerVisibleAfterClose = await page.locator('div.fixed.bottom-6.right-6.z-50.w-\\[90vw\\]').isVisible();
-    const fabVisibleAfterClose = await page.locator('button:has(svg.lucide-message-square)').isVisible();
+    const fabVisibleAfterClose = await page.locator('button.fixed:has(svg.lucide-message-square)').isVisible();
     console.log(`Drawer closed: ${!drawerVisibleAfterClose}, FAB reopened: ${fabVisibleAfterClose}`);
 
     await page.screenshot({ path: path.join(ARTIFACT_DIR, 'chat_05_drawer_closed.png') });
 
     // Reopen FAB
-    await page.locator('button:has(svg.lucide-message-square)').click();
+    await page.locator('button.fixed:has(svg.lucide-message-square)').click();
     await page.waitForTimeout(400);
 
     // Verify messages persisted

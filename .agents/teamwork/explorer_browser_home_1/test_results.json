@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-01T14:44:42.923Z",
+  "timestamp": "2026-11-01T14:49:44.992Z",
   "testsPassed": 40,
   "testsFailed": 0,
   "failures": [],
@@ -284,7 +284,7 @@
           "message": "Practice consultation request registered successfully.",
           "lead": {
             "event": "lead_captured",
-            "timestamp": "2026-11-01T14:45:21.621Z",
+            "timestamp": "2026-11-01T14:50:24.584Z",
             "domain": "sub.practice-implants.clinic",
             "contactName": "Dr. Robert Vance, DDS",
             "email": "dr.vance@beverlyhillsimplants.com",

@@ -1,13 +1,66 @@
 {
-  "timestamp": "2026-11-01T14:20:28.212Z",
+  "timestamp": "2026-11-01T14:51:08.637Z",
   "floatingButtonTest": {
     "visible": true,
-    "text": "3. Review Loops & QR\nPILLAR 3"
+    "text": "NexusRank1 Advisor"
   },
-  "welcomeMessageTest": {},
-  "presetButtonTests": [],
-  "clinicianInquiries": [],
-  "closeReopenTest": {},
-  "consoleErrors": [],
-  "error": "locator.innerText: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('div.whitespace-pre-wrap').first()\n"
+  "welcomeMessageTest": {
+    "content": "**NexusRank1 Clinical Practice GEO Advisor**\n\nHow can I help protect your clinic's search presence today?\n\n- **Full Clinic Deployment:** $1,500 One-Time (0 Monthly Retainers • 90-Day 1-Patient ROI Guarantee)\n- **Competitor Steal Radar:** Alerts when ChatGPT recommends a rival clinic\n- **Clinical Schema & /llms.txt:** CMS guides for WordPress, Webflow & Squarespace",
+    "hasDeploymentTerms": true,
+    "hasZeroRetainers": true,
+    "hasRoiGuarantee": true,
+    "hasCompetitorRadar": true,
+    "passed": true
+  },
+  "presetButtonTests": [
+    {
+      "preset": "Practice Pricing",
+      "replySnippet": "### 💰 NexusRank1 Direct Clinic Pricing & ROI Structure\n\n#### The Complete Clinic Local Growth & AI Audit System ($1,500 One-Time Investment)\n- **Permanent Infrastructure:** 0 ongoing monthly software fees or agency retainers.\n- **Pillar 1: Geo-Visibility Grid Tracking:** Maps 3x3 mile neighborhood grids and benchmarks visibility against top rival clinics in your exact zip code.\n- **Pillar 2: Google Profile & Citation Cleanup:** Resolves category mismatches and syncs phone/address consistency ac",
+      "has1500": true,
+      "hasGuarantee": true,
+      "hasPillars": true,
+      "passed": true
+    }
+  ],
+  "clinicianInquiries": [
+    {
+      "topic": "Deployment Terms & $1,500 Flat Fee",
+      "question": "Can you confirm the $1,500 one-time deployment terms and whether there are any hidden monthly fees?",
+      "fullReply": "### 🤖 Master NexusRank1 Practice AI Advisor\n\nI am fully initialized with the official **NexusRank1 Clinical Practice GEO Knowledge Base**.\n\nYou can ask me about:\n1. **CMS Code Insertion Guides:** Step-by-step instructions for WordPress, Shopify, Webflow, Squarespace & Wix\n2. **Direct Clinic Pricing & Patient ROI:** The complete $1,500 one-time deployment with 0 monthly retainers and the 90-Day 1-Patient ROI Guarantee\n3. **Competitor Steal Radar:** How to reclaim patients when ChatGPT or Perplexity recommends a local rival\n4. **Schema.org @graph & /llms.txt Standards:** Federal NPI registry, state licensure, and accredited procedure ontologies\n\nHow can I assist your practice with AI search defense today?",
+      "matchedPhrases": [
+        "$1,500",
+        "one-time",
+        "0 monthly"
+      ],
+      "passed": true
+    },
+    {
+      "topic": "Google Ads Competitor Displacement",
+      "question": "How does your Geo-Grid Radar displace our #1 local competitor who spends $100/click on Google Ads?",
+      "fullReply": "### 🛡️ Local Competitor Displacement & Patient Defense Strategy\n\n#### Why Local Competitors Are Winning Your High-Ticket Patients:\nWhen prospective patients query ChatGPT Search, Perplexity, or Google AI Overviews for high-ticket procedures (e.g. *\"Best All-on-4 dental implants in Austin\"* or *\"Top cosmetic surgeon for deep plane facelifts\"*), AI answer engines do not display Google Maps 3-packs. Instead, they recommend whichever local practice has published **0-error Clinical Knowledge Graphs (Schema.org)** and a verified **domain /llms.txt factsheet**.\n\nIf your site lacks these, AI engines automatically redirect those $5,000–$40,000 consultations to your #1 local competitor.\n\n#### The NexusRank1 Countermeasure ($1,500 One-Time Investment):\n1. **Pillar 1: Local Geo-Grid Tracking:** Pinpoints coordinate-by-coordinate where rival practices displace you within your 5-mile radius.\n2. **Pillar 2: Directory & NAP Authority:** Aligns your primary medical sub-specialty across Google Business Profile and 50+ healthcare directories.\n3. **Pillar 3: Automated Review Loops:** Deploys front-desk QR stands and SMS sequences to distill procedure-specific patient sentiment.\n4. **Pillar 4: Verified Clinical Knowledge Architecture:** Directly links your CMS NPPES NPI-1 license and ADA CDT/CPT procedural codes.\n\n#### 🎯 90-Day 1-Patient ROI Guarantee:\nA single implant or surgical case pays for the entire $1,500 deployment 3x to 16x over. If you don't receive a verified consultation within 90 days, we issue a 100% full refund.",
+      "matchedPhrases": [
+        "competitor",
+        "grid",
+        "geo"
+      ],
+      "passed": false
+    },
+    {
+      "topic": "Implementation Timeline & Team Effort",
+      "question": "What is the implementation timeline and does our clinic staff have to write any code?",
+      "fullReply": "### 🤖 Master NexusRank1 Practice AI Advisor\n\nI am fully initialized with the official **NexusRank1 Clinical Practice GEO Knowledge Base**.\n\nYou can ask me about:\n1. **CMS Code Insertion Guides:** Step-by-step instructions for WordPress, Shopify, Webflow, Squarespace & Wix\n2. **Direct Clinic Pricing & Patient ROI:** The complete $1,500 one-time deployment with 0 monthly retainers and the 90-Day 1-Patient ROI Guarantee\n3. **Competitor Steal Radar:** How to reclaim patients when ChatGPT or Perplexity recommends a local rival\n4. **Schema.org @graph & /llms.txt Standards:** Federal NPI registry, state licensure, and accredited procedure ontologies\n\nHow can I assist your practice with AI search defense today?",
+      "matchedPhrases": [
+        "schema",
+        "wordpress"
+      ],
+      "passed": true
+    }
+  ],
+  "closeReopenTest": {
+    "drawerClosedCleanly": true,
+    "fabReappeared": true,
+    "reopenSuccess": true,
+    "persistedMessageCount": 9
+  },
+  "consoleErrors": []
 }

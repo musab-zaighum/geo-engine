@@ -1,14 +1,15 @@
-[2026-11-01T14:18:58.366Z] Starting Multi-Domain Public Report Test
-[2026-11-01T14:18:58.657Z] Checking http://localhost:3000/report/mayoclinic.org...
-[2026-11-01T14:18:59.505Z] Status: 200
-[2026-11-01T14:18:59.535Z] Domain: mayoclinic.org -> Title: "Mayo Clinic", Score: "45/100"
-[2026-11-01T14:18:59.536Z] Console errors: 0
-[2026-11-01T14:18:59.642Z] Checking http://localhost:3000/report/clevelandclinic.org...
-[2026-11-01T14:19:00.509Z] Status: 200
-[2026-11-01T14:19:00.538Z] Domain: clevelandclinic.org -> Title: "Cleveland Clinic", Score: "90/100"
-[2026-11-01T14:19:00.538Z] Console errors: 0
-[2026-11-01T14:19:00.618Z] Checking http://localhost:3000/report/austincosmetic.com...
-[2026-11-01T14:19:05.363Z] Status: 200
-[2026-11-01T14:19:05.384Z] Domain: austincosmetic.com -> Title: "Austin Cosmetic Dentistry By Tejas Patel DDS", Score: "70/100"
-[2026-11-01T14:19:05.385Z] Console errors: 0
-[2026-11-01T14:19:05.463Z] Multi-Domain Test Complete
+[2026-11-01T14:54:24.911Z] Starting Multi-Domain Public Report Test
+[2026-11-01T14:54:25.183Z] Checking http://localhost:3000/report/mayoclinic.org...
+[2026-11-01T14:54:26.031Z] Status: 200
+[2026-11-01T14:54:26.059Z] Domain: mayoclinic.org -> Title: "Mayo Clinic", Score: "45/100"
+[2026-11-01T14:54:26.059Z] Console errors: 0
+[2026-11-01T14:54:26.138Z] Checking http://localhost:3000/report/clevelandclinic.org...
+[2026-11-01T14:54:26.999Z] Status: 200
+[2026-11-01T14:54:27.020Z] Domain: clevelandclinic.org -> Title: "Cleveland Clinic", Score: "90/100"
+[2026-11-01T14:54:27.020Z] Console errors: 0
+[2026-11-01T14:54:27.093Z] Checking http://localhost:3000/report/austincosmetic.com...
+[2026-11-01T14:54:42.096Z] Error testing austincosmetic.com: page.goto: Timeout 15000ms exceeded.
+Call log:
+  - navigating to "http://localhost:3000/report/austincosmetic.com", waiting until "networkidle"
+
+[2026-11-01T14:54:42.163Z] Multi-Domain Test Complete

@@ -1,34 +1,35 @@
-[2026-11-01T14:17:00.883Z] Starting Public Report (/report/[domain]) Test Suite
-[2026-11-01T14:17:01.186Z] Navigating to http://localhost:3000/report/dentalpractice.com...
-[2026-11-01T14:17:02.081Z] Response HTTP Status: 200
-[2026-11-01T14:17:02.226Z] Header Title: "NexusRank1 Clinical Intelligence", Practice Title: "Kalyani Dental Lounge"
-[2026-11-01T14:17:02.231Z] Score Display: "90/100"
-[2026-11-01T14:17:02.244Z] Found 4 metric blocks
-[2026-11-01T14:17:02.259Z] Images on page: 0, Broken Images: 0
-[2026-11-01T14:17:02.260Z] --- Testing Tab 1: Diagnostic Checklist ---
-[2026-11-01T14:17:02.263Z] Checklist items found: ["Schema.org MedicalClinic Root Entity","CMS NPPES Federal Provider Token (#1948203918)","Machine-Readable Directives (/llms.txt)","robots.txt AI Crawler Directives"]
-[2026-11-01T14:17:02.263Z] --- Testing Tab 2: Entity Knowledge Graph ---
-[2026-11-01T14:17:03.065Z] Graph containers / elements count: 33
-[2026-11-01T14:17:03.065Z] --- Testing Tab 3: AI Citation Simulator ---
-[2026-11-01T14:17:03.829Z] Simulator engine references count: 0
-[2026-11-01T14:17:03.829Z] --- Testing Tab 4: 0-Error Code Payload ---
-[2026-11-01T14:17:04.683Z] Toast after Copy Schema: ["0-Error Schema copied to clipboard"]
-[2026-11-01T14:17:05.032Z] Toast after Copy /llms.txt: ["/llms.txt manifest copied to clipboard","0-Error Schema copied to clipboard"]
-[2026-11-01T14:17:05.033Z] --- Testing Tab 5: Patient Value & ROI ---
-[2026-11-01T14:17:05.556Z] Initial Monthly Practice Lift: "MONTHLY PRACTICE LIFT +$10,500 From 3 AI patients"
-[2026-11-01T14:17:05.556Z] Selecting Case Value = $8,000...
-[2026-11-01T14:17:05.798Z] Selecting New Patients = +5...
-[2026-11-01T14:17:06.030Z] Selecting Retainer = $1500...
-[2026-11-01T14:17:06.251Z] Updated Calculation: Monthly Lift="MONTHLY PRACTICE LIFT +$40,000 From 5 AI patients", Net Profit="NET PRACTICE PROFIT +$38,500/mo After retainer deduction"
-[2026-11-01T14:17:06.327Z] --- Testing Lead / Claim Deployment Modal ---
-[2026-11-01T14:17:06.956Z] Lead Modal is visible: true
-[2026-11-01T14:17:06.958Z] Disabled domain input value: "dentalpractice.com"
-[2026-11-01T14:17:07.009Z] Submitting Lead Modal form...
-[2026-11-01T14:17:07.689Z] Toast after submitting lead form: ["Consultation request confirmed! Our team will reach out with the deployment file.","/llms.txt manifest copied to clipboard","0-Error Schema copied to clipboard"]
-[2026-11-01T14:17:08.493Z] Lead modal closed after successful submission: false
-[2026-11-01T14:17:08.495Z] Vector PDF download href: "/api/report/pdf?domain=dentalpractice.com"
-[2026-11-01T14:17:08.497Z] Google Rich Results link href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fdentalpractice.com"
-[2026-11-01T14:17:08.498Z] --- Testing Mobile Viewport (375x812) ---
-[2026-11-01T14:17:09.062Z] Mobile viewport horizontal overflow: false
-[2026-11-01T14:17:09.062Z] === Public Report Test Completed Successfully ===
-[2026-11-01T14:17:09.062Z] Summary: 0 console errors, 0 failed requests.
+[2026-11-01T14:54:10.874Z] Starting Public Report (/report/[domain]) Test Suite
+[2026-11-01T14:54:11.161Z] Navigating to http://localhost:3000/report/dentalpractice.com...
+[2026-11-01T14:54:12.011Z] Response HTTP Status: 200
+[2026-11-01T14:54:12.139Z] Header Title: "NexusRank1 Clinical Intelligence", Practice Title: "Kalyani Dental Lounge"
+[2026-11-01T14:54:12.142Z] Score Display: "90/100"
+[2026-11-01T14:54:12.152Z] Found 4 metric blocks
+[2026-11-01T14:54:12.165Z] Images on page: 0, Broken Images: 0
+[2026-11-01T14:54:12.165Z] --- Testing Tab 1: Diagnostic Checklist ---
+[2026-11-01T14:54:12.169Z] Checklist items found: ["Schema.org MedicalClinic Root Entity","CMS NPPES Federal Provider Token (#1948203918)","Machine-Readable Directives (/llms.txt)","robots.txt AI Crawler Directives"]
+[2026-11-01T14:54:12.169Z] --- Testing Tab 2: Entity Knowledge Graph ---
+[2026-11-01T14:54:12.947Z] Graph containers / elements count: 34
+[2026-11-01T14:54:12.947Z] --- Testing Tab 3: AI Citation Simulator ---
+[2026-11-01T14:54:13.709Z] Simulator engine references count: 0
+[2026-11-01T14:54:13.709Z] --- Testing Tab 4: 0-Error Code Payload ---
+[2026-11-01T14:54:14.561Z] Toast after Copy Schema: ["0-Error Schema copied to clipboard"]
+[2026-11-01T14:54:14.909Z] Toast after Copy /llms.txt: ["/llms.txt manifest copied to clipboard","0-Error Schema copied to clipboard"]
+[2026-11-01T14:54:14.909Z] --- Testing Tab 5: Patient Value & ROI ---
+[2026-11-01T14:54:15.421Z] Initial Monthly Practice Lift: "MONTHLY PRACTICE LIFT +$13,500 From 3 AI patients/mo"
+[2026-11-01T14:54:15.421Z] Selecting Case Value = $8,000...
+[2026-11-01T14:54:15.642Z] Selecting New Patients = +5...
+[2026-11-01T14:54:15.874Z] Verifying System Investment = $1,500 One-Time...
+[2026-11-01T14:54:15.876Z] $1,500 One-Time card visible: true
+[2026-11-01T14:54:15.880Z] Updated Calculation: Monthly Lift="MONTHLY PRACTICE LIFT +$40,000 From 5 AI patients/mo", Net ROI="NET SYSTEM ROI MULTIPLE 319.0x Net ROI Above $1,500 investment"
+[2026-11-01T14:54:15.969Z] --- Testing Lead / Claim Deployment Modal ---
+[2026-11-01T14:54:16.581Z] Lead Modal is visible: true
+[2026-11-01T14:54:16.583Z] Disabled domain input value: "dentalpractice.com"
+[2026-11-01T14:54:16.618Z] Submitting Lead Modal form...
+[2026-11-01T14:54:17.305Z] Toast after submitting lead form: ["Consultation request confirmed! Our team will reach out with the deployment file.","/llms.txt manifest copied to clipboard","0-Error Schema copied to clipboard"]
+[2026-11-01T14:54:18.108Z] Lead modal closed after successful submission: true
+[2026-11-01T14:54:18.111Z] Vector PDF download href: "/api/report/pdf?domain=dentalpractice.com"
+[2026-11-01T14:54:18.112Z] Google Rich Results link href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fdentalpractice.com"
+[2026-11-01T14:54:18.112Z] --- Testing Mobile Viewport (375x812) ---
+[2026-11-01T14:54:18.674Z] Mobile viewport horizontal overflow: false
+[2026-11-01T14:54:18.674Z] === Public Report Test Completed Successfully ===
+[2026-11-01T14:54:18.674Z] Summary: 0 console errors, 0 failed requests.

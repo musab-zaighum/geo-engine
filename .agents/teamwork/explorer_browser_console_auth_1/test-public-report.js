@@ -168,15 +168,14 @@ async function run() {
     await patients5Btn.click();
     await page.waitForTimeout(200);
 
-    // Click $1500 retainer button
-    log('Selecting Retainer = $1500...');
-    const fee1500Btn = page.locator('button:has-text("$1500")');
-    await fee1500Btn.click();
-    await page.waitForTimeout(200);
+    // Verify $1,500 One-Time system investment
+    log('Verifying System Investment = $1,500 One-Time...');
+    const hasOneTime = await page.locator('text=$1,500 One-Time').first().isVisible();
+    log(`$1,500 One-Time card visible: ${hasOneTime}`);
 
     const updatedLift = await page.locator('text=Monthly Practice Lift').locator('..').innerText();
-    const updatedNet = await page.locator('text=Net Practice Profit').locator('..').innerText();
-    log(`Updated Calculation: Monthly Lift="${updatedLift.replace(/\n/g, ' ')}", Net Profit="${updatedNet.replace(/\n/g, ' ')}"`);
+    const updatedNet = await page.locator('text=Net System ROI Multiple').locator('..').innerText();
+    log(`Updated Calculation: Monthly Lift="${updatedLift.replace(/\n/g, ' ')}", Net ROI="${updatedNet.replace(/\n/g, ' ')}"`);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '13_report_roi_updated.png') });
 
     // 7. Test Lead / Claim Deployment Modal

@@ -54,12 +54,12 @@ Execute exhaustive live browser-based functional, visual, and clinician UX test 
 | explorer_browser_tools_1 | teamwork_preview_explorer | ROI, Chat widget & Pricing testing | completed | e6c75942-7cca-4c31-bb19-837f50d897fb |
 | explorer_browser_console_auth_1 | teamwork_preview_explorer | Partner Console & Auth flows testing | completed | 57beef37-c991-424f-841a-719cfccadf52 |
 | spec_miner_clinician_ux_1 | teamwork_preview_spec_miner | Clinician persona & jargon evaluation | completed | f552b8e9-9809-40da-bfc6-484c1451addf |
-| worker_remediation_1 | teamwork_preview_worker | Automated code remediation & build verification | in-progress | 4beb01a3-458b-41c0-9e40-7ba631e51139 |
+| worker_remediation_1 | teamwork_preview_worker | Automated code remediation & build verification | completed | 4beb01a3-458b-41c0-9e40-7ba631e51139 |
 
 ## Succession Status
 - Succession required: no
 - Spawn count: 6 / 16
-- Pending subagents: 4beb01a3-458b-41c0-9e40-7ba631e51139
+- Pending subagents: none
 - Predecessor: orchestrator_3
 - Successor: not yet spawned
 
