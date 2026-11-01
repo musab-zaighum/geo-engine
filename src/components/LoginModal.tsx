@@ -63,7 +63,7 @@ export function LoginModal({ isOpen, onAuthenticated }: LoginModalProps) {
               NexusRank1 Platform Gate
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Enter your access passcode to protect AI Gateway API credits and unlock the workspace.
+              Enter your practice access passcode or license key to unlock your Clinic Command Center.
             </p>
           </div>
 

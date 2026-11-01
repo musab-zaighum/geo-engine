@@ -185,7 +185,7 @@ export default function NexusRankLandingPage() {
                     <span>❌ ChatGPT Recommends Your Rival Across Town:</span>
                   </div>
                   <p className="text-slate-300">
-                    &ldquo;I recommend <strong>Apex Implant Specialists</strong> because their clinical procedures and board certifications are structured on medical registries. <em>(Your practice was omitted because AI crawlers found no machine-readable procedure schema or active NPI graph.)</em>&rdquo;
+                    &ldquo;I recommend <strong>Apex Implant Specialists</strong> because their clinical procedures and board certifications are structured on medical registries. <em>(Your practice was omitted because AI search engines found no verified procedure schema or active NPI graph.)</em>&rdquo;
                   </p>
                 </div>
 
@@ -304,13 +304,13 @@ export default function NexusRankLandingPage() {
                   <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 flex items-center justify-center shadow-inner">
                     <FileCode2 className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-white">AI Model Readability</h3>
+                  <h3 className="text-base font-bold text-white">Clinical AI Knowledge Graph</h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Formats clinic data into clean markdown and JSON-LD structured schemas specifically engineered for AI web-crawlers (GPTBot, PerplexityBot, ClaudeBot, Google AI).
+                    Synthesizes your clinical credentials, accepted insurances, and surgical procedures into verified knowledge graphs structured specifically so AI search engines recommend your clinic.
                   </p>
                 </div>
                 <div className="text-[11px] font-mono text-violet-400 flex items-center gap-1 pt-2 border-t border-slate-800/80">
-                  <Check className="w-3.5 h-3.5" /> 0-Error AST &amp; /llms.txt
+                  <Check className="w-3.5 h-3.5" /> 0-Error Clinical Graph &amp; /llms.txt
                 </div>
               </div>
 
