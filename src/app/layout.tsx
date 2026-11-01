@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'NexusRank1.com | Autonomous Healthcare GEO & AI Search Ranking Platform',
   description:
-    'Turn local healthcare schema into higher patient rankings on Perplexity, SearchGPT, and Google AI Overviews. Run 5-second clinical audits, generate 0-error Schema.org JSON-LD and /llms.txt manifests with 93% net profit margins.',
+    'Turn local healthcare schema into higher patient rankings on Perplexity, SearchGPT, and Google AI Overviews. Run 5-second clinical audits, generate 0-error Schema.org JSON-LD and /llms.txt manifests. Acquire high-ticket surgical and elective patients from ChatGPT, Perplexity, and Google AI Overviews. Permanent local growth & AI defense backed by our 1-patient ROI guarantee.',
   keywords: [
     'NexusRank',
     'NexusRank1.com',
