@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/build-netlify.mjs",
+    "export:netlify": "node scripts/build-netlify.mjs",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "npx tsx tests/e2e/run-all-tests.ts",
+    "test:browser": "node scripts/verify-nexus-v5.mjs"
   },
   "dependencies": {
     "@cucumber/microdata": "^2.2.0",

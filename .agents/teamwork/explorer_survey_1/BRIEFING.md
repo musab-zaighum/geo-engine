@@ -1,48 +1,53 @@
-# BRIEFING — 2026-10-31T20:33:30Z
+# BRIEFING — 2026-11-04T17:00:45Z
 
 ## Mission
-Thoroughly survey existing codebase, environment, scrapers, APIs, and leads data in /home/pwn/geo-engine to inform the autonomous lead generation pipeline.
+Survey frontend architecture and UI components for healthcare redesign (R1-R5).
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: codebase and environment explorer
+- Roles: explorer, survey
 - Working directory: /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1
-- Original parent: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
-- Milestone: codebase_and_environment_survey
+- Original parent: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
+- Milestone: milestone-1
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT implement
-- Write metadata only to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/
-- No modifications to source files or leads data
+- Evidence-based findings with exact file paths and line numbers
 
 ## Current Parent
-- Conversation ID: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
-- Updated: 2026-10-31T20:33:30Z
+- Conversation ID: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
+- Updated: 2026-11-04T17:00:45Z
 
 ## Investigation State
 - **Explored paths**:
-  - `package.json`, `.env.local`, `README.md`
-  - `scripts/` (`crawl4ai_runner.py`, `test-api-http.mjs`, `verify-velogeo.mjs`)
-  - `src/lib/` (`playwright-scraper.ts`, `npi-registry.ts`, `agentic-search.ts`, `oss-scrapers-engine.ts`, `schema-validator.ts`, `stagehand-distiller.ts`, `readability-turndown.ts`)
-  - `lib/` (`citemed-engine.ts`, `schema.ts`, `types.ts`, `supabase.ts`, `openrouter.ts`)
-  - `leads/` (`goated_leads.json`, `goated_leads.csv`)
-  - Python environment (`.venv`, nix store interpreters, C-extension dynamic linking failure)
-  - Node environment (v24.20.0, npm 11.19.0, rebrowser-playwright, headless Chrome 156.0.8078.47 at `/run/current-system/sw/bin/google-chrome`)
-  - CMS NPPES NPI Registry API live test
-  - Google Maps live scraping test via Playwright
+  - `src/app/page.tsx` (Homepage layout, Hero, Features, ROI Calculator, FAQ, Bottom Banner)
+  - `src/app/layout.tsx` (Root layout, Navbar, CornerChatWidget, Toaster)
+  - `src/app/globals.css` (Tailwind tokens, `.nr-glass-card`, styling utilities)
+  - `src/components/Navbar.tsx` (Navigation, CTAs, Whop checkout links)
+  - `src/components/PricingSection.tsx` ($1,500 master offer card and Whop links)
+  - `src/components/PatientRoiCalculator.tsx` (Specialty presets, slider math, Whop link)
+  - `src/components/InstantAuditBar.tsx` (Audit tools and conversion links)
+  - `src/components/CornerChatWidget.tsx` (Floating chat advisor)
+  - `src/app/api/lead/route.ts` (Lead capture endpoint)
+  - `src/lib/config.ts` (Pillars configuration and Whop URLs)
+  - `next.config.mjs` & `package.json` (Next.js 16.3.4, React 19, Lucide, Sonner)
 - **Key findings**:
-  1. Python runtime in `.venv` is broken (missing nix interpreter symlink target, and running against nix store python3.13 fails with `ImportError: libstdc++.so.6` in `numpy`).
-  2. Node.js environment is fully functional (Node 24.20.0, npm 11.19.0). Playwright with `/run/current-system/sw/bin/google-chrome` successfully launches headless Chrome and scrapes Google Maps live with zero captcha/blocking.
-  3. CMS NPPES Federal NPI Registry API is public, free, requires no API key, and responds with full provider data, solo proprietor status, taxonomy, and address.
-  4. Existing `src/lib/npi-registry.ts` and `src/lib/playwright-scraper.ts` provide rich, production-grade logic that can be reused directly.
-  5. `leads/goated_leads.json` and `goated_leads.csv` contain 10 qualified leads (GOAT-001 to GOAT-010). All 10 meet #4-#6 rank and solo owner criteria, but GOAT-005 lists competitor rank #3 instead of #1, NPI numbers are not explicitly exposed in the JSON schema, and CSV is missing competitor address and review count columns.
-- **Unexplored areas**: None for codebase/environment survey. Ready to write handoff report.
+  - Hero currently displays "When Patients Ask ChatGPT..." instead of "Ensure AI Search Recommends Your Clinic Over Local Competitors".
+  - Hero subhead needs verbatim replacement matching specification.
+  - Hero primary CTA currently points directly to Whop checkout; needs to be `[ Request Your Zip Code Audit ]` smoothly scrolling to the new intake card `#audit-intake`.
+  - The 4 Growth Pillars currently in `src/app/page.tsx` lines 253-316 have "GBP & Citation Cleanup" and "Clinical AI Knowledge Graph"; must be updated to the exact 4 Pillars in R2 (Geo-Grid, 0-Error Schema ASTs, Automated Review Loops, Strict Zip Code Exclusivity).
+  - $1,500 checkout links exist in 7 key UI locations (Navbar, Hero, Features eyebrow, PricingSection, PatientRoiCalculator, InstantAuditBar, Bottom CTA).
+  - The new Intake Form card should replace `<PricingSection />` on the homepage at line 330, with container id `audit-intake`.
+  - `PatientRoiCalculator.tsx` needs 4 specialty toggles (All-on-4 Implants $20k-$50k, Facial Plastic Surgery, Orthopedics, MedSpa) and slider reaching $50,000+.
+  - `clinicFaqs` in `page.tsx` must explicitly address Medical Board Compliance, HIPAA Zero-PHI safety, and 48-Hour deployment.
+  - `/api/lead/route.ts` needs to be updated to receive the intake form fields and route dispatch to `name@nexusrank1.com`.
+- **Unexplored areas**: None for frontend UI survey.
 
 ## Key Decisions Made
-- Recommend building pipeline entirely in TypeScript/Node.js utilizing existing libraries in `src/lib/` to bypass all Python NixOS shared-library issues.
-- Recommend enriching `goated_leads.json` with explicit `npi_number` and `npi_verified` fields and updating CSV columns to include competitor address and review count.
+- Identified exact replacement points and component boundaries for R1, R2, R3, R4, and R5.
+- Documenting complete evidence chains in `handoff.md`.
 
 ## Artifact Index
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/BRIEFING.md — Working memory
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/progress.md — Heartbeat and progress tracking
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/handoff.md — Final investigation report
+- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/handoff.md — Final survey report
+- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/progress.md — Liveness tracker
+- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/DISPATCH.md — Incoming instruction log

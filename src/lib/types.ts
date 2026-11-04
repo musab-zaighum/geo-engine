@@ -110,3 +110,43 @@ export interface CmsGuide {
     steps: string[];
   };
 }
+
+export interface ZipCodeLeadInput {
+  practiceName?: string;
+  doctorName?: string;
+  domain: string;
+  cityZip?: string;
+  city?: string;
+  zipCode?: string;
+  email: string;
+  phone?: string;
+  notes?: string;
+  source?: string;
+  webhookUrl?: string;
+  name?: string;
+}
+
+export interface LeadDispatchResult {
+  forwardedTo: string;
+  recipient: string;
+  status: string;
+  timestamp: string;
+}
+
+export interface CapturedLeadPayload {
+  leadId: string;
+  event: string;
+  timestamp: string;
+  domain: string;
+  practiceName: string;
+  doctorName: string;
+  contactName: string;
+  cityZip: string;
+  email: string;
+  phone: string;
+  notes: string;
+  source: string;
+  dispatchRecipient: string;
+  forwardedTo: string;
+  status: string;
+}

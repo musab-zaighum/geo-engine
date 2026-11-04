@@ -1,46 +1,50 @@
-# BRIEFING — 2026-10-31T20:26:40Z
+# BRIEFING — 2026-11-04T17:06:15Z
 
 ## Mission
-Perform exhaustive specification mining and schema extraction from ORIGINAL_REQUEST.md and codebase for lead generation engine.
+Investigate build, export (static dist-netlify/), and testing infrastructure for Geo-Engine.
 
 ## 🔒 My Identity
-- Archetype: Specification Miner
-- Roles: Specification and Schema Miner
+- Archetype: explorer
+- Roles: investigator, reporter
 - Working directory: /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3
-- Original parent: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
-- Milestone: Specification Mining and Schema Extraction
+- Original parent: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
+- Milestone: initial_survey
 
 ## 🔒 Key Constraints
-- Exhaustive specification mining & schema extraction
-- Do not implement project code — read-only regarding project implementation
-- Only write within /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/
-- Define exact JSON schema and CSV headers for /home/pwn/geo-engine/leads/goated_leads.json and .csv
-- Define exact verification tests for each of the 6 acceptance criteria in ORIGINAL_REQUEST.md
-- Document required feature inventory items for PROJECT.md § Feature Inventory
-- Write findings to handoff.md and send completion message to parent
+- Read-only investigation — do NOT implement code changes in the project source
+- Adhere strictly to file workspace conventions (write only in our directory)
+- Provide exact evidence chains (file paths, line numbers, tool output)
 
 ## Current Parent
-- Conversation ID: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
-- Updated: 2026-10-31T20:26:21Z
+- Conversation ID: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
+- Updated: 2026-11-04T17:06:15Z
 
-## Task Summary
-- **What to build**: Comprehensive specification mining report with schema definitions, verification test specs, and feature inventory
-- **Success criteria**: All requirements, constraints, and criteria from ORIGINAL_REQUEST.md mapped to schema, tests, and feature inventory
-- **Interface contracts**: /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md
-- **Code layout**: Metadata only in .agents/teamwork/explorer_survey_3/
+## Investigation State
+- **Explored paths**:
+  - `package.json`
+  - `next.config.mjs`
+  - `tsconfig.json`
+  - `node_modules/next/dist/docs/01-app/02-guides/static-exports.md`
+  - `tests/e2e/run-all-tests.ts`, `tests/e2e/live-browser-flow.ts`
+  - `scripts/clinician-browser-journey.mjs`, `scripts/challenger-v4-3-final-verify.mjs`, `scripts/independent-victory-audit.mjs`
+  - `.next/server/app/`, `.next/static/`, `public/`
+- **Key findings**:
+  1. Next.js is 16.3.4 (Turbopack). `npm run build` generates 15/15 routes successfully.
+  2. `npx tsc --noEmit` passes with 0 errors.
+  3. `output: 'export'` cannot be used directly in Next.js when server API routes (`POST /api/lead`), redirects, or dynamic routes without static params exist.
+  4. Pre-rendered HTML for all pages is generated in `.next/server/app/*.html` during `next build`.
+  5. Tested and verified static exporter script architecture: copying pre-rendered HTML, `_next/static/`, and `public/` assets into `dist-netlify/` produces an immediate drag-and-drop folder for Netlify Drop that serves cleanly in Chrome with 0 console errors.
+  6. Playwright (`rebrowser-playwright`) is installed and operates with Google Chrome at `/run/current-system/sw/bin/google-chrome`.
+- **Unexplored areas**: None for survey scope.
 
 ## Key Decisions Made
-- Fully enumerated all requirements (R1, R2.1-R2.7, R3, R4) and 6 Acceptance Criteria from ORIGINAL_REQUEST.md
-- Formulated exact JSON Schema (Draft 2020-12) and 20 RFC 4180 CSV columns for goated_leads.json / csv
-- Defined automated verification tests for all 6 Acceptance Criteria
-- Verified CMS NPPES NPI Registry API live integration and fallback to practice About page
-- Cataloged 19 modular feature inventory items across 7 categories for PROJECT.md § Feature Inventory
-- Documented 19 discovered features and 10 edge cases in canonical table format
-- Successfully executed independent test script proving 100% AC compliance
-- Compiled exhaustive report to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/handoff.md
+- Recommend dual build strategy: `npm run build` runs `next build`, followed by an automated exporter script (`scripts/build-netlify.mjs`) that constructs `dist-netlify/` with `_redirects` and `_headers`.
+- Recommend Playwright-based headless Chrome test runner (`scripts/verify-nexus-v5.mjs` or similar) testing form validation, smooth scroll, dispatch to `/api/lead`, ROI slider math, and responsive viewports.
 
 ## Artifact Index
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/DISPATCH.md — Incoming dispatch instructions
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/BRIEFING.md — Situational awareness
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/progress.md — Liveness heartbeat
-- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/handoff.md — Final specification mining handoff report
+- DISPATCH.md — recorded incoming dispatch messages
+- BRIEFING.md — persistent working memory
+- progress.md — liveness heartbeat
+- test-exporter.mjs — validated static exporter prototype
+- test-static-serve.mjs — validated static server + Playwright headless verification test
+- handoff.md — comprehensive final report for orchestrator and implementation team

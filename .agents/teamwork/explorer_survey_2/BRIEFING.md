@@ -1,50 +1,37 @@
-# BRIEFING — 2026-10-31T20:33:00Z
+# BRIEFING — 2026-11-04T17:09:00Z
 
 ## Mission
-Analyze technical and domain requirements for the autonomous scouting, 7-point qualification engine, competitor intelligence, and displacement pitch hook generation for dental implant clinic leads.
+Explore and survey backend and lead flow architecture (lead routes, validation, email dispatch to name@nexusrank1.com, client-side form integration, Requirement R3).
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: explorer, analyst, synthesizer
+- Roles: explorer, investigator, reporter
 - Working directory: /home/pwn/geo-engine/.agents/teamwork/explorer_survey_2
-- Original parent: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
-- Milestone: Step 0 Survey - Qualification & Discovery Exploration
+- Original parent: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
+- Milestone: Lead Flow & API Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement code in src/lib/scripts directly
-- Write only metadata/reports in /home/pwn/geo-engine/.agents/teamwork/explorer_survey_2
-- Deliver comprehensive, concrete technical implementation specifications with APIs, algorithms, and schemas
+- Read-only investigation — do NOT implement
+- Inspect lead handling routes, validation, notification/email dispatch to name@nexusrank1.com, client-side submission state & modals
+- Document exact files, lines, and necessary changes for Requirement R3
 
 ## Current Parent
-- Conversation ID: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
+- Conversation ID: 5fdec3c9-ef05-4ed6-93e3-5900c9611bb8
 - Updated: not yet
 
 ## Investigation State
-- **Explored paths**:
-  - `/home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md`
-  - `/home/pwn/geo-engine/.agents/teamwork/orchestrator_1/BRIEFING.md`
-  - `/home/pwn/geo-engine/README.md`
-  - `/home/pwn/geo-engine/package.json`
-  - `/home/pwn/geo-engine/leads/` (`goated_leads.json`, `goated_leads.csv`)
-  - Live CMS NPPES Registry API v2.1 endpoints (`npiregistry.cms.hhs.gov/api/?version=2.1`)
-  - US Census Bureau ACS 5-Year API & `api.zippopotam.us`
-  - DSO market directories and corporate healthcare filings
+- **Explored paths**: `src/app/api/lead/route.ts`, `src/app/page.tsx`, `src/components/InstantAuditBar.tsx`, `src/app/report/[domain]/page.tsx`, `src/components/Navbar.tsx`, `src/components/PricingSection.tsx`, `src/app/pricing/page.tsx`, `tests/adversarial-api-suite.ts`, `tests/adversarial-fuzzing-suite.ts`, `leads/`, `package.json`, `next.config.mjs`
 - **Key findings**:
-  - Verified live CMS NPPES API query capabilities (NPI-1 Individual vs NPI-2 Organization, dental taxonomy codes `122300000X`, `1223P0221X`, `1223P0300X`, `1223S0112X`, `sole_proprietor` field, license number, and location address).
-  - Cataloged 7 top affluent US metropolitan clusters (Scottsdale, Newport Beach, Beverly Hills, Dallas/Plano, Boca Raton/Naples, Bellevue, Greenwich) encompassing 35+ high-wealth zip codes (Median HHI $135k–$250k+).
-  - Formulated the 7-Point Qualification & Disqualification Engine with explicit gate conditions and auto-reject rules (DSOs, Medicaid, Pediatrics, General routine, ranks #1–#3, ranks >#15).
-  - Drafted 25+ DSO blacklist and 5-tier detection heuristics (domain, footer legal regex, career links, TOS entity mismatch, NPI-2 parent org).
-  - Built programmatic Haversine <= 5.0 mile proximity competitor selection engine.
-  - Engineered the 6-token dynamic $1,500 pitch hook formulation template.
-  - Discovered forensic anomaly in sample dataset lead GOAT-005 (competitor recorded as rank 3 instead of rank 1), requiring strict pipeline enforcement in worker milestones.
-- **Unexplored areas**: None within assigned survey scope. Full specification delivered.
+  - `/api/lead/route.ts` is the single lead API route; currently checks `!domain || !email` and forwards to webhook. Needs Zod validation, doctor-tailored fields (practiceName, doctorName, domain, cityZip, email, phone), and dispatch forwarding directly to `name@nexusrank1.com`.
+  - Email dispatch: no nodemailer/resend in package.json; multi-tier dispatch should support Resend REST API, forward webhook, persistent file logging (`leads/captured_leads.json`), structured console log, and JSON response with `forwardedTo: 'name@nexusrank1.com'`.
+  - Client integration: sonner `<Toaster />` globally mounted in `layout.tsx`; new doctor-tailored intake component `ZipCodeAuditIntake.tsx` required for Section 3 (`#audit-intake`) with exact button `[ Submit Audit Request ]` and in-card confirmation state.
+  - Backwards compatibility: Existing adversarial tests (`tests/adversarial-api-suite.ts`) verify that missing email/domain returns HTTP 400 and valid submission returns HTTP 200 with lead payload; our proposed schema maintains 100% compatibility.
+- **Unexplored areas**: None; full backend lead flow mapped.
 
 ## Key Decisions Made
-- Completed comprehensive technical handoff report at `/home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/handoff.md`.
-- Ready to message parent orchestrator.
+- Confirmed full backwards compatibility requirements for `/api/lead` while adding Zod validation and forwarding to `name@nexusrank1.com`.
+- Designed component architecture for `ZipCodeAuditIntake.tsx` with smooth scroll target `#audit-intake` and verified client-side confirmation card.
 
 ## Artifact Index
-- `/home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/DISPATCH.md` — Incoming dispatch message
-- `/home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/BRIEFING.md` — Persistent working memory
-- `/home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/progress.md` — Liveness & status tracking
-- `/home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/handoff.md` — Comprehensive technical survey handoff report
+- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/handoff.md — Comprehensive handoff report
+- /home/pwn/geo-engine/.agents/teamwork/explorer_survey_2/progress.md — Liveness & progress tracking

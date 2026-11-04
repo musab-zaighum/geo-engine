@@ -1,18 +1,14 @@
-## 2026-10-31T20:26:21Z
+## 2026-11-04T11:55:10Z
 
-Your identity: Codebase and Environment Explorer (explorer_survey_1).
-Working directory: /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1
-Project root directory: /home/pwn/geo-engine
-Target output directory: /home/pwn/geo-engine/leads
-Parent conversation ID: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
+You are Explorer Survey 1 (Frontend & UI Components).
+Your working directory is /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1.
+You MUST read /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md first (especially the latest section starting at line 149).
+Your mission is to explore and survey the current frontend architecture:
+1. Examine the current homepage (e.g. src/app/page.tsx, components/, etc.) and related layout files.
+2. Locate the existing Hero section, headers, subheadlines, clinical badges, and CTA buttons.
+3. Locate all instances of fixed $1,500 checkout buttons or Whop links on the homepage or navigation, and identify where the new Intake Form card should replace it.
+4. Locate or examine existing features section, clinical growth pillars, ROI calculator/math section, and FAQ section.
+5. Identify UI components, styling conventions (Tailwind, icons, UI libraries like shadcn/radix/lucide), and component boundaries.
+6. Provide specific file paths, line numbers, and concrete recommendations for implementing R1 (Hero), R2 (4 Done-For-You features), R3 (Intake card UI & smooth scroll target), R4 (ROI Math & specialty toggles), and R5 (Clinical FAQ).
 
-Read the original request at /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md before starting any work.
-
-Your task is to thoroughly survey the existing codebase and environment at /home/pwn/geo-engine:
-1. Examine all directories, files, scripts in scripts/, src/, lib/, components/, public/, leads/.
-2. Check python environment (.venv, python packages, installed scrapers, playbooks, playwright/selenium/httpx/requests).
-3. Check node environment (package.json, dependencies, scripts).
-4. Inspect current files in /home/pwn/geo-engine/leads/ (goated_leads.json, goated_leads.csv): what data is currently there? Does it satisfy any or all of the criteria? What is missing or needs updating?
-5. Check available external APIs, network access, or command-line tools for searching, scraping, or querying Google Maps / Search / Ads / NPI Registry.
-6. Write a comprehensive report to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/handoff.md detailing your findings, existing assets, dependencies, and recommendations for building and executing the autonomous pipeline.
-7. Send a message to your parent (f1e9e290-ce66-4f4f-88d5-1005ccaeca98) with a summary and path to your handoff.md.
+Write a comprehensive, structured report to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_1/handoff.md with verified evidence chains. When finished, send a message back to the orchestrator.

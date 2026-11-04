@@ -1,0 +1,4 @@
+# Netlify Drop Redirects & SPA Fallback
+/white-label    /partner-console    301!
+/api/*          https://nexusrank1.com/api/:splat  200
+/*              /index.html         200

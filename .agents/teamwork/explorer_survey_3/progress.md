@@ -1,18 +1,16 @@
-# Progress — explorer_survey_3
+# Progress — Explorer Survey 3
 
-Last visited: 2026-10-31T20:34:00Z
-Current Status: Specification mining and schema extraction complete. Handoff report ready.
+Last visited: 2026-11-04T17:06:00Z
 
-## Tasks
-- [x] Read dispatch message and create DISPATCH.md, BRIEFING.md, progress.md
-- [x] Inspect /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md
-- [x] Inspect repository structure, existing leads (JSON/CSV), lib modules, and scripts
-- [x] Test live CMS NPPES API and practice About page doctor verification
-- [x] Enumerate every single requirement, constraint, and acceptance criterion in ORIGINAL_REQUEST.md
-- [x] Formulate Features Discovered and Edge Cases tables
-- [x] Define exact JSON schema and CSV headers for goated_leads.json and goated_leads.csv
-- [x] Define exact verification test specifications for the 6 Acceptance Criteria
-- [x] Document required feature inventory items for PROJECT.md § Feature Inventory
-- [x] Compile full handoff.md report at /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/handoff.md
-- [x] Verify handoff report with independent Node.js test script
-- [ ] Notify parent orchestrator via send_message
+## Completed Work
+1. Read and analyzed ORIGINAL_REQUEST.md (lines 149-216) requirements for dual build, static export (dist-netlify/), and headless browser testing.
+2. Examined package.json: Next.js 16.3.4 (Turbopack), React 19.2.8, rebrowser-playwright 1.64.101, Tailwind CSS 3.4.3, Lucide-react, Sonner, Radix UI.
+3. Examined Next.js configuration (next.config.mjs): output: 'standalone', redirects, remotePatterns.
+4. Tested Next.js production build (`npm run build`): passes with 0 errors, compiles 15/15 routes.
+5. Tested TypeScript check (`npx tsc --noEmit`): passes with 0 errors.
+6. Investigated static export mechanisms for Netlify Drop:
+   - Next.js built-in `output: 'export'` clashes with POST API route handlers, redirects in next.config.mjs, and unoptimized image requirements.
+   - Built and proved working prototype (`test-exporter.mjs` & `test-static-serve.mjs`): extracts prerendered HTML from `.next/server/app/`, static assets from `.next/static/` to `_next/static/`, `public/` assets, Netlify `_redirects` and `_headers`.
+   - Verified static serve in Chrome headless at http://localhost:3456: HTTP 200, 0 console errors.
+7. Investigated existing test setups: Playwright (rebrowser-playwright) with Chrome at `/run/current-system/sw/bin/google-chrome`, `tests/e2e/run-all-tests.ts` (125 tests, 100% pass rate), existing browser journeys in `scripts/`.
+8. Preparing comprehensive handoff report.

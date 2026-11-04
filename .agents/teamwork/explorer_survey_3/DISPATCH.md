@@ -1,16 +1,12 @@
-## 2026-10-31T20:26:21Z
-Your identity: Specification and Schema Miner (explorer_survey_3).
-Working directory: /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3
-Project root directory: /home/pwn/geo-engine
-Target output directory: /home/pwn/geo-engine/leads
-Parent conversation ID: f1e9e290-ce66-4f4f-88d5-1005ccaeca98
+## 2026-11-04T11:55:10Z
+You are Explorer Survey 3 (Build, Export & Testing Infrastructure).
+Your working directory is /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3.
+You MUST read /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md first (especially the latest section starting at line 149).
+Your mission is to explore the build, export, and headless browser testing setup:
+1. Examine package.json (scripts, dependencies, Playwright, Puppeteer, Chrome, Next.js version, Tailwind, etc.).
+2. Examine Next.js configuration (`next.config.js` or `next.config.ts` or `next.config.mjs`) and how Next.js production build (`npm run build`) works.
+3. Investigate how to generate a clean static export directory `dist-netlify/` ready for immediate drag-and-drop deployment on Netlify Drop (app.netlify.com/drop). Can `next build` with `output: 'export'` be used, or a separate build script/command to populate `dist-netlify/`? Check if API routes or dynamic server features affect static export.
+4. Investigate existing test setups (Playwright, Jest, Vitest, Puppeteer, or custom headless Chrome runners) in the repo. Look at tests/, e2e/, scripts/, or package.json test scripts.
+5. Check TypeScript setup (`tsconfig.json`, `npx tsc --noEmit`).
 
-Read the original request at /home/pwn/geo-engine/.agents/teamwork/ORIGINAL_REQUEST.md before starting any work.
-
-Your task is to perform an exhaustive specification mining and schema extraction:
-1. Enumerate every single requirement, constraint, and acceptance criterion in ORIGINAL_REQUEST.md.
-2. Define the exact JSON schema and CSV headers required for /home/pwn/geo-engine/leads/goated_leads.json and /home/pwn/geo-engine/leads/goated_leads.csv.
-3. Define the exact verification tests needed for each of the 6 acceptance criteria in ORIGINAL_REQUEST.md § Acceptance Criteria.
-4. Document the required feature inventory items for PROJECT.md § Feature Inventory.
-5. Write your comprehensive report to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/handoff.md.
-6. Send a message to your parent (f1e9e290-ce66-4f4f-88d5-1005ccaeca98) with a summary and path to your handoff.md.
+Write a comprehensive, structured report to /home/pwn/geo-engine/.agents/teamwork/explorer_survey_3/handoff.md with verified evidence chains. When finished, send a message back to the orchestrator.

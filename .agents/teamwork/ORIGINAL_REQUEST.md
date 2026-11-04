@@ -144,3 +144,72 @@ For any defect, visual glitch, broken link, or friction identified during browse
 - [ ] The Corner Chat Widget successfully answers clinician inquiries with $1,500 one-time deployment terms.
 - [ ] All external checkout links correctly point to `https://whop.com/checkout/plan_e37e96b86e088/`.
 - [ ] Zero TypeScript errors (`npx tsc --noEmit`) and 15/15 routes pass production compilation (`npm run build`).
+
+
+## 2026-11-04T11:52:08Z
+
+Use a very large team of agents. Redesign and deploy the NexusRank1 clinical platform to transition from upfront fixed pricing to an exclusive, high-ticket Zip Code Audit intake pipeline for elective healthcare practices (surgeons, cosmetic dentists, aesthetic medical directors). Implement the exact 5-section architecture, email submission routing to name@nexusrank1.com, dual Next.js build + Netlify Drop static export, and exhaustive headless Chrome browser verification.
+
+Working directory: /home/pwn/geo-engine
+Integrity mode: development
+
+## Requirements
+
+### R1. Hero Header (Above the Fold)
+- **Headline:** Ensure AI Search Recommends Your Clinic Over Local Competitors
+- **Subheadline:** The complete, automated local growth & AI audit system engineered exclusively for medical, dental, and aesthetic clinic owners. Dominate local search proximity on ChatGPT, Perplexity, and Google AI Overviews.
+- **Call to Action (CTA):** `[ Request Your Zip Code Audit ]` — button smoothly scrolls directly to the Intake Form section with clear focus indicator.
+- **Visuals & Proof:** High-trust clinical badges, CMS NPPES licensure tags, and instant authority indicators.
+
+### R2. Core Done-For-You Features Section
+Highlight the 4 clinical growth pillars emphasizing complete done-for-you technical implementation:
+1. **Geo-Visibility Grid Tracking & Zip Code Benchmarking:** Weekly mapping of their exact 5-mile radius to eliminate local blind spots.
+2. **0-Error MedicalClinic Schema ASTs:** Enterprise technical code so AI engines recognize their clinical credentials and recommend them first.
+3. **Automated Review Loops & Front-Desk Engine:** Seamless capture of 5-star Google reviews from patients right at the clinic.
+4. **Strict Zip Code Exclusivity:** Locking out their local rivals permanently with territory protection.
+
+### R3. Intake Form Section (Contact for Audit)
+Replace the fixed $1,500 checkout button on the homepage with a sleek, doctor-tailored intake card:
+- **Required Fields:**
+  - Practice Name
+  - Doctor / Surgeon Name
+  - Website Domain & City/Zip Code
+  - Direct Email / Phone
+- **Button Text:** `[ Submit Audit Request ]`
+- **Submission Routing:**
+  - Route form submissions through `/api/lead` and configure submission dispatch to forward directly to `name@nexusrank1.com`.
+  - Include instant user feedback with a success confirmation state and immediate toast notification.
+
+### R4. The ROI Proof & Math Section
+Show a transparent financial breakdown centered on high-ticket elective procedure production:
+- Highlight full-arch case values ($20,000 to $50,000 per case).
+- Demonstrate that securing just a single patient consultation covers the entire system deployment multiple times over.
+- Include interactive specialty toggles (All-on-4 Implants, Facial Plastic Surgery, Orthopedics, MedSpa).
+
+### R5. Clinical FAQ Section
+Address critical healthcare practice questions:
+- **Medical Board Compliance:** Adherence to state medical/dental board advertising guidelines.
+- **HIPAA Safety:** Zero protected health information (PHI) processed; strict focus on public clinical credential syndication.
+- **Fast Deployment:** 100% done-for-you setup deployed within 48 hours.
+
+### R6. Dual Deployment & Headless Browser Verification
+- **Dual Build:** Next.js production build (`npm run build`) AND a standalone static distribution package in `dist-netlify/` ready for immediate drag-and-drop deployment on Netlify Drop (app.netlify.com/drop).
+- **Headless Browser Test Suite:** Live Chrome tests verifying all form fields, smooth scrolling, validation error states, submission dispatch, and responsive viewports.
+
+## Acceptance Criteria
+
+### Clinician Landing Page & Conversion Integrity
+- [ ] Hero headline is exactly: "Ensure AI Search Recommends Your Clinic Over Local Competitors".
+- [ ] Hero subheadline matches the user specification word-for-word.
+- [ ] CTA button `[ Request Your Zip Code Audit ]` scrolls directly to the Intake Form.
+- [ ] The 4 core features (Geo-Grid, Schema ASTs, Review Loops, Strict Zip Code Exclusivity) are clearly presented.
+- [ ] Intake form collects Practice Name, Doctor Name, Domain & City/Zip, Email/Phone with `[ Submit Audit Request ]`.
+- [ ] Form handler submits to `/api/lead` and dispatches notifications to `name@nexusrank1.com`.
+- [ ] Full-arch case values ($20,000 to $50,000) are explicitly modeled in the ROI section.
+- [ ] FAQ answers medical board compliance, HIPAA safety, and 48-hour turnaround.
+
+### Build & Browser Verification
+- [ ] TypeScript passes with 0 errors (`npx tsc --noEmit`).
+- [ ] Next.js compiles with 0 build errors (`npm run build`).
+- [ ] A clean static export directory (`dist-netlify/`) is generated and verified for Netlify Drop.
+- [ ] Real headless browser tests pass 100% of functional checks with 0 console errors.

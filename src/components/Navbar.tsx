@@ -42,6 +42,8 @@ export function Navbar() {
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
+        const firstInput = el.querySelector('input') as HTMLInputElement | null;
+        firstInput?.focus();
       }
     }
   };
@@ -76,7 +78,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => handleScrollTo('features')}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <MapPin className="w-3.5 h-3.5 text-emerald-400" />
             <span>The 4 Growth Pillars</span>
@@ -85,18 +87,19 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => handleScrollTo('audit-bar')}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
             <span>Live Clinic Scan</span>
           </button>
 
-          <Link
-            href="/pricing"
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors"
+          <button
+            type="button"
+            onClick={() => handleScrollTo('audit-intake')}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors cursor-pointer"
           >
-            $1,500 System
-          </Link>
+            Zip Code Audit
+          </button>
 
           <Link
             href="/partner-console"
@@ -118,16 +121,20 @@ export function Navbar() {
             <span>Clinic Login</span>
           </Link>
 
-          {/* Direct $1,500 Whop CTA */}
+          {/* Desktop Primary CTA: Request Zip Code Audit */}
           <a
-            href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/#audit-intake"
+            onClick={(e) => {
+              if (pathname === '/') {
+                e.preventDefault();
+                handleScrollTo('audit-intake');
+              }
+            }}
             className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white text-xs font-black shadow-lg shadow-emerald-950/60 transition-all duration-200 active:scale-[0.98] touch-target cursor-pointer group"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0 group-hover:rotate-12 transition-transform" />
-            <span className="hidden xs:inline">Claim $1,500 System</span>
-            <span className="xs:hidden">Get System</span>
+            <span className="hidden xs:inline">Request Zip Code Audit</span>
+            <span className="xs:hidden">Audit</span>
           </a>
 
           {/* Mobile Hamburger Menu Toggle Button */}
@@ -170,16 +177,17 @@ export function Navbar() {
               <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
             </button>
 
-            <Link
-              href="/pricing"
+            <button
+              type="button"
+              onClick={() => handleScrollTo('audit-intake')}
               className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-slate-200 hover:bg-slate-900 transition-colors flex items-center justify-between"
             >
               <span className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>$1,500 System &amp; ROI</span>
+                <span>Request Zip Code Audit</span>
               </span>
               <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
-            </Link>
+            </button>
 
             <Link
               href="/partner-console"
@@ -206,21 +214,23 @@ export function Navbar() {
 
           <div className="pt-2 border-t border-slate-800 space-y-2">
             <a
-              href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/#audit-intake"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleScrollTo('audit-intake');
+              }}
               className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 text-white text-xs font-black shadow-lg shadow-emerald-950/60 flex items-center justify-center gap-2 text-center"
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>Claim Your Clinic Growth System — $1,500</span>
+              <span>Request Your Zip Code Audit</span>
             </a>
 
             <div className="flex items-center justify-center gap-3 text-[11px] text-slate-400 pt-1">
               <span className="flex items-center gap-1 font-medium">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Verified Whop Checkout
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Strict Zip Exclusivity
               </span>
               <span>•</span>
-              <span>1-Patient ROI Guarantee</span>
+              <span>1-Patient ROI Reality</span>
             </div>
           </div>
         </div>

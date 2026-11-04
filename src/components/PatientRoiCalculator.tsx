@@ -24,50 +24,42 @@ interface SpecialtyPreset {
 
 const SPECIALTIES: SpecialtyPreset[] = [
   {
-    id: 'dental',
-    name: 'Cosmetic & Restorative Dentistry',
+    id: 'all-on-4',
+    name: 'All-on-4 Implants',
     icon: '🦷',
-    defaultTicket: 6500,
-    sampleProcedures: 'Single Implant ($4,500), All-on-4 Full Arch ($24,000), Full-Mouth Restoration ($38,000)',
-    sliderMilestones: ['$1,000 (Routine)', '$15,000 (Single Arch)', '$40,000 (Full-Mouth Surgical)'],
-  },
-  {
-    id: 'aesthetics',
-    name: 'MedSpa & Facial Aesthetics',
-    icon: '✨',
-    defaultTicket: 3500,
-    sampleProcedures: 'Neuromodulators & Fillers ($2,200), Laser Resurfacing ($3,800), Body Contouring ($6,500)',
-    sliderMilestones: ['$500 (Skin Rejuvenation)', '$3,500 (Full-Face Liquid Lift)', '$10,000 (Annual Wellness Package)'],
+    defaultTicket: 25000,
+    sampleProcedures: 'Full Arch Fixed Hybrid ($25,000), Zygomatic Implants ($35,000), Dual-Arch All-on-4 ($50,000)',
+    sliderMilestones: ['$10,000 (Single Implant)', '$25,000 (Full-Arch Case)', '$50,000 (Dual-Arch Reconstruction)'],
   },
   {
     id: 'plastic',
-    name: 'Plastic & Cosmetic Surgery',
+    name: 'Facial Plastic Surgery',
     icon: '🩺',
-    defaultTicket: 14500,
-    sampleProcedures: 'Rhinoplasty ($9,500), Deep Plane Facelift ($18,000), Mommy Makeover ($25,000)',
-    sliderMilestones: ['$1,000 (Minor Injectable)', '$15,000 (Facelift / Rhinoplasty)', '$40,000 (Mommy Makeover / Reconstruction)'],
+    defaultTicket: 18000,
+    sampleProcedures: 'Deep Plane Facelift ($18,000), Rhinoplasty ($12,000), Neck Lift ($15,000)',
+    sliderMilestones: ['$5,000 (Minor Revision)', '$18,000 (Deep Plane Facelift)', '$50,000 (Full Facial Rejuvenation)'],
   },
   {
     id: 'ortho',
-    name: 'Orthopedics & Spine Medicine',
+    name: 'Orthopedics',
     icon: '🦴',
-    defaultTicket: 8500,
-    sampleProcedures: 'Total Joint Replacement ($18,000), Minimally Invasive Spine ($12,000), Sports Rehab ($3,500)',
-    sliderMilestones: ['$1,000 (Diagnostic Injection)', '$15,000 (Arthroscopy)', '$40,000 (Total Joint Reconstruction)'],
+    defaultTicket: 16000,
+    sampleProcedures: 'Total Joint Replacement ($18,000), Minimally Invasive Spine ($16,000), Complex Reconstruction ($28,000)',
+    sliderMilestones: ['$5,000 (Arthroscopy)', '$16,000 (Spine Surgery)', '$50,000 (Total Joint Reconstruction)'],
   },
   {
-    id: 'derm',
-    name: 'Dermatology & Skin Surgery',
-    icon: '🔬',
-    defaultTicket: 3500,
-    sampleProcedures: 'Mohs Micrographic Surgery ($3,800), Complex Excision ($2,400), Cosmetic Laser ($3,500)',
-    sliderMilestones: ['$500 (Biopsy / Routine)', '$3,500 (Mohs Surgery)', '$12,000 (Complex Reconstruction)'],
+    id: 'medspa',
+    name: 'MedSpa',
+    icon: '✨',
+    defaultTicket: 4500,
+    sampleProcedures: 'Full-Face Liquid Lift ($3,500), Body Contouring Package ($6,500), Annual Injectable Protocol ($8,500)',
+    sliderMilestones: ['$1,000 (Injectables)', '$4,500 (Liquid Lift)', '$15,000 (Annual Wellness Package)'],
   },
 ];
 
 export function PatientRoiCalculator() {
-  const [selectedSpecialty, setSelectedSpecialty] = useState('dental');
-  const [avgTicket, setAvgTicket] = useState(6500);
+  const [selectedSpecialty, setSelectedSpecialty] = useState('all-on-4');
+  const [avgTicket, setAvgTicket] = useState(25000);
   const [newPatientsPerMonth, setNewPatientsPerMonth] = useState(3);
 
   const handleSpecialtyChange = (specId: string) => {
@@ -90,6 +82,16 @@ export function PatientRoiCalculator() {
   // How many times 1 single patient covers the entire $1,500 system
   const timesCoveredByOnePatient = (avgTicket / systemCost).toFixed(1);
 
+  const handleScrollToIntake = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById('audit-intake');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      const firstInput = el.querySelector('input') as HTMLInputElement | null;
+      firstInput?.focus();
+    }
+  };
+
   return (
     <div id="patient-roi-calculator" className="space-y-10 sm:space-y-12">
       
@@ -97,7 +99,7 @@ export function PatientRoiCalculator() {
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold shadow-xl">
           <Calculator className="w-4 h-4 text-emerald-400" />
-          <span>Patient Acquisition &amp; Practice Revenue Modeler</span>
+          <span>High-Ticket Procedure Economics • Full-Arch Case Modeling</span>
         </div>
         
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
@@ -108,7 +110,7 @@ export function PatientRoiCalculator() {
         </h2>
         
         <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-          When ChatGPT, Perplexity, and Google AI Overviews cite your practice for high-ticket procedures, even just 1 or 2 new monthly patients produces tens of thousands in direct clinical revenue against a single $1,500 investment.
+          With elective full-arch case values producing <strong className="text-emerald-400">$20,000 to $50,000 per case</strong>, securing just a single patient consultation covers the system deployment multiple times over.
         </p>
       </div>
 
@@ -117,7 +119,7 @@ export function PatientRoiCalculator() {
         <label className="block text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-3 text-center">
           Step 1: Select Your Practice Medical Specialty
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {SPECIALTIES.map((spec) => {
             const isSelected = selectedSpecialty === spec.id;
             return (
@@ -125,15 +127,15 @@ export function PatientRoiCalculator() {
                 key={spec.id}
                 type="button"
                 onClick={() => handleSpecialtyChange(spec.id)}
-                className={`p-3 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-2 ${
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-2 ${
                   isSelected
                     ? 'bg-emerald-950/40 border-emerald-500 text-white shadow-lg shadow-emerald-950/50 ring-1 ring-emerald-500/50'
                     : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
                 }`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span className="text-xl">{spec.icon}</span>
-                  {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
+                  <span className="text-2xl">{spec.icon}</span>
+                  {isSelected && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
                 </div>
                 <div className="space-y-0.5">
                   <div className="text-xs font-bold leading-tight">{spec.name}</div>
@@ -176,7 +178,7 @@ export function PatientRoiCalculator() {
               <input
                 type="range"
                 min="1000"
-                max="40000"
+                max="50000"
                 step="500"
                 value={avgTicket}
                 onChange={(e) => setAvgTicket(Number(e.target.value))}
@@ -185,8 +187,8 @@ export function PatientRoiCalculator() {
               
               <div className="flex justify-between text-[11px] font-mono text-slate-500">
                 <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[0] || '$1,000 (Routine)'}</span>
-                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[1] || '$15,000 (Single Arch)'}</span>
-                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[2] || '$40,000 (Full-Mouth Surgical)'}</span>
+                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[1] || '$25,000 (Full Arch)'}</span>
+                <span>{SPECIALTIES.find((s) => s.id === selectedSpecialty)?.sliderMilestones[2] || '$50,000 (Dual-Arch Reconstruction)'}</span>
               </div>
             </div>
 
@@ -223,20 +225,20 @@ export function PatientRoiCalculator() {
               </div>
             </div>
 
-            {/* The 1-Patient Guarantee Callout */}
+            {/* The 1-Patient Consultation Callout */}
             <div className="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 flex items-start gap-3.5">
               <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 mt-0.5">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div className="space-y-1">
                 <div className="text-xs font-bold text-white flex items-center gap-2">
-                  <span>The 1-Patient ROI Reality:</span>
+                  <span>The 1-Consultation ROI Reality:</span>
                   <span className="text-[11px] font-mono font-normal text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/20">
                     {timesCoveredByOnePatient}x System Cost in 1 Patient
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400 leading-relaxed">
-                  A single procedure valued at <strong className="text-white">${avgTicket.toLocaleString()}</strong> completely pays for the <strong className="text-emerald-400">${systemCost.toLocaleString()}</strong> deployment <strong className="text-white">{timesCoveredByOnePatient} times over</strong>.
+                  Securing just a single patient consultation covers the system deployment multiple times over. A single full-arch or surgical case valued at <strong className="text-white">${avgTicket.toLocaleString()}</strong> completely pays for the <strong className="text-emerald-400">${systemCost.toLocaleString()}</strong> deployment <strong className="text-white">{timesCoveredByOnePatient} times over</strong>.
                 </p>
               </div>
             </div>
@@ -301,25 +303,24 @@ export function PatientRoiCalculator() {
 
             </div>
 
-            {/* Direct Whop CTA Trigger */}
+            {/* Direct Audit Intake Trigger */}
             <div className="pt-2">
               <a
-                href={CLINIC_OFFER_CONFIG.whopCheckoutUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/50 transition-all duration-200 active:scale-[0.98] cursor-pointer text-center group"
+                href="#audit-intake"
+                onClick={handleScrollToIntake}
+                className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:via-teal-400 hover:to-indigo-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-950/50 transition-all duration-200 active:scale-[0.98] cursor-pointer text-center group"
               >
                 <Sparkles className="w-4 h-4 text-amber-300 group-hover:rotate-12 transition-transform" />
-                <span>{CLINIC_OFFER_CONFIG.ctaLabel}</span>
+                <span>Request Your Zip Code Audit</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               
               <div className="flex items-center justify-center gap-4 text-[10px] font-mono text-slate-500 pt-3">
-                <span>✓ 1-Patient ROI Guarantee</span>
+                <span>✓ 1-Patient ROI Reality</span>
                 <span>•</span>
                 <span>✓ One-Time Deployment</span>
                 <span>•</span>
-                <span>✓ No Monthly Traps</span>
+                <span>✓ Strict Zip Exclusivity</span>
               </div>
             </div>
 
